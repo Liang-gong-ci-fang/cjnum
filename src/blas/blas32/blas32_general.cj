@@ -1,5 +1,7 @@
 package cjnum.blas.blas32
 
+import cjnum.blas.*
+
 public abstract class GeneralCore {
     public GeneralCore(
         public let rows: Int64,
@@ -11,10 +13,10 @@ public abstract class GeneralCore {
 
 public class General <: GeneralCore {
     public General(
-        rows: Int64,
-        cols: Int64,
-        stride: Int64,
-        data: Array<Float32>
+        rows!: Int64 = 0,
+        cols!: Int64 = 0,
+        stride!: Int64 = 0,
+        data!: Array<Float32> = []
     ) {
         super(rows, cols, stride, data)
     }

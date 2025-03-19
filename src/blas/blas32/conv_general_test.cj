@@ -1,26 +1,32 @@
 package cjnum.blas.blas32
 
+import cjnum.blas.*
 import std.math.*
 import std.unittest.*
 import std.unittest.testmacro.*
 
 func newGeneralFrom(a: GeneralCols): General {
-    let t = General(a.rows, a.cols, a.cols, Array<Float32>(a.rows * a.cols, item: 0.0))
+    let t = General(rows: a.rows, cols: a.cols, stride: a.cols, data: Array<Float32>(a.rows * a.cols, item: 0.0))
     t.from(a)
     return t
 }
 
 func newGeneralColsFrom(a: General): GeneralCols {
-    let t = GeneralCols(a.rows, a.cols, a.rows, Array<Float32>(a.rows * a.cols, item: 0.0))
+    let t = GeneralCols(rows: a.rows, cols: a.cols, stride: a.rows, data: Array<Float32>(a.rows * a.cols, item: 0.0))
     t.from(a)
     return t
 }
 
-let generalTests = [General(2, 3, 3, [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]), General(3, 2, 2, [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]),
-    General(3, 3, 3, [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]),
-    General(2, 3, 5, [1.0, 2.0, 3.0, 0.0, 0.0, 4.0, 5.0, 6.0, 0.0, 0.0]),
-    General(3, 2, 5, [1.0, 2.0, 0.0, 0.0, 0.0, 3.0, 4.0, 0.0, 0.0, 0.0, 5.0, 6.0, 0.0, 0.0, 0.0]),
-    General(3, 3, 5, [1.0, 2.0, 3.0, 0.0, 0.0, 4.0, 5.0, 6.0, 0.0, 0.0, 7.0, 8.0, 9.0, 0.0, 0.0])]
+let generalTests = [
+    General(rows: 2, cols: 3, stride: 3, data: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]),
+    General(rows: 3, cols: 2, stride: 2, data: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]),
+    General(rows: 3, cols: 3, stride: 3, data: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]),
+    General(rows: 2, cols: 3, stride: 5, data: [1.0, 2.0, 3.0, 0.0, 0.0, 4.0, 5.0, 6.0, 0.0, 0.0]),
+    General(rows: 3, cols: 2, stride: 5, data: [1.0, 2.0, 0.0, 0.0, 0.0, 3.0, 4.0, 0.0, 0.0, 0.0, 5.0, 6.0, 0.0, 0.0,
+        0.0]),
+    General(rows: 3, cols: 3, stride: 5, data: [1.0, 2.0, 3.0, 0.0, 0.0, 4.0, 5.0, 6.0, 0.0, 0.0, 7.0, 8.0, 9.0, 0.0,
+        0.0])
+]
 
 @Test
 public func testConvertGeneral() {
@@ -52,7 +58,7 @@ extend GeneralCols <: general {
     }
 }
 
-interface general {
+sealed interface general {
     func dims(): (Int64, Int64)
     func at(i: Int64, j: Int64): Float32
 }
