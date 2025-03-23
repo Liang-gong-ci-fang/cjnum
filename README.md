@@ -18,13 +18,7 @@
 <img alt="" src="https://raw.gitcode.com/Cangjie-SIG/cjgrapht/attachment/uploads/f9ffe377-e653-4fa3-b03e-e6ade35594a3/MEGAPROJECT.jpg" />
 </div>
 
-<p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v0.1.0-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.53.13-brightgreen" style="display: inline-block;" />
-<!-- <img alt="" src="https://img.shields.io/badge/cjcov-1.0%25-brightgreen" style="display: inline-block;" /> -->
-<img alt="" src="https://img.shields.io/badge/state-孵化-brightgreen" style="display: inline-block;" />
-<!-- <img alt="" src="https://img.shields.io/badge/domain-HOS/Cloud-brightgreen" style="display: inline-block;" /> -->
-</p>
+<p></p>
 
 本项目由 [SIGCANGJIE / 仓颉兴趣组](https://gitcode.com/SIGCANGJIE) 实现并维护。技术支持和意见反馈请提Issue。
 
