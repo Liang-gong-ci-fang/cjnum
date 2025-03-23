@@ -1,5 +1,7 @@
 package cjnum.blas
 
+import cjnum.complex.*
+
 public type Flag = Int64
 
 public const Identity: Flag = -2
@@ -230,7 +232,7 @@ public interface Complex64Level3 {
         b: Array<Complex64>, ldb: Int64, beta: Float32, c: Array<Complex64>, ldc: Int64): Unit
 }
 
-public interface Complex128 <: Complex128Level1 & Complex128Level2 & Complex128Level3 {}
+public interface NComplex128 <: Complex128Level1 & Complex128Level2 & Complex128Level3 {}
 
 public interface Complex128Level1 {
     func zdotu(n: Int64, x: Array<Complex128>, incX: Int64, y: Array<Complex128>, incY: Int64): Complex128
