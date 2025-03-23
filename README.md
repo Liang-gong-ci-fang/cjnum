@@ -1,6 +1,21 @@
 <div align="center">
-<img alt="" src="https://raw.gitcode.com/Cangjie-SIG/cjgrapht/attachment/uploads/424beb90-5f39-43e0-b1fe-dd9ce14207c7/megaproject.png" />
-<h1>cjnum</h1>
+<img alt="" src="https://raw.gitcode.com/naxida/cjnum/attachment/uploads/0454254b-8d77-4615-bf1c-ba30a7ad44f4/cjnum.jpg" />
+</div>
+
+<p></p>
+
+<p align="center">
+<img alt="" src="https://img.shields.io/badge/release-v0.1.0-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.53.13-brightgreen" style="display: inline-block;" />
+<!-- <img alt="" src="https://img.shields.io/badge/cjcov-1.0%25-brightgreen" style="display: inline-block;" /> -->
+<img alt="" src="https://img.shields.io/badge/state-孵化-brightgreen" style="display: inline-block;" />
+<!-- <img alt="" src="https://img.shields.io/badge/domain-HOS/Cloud-brightgreen" style="display: inline-block;" /> -->
+</p>
+
+<p></p>
+
+<div align="center">
+<img alt="" src="https://raw.gitcode.com/Cangjie-SIG/cjgrapht/attachment/uploads/f9ffe377-e653-4fa3-b03e-e6ade35594a3/MEGAPROJECT.jpg" />
 </div>
 
 <p align="center">
