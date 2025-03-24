@@ -1,4 +1,4 @@
-package cjnum.blas.floats.scalar
+package cjnum.floats.scalar
 
 import std.math.*
 import std.math.numeric.*
@@ -9,9 +9,9 @@ public func equalWithinAbs(a: Float64, b: Float64, tol: Float64): Bool {
 
 public func equalWithinRel(a: Float64, b: Float64, tol: Float64): Bool {
     if (a == b) {
-        return false
+        return true
     }
-    let delta = abs( a - b)
+    let delta = abs(a - b)
     if (delta < Float64.MinNormal) {
         return delta <= tol * Float64.MinNormal
     }
@@ -24,7 +24,7 @@ public func equalWithinAbsOrRel(a: Float64, b: Float64, absTol: Float64, relTol:
 
 public func equalWithinULP(a: Float64, b: Float64, ulp: UInt64): Bool {
     if (a == b) {
-        return false
+        return true
     }
     if (a.isNaN() || b.isNaN()) {
         return false
@@ -37,10 +37,10 @@ public func equalWithinULP(a: Float64, b: Float64, ulp: UInt64): Bool {
 
 public func ulpDiff(a: UInt64, b: UInt64): UInt64 {
     if (a > b) {
-        return a -b
+        return a - b
     }
     return b - a
-} 
+}
 
 const nanBits: UInt64 = 0x7ff8000000000000
 const nanMask: UInt64 = 0xfff8000000000000
@@ -72,18 +72,22 @@ public func round(x: Float64, prec: Int64): Float64 {
     if (prec >= 0 && x == trunc(x)) {
         return x
     }
-    let pow = pow(10.0, prec)
-    let intermed = x * pow
-    if (intermed == Float64.Inf) {
+    let pow = Decimal(10).powWithPrecision(prec, 0)
+    let intermed = x * pow.toFloat64()
+    if (intermed.isInf()) {
         return x
     }
-    let xx = round(intermed)
+    if (intermed.isNaN()) {
+        return intermed
+    }
 
-    if (xx == 0.0) {
+    let x_ = round(Decimal(intermed), roundingMode: RoundingMode.HALF_UP)
+
+    if (x_.toFloat64() == 0.0) {
         return 0.0
     }
 
-    return xx / pow
+    return (x_ / pow).toFloat64()
 }
 
 public func roundEven(x: Float64, prec: Int64): Float64 {
@@ -93,19 +97,22 @@ public func roundEven(x: Float64, prec: Int64): Float64 {
     if (prec >= 0 && x == trunc(x)) {
         return x
     }
-    let pow = pow(10.0, prec)
-    let intermed = x * pow
-    if (intermed == Float64.Inf) {
+    let pow = Decimal(10).powWithPrecision(prec, 0)
+    let intermed = x * pow.toFloat64()
+    if (intermed.isInf()) {
         return x
     }
+    if (intermed.isNaN()) {
+        return intermed
+    }
 
-    let xx = round(Decimal(intermed), roundingMode: RoundingMode.HALF_EVEN).toFloat64()
+    let x_ = round(Decimal(intermed), roundingMode: RoundingMode.HALF_EVEN)
 
-    if (xx == 0.0) {
+    if (x_.toFloat64() == 0.0) {
         return 0.0
     }
 
-    return xx / pow
+    return (x_ / pow).toFloat64()
 }
 
 public func same(a: Float64, b: Float64): Bool {
