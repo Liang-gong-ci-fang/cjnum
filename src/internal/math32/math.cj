@@ -3,7 +3,7 @@ package cjnum.internal.math32
 import std.math.*
 import std.math.numeric.*
 
-const unan = 0x7fc00000
+const unan: UInt32= 0x7fc00000
 const uinf: UInt32 = 0x7f800000
 const uneginf: UInt32 = 0xff800000
 const mask = 0x7f8 >> 3
@@ -22,7 +22,6 @@ func Copysign(x: Float32, y: Float32): Float32 {
     const sign: UInt32 = 1 << 31
     let xBits = x.toBits()
     let yBits = y.toBits()
-
     let resultBits = (xBits & (sign ^ 0xFFFFFFFF)) | (yBits & sign)
 
     return Float32.fromBits(resultBits)
@@ -35,7 +34,7 @@ func Inf(sign: Int): Float32 {
     } else {
         v = uneginf
     }
-    return Float32.fromBits(v)
+    return Float32(v)
 }
 
 func IsInf(f: Float32, sign: Int): Bool {
@@ -48,19 +47,20 @@ func IsNaN(f: Float32): Bool {
 
 func Hypot(p: Float32, q: Float32): Float32 {
     let x: Float32 = Float32.NaN
-    
+
     if (IsInf(p, 0) || IsInf(q, 0)) {
         return Float32(uinf)
     }
     if (IsNaN(p) || IsNaN(q)) {
         return Float32(unan)
     }
+
     var m = Abs(p)
     var n = Abs(q)
     if (m < n) {
         let temp = m;
-        m = n;
-        n = temp;
+        m = n
+        n = temp
     }
     if (m == 0.0) {
         return 0.0
