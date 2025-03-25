@@ -7,7 +7,7 @@ import std.random.*
 import std.unittest.*
 import std.unittest.testmacro.*
 
-const tol:Float64=1e-7
+const tol: Float64 = 1e-7
 
 let absTests: Array<Float32> = [0.0, -0.0, 1.0, -1.0, Float32(unan), 123.4, -123.4]
 let copySignTests: Array<Array<Float32>> = [[1.0, 2.0, 1.0], [-1.0, -2.0, -1.0], [1.0, -2.0, -1.0], [-1.0, -2.0, -1.0],
@@ -77,11 +77,11 @@ func TestIsNaN(){
 
 @Test
 func TestSignbit(){
-    var i=0
+    var i = 0
     for(test in signBitTests){
         let result = Signbit(test)  
         @Expect(result, signResult[i]) 
-        i+=1
+        i += 1
     }
 }
 
