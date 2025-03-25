@@ -8,8 +8,8 @@ public abstract class BandCore {
     public BandCore(
         public let rows: Int64,
         public let cols: Int64,
-        public let kl: Int64,
-        public let ku: Int64,
+        public var kl: Int64,
+        public var ku: Int64,
         public let stride: Int64,
         public let data: Array<Complex128>
     ) {}
