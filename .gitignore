@@ -10,3 +10,4 @@ cov_output/
 reports/
 *.gcda
 .arts/
+.DS_Store
