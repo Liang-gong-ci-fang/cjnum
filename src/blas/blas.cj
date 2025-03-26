@@ -21,7 +21,7 @@ public type Transpose = UInt8
 
 public const NoTrans: Transpose = 'N'
 public const Trans: Transpose = 'T'
-public const COnjTrans: Transpose = 'C'
+public const ConjTrans: Transpose = 'C'
 
 public type Uplo = UInt8
 
