@@ -1,0 +1,34 @@
+name: CI Contrib Bench
+
+on:
+  push:
+    branches: ["contrib"]
+  pull_request:
+
+jobs:
+  bench:
+    runs-on: euleros-2.10.1
+    steps:
+      - name: Checkout 
+        uses: checkout-action@0.0.1
+        with:
+          ref: 'contrib'
+
+      - name: Download Cangjie
+        run: |
+          wget "https://cangjie-lang.cn/v1/files/auth/downLoad?nsId=142267&fileName=Cangjie-0.53.18-linux_x64.tar.gz&objectKey=67a2c8976a75297d1cdc1d4c" -q -O Cangjie-0.53.18-linux_x64.tar.gz
+          tar -xzf Cangjie-0.53.18-linux_x64.tar.gz
+      
+      - name: Build unit tests
+        run: |
+          . cangjie/envsetup.sh
+          cd repo_workspace
+          cjpm update
+          cjpm test --no-run --no-color -j3
+
+      - name: Bench unit tests
+        run: |
+          . cangjie/envsetup.sh
+          cd repo_workspace
+          export cjHeapSize=1GB
+          cjpm test --skip-build --no-color --bench
