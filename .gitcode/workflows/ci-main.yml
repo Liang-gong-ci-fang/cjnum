@@ -16,19 +16,19 @@ jobs:
 
       - name: Download Cangjie
         run: |
-          wget "https://cangjie-lang.cn/v1/files/auth/downLoad?nsId=142267&fileName=Cangjie-0.53.13-linux_x64.tar.gz&objectKey=6719f1eb3af6947e3c6af327" -q -O Cangjie-0.53.13-linux_x64.tar.gz 
-          tar -xzf Cangjie-0.53.13-linux_x64.tar.gz
+          wget "https://cangjie-lang.cn/v1/files/auth/downLoad?nsId=142267&fileName=Cangjie-0.53.18-linux_x64.tar.gz&objectKey=67a2c8976a75297d1cdc1d4c" -q -O Cangjie-0.53.18-linux_x64.tar.gz
+          tar -xzf Cangjie-0.53.18-linux_x64.tar.gz
       
-      - name: Build Unit tests
+      - name: Build unit tests
         run: |
           . cangjie/envsetup.sh
           cd repo_workspace
           cjpm update
           cjpm test --no-run --no-color -j3
 
-      - name: Run Unit tests
+      - name: Run unit tests
         run: |
           . cangjie/envsetup.sh
           cd repo_workspace
           export cjHeapSize=1GB
-          cjpm test --skip-build --no-color --bench
+          cjpm test --skip-build --no-color
