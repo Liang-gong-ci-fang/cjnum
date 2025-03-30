@@ -1,5 +1,10 @@
 name: CI Main Bench
 
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
 jobs:
   bench:
     runs-on: euleros-2.10.1
