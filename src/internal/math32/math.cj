@@ -10,7 +10,7 @@ const mask = 0x7f8 >> 3
 const shift = 32 - 8 - 1
 const bias = 127
 
-func Abs(x: Float32): Float32 {
+public func Abs(x: Float32): Float32 {
     match {
         case x < 0.0 => return -x
         case x == 0.0 => return 0.0
@@ -18,7 +18,7 @@ func Abs(x: Float32): Float32 {
     }
 }
 
-func Copysign(x: Float32, y: Float32): Float32 {
+public func Copysign(x: Float32, y: Float32): Float32 {
     const sign: UInt32 = 1 << 31
     let xBits = x.toBits()
     let yBits = y.toBits()
@@ -27,7 +27,7 @@ func Copysign(x: Float32, y: Float32): Float32 {
     return Float32.fromBits(resultBits)
 }
 
-func Inf(sign: Int): Float32 {
+public func Inf(sign: Int): Float32 {
     var v: UInt32
     if (sign >= 0) {
         v = uinf
@@ -37,15 +37,15 @@ func Inf(sign: Int): Float32 {
     return Float32(v)
 }
 
-func IsInf(f: Float32, sign: Int): Bool {
+public func IsInf(f: Float32, sign: Int): Bool {
     return sign >= 0 && f == Float32(uinf) || sign <= 0 && f == Float32(uneginf)
 }
 
-func IsNaN(f: Float32): Bool {
+public func IsNaN(f: Float32): Bool {
     return f != f
 }
 
-func Hypot(p: Float32, q: Float32): Float32 {
+public func Hypot(p: Float32, q: Float32): Float32 {
     let x: Float32 = Float32.NaN
 
     if (IsInf(p, 0) || IsInf(q, 0)) {
@@ -69,7 +69,7 @@ func Hypot(p: Float32, q: Float32): Float32 {
     return m * sqrt(1.0 + result * result)
 }
 
-func Signbit(x: Float32): Bool {
+public func Signbit(x: Float32): Bool {
     if (x < 0.0) {
         return true
     }
@@ -79,7 +79,7 @@ func Signbit(x: Float32): Bool {
     return false
 }
 
-func Max(x: Float32, y: Float32): Float32 {
+public func Max(x: Float32, y: Float32): Float32 {
     if (IsInf(x, 1) || IsInf(y, 1)) {
         return Float32(uinf)
     }
@@ -101,7 +101,7 @@ func Max(x: Float32, y: Float32): Float32 {
     return y
 }
 
-func Min(x: Float32, y: Float32): Float32 {
+public func Min(x: Float32, y: Float32): Float32 {
     if (IsInf(x, -1) || IsInf(y, -1)) {
         return Float32(uinf)
     }
@@ -123,6 +123,6 @@ func Min(x: Float32, y: Float32): Float32 {
     return y
 }
 
-func NaN(): Float32 {
+public func NaN(): Float32 {
     return Float32(unan)
 }
