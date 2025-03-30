@@ -9,103 +9,101 @@ import std.unittest.testmacro.*
 
 const tol: Float64 = 1e-7
 
-let absTests: Array<Float32> = [0.0, -0.0, 1.0, -1.0, Float32(unan), 123.4, -123.4]
-let copySignTests: Array<Array<Float32>> = [[1.0, 2.0, 1.0], [-1.0, -2.0, -1.0], [1.0, -2.0, -1.0], [-1.0, -2.0, -1.0],
-    [0.0, 2.0, 0.0], [0.0, -2.0, -0.0], [1.0, 0.0, 1.0], [-1.0, 0.0, 1.0]]
-let hypotTest: Array<Array<Float32>> = [[3.0, 4.0, 5.0], [-5.0, -12.0, 13.0], [1.0, 1.0, sqrt(2.0)], [0.0, 0.0, 0.0],
-    [0.0, 5.0, 5.0], [5.0, 0.0, 5.0], [-3.0, 4.0, 5.0], [3.0, -4.0, 5.0], [-5.0, -12.0, 13.0],
-    [1e6, 1e6, sqrt(1e6 * 1e6 + 1e6 * 1e6)], [Float32(uinf), 1.0, Float32(uinf)], [1.0, Float32(uinf), Float32(uinf)],
-    [Float32(unan), 1.0, Float32(unan)], [1.0, Float32(unan), Float32(unan)], [Float32.Max, Float32.Max, Float32.Max]]
-let isNaNTests: Array<Float32> = [0.0, 1.0, Float32(unan), -1.0, Float32(uinf), Float32(uneginf)]
-let signBitTests: Array<Float32> = [1.0, -1.0, 0.0, -0.0, Float32.Max, Float32.Min]
-let signResult: Array<Bool> = [false, true, false, true, false, true]
-let sqrtTests: Array<Float32> = [4.0, 0.0, 1234.5, Float32.Max, Float32(uneginf), Float32(uneginf)]
-let sqrtTests2: Array<Float32> = [-1.0, Float32.Min]
-
 @Test
-public func TestAbs(){ 
+public func testAbs(){ 
+    let absTests: Array<Float32> = [0.0, -0.0, 1.0, -1.0, Float32.NaN, 123.4, -123.4]
     for(test in absTests){
-        let result = Abs(test)
-        @Expect(result, abs(test))
+        let result = nAbs(test)
+        @Expect(same(Float64(result), Float64(abs(test))))
     }
 }
 
 @Test
-public func TestCopySign(){
+public func testCopySign(){
+    let copySignTests: Array<Array<Float32>> = [[1.0, 2.0, 1.0], [-1.0, -2.0, -1.0], [1.0, -2.0, -1.0], [-1.0, -2.0, -1.0],
+    [0.0, 2.0, 0.0], [0.0, -2.0, -0.0], [1.0, 0.0, 1.0], [-1.0, 0.0, 1.0]]
     for(test in copySignTests){
-        let result = Copysign(test[0], test[1])
+        let result = nCopysign(test[0], test[1])
         @Expect(result, test[2])
     }
 }
 
 @Test
-public func TestHypot(){
+public func testHypot(){
+    let hypotTest: Array<Array<Float32>> = [[3.0, 4.0, 5.0], [-5.0, -12.0, 13.0], [1.0, 1.0, sqrt(2.0)], [0.0, 0.0, 0.0],
+        [0.0, 5.0, 5.0], [5.0, 0.0, 5.0], [-3.0, 4.0, 5.0], [3.0, -4.0, 5.0], [-5.0, -12.0, 13.0],
+        [1e6, 1e6, sqrt(1e6 * 1e6 + 1e6 * 1e6)], [Float32.Inf, 1.0, Float32.Inf], [1.0, Float32.Inf, Float32.Inf],
+        [Float32.NaN, 1.0, Float32.NaN], [1.0, Float32.NaN, Float32.NaN], [Float32.Max, Float32.Max, Float32.Max]]
     for(test in hypotTest){
-        let result = Hypot(test[0], test[1])
+        let result = nHypot(test[0], test[1])
         if (result > Float32.Max){
             return 
         }
-        @Expect(equalWithinRel(Float64(result), Float64(test[2]), tol))
-        
+        @Expect(equalWithinRel(Float64(result), Float64(test[2]), tol))  
     }
 }
 
 @Test
-func TestInf(){
-        @Expect(Inf(1), Float32(uinf))
-        @Expect(Inf(-1), Float32(uneginf))
+public func testInf(){
+        @Expect(nInf(1), Float32.Inf)
+        @Expect(nInf(-1), -Float32.Inf)
 }
 
 @Test
-func TsetIsInf(){
-    let posInf = Float32(uinf)
-    let negInf = Float32(uneginf)
+public func tsetIsInf(){
+    let posInf = Float32.Inf
+    let negInf = -Float32.Inf
 
-    @Expect(!IsInf(posInf, 0) || !IsInf(negInf, 0) ||
-		!IsInf(posInf, 1) || !IsInf(negInf, -1) ||
-		IsInf(posInf, -1) || IsInf(negInf, 1), false)
-    @Expect(IsInf(1.0, 0)||IsInf(1.0, 0), false)
+    @Expect(!nIsInf(posInf, 0) || !nIsInf(negInf, 0) ||
+		!nIsInf(posInf, 1) || !nIsInf(negInf, -1) ||
+		nIsInf(posInf, -1) || nIsInf(negInf, 1), false)
+    @Expect(nIsInf(1.0, 0)||nIsInf(1.0, 0), false)
 }
 
 @Test
-func TestIsNaN(){
+public func testIsNaN(){
+    let isNaNTests: Array<Float32> = [0.0, 1.0, Float32.NaN, -1.0, Float32.Inf, -Float32.Inf]
     for(test in isNaNTests){
-        let result = IsNaN(test)
-        @Expect(result, IsNaN(test))     
+        let result = nIsNaN(test)
+        @Expect(result, nIsNaN(test))     
     }
 }
 
 @Test
-func TestSignbit(){
+public func testSignbit(){
+    let signBitTests: Array<Float32> = [1.0, -1.0, 0.0, -0.0, Float32.Max, Float32.Min]
+    let signResult: Array<Bool> = [false, true, false, true, false, true]
     var i = 0
     for(test in signBitTests){
-        let result = Signbit(test)  
+        let result = nSignbit(test)  
         @Expect(result, signResult[i]) 
         i += 1
     }
 }
 
 @Test
-func TestSqrt(){
+public func testSqrt(){
+    let sqrtTests: Array<Float32> = [4.0, 0.0, 1234.5, Float32.Max, Float32.Inf]
+    let sqrtTests2: Array<Float32> = [-1.0, Float32.Min, -Float32.Inf]
     for(test in sqrtTests){
         let y = sqrt(test)
-        if (IsNaN(y) && IsNaN(Sqrt(test))) {
+        if (nIsNaN(y) && nIsNaN(nSqrt(test))) {
 			return
 		}
-        @Expect(equalWithinRel(Float64(Sqrt(test)), Float64(y), tol))    
+        @Expect(equalWithinRel(Float64(nSqrt(test)), Float64(y), tol))    
     }
     for(test2 in sqrtTests2){
-            let result: Float32 = Sqrt(test2)
-            @Expect(result, Float32(unan))  
+            let result: Float32 = nSqrt(test2)
+            @Expect(same(Float64(result), Float64.NaN))  
         }
 }
 
-func Sqrt(x: Float32) : Float32 {
-    if(x == 0.0 || IsNaN(x) || IsInf(x, 1)){
+func nSqrt(x: Float32) : Float32 {
+    if(x == 0.0 || nIsNaN(x) || nIsInf(x, 1)){
         return x
     }
     if(x < 0.0){
-        return Float32(unan)
+        return Float32.NaN
     }
     var ix = x.toBits()
     var exp = Int64(ix >> shift) & mask
@@ -145,11 +143,11 @@ func Sqrt(x: Float32) : Float32 {
 }
 
 func alike(a: Float32,b :Float32) : Bool {
-    if(IsNaN(a) && IsNaN(b)){
+    if(nIsNaN(a) && nIsNaN(b)){
         return true
     }
     if(a == b){
-        return Signbit(a) == Signbit(b)
+        return nSignbit(a) == nSignbit(b)
     }
 	return false
 }
