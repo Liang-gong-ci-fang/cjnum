@@ -31,4 +31,4 @@ jobs:
           . cangjie/envsetup.sh
           cd repo_workspace
           export cjHeapSize=1GB
-          cjpm test --skip-build --parallel true --no-color
+          cjpm test --skip-build --parallel true --no-color --bench
