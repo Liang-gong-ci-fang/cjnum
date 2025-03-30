@@ -3,7 +3,7 @@ package cjnum.internal.asm.f64
 import std.math.*
 import std.math.numeric.*
 
-func L2NormUnitary(x: Array<Float64>): Float64 {
+public func l2NormUnitary(x: Array<Float64>): Float64 {
     var scale: Float64 = 0.0
     var sumSquares: Float64 = 1.0
     for (v in x) {
@@ -29,7 +29,7 @@ func L2NormUnitary(x: Array<Float64>): Float64 {
     return scale * sqrt(sumSquares)
 }
 
-func L2NormInc(x: Array<Float64>, n: Int, incX: Int): Float64 {
+public func l2NormInc(x: Array<Float64>, n: Int, incX: Int): Float64 {
     var scale: Float64 = 0.0
     var sumSquares: Float64 = 1.0
     var ix = 0
@@ -59,7 +59,7 @@ func L2NormInc(x: Array<Float64>, n: Int, incX: Int): Float64 {
     return scale * sqrt(sumSquares)
 }
 
-func L2DistanceUnitary(x: Array<Float64>, y: Array<Float64>): Float64 {
+public func l2DistanceUnitary(x: Array<Float64>, y: Array<Float64>): Float64 {
     var scale: Float64 = 0.0
     var sumSquares: Float64 = 1.0
     for (i in 0..x.size) {

@@ -3,14 +3,11 @@ package cjnum.internal.math32
 import std.math.*
 import std.math.numeric.*
 
-const unan: UInt32= 0x7fc00000
-const uinf: UInt32 = 0x7f800000
-const uneginf: UInt32 = 0xff800000
 const mask = 0x7f8 >> 3
 const shift = 32 - 8 - 1
 const bias = 127
 
-public func Abs(x: Float32): Float32 {
+public func nAbs(x: Float32): Float32 {
     match {
         case x < 0.0 => return -x
         case x == 0.0 => return 0.0
@@ -18,7 +15,7 @@ public func Abs(x: Float32): Float32 {
     }
 }
 
-public func Copysign(x: Float32, y: Float32): Float32 {
+public func nCopysign(x: Float32, y: Float32): Float32 {
     const sign: UInt32 = 1 << 31
     let xBits = x.toBits()
     let yBits = y.toBits()
@@ -27,36 +24,36 @@ public func Copysign(x: Float32, y: Float32): Float32 {
     return Float32.fromBits(resultBits)
 }
 
-public func Inf(sign: Int): Float32 {
-    var v: UInt32
+public func nInf(sign: Int): Float32 {
+    var v: Float32
     if (sign >= 0) {
-        v = uinf
+        v = Float32.Inf
     } else {
-        v = uneginf
+        v = -Float32.Inf
     }
-    return Float32(v)
+    return v
 }
 
-public func IsInf(f: Float32, sign: Int): Bool {
-    return sign >= 0 && f == Float32(uinf) || sign <= 0 && f == Float32(uneginf)
+public func nIsInf(f: Float32, sign: Int): Bool {
+    return sign >= 0 && f == Float32.Inf || sign <= 0 && f == -Float32.Inf
 }
 
-public func IsNaN(f: Float32): Bool {
+public func nIsNaN(f: Float32): Bool {
     return f != f
 }
 
-public func Hypot(p: Float32, q: Float32): Float32 {
+public func nHypot(p: Float32, q: Float32): Float32 {
     let x: Float32 = Float32.NaN
 
-    if (IsInf(p, 0) || IsInf(q, 0)) {
-        return Float32(uinf)
+    if (nIsInf(p, 0) || nIsInf(q, 0)) {
+        return Float32.Inf
     }
-    if (IsNaN(p) || IsNaN(q)) {
-        return Float32(unan)
+    if (nIsNaN(p) || nIsNaN(q)) {
+        return Float32.NaN
     }
 
-    var m = Abs(p)
-    var n = Abs(q)
+    var m = nAbs(p)
+    var n = nAbs(q)
     if (m < n) {
         let temp = m;
         m = n
@@ -69,7 +66,7 @@ public func Hypot(p: Float32, q: Float32): Float32 {
     return m * sqrt(1.0 + result * result)
 }
 
-public func Signbit(x: Float32): Bool {
+public func nSignbit(x: Float32): Bool {
     if (x < 0.0) {
         return true
     }
@@ -79,17 +76,17 @@ public func Signbit(x: Float32): Bool {
     return false
 }
 
-public func Max(x: Float32, y: Float32): Float32 {
-    if (IsInf(x, 1) || IsInf(y, 1)) {
-        return Float32(uinf)
+public func nMax(x: Float32, y: Float32): Float32 {
+    if (nIsInf(x, 1) || nIsInf(y, 1)) {
+        return Float32.Inf
     }
 
-    if (IsNaN(x) || IsNaN(y)) {
-        return Float32(unan)
+    if (nIsNaN(x) || nIsNaN(y)) {
+        return Float32.NaN
     }
 
     if (x == 0.0 && x == y) {
-        if (Signbit(x)) {
+        if (nSignbit(x)) {
             return y
         }
         return x
@@ -101,17 +98,17 @@ public func Max(x: Float32, y: Float32): Float32 {
     return y
 }
 
-public func Min(x: Float32, y: Float32): Float32 {
-    if (IsInf(x, -1) || IsInf(y, -1)) {
-        return Float32(uinf)
+public func nMin(x: Float32, y: Float32): Float32 {
+    if (nIsInf(x, -1) || nIsInf(y, -1)) {
+        return Float32.Inf
     }
 
-    if (IsNaN(x) || IsNaN(y)) {
-        return Float32(unan)
+    if (nIsNaN(x) || nIsNaN(y)) {
+        return Float32.NaN
     }
 
     if (x == 0.0 && x == y) {
-        if (Signbit(x)) {
+        if (nSignbit(x)) {
             return x
         }
         return y
@@ -123,6 +120,6 @@ public func Min(x: Float32, y: Float32): Float32 {
     return y
 }
 
-public func NaN(): Float32 {
-    return Float32(unan)
+public func nNaN(): Float32 {
+    return Float32.NaN
 }
