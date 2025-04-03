@@ -16,7 +16,7 @@ const Large       = 100000
 const Huge        = 10000000
 
 func areSlicesEqual(truth: Array<Float64>, comp: Array<Float64>): Bool {
-    return equalApprox(truth, comp, EqTolerance)
+    return fEqualApprox(truth, comp, EqTolerance)
 }
 
 func areSlicesSame(truth: Array<Float64>, comp: Array<Float64>): Bool {
@@ -48,14 +48,14 @@ public func testAdd() {
     let truth = [12.0, 15.0, 18.0]
     let n = Array<Float64>(a.size, item: 0.0)
 
-    add(n, a)
-    add(n, b)
-    add(n, c)
+    fAdd(n, a)
+    fAdd(n, b)
+    fAdd(n, c)
     @Expect(areSlicesEqual(truth, n))
-    add(a, b)
-    add(a, c)
+    fAdd(a, b)
+    fAdd(a, c)
     @Expect(areSlicesEqual(truth, n))
-    @Expect(exception({ => add(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fAdd(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
 }
 
 @Test
@@ -66,12 +66,12 @@ public func testAddTo() {
     let truth = [5.0, 7.0, 9.0]
     let n1 = Array<Float64>(a.size, item: 0.0)
 
-    let n2 = addTo(n1, a, b)
+    let n2 = fAddTo(n1, a, b)
     @Expect(areSlicesEqual(truth, n1))
     @Expect(areSlicesEqual(truth, n2))
 
-    @Expect(exception( { => addTo(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
-    @Expect(exception( { => addTo(Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception( { => fAddTo(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception( { => fAddTo(Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0)) }))
 }
 
 @Test
@@ -80,7 +80,7 @@ public func testAddConst() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let c = 6.0
     let truth = [9.0, 10.0, 7.0, 13.0, 11.0]
-    addConst(c, s)
+    fAddConst(c, s)
     @Expect(areSlicesEqual(truth, s))
 }
 
@@ -91,11 +91,11 @@ public func testAddScaled() {
     let alpha = 6.0
     let dst = [1.0, 2.0, 3.0, 4.0, 5.0]
     let ans = [19.0, 26.0, 9.0, 46.0, 35.0]
-    addScaled(dst, alpha, s)
-    @Expect(equalApprox(dst, ans, EqTolerance))
+    fAddScaled(dst, alpha, s)
+    @Expect(fEqualApprox(dst, ans, EqTolerance))
     let short = [1.0]
-    @Expect(exception({ => addScaled(dst, alpha, short) }))
-    @Expect(exception({ => addScaled(short, alpha, s) }))
+    @Expect(exception({ => fAddScaled(dst, alpha, short) }))
+    @Expect(exception({ => fAddScaled(short, alpha, s) }))
 }
 
 @Test
@@ -106,15 +106,15 @@ public func testAddScaledTo() {
     let y = [1.0, 2.0, 3.0, 4.0, 5.0]
     let dst1 = Array<Float64>(5, item: 0.0)
     let ans = [19.0, 26.0, 9.0, 46.0, 35.0]
-    let dst2 = addScaledTo(dst1, y, alpha, s)
-    @Expect(equalApprox(dst1, ans, EqTolerance))
-    @Expect(equalApprox(dst2, ans, EqTolerance))
-    addScaledTo(dst1, y, alpha, s)
-    @Expect(equalApprox(dst1, ans, EqTolerance))
+    let dst2 = fAddScaledTo(dst1, y, alpha, s)
+    @Expect(fEqualApprox(dst1, ans, EqTolerance))
+    @Expect(fEqualApprox(dst2, ans, EqTolerance))
+    fAddScaledTo(dst1, y, alpha, s)
+    @Expect(fEqualApprox(dst1, ans, EqTolerance))
     let short = [1.0]
-    @Expect(exception({ => addScaledTo(dst1, y, alpha, short) }))
-    @Expect(exception({ => addScaledTo(short, y, alpha, s) }))
-    @Expect(exception({ => addScaledTo(dst1, short, alpha, s) }))
+    @Expect(exception({ => fAddScaledTo(dst1, y, alpha, short) }))
+    @Expect(exception({ => fAddScaledTo(short, y, alpha, s) }))
+    @Expect(exception({ => fAddScaledTo(dst1, short, alpha, s) }))
 }
 
 @Test
@@ -123,18 +123,18 @@ public func testArgsort() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let inds = Array<Int64>(s.size, item: 0)
 
-    argsort(s, inds)
+    fArgsort(s, inds)
 
     let sortedS = [1.0, 3.0, 4.0, 5.0, 7.0]
     let trueInds = [2, 0, 1, 4, 3]
 
-    @Expect(equal(s, sortedS))
+    @Expect(fEqual(s, sortedS))
     for (i in 0..trueInds.size) {
         @Expect(trueInds[i], inds[i])
     }
 
     let indx = [1, 2]
-    @Expect(exception({ => argsort(s, indx) }))
+    @Expect(exception({ => fArgsort(s, indx) }))
 }
 
 @Test
@@ -148,12 +148,12 @@ public func testArgsortStable() {
             data[j] = 1.0
         }
         let idx = Array<Int64>(data.size, item: 0)
-        argsortStable(data, idx)
+        fArgsortStable(data, idx)
         @Expect(isSort(data))
         @Expect(isSort(idx[..i]))
     }
 
-    @Expect(exception({ => argsortStable([1.0, 2.0, 3.0], [0, 0]) }))
+    @Expect(exception({ => fArgsortStable([1.0, 2.0, 3.0], [0, 0]) }))
 }
 
 @Test
@@ -161,7 +161,7 @@ public func testArgsortStable() {
 public func testCount() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let f = { v: Float64 => v > 3.5}
-    @Expect(count(f, s), 3)
+    @Expect(fCount(f, s), 3)
 }
 
 @Test
@@ -169,18 +169,18 @@ public func testCount() {
 public func testCumProd() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let receiver = Array<Float64>(s.size, item: 0.0)
-    let result = cumProd(receiver, s)
+    let result = fCumProd(receiver, s)
     var truth = [3.0, 12.0, 12.0, 84.0, 420.0]
     @Expect(areSlicesEqual(truth, receiver))
     @Expect(areSlicesEqual(truth, result))
-    cumProd(receiver, s)
+    fCumProd(receiver, s)
     @Expect(areSlicesEqual(truth, receiver))
 
-    @Expect(exception({ => cumProd(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fCumProd(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
 
     let emptyReceiver = Array<Float64>()
     truth = []
-    cumProd(emptyReceiver, emptyReceiver)
+    fCumProd(emptyReceiver, emptyReceiver)
     @Expect(areSlicesEqual(truth, emptyReceiver))
 }
 
@@ -189,16 +189,16 @@ public func testCumProd() {
 public func testCumSum() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let receiver = Array<Float64>(s.size, item: 0.0)
-    let result = cumSum(receiver, s)
+    let result = fCumSum(receiver, s)
     var truth = [3.0, 7.0, 8.0, 15.0, 20.0]
     @Expect(areSlicesEqual(truth, receiver))
     @Expect(areSlicesEqual(truth, result))
-    cumSum(receiver, s)
+    fCumSum(receiver, s)
     @Expect(areSlicesEqual(truth, receiver))
-    @Expect(exception({ => cumSum(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fCumSum(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
     let emptyReceiver = Array<Float64>()
     truth = []
-    cumSum(emptyReceiver, emptyReceiver)
+    fCumSum(emptyReceiver, emptyReceiver)
     @Expect(areSlicesEqual(truth, emptyReceiver))
 }
 
@@ -212,7 +212,7 @@ class DistanceTestStruct {
 @Test
 @Parallel
 public func testDistance() {
-    let norms = [1.0, 2.0, 4.0, Float64.Inf]
+    let fNorms = [1.0, 2.0, 4.0, Float64.Inf]
     let tests = [
         DistanceTestStruct(),
         DistanceTestStruct(s: [8.0, 9.0, 10.0, -12.0], t: [8.0, 9.0, 10.0, -12.0]),
@@ -220,11 +220,11 @@ public func testDistance() {
     ]
     for (test in tests) {
         let tmp = Array<Float64>(test.s.size, item: 0.0)
-        for (L in norms) {
-            let dist = distance(L, s: test.s, t: test.t)
+        for (L in fNorms) {
+            let dist = fDistance(L, s: test.s, t: test.t)
             copy(tmp, test.s)
-            sub(tmp, test.t)
-            @Expect(dist, norm(tmp, L))
+            fSub(tmp, test.t)
+            @Expect(dist, fNorm(tmp, L))
         }
     }
 }
@@ -241,12 +241,12 @@ public func testDiv() {
     let s1 = [5.0, 12.0, 27.0]
     let s2 = [1.0, 2.0, 3.0]
     let ans = [5.0, 6.0, 9.0]
-    div(s1, s2)
-    @Expect(equalApprox(s1, ans, EqTolerance))
+    fDiv(s1, s2)
+    @Expect(fEqualApprox(s1, ans, EqTolerance))
     let s1Short = [1.0]
-    @Expect(exception({ => div(s1Short, s2) }))
+    @Expect(exception({ => fDiv(s1Short, s2) }))
     let s2Short = [1.0]
-    @Expect(exception({ => div(s1, s2Short) }))
+    @Expect(exception({ => fDiv(s1, s2Short) }))
 }
 
 @Test
@@ -258,19 +258,19 @@ public func testDivTo() {
     let s2orig = [1.0, 2.0, 3.0]
     let dst1 = Array<Float64>(3, item: 0.0)
     let ans = [5.0, 6.0, 9.0]
-    let dst2 = divTo(dst1, s1, s2)
-    @Expect(equalApprox(dst1, ans, EqTolerance))
-    @Expect(equalApprox(dst2, ans, EqTolerance))
-    @Expect(equalApprox(s1, s1orig, EqTolerance))
-    @Expect(equalApprox(s2, s2orig, EqTolerance))
-    divTo(dst1, s1, s2)
-    @Expect(equalApprox(dst1, ans, EqTolerance))
+    let dst2 = fDivTo(dst1, s1, s2)
+    @Expect(fEqualApprox(dst1, ans, EqTolerance))
+    @Expect(fEqualApprox(dst2, ans, EqTolerance))
+    @Expect(fEqualApprox(s1, s1orig, EqTolerance))
+    @Expect(fEqualApprox(s2, s2orig, EqTolerance))
+    fDivTo(dst1, s1, s2)
+    @Expect(fEqualApprox(dst1, ans, EqTolerance))
     let dstShort = [1.0]
-    @Expect(exception{ => divTo(dstShort, s1, s2) })
+    @Expect(exception{ => fDivTo(dstShort, s1, s2) })
     let s1Short = [1.0]
-    @Expect(exception{ => divTo(dst1, s1Short, s2) })
+    @Expect(exception{ => fDivTo(dst1, s1Short, s2) })
     let s2Short = [1.0]
-    @Expect(exception{ => divTo(dst1, s1, s2Short) })
+    @Expect(exception{ => fDivTo(dst1, s1, s2Short) })
 }
 
 @Test
@@ -279,9 +279,9 @@ public func testDot() {
     let s1 = [1.0, 2.0, 3.0, 4.0]
     let s2 = [-3.0, 4.0, 5.0, -6.0]
     let truth = -4.0
-    let ans = dot(s1, s2)
+    let ans = fDot(s1, s2)
     @Expect(ans, truth)
-    @Expect(exception({ => dot(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fDot(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
 }
 
 @Test
@@ -289,10 +289,10 @@ public func testDot() {
 public func testEquals() {
     var s1 = [1.0, 2.0, 3.0, 4.0]
     var s2 = [1.0, 2.0, 3.0, 4.0]
-    @Expect(equal(s1, s2))
+    @Expect(fEqual(s1, s2))
     s2 = [1.0, 2.0, 3.0, 4.0 + 1e-14]
-    @Expect(!equal(s1, s2))
-    @Expect(!equal(s1, []))
+    @Expect(!fEqual(s1, s2))
+    @Expect(!fEqual(s1, []))
 }
 
 @Test
@@ -300,13 +300,13 @@ public func testEquals() {
 public func testEqualApprox() {
     var s1 = [1.0, 2.0, 3.0, 4.0]
     var s2 = [1.0, 2.0, 3.0, 4.0 + 1e-10]
-    @Expect(!equalApprox(s1, s2, 1e-13))
-    @Expect(equalApprox(s1, s2, 1e-5))
+    @Expect(!fEqualApprox(s1, s2, 1e-13))
+    @Expect(fEqualApprox(s1, s2, 1e-5))
     s1 = [1.0, 2.0, 3.0, 1000.0]
     s2 = [1.0, 2.0, 3.0, 1000.0 * (1.0 + 1e-7)]
-    @Expect(!equalApprox(s1, s2, 1e-8))
-    @Expect(equalApprox(s1, s2, 1e-5))
-    @Expect(!equalApprox(s1, [], 1e-5))
+    @Expect(!fEqualApprox(s1, s2, 1e-8))
+    @Expect(fEqualApprox(s1, s2, 1e-5))
+    @Expect(!fEqualApprox(s1, [], 1e-5))
 }
 
 @Test
@@ -315,111 +315,111 @@ public func testEqualFunc() {
     let s1 = [1.0, 2.0, 3.0, 4.0]
     var s2 = [1.0, 2.0, 3.0, 4.0]
     let eq = { x: Float64, y: Float64 => x == y }
-    @Expect(equalFunc(s1, s2, eq))
+    @Expect(fEqualFunc(s1, s2, eq))
     s2 = [1.0, 2.0, 3.0, 4.0 + 1e-14]
-    @Expect(!equalFunc(s1, s2, eq))
-    @Expect(!equalFunc(s1, [], eq))
+    @Expect(!fEqualFunc(s1, s2, eq))
+    @Expect(!fEqualFunc(s1, [], eq))
 }
 
 const smallestNonzeroFloat64 = 4.9406564584124654e-324
 
-class equalsRelativeTestStruct {
-    public equalsRelativeTestStruct(
+class fEqualsRelativeTestStruct {
+    public fEqualsRelativeTestStruct(
         let a: Float64,
         let b: Float64,
         var tol: Float64,
-        let equal: Bool
+        let fEqual: Bool
     ) {}
 }
 
 @Test
 @Parallel
 public func testEqualsRelative() {
-    let equalityTests = [
-        equalsRelativeTestStruct(1000000.0, 1000001.0, 0.0, true),
-        equalsRelativeTestStruct(1000001.0, 1000000.0, 0.0, true),
-        equalsRelativeTestStruct(10000.0, 10001.0, 0.0, false),
-        equalsRelativeTestStruct(10001.0, 10000.0, 0.0, false),
-        equalsRelativeTestStruct(-1000000.0, -1000001.0, 0.0, true),
-        equalsRelativeTestStruct(-1000001.0, -1000000.0, 0.0, true),
-        equalsRelativeTestStruct(-10000.0, -10001.0, 0.0, false),
-        equalsRelativeTestStruct(-10001.0, -10000.0, 0.0, false),
-        equalsRelativeTestStruct(1.0000001, 1.0000002, 0.0, true),
-        equalsRelativeTestStruct(1.0000002, 1.0000001, 0.0, true),
-        equalsRelativeTestStruct(1.0002, 1.0001, 0.0, false),
-        equalsRelativeTestStruct(1.0001, 1.0002, 0.0, false),
-        equalsRelativeTestStruct(-1.000001, -1.000002, 0.0, true),
-        equalsRelativeTestStruct(-1.000002, -1.000001, 0.0, true),
-        equalsRelativeTestStruct(-1.0001, -1.0002, 0.0, false),
-        equalsRelativeTestStruct(-1.0002, -1.0001, 0.0, false),
-        equalsRelativeTestStruct(0.000000001000001, 0.000000001000002, 0.0, true),
-        equalsRelativeTestStruct(0.000000001000002, 0.000000001000001, 0.0, true),
-        equalsRelativeTestStruct(0.000000000001002, 0.000000000001001, 0.0, false),
-        equalsRelativeTestStruct(0.000000000001001, 0.000000000001002, 0.0, false),
-        equalsRelativeTestStruct(-0.000000001000001, -0.000000001000002, 0.0, true),
-        equalsRelativeTestStruct(-0.000000001000002, -0.000000001000001, 0.0, true),
-        equalsRelativeTestStruct(-0.000000000001002, -0.000000000001001, 0.0, false),
-        equalsRelativeTestStruct(-0.000000000001001, -0.000000000001002, 0.0, false),
-        equalsRelativeTestStruct(0.0, 0.0, 0.0, true),
-        equalsRelativeTestStruct(0.0, -0.0, 0.0, true),
-        equalsRelativeTestStruct(-0.0, -0.0, 0.0, true),
-        equalsRelativeTestStruct(0.00000001, 0.0, 0.0, false),
-        equalsRelativeTestStruct(0.0, 0.00000001, 0.0, false),
-        equalsRelativeTestStruct(-0.00000001, 0.0, 0.0, false),
-        equalsRelativeTestStruct(0.0, -0.00000001, 0.0, false),
-        equalsRelativeTestStruct(0.0, 1e-310, 0.01, true),
-        equalsRelativeTestStruct(1e-310, 0.0, 0.01, true),
-        equalsRelativeTestStruct(1e-310, 0.0, 0.000001, false),
-        equalsRelativeTestStruct(0.0, 1e-310, 0.000001, false),
-        equalsRelativeTestStruct(0.0, -1e-310, 0.1, true),
-        equalsRelativeTestStruct(-1e-310, 0.0, 0.1, true),
-        equalsRelativeTestStruct(-1e-310, 0.0, 0.00000001, false),
-        equalsRelativeTestStruct(0.0, -1e-310, 0.00000001, false),
-        equalsRelativeTestStruct(Float64.Inf, Float64.Inf, 0.0, true),
-        equalsRelativeTestStruct(-Float64.Inf, -Float64.Inf, 0.0, true),
-        equalsRelativeTestStruct(-Float64.Inf, Float64.Inf, 0.0, false),
-        equalsRelativeTestStruct(Float64.Inf, Float64.Max, 0.0, false),
-        equalsRelativeTestStruct(-Float64.Inf, -Float64.Max, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, 0.0, 0.0, false),
-        equalsRelativeTestStruct(-0.0, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, -0.0, 0.0, false),
-        equalsRelativeTestStruct(0.0, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, Float64.Inf, 0.0, false),
-        equalsRelativeTestStruct(Float64.Inf, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, -Float64.Inf, 0.0, false),
-        equalsRelativeTestStruct(-Float64.Inf, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, Float64.Max, 0.0, false),
-        equalsRelativeTestStruct(Float64.Max, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, -Float64.Max, 0.0, false),
-        equalsRelativeTestStruct(-Float64.Max, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, smallestNonzeroFloat64, 0.0, false),
-        equalsRelativeTestStruct(smallestNonzeroFloat64, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(Float64.NaN, -smallestNonzeroFloat64, 0.0, false),
-        equalsRelativeTestStruct(-smallestNonzeroFloat64, Float64.NaN, 0.0, false),
-        equalsRelativeTestStruct(1.000000001, -1.0, 0.0, false),
-        equalsRelativeTestStruct(-1.0, 1.000000001, 0.0, false),
-        equalsRelativeTestStruct(-1.000000001, 1.0, 0.0, false),
-        equalsRelativeTestStruct(1.0, -1.000000001, 0.0, false),
-        equalsRelativeTestStruct(10.0 * smallestNonzeroFloat64, 10.0 * (-smallestNonzeroFloat64), 0.0, true),
-        equalsRelativeTestStruct(1e11 * smallestNonzeroFloat64, 1e11 * (-smallestNonzeroFloat64), 0.0, false),
-        equalsRelativeTestStruct(smallestNonzeroFloat64, -smallestNonzeroFloat64, 0.0, true),
-        equalsRelativeTestStruct(-smallestNonzeroFloat64, smallestNonzeroFloat64, 0.0, true),
-        equalsRelativeTestStruct(smallestNonzeroFloat64, 0.0, 0.0, true),
-        equalsRelativeTestStruct(0.0, smallestNonzeroFloat64, 0.0, true),
-        equalsRelativeTestStruct(-smallestNonzeroFloat64, 0.0, 0.0, true),
-        equalsRelativeTestStruct(0.0, -smallestNonzeroFloat64, 0.0, true),
-        equalsRelativeTestStruct(0.000000001, -smallestNonzeroFloat64, 0.0, false),
-        equalsRelativeTestStruct(0.000000001, smallestNonzeroFloat64, 0.0, false),
-        equalsRelativeTestStruct(smallestNonzeroFloat64, 0.000000001, 0.0, false),
-        equalsRelativeTestStruct(-smallestNonzeroFloat64, 0.000000001, 0.0, false)
+    let fEqualityTests = [
+        fEqualsRelativeTestStruct(1000000.0, 1000001.0, 0.0, true),
+        fEqualsRelativeTestStruct(1000001.0, 1000000.0, 0.0, true),
+        fEqualsRelativeTestStruct(10000.0, 10001.0, 0.0, false),
+        fEqualsRelativeTestStruct(10001.0, 10000.0, 0.0, false),
+        fEqualsRelativeTestStruct(-1000000.0, -1000001.0, 0.0, true),
+        fEqualsRelativeTestStruct(-1000001.0, -1000000.0, 0.0, true),
+        fEqualsRelativeTestStruct(-10000.0, -10001.0, 0.0, false),
+        fEqualsRelativeTestStruct(-10001.0, -10000.0, 0.0, false),
+        fEqualsRelativeTestStruct(1.0000001, 1.0000002, 0.0, true),
+        fEqualsRelativeTestStruct(1.0000002, 1.0000001, 0.0, true),
+        fEqualsRelativeTestStruct(1.0002, 1.0001, 0.0, false),
+        fEqualsRelativeTestStruct(1.0001, 1.0002, 0.0, false),
+        fEqualsRelativeTestStruct(-1.000001, -1.000002, 0.0, true),
+        fEqualsRelativeTestStruct(-1.000002, -1.000001, 0.0, true),
+        fEqualsRelativeTestStruct(-1.0001, -1.0002, 0.0, false),
+        fEqualsRelativeTestStruct(-1.0002, -1.0001, 0.0, false),
+        fEqualsRelativeTestStruct(0.000000001000001, 0.000000001000002, 0.0, true),
+        fEqualsRelativeTestStruct(0.000000001000002, 0.000000001000001, 0.0, true),
+        fEqualsRelativeTestStruct(0.000000000001002, 0.000000000001001, 0.0, false),
+        fEqualsRelativeTestStruct(0.000000000001001, 0.000000000001002, 0.0, false),
+        fEqualsRelativeTestStruct(-0.000000001000001, -0.000000001000002, 0.0, true),
+        fEqualsRelativeTestStruct(-0.000000001000002, -0.000000001000001, 0.0, true),
+        fEqualsRelativeTestStruct(-0.000000000001002, -0.000000000001001, 0.0, false),
+        fEqualsRelativeTestStruct(-0.000000000001001, -0.000000000001002, 0.0, false),
+        fEqualsRelativeTestStruct(0.0, 0.0, 0.0, true),
+        fEqualsRelativeTestStruct(0.0, -0.0, 0.0, true),
+        fEqualsRelativeTestStruct(-0.0, -0.0, 0.0, true),
+        fEqualsRelativeTestStruct(0.00000001, 0.0, 0.0, false),
+        fEqualsRelativeTestStruct(0.0, 0.00000001, 0.0, false),
+        fEqualsRelativeTestStruct(-0.00000001, 0.0, 0.0, false),
+        fEqualsRelativeTestStruct(0.0, -0.00000001, 0.0, false),
+        fEqualsRelativeTestStruct(0.0, 1e-310, 0.01, true),
+        fEqualsRelativeTestStruct(1e-310, 0.0, 0.01, true),
+        fEqualsRelativeTestStruct(1e-310, 0.0, 0.000001, false),
+        fEqualsRelativeTestStruct(0.0, 1e-310, 0.000001, false),
+        fEqualsRelativeTestStruct(0.0, -1e-310, 0.1, true),
+        fEqualsRelativeTestStruct(-1e-310, 0.0, 0.1, true),
+        fEqualsRelativeTestStruct(-1e-310, 0.0, 0.00000001, false),
+        fEqualsRelativeTestStruct(0.0, -1e-310, 0.00000001, false),
+        fEqualsRelativeTestStruct(Float64.Inf, Float64.Inf, 0.0, true),
+        fEqualsRelativeTestStruct(-Float64.Inf, -Float64.Inf, 0.0, true),
+        fEqualsRelativeTestStruct(-Float64.Inf, Float64.Inf, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.Inf, Float64.Max, 0.0, false),
+        fEqualsRelativeTestStruct(-Float64.Inf, -Float64.Max, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, 0.0, 0.0, false),
+        fEqualsRelativeTestStruct(-0.0, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, -0.0, 0.0, false),
+        fEqualsRelativeTestStruct(0.0, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, Float64.Inf, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.Inf, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, -Float64.Inf, 0.0, false),
+        fEqualsRelativeTestStruct(-Float64.Inf, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, Float64.Max, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.Max, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, -Float64.Max, 0.0, false),
+        fEqualsRelativeTestStruct(-Float64.Max, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, smallestNonzeroFloat64, 0.0, false),
+        fEqualsRelativeTestStruct(smallestNonzeroFloat64, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(Float64.NaN, -smallestNonzeroFloat64, 0.0, false),
+        fEqualsRelativeTestStruct(-smallestNonzeroFloat64, Float64.NaN, 0.0, false),
+        fEqualsRelativeTestStruct(1.000000001, -1.0, 0.0, false),
+        fEqualsRelativeTestStruct(-1.0, 1.000000001, 0.0, false),
+        fEqualsRelativeTestStruct(-1.000000001, 1.0, 0.0, false),
+        fEqualsRelativeTestStruct(1.0, -1.000000001, 0.0, false),
+        fEqualsRelativeTestStruct(10.0 * smallestNonzeroFloat64, 10.0 * (-smallestNonzeroFloat64), 0.0, true),
+        fEqualsRelativeTestStruct(1e11 * smallestNonzeroFloat64, 1e11 * (-smallestNonzeroFloat64), 0.0, false),
+        fEqualsRelativeTestStruct(smallestNonzeroFloat64, -smallestNonzeroFloat64, 0.0, true),
+        fEqualsRelativeTestStruct(-smallestNonzeroFloat64, smallestNonzeroFloat64, 0.0, true),
+        fEqualsRelativeTestStruct(smallestNonzeroFloat64, 0.0, 0.0, true),
+        fEqualsRelativeTestStruct(0.0, smallestNonzeroFloat64, 0.0, true),
+        fEqualsRelativeTestStruct(-smallestNonzeroFloat64, 0.0, 0.0, true),
+        fEqualsRelativeTestStruct(0.0, -smallestNonzeroFloat64, 0.0, true),
+        fEqualsRelativeTestStruct(0.000000001, -smallestNonzeroFloat64, 0.0, false),
+        fEqualsRelativeTestStruct(0.000000001, smallestNonzeroFloat64, 0.0, false),
+        fEqualsRelativeTestStruct(smallestNonzeroFloat64, 0.000000001, 0.0, false),
+        fEqualsRelativeTestStruct(-smallestNonzeroFloat64, 0.000000001, 0.0, false)
     ]
 
-    for (ts in equalityTests) {
+    for (ts in fEqualityTests) {
         if (ts.tol == 0.0) {
             ts.tol = 1e-5
         }
-        @Expect(equalWithinRel(ts.a, ts.b, ts.tol) == ts.equal)
+        @Expect(equalWithinRel(ts.a, ts.b, ts.tol) == ts.fEqual)
     }
 }
 
@@ -429,10 +429,10 @@ public func testEqualLengths() {
     let s1 = [1.0, 2.0, 3.0, 4.0]
     let s2 = [1.0, 2.0, 3.0, 4.0]
     let s3 = [1.0, 2.0, 3.0]
-    @Expect(equalLengths(s1, s2))
-    @Expect(!equalLengths(s1, s3))
-    @Expect(equalLengths(s1))
-    @Expect(equalLengths())
+    @Expect(fEqualLengths(s1, s2))
+    @Expect(!fEqualLengths(s1, s3))
+    @Expect(fEqualLengths(s1))
+    @Expect(fEqualLengths())
 }
 
 func eqIntSlice(one: Array<Int64>, two: Array<Int64>): String {
@@ -454,27 +454,27 @@ public func testFind() {
     let f = { v: Float64 => v > 3.5}
     let allTrueInds = [1, 3, 4]
     
-    var inds = find(f, s, 2)
+    var inds = fFind(f, s, 2)
     let trueInds = allTrueInds[0..2]
     @Expect(eqIntSlice(inds.toArray(), trueInds), "")
 
     inds = ArrayList<Int64>([1, 2, 3, 4, 5, 6])
-    inds = find(f, s, 0, inds: inds)
+    inds = fFind(f, s, 0, inds: inds)
     @Expect(eqIntSlice(inds.toArray(), []), "")
 
     inds = ArrayList<Int64>([1, 2, 3, 4, 5, 6])
-    inds = find(f, s, 2, inds: inds)
+    inds = fFind(f, s, 2, inds: inds)
     @Expect(eqIntSlice(inds.toArray(), trueInds), "")
 
     try {
-        inds = find(f, s, 4, inds: inds)
+        inds = fFind(f, s, 4, inds: inds)
         @Expect(false)
     } catch (e: Exception) {
         // fall
     }
     @Expect(eqIntSlice(inds.toArray(), allTrueInds), "")
     
-    inds = find(f, s, -1)
+    inds = fFind(f, s, -1)
     @Expect(eqIntSlice(inds.toArray(), allTrueInds), "")
 }
 
@@ -495,7 +495,7 @@ public func testHasNaN() {
         HasNaNTestStruct(s: [1.0, 2.0, 3.0, Float64.NaN], ans: true)
     ]
     for (test in tests) {
-        @Expect(hasNaN(test.s), test.ans)
+        @Expect(fHasNaN(test.s), test.ans)
     }
 }
 
@@ -504,7 +504,7 @@ public func testHasNaN() {
 public func testLogSpan() {
     let receiver1 = Array<Float64>(6, item: 0.0)
     let truth = [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
-    let receiver2 = logSpan(0.001, 100.0, dst: receiver1)
+    let receiver2 = fLogSpan(0.001, 100.0, dst: receiver1)
     let tst = Array<Float64>(6, item: 0.0)
     for (i in 0..truth.size) {
         tst[i] = receiver1[i] / truth[i]
@@ -515,8 +515,8 @@ public func testLogSpan() {
         tst[i] = receiver2[i] / truth[i]
     }
     @Expect(areSlicesEqual(comp, tst))
-    @Expect(exception({ => logSpan(1.0, 5.0)}))
-    @Expect(exception({ => logSpan(1.0, 5.0, dst: Array<Float64>(1, item: 0.0)) }))
+    @Expect(exception({ => fLogSpan(1.0, 5.0)}))
+    @Expect(exception({ => fLogSpan(1.0, 5.0, dst: Array<Float64>(1, item: 0.0)) }))
 }
 
 @Test
@@ -524,27 +524,27 @@ public func testLogSpan() {
 public func testLogSumExp() {
     var s = [1.0, 2.0, 3.0, 4.0, 5.0]
     var truth = 5.4519143959375933331957225109748087179338972737576824
-    var val = logSumExp(s)
+    var val = fLogSumExp(s)
     @Expect(abs(val - truth) <= EqTolerance)
 
     s = [1.0, 2.0]
     truth = 2.3132616875182228340489954949678556419152800856703483
-    val = logSumExp(s)
+    val = fLogSumExp(s)
     @Expect(abs(val - truth) <= EqTolerance)
 
     s = [-1001.0, -1002.0, -1003.0, -1004.0, -1005.0]
     truth = -1000.54808560406240666680427748902519128206610272624
-    val = logSumExp(s)
+    val = fLogSumExp(s)
     @Expect(abs(val - truth) <= EqTolerance)
 
     s = [1.0, 2.0, 3.0, 4.0, 5.0, Float64.Inf]
     truth = Float64.Inf
-    val = logSumExp(s)
+    val = fLogSumExp(s)
     @Expect(val, truth)
 
     s = [1.0, 2.0, 3.0, 4.0, 5.0, -Float64.Inf]
     truth = 5.4519143959375933331957225109748087179338972737576824
-    val = logSumExp(s)
+    val = fLogSumExp(s)
     @Expect(abs(val - truth) <= EqTolerance)
 }
 
@@ -598,12 +598,12 @@ public func testMul() {
     let s1 = [1.0, 2.0, 3.0]
     let s2 = [1.0, 2.0, 3.0]
     let ans = [1.0, 4.0, 9.0]
-    mul(s1, s2)
-    @Expect(equalApprox(s1, ans, EqTolerance))
+    fMul(s1, s2)
+    @Expect(fEqualApprox(s1, ans, EqTolerance))
     let s1Short = [1.0]
-    @Expect(exception({ => mul(s1Short, s2) }))
+    @Expect(exception({ => fMul(s1Short, s2) }))
     let s2Short = [1.0]
-    @Expect(exception({ => mul(s1, s2Short) }))
+    @Expect(exception({ => fMul(s1, s2Short) }))
 }
 
 @Test
@@ -615,19 +615,19 @@ public func testMulTo() {
     let s2orig = [1.0, 2.0, 3.0]
     let dst1 = Array<Float64>(3, item: 0.0)
     let ans = [1.0, 4.0, 9.0]
-    let dst2 = mulTo(dst1, s1, s2)
-    @Expect(equalApprox(dst1, ans, EqTolerance))
-    @Expect(equalApprox(dst2, ans, EqTolerance))
-    @Expect(equalApprox(s1, s1orig, EqTolerance))
-    @Expect(equalApprox(s2, s2orig, EqTolerance))
-    mulTo(dst1, s1, s2)
-    @Expect(equalApprox(dst1, ans, EqTolerance))
+    let dst2 = fMulTo(dst1, s1, s2)
+    @Expect(fEqualApprox(dst1, ans, EqTolerance))
+    @Expect(fEqualApprox(dst2, ans, EqTolerance))
+    @Expect(fEqualApprox(s1, s1orig, EqTolerance))
+    @Expect(fEqualApprox(s2, s2orig, EqTolerance))
+    fMulTo(dst1, s1, s2)
+    @Expect(fEqualApprox(dst1, ans, EqTolerance))
     let dstShort = [1.0]
-    @Expect(exception({ => mulTo(dstShort, s1, s2) }))
+    @Expect(exception({ => fMulTo(dstShort, s1, s2) }))
     let s1Short = [1.0]
-    @Expect(exception({ => mulTo(dst1, s1Short, s2) }))
+    @Expect(exception({ => fMulTo(dst1, s1Short, s2) }))
     let s2Short = [1.0]
-    @Expect(exception({ => mulTo(dst1, s1, s2Short) }))
+    @Expect(exception({ => fMulTo(dst1, s1, s2Short) }))
 }
 
 class NearestIdxTestStruct {
@@ -658,9 +658,9 @@ public func testNearestIdx() {
     ]
 
     for (test in tests) {
-        @Expect(nearestIdx(test.in_, test.query), test.want)
+        @Expect(fNearestIdx(test.in_, test.query), test.want)
     }
-    @Expect(exception({ => nearestIdx([], 0.0)}))
+    @Expect(exception({ => fNearestIdx([], 0.0)}))
 }
 
 class NearestIdxForSpanTestStruct {
@@ -711,32 +711,29 @@ public func testNearestIdxForSpan() {
         NearestIdxForSpanTestStruct(length: 5, lower: 2.0, upper: 0.0, value: 3.0, idx: 0),
         NearestIdxForSpanTestStruct(length: 5, lower: 2.0, upper: 0.0, value: -1.0, idx: 4)
     ]
-    var count = -1
     for (test in tests) {
-        count++
-        let t = nearestIdxForSpan(test.length, test.lower, test.upper, test.value) == test.idx
-        @Expect(t)
+        @Expect(fNearestIdxForSpan(test.length, test.lower, test.upper, test.value) == test.idx)
     }
-    @Expect(exception({ => nearestIdxForSpan(1, 0.0, 1.0, 0.5) }))
+    @Expect(exception({ => fNearestIdxForSpan(1, 0.0, 1.0, 0.5) }))
 }
 
 @Test
 @Parallel
 public func testNorm() {
     let s = [-1.0, -3.4, 5.0, -6.0]
-    var val = norm(s, Float64.Inf)
+    var val = fNorm(s, Float64.Inf)
     var truth = 6.0
     @Expect(abs(val - truth) <= EqTolerance)
 
-    val = norm(s, 2.0)
+    val = fNorm(s, 2.0)
     truth = 8.5767126569566267590651614132751986658027271236078592
     @Expect(abs(val - truth) <= EqTolerance)
 
-    val = norm(s, 3.0)
+    val = fNorm(s, 3.0)
     truth = 7.2514321388020228478109121239004816430071237369356233
     @Expect(abs(val - truth) <= EqTolerance)
 
-    val = norm(s, 1.0)
+    val = fNorm(s, 1.0)
     truth = 15.4
     @Expect(abs(val - truth) <= EqTolerance)
 }
@@ -745,10 +742,10 @@ public func testNorm() {
 @Parallel
 public func testProd() {
     var s: Array<Float64> = []
-    @Expect(prod(s), 1.0)
+    @Expect(fProd(s), 1.0)
 
     s = [3.0, 4.0, 1.0, 7.0, 5.0]
-    @Expect(prod(s), 420.0)
+    @Expect(fProd(s), 420.0)
 }
 
 @Test
@@ -762,7 +759,7 @@ public func testReverse() {
         [9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0]
     ]
     for (s in ss) {
-        reverse(s)
+        fReverse(s)
         for (i in 0..s.size) {
             @Expect(s[i], Float64(i))
         }
@@ -775,7 +772,7 @@ public func testScale() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let c = 5.0
     let truth = [15.0, 20.0, 5.0, 35.0, 25.0]
-    scale(c, s)
+    fScale(c, s)
     @Expect(areSlicesEqual(truth, s))
 }
 
@@ -787,10 +784,10 @@ public func testScaleTo() {
     let c = 5.0
     let truth = [15.0, 20.0, 5.0, 35.0, 25.0]
     let dst = Array<Float64>(s.size, item: 0.0)
-    scaleTo(dst, c, s)
+    fScaleTo(dst, c, s)
     @Expect(fSame(dst, truth))
     @Expect(fSame(s, sCopy))
-    @Expect(exception({ => scaleTo(dst, 0.0, [1.0]) }))
+    @Expect(exception({ => fScaleTo(dst, 0.0, [1.0]) }))
 }
 
 @Test
@@ -810,8 +807,8 @@ public func testSame() {
     @Expect(!fSame(s1, s2))
 } 
 
-class spanTestStruct {
-    spanTestStruct(
+class fSpanTestStruct {
+    fSpanTestStruct(
         let n!: Int64,
         let l!: Float64,
         let u!: Float64,
@@ -824,35 +821,35 @@ class spanTestStruct {
 public func testSpan() {
     var receiver1 = Array<Float64>(5, item: 0.0)
     var truth = [1.0, 2.0, 3.0, 4.0, 5.0]
-    let receiver2 = span(receiver1, 1.0, 5.0)
+    let receiver2 = fSpan(receiver1, 1.0, 5.0)
     @Expect(areSlicesEqual(truth, receiver1))
     @Expect(areSlicesEqual(truth, receiver2))
     receiver1 = Array<Float64>(6, item: 0.0)
     truth = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
-    span(receiver1, 0.0, 1.0)
+    fSpan(receiver1, 0.0, 1.0)
     @Expect(areSlicesEqual(truth, receiver1))
-    @Expect(exception({ => span(Array<Float64>(1, item: 0.0), 1.0, 5.0) }))
+    @Expect(exception({ => fSpan(Array<Float64>(1, item: 0.0), 1.0, 5.0) }))
 
     let tests = [
-        spanTestStruct(n: 4, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, Float64.Inf, Float64.Inf]),
-        spanTestStruct(n: 4, l: Float64.Inf, u: -Float64.Inf, want: [Float64.Inf, Float64.Inf, -Float64.Inf, -Float64.Inf]),
-        spanTestStruct(n: 5, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, 0.0, Float64.Inf, Float64.Inf]),
-        spanTestStruct(n: 5, l: Float64.Inf, u: -Float64.Inf, want: [Float64.Inf, Float64.Inf, 0.0, -Float64.Inf, -Float64.Inf]),
-        spanTestStruct(n: 5, l: Float64.Inf, u: Float64.Inf, want: [Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf]),
-        spanTestStruct(n: 5, l: -Float64.Inf, u: -Float64.Inf, want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf]),
-        spanTestStruct(n: 5, l: -Float64.Inf, u: Float64.NaN, want: [-Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
-        spanTestStruct(n: 5, l: Float64.Inf, u: Float64.NaN, want: [Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
-        spanTestStruct(n: 5, l: Float64.NaN, u: -Float64.Inf, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, -Float64.Inf]),
-        spanTestStruct(n: 5, l: Float64.NaN, u: Float64.Inf, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, Float64.Inf]),
-        spanTestStruct(n: 5, l: 42.0, u: -Float64.Inf, want: [42.0, -Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf]),
-        spanTestStruct(n: 5, l: 42.0, u: Float64.Inf, want: [42.0, Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf]),
-        spanTestStruct(n: 5, l: 42.0, u: Float64.NaN, want: [42.0, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
-        spanTestStruct(n: 5, l: -Float64.Inf, u: 42.0, want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf, 42.0]),
-        spanTestStruct(n: 5, l: Float64.Inf, u: 42.0, want: [Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf, 42.0]),
-        spanTestStruct(n: 5, l: Float64.NaN, u: 42.0, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, 42.0])
+        fSpanTestStruct(n: 4, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, Float64.Inf, Float64.Inf]),
+        fSpanTestStruct(n: 4, l: Float64.Inf, u: -Float64.Inf, want: [Float64.Inf, Float64.Inf, -Float64.Inf, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, 0.0, Float64.Inf, Float64.Inf]),
+        fSpanTestStruct(n: 5, l: Float64.Inf, u: -Float64.Inf, want: [Float64.Inf, Float64.Inf, 0.0, -Float64.Inf, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: Float64.Inf, u: Float64.Inf, want: [Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: -Float64.Inf, want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: Float64.NaN, want: [-Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
+        fSpanTestStruct(n: 5, l: Float64.Inf, u: Float64.NaN, want: [Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
+        fSpanTestStruct(n: 5, l: Float64.NaN, u: -Float64.Inf, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: Float64.NaN, u: Float64.Inf, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, Float64.Inf]),
+        fSpanTestStruct(n: 5, l: 42.0, u: -Float64.Inf, want: [42.0, -Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: 42.0, u: Float64.Inf, want: [42.0, Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf]),
+        fSpanTestStruct(n: 5, l: 42.0, u: Float64.NaN, want: [42.0, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: 42.0, want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf, 42.0]),
+        fSpanTestStruct(n: 5, l: Float64.Inf, u: 42.0, want: [Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf, 42.0]),
+        fSpanTestStruct(n: 5, l: Float64.NaN, u: 42.0, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, 42.0])
     ]
     for (test in tests) {
-        let got = span(Array<Float64>(test.n, item: 0.0), test.l, test.u)
+        let got = fSpan(Array<Float64>(test.n, item: 0.0), test.l, test.u)
         @Expect(areSlicesSame(test.want, got))
     }
 }
@@ -863,9 +860,9 @@ public func testSub() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let v = [1.0, 2.0, 3.0, 4.0, 5.0]
     var truth = [2.0, 2.0, -2.0, 3.0, 0.0]
-    sub(s, v)
+    fSub(s, v)
     @Expect(areSlicesEqual(truth, s))
-    @Expect(exception({ => sub(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fSub(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
 }
 
 @Test
@@ -875,22 +872,22 @@ public func testSubTo() {
     let v = [1.0, 2.0, 3.0, 4.0, 5.0]
     var truth = [2.0, 2.0, -2.0, 3.0, 0.0]
     var dst1 = Array<Float64>(s.size, item: 0.0)
-    var dst2 = subTo(dst1, s, v)
+    var dst2 = fSubTo(dst1, s, v)
     @Expect(areSlicesEqual(truth, dst1))
     @Expect(areSlicesEqual(truth, dst2))
-    @Expect(exception({ => subTo(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0)) }))
-    @Expect(exception({ => subTo(Array<Float64>(3, item: 0.0), Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
-    @Expect(exception({ => subTo(Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0), Array<Float64>(2, item: 0.0)) }))
+    @Expect(exception({ => fSubTo(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fSubTo(Array<Float64>(3, item: 0.0), Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fSubTo(Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0), Array<Float64>(2, item: 0.0)) }))
 }
 
 @Test
 @Parallel
 public func testSum() {
     var s: Array<Float64> = []
-    @Expect(sum(s), 0.0)
+    @Expect(fSum(s), 0.0)
 
     s = [3.0, 4.0, 1.0, 7.0, 5.0]
-    @Expect(sum(s), 20.0)
+    @Expect(fSum(s), 20.0)
 }
 
 class WithInTestStruct {
@@ -921,7 +918,7 @@ public func testWithIn() {
     for (test in tests) {
         var idx: Int64 = 0
         try {
-            idx = within(test.s, test.v)
+            idx = fWithin(test.s, test.v)
         } catch (e: Exception) {
             @Expect(test.exception) 
             continue
@@ -963,7 +960,7 @@ public func testSumCompensated() {
         SumCompensatedTestStruct(s: [1.0, 1e100, 1.0, -1e100], want: 2.0)
     ]
     for (test in tests) {
-        let got = sumCompensated(test.s)
+        let got = fSumCompensated(test.s)
         @Expect(abs(got - test.want) <= EqTolerance, true)
     }
 }
