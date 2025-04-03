@@ -209,13 +209,9 @@ public func testNaNPayload() {
     }
 }
 
-func copysign(x: Float64, y: Float64): Float64 {
-    let sign = if (y > 0.0) {
-        1.0
-    } else {
-        -1.0
-    }
-    return sign * x
+func copysign(f: Float64, sign: Float64): Float64 {
+    const signBit: UInt64 = 1 << 63
+    return Float64.fromBits((f.toBits() & (!signBit)) | sign.toBits() & signBit)
 }
 
 class roundTestStruct {
