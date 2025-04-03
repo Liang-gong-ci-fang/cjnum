@@ -5,26 +5,20 @@ import std.sort.*
 import std.collection.*
 import cjnum.floats.scalar.*
 import cjnum.internal.asm.f64.*
-import cjnum.internal.asm.f64.cumProd as f64_cumProd
-import cjnum.internal.asm.f64.cumSum as f64_cumSum
-import cjnum.internal.asm.f64.div as f64_div
-import cjnum.internal.asm.f64.divTo as f64_divTo
-import cjnum.internal.asm.f64.sum as f64_sum
-import cjnum.internal.asm.f64.addConst as f64_addConst
 
 const zeroLength   = "floats: zero length slice"
 const shortSpan    = "floats: slice length less than 2"
 const badLength    = "floats: slice lengths do not match"
 const badDstLength = "floats: destination slice length does not match input"
 
-public func add(dst: Array<Float64>, s: Array<Float64>): Unit {
+public func fAdd(dst: Array<Float64>, s: Array<Float64>): Unit {
     if (dst.size != s.size) {
         throw Exception(badDstLength)
     }
     axpyUnitaryTo(dst, 1.0, s, dst)
 }
 
-public func addTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
+public func fAddTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
     if (s.size != t.size) {
         throw Exception(badLength)
     }
@@ -35,18 +29,18 @@ public func addTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Ar
     return dst
 }
 
-public func addConst(c: Float64, dst: Array<Float64>): Unit {
-    f64_addConst(c, dst)
+public func fAddConst(c: Float64, dst: Array<Float64>): Unit {
+    addConst(c, dst)
 }
 
-public func addScaled(dst: Array<Float64>, alpha: Float64, s: Array<Float64>): Unit{
+public func fAddScaled(dst: Array<Float64>, alpha: Float64, s: Array<Float64>): Unit{
     if (dst.size != s.size) {
         throw Exception(badLength)
     }
     axpyUnitaryTo(dst, alpha, s, dst)
 }
 
-public func addScaledTo(dst: Array<Float64>, y: Array<Float64>, alpha: Float64, s: Array<Float64>): Array<Float64> {
+public func fAddScaledTo(dst: Array<Float64>, y: Array<Float64>, alpha: Float64, s: Array<Float64>): Array<Float64> {
     if (s.size != y.size) {
         throw Exception(badLength)
     }
@@ -91,7 +85,7 @@ class Argsort{
     }
 }
 
-public func argsort(dst: Array<Float64>, inds: Array<Int64>): Unit { 
+public func fArgsort(dst: Array<Float64>, inds: Array<Int64>): Unit { 
     if (dst.size != inds.size) {
         throw Exception(badDstLength)
     }
@@ -103,7 +97,7 @@ public func argsort(dst: Array<Float64>, inds: Array<Int64>): Unit {
     a.sort()
 }
 
-public func argsortStable(dst: Array<Float64>, inds: Array<Int64>): Unit { 
+public func fArgsortStable(dst: Array<Float64>, inds: Array<Int64>): Unit { 
     if (dst.size != inds.size) {
         throw Exception(badDstLength)
     }
@@ -115,7 +109,7 @@ public func argsortStable(dst: Array<Float64>, inds: Array<Int64>): Unit {
     a.sort(stable: true)
 }
 
-public func count(f: (Float64) -> Bool, s: Array<Float64>): Int64 {
+public func fCount(f: (Float64) -> Bool, s: Array<Float64>): Int64 {
     var n: Int64 = 0
     for (val in s) {
         if (f(val)) {
@@ -125,27 +119,27 @@ public func count(f: (Float64) -> Bool, s: Array<Float64>): Int64 {
     return n
 }
 
-public func cumProd(dst: Array<Float64>, s: Array<Float64>): Array<Float64> {
+public func fCumProd(dst: Array<Float64>, s: Array<Float64>): Array<Float64> {
     if (dst.size != s.size) {
         throw Exception(badDstLength)
     }
     if (dst.size == 0) {
         return dst
     }
-    return f64_cumProd(dst, s)
+    return cumProd(dst, s)
 }
 
-public func cumSum(dst: Array<Float64>, s: Array<Float64>): Array<Float64> {
+public func fCumSum(dst: Array<Float64>, s: Array<Float64>): Array<Float64> {
     if (dst.size != s.size) {
         throw Exception(badDstLength)
     }
     if (dst.size == 0) {
         return dst
     }
-    return f64_cumSum(dst, s)
+    return cumSum(dst, s)
 }
 
-public func distance(L: Float64, s!: Array<Float64> = [], t!: Array<Float64> = []): Float64 {
+public func fDistance(L: Float64, s!: Array<Float64> = [], t!: Array<Float64> = []): Float64 {
     if (s.size != t.size) {
         throw Exception(badLength)
     }
@@ -155,61 +149,61 @@ public func distance(L: Float64, s!: Array<Float64> = [], t!: Array<Float64> = [
     if (L == 2.0) {
         return l2DistanceUnitary(s, t)
     }
-    var norm: Float64 = 0.0
+    var fNorm: Float64 = 0.0
     if (L == 1.0) {
         for (i in 0..s.size) {
-            norm += abs(t[i] - s[i])
+            fNorm += abs(t[i] - s[i])
         }
-        return norm
+        return fNorm
     }
     if (L == Float64.Inf) {
         for (i in 0..s.size) {
             let absDiff = abs(t[i]- s[i])
-            if (absDiff > norm) {
-                norm = absDiff
+            if (absDiff > fNorm) {
+                fNorm = absDiff
             }
         }
-        return norm
+        return fNorm
     }
     for (i in 0..s.size) {
-        norm += pow(abs(t[i]- s[i]), L)
+        fNorm += pow(abs(t[i]- s[i]), L)
     }
-    return pow(norm, 1.0 / L)
+    return pow(fNorm, 1.0 / L)
 }
 
-public func div(dst: Array<Float64>, s: Array<Float64>): Unit {
+public func fDiv(dst: Array<Float64>, s: Array<Float64>): Unit {
     if (dst.size != s.size) {
         throw Exception(badLength)
     }
-    f64_div(dst, s)
+    div(dst, s)
 }
 
-public func divTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
+public func fDivTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
     if (s.size != t.size) {
         throw Exception(badLength)
     }
     if (dst.size != s.size) {
         throw Exception(badDstLength)
     }
-    return f64_divTo(dst, s, t)
+    return divTo(dst, s, t)
 }
 
-public func dot(s1: Array<Float64>, s2: Array<Float64>): Float64 {
+public func fDot(s1: Array<Float64>, s2: Array<Float64>): Float64 {
     if (s1.size != s2.size) {
         throw Exception(badLength)
     }
-    return dotUnitary(s1, s2)
+    return fDotUnitary(s1, s2)
 }
 
-public func dotUnitary(x: Array<Float64>, y: Array<Float64>): Float64 {
-    var sum : Float64 = 0.0
+public func fDotUnitary(x: Array<Float64>, y: Array<Float64>): Float64 {
+    var fSum : Float64 = 0.0
     for (i in 0..x.size){
-        sum += y[i] * x[i]
+        fSum += y[i] * x[i]
     }
-    return sum
+    return fSum
 }
 
-public func equal(s1: Array<Float64>, s2: Array<Float64>): Bool {
+public func fEqual(s1: Array<Float64>, s2: Array<Float64>): Bool {
     if (s1.size != s2.size) {
         return false
     }
@@ -221,7 +215,7 @@ public func equal(s1: Array<Float64>, s2: Array<Float64>): Bool {
     return true
 }
 
-public func equalApprox(s1: Array<Float64>, s2: Array<Float64>, tol: Float64): Bool {
+public func fEqualApprox(s1: Array<Float64>, s2: Array<Float64>, tol: Float64): Bool {
     if (s1.size != s2.size) {
         return false
     }
@@ -233,7 +227,7 @@ public func equalApprox(s1: Array<Float64>, s2: Array<Float64>, tol: Float64): B
     return true
 }
 
-public func equalFunc(s1: Array<Float64>, s2: Array<Float64>, f: (Float64, Float64) -> Bool): Bool {
+public func fEqualFunc(s1: Array<Float64>, s2: Array<Float64>, f: (Float64, Float64) -> Bool): Bool {
     if (s1.size != s2.size) {
         return false
     }
@@ -245,7 +239,7 @@ public func equalFunc(s1: Array<Float64>, s2: Array<Float64>, f: (Float64, Float
     return true
 }
 
-public func equalLengths(slices: Array<Array<Float64>>): Bool {
+public func fEqualLengths(slices: Array<Array<Float64>>): Bool {
     if (slices.size == 0) {
         return true
     }
@@ -258,7 +252,7 @@ public func equalLengths(slices: Array<Array<Float64>>): Bool {
     return true
 }
 
-public func find(f: (Float64) -> Bool, s: Array<Float64>, k: Int64, inds!: ArrayList<Int64> = ArrayList<Int64>()): ArrayList<Int64> {
+public func fFind(f: (Float64) -> Bool, s: Array<Float64>, k: Int64, inds!: ArrayList<Int64> = ArrayList<Int64>()): ArrayList<Int64> {
     inds.clear()
 
     if (k == 0) {
@@ -288,7 +282,7 @@ public func find(f: (Float64) -> Bool, s: Array<Float64>, k: Int64, inds!: Array
     throw Exception("floats: insufficient elements found")
 }
 
-public func hasNaN(s: Array<Float64>): Bool {
+public func fHasNaN(s: Array<Float64>): Bool {
     for (v in s) {
         if (v.isNaN()) {
             return true
@@ -297,15 +291,15 @@ public func hasNaN(s: Array<Float64>): Bool {
     return false
 }
 
-public func logSpan(l: Float64, u: Float64, dst!: Array<Float64> = []): Array<Float64> {
-    span(dst, log(l), log(u))
+public func fLogSpan(l: Float64, u: Float64, dst!: Array<Float64> = []): Array<Float64> {
+    fSpan(dst, log(l), log(u))
     for (i in 0..dst.size) {
         dst[i] = exp(dst[i])
     }
     return dst
 }
 
-public func logSumExp(s: Array<Float64>): Float64 {
+public func fLogSumExp(s: Array<Float64>): Float64 {
     let fMaxVal = fMax(s)
     if (fMaxVal.isInf()) {
         return fMaxVal
@@ -361,7 +355,7 @@ public func fMinIdx(s: Array<Float64>): Int64 {
     return ind
 }
 
-public func mul(dst: Array<Float64>, s: Array<Float64>): Unit {
+public func fMul(dst: Array<Float64>, s: Array<Float64>): Unit {
     if (dst.size != s.size) {
         throw Exception(badLength)
     }
@@ -370,7 +364,7 @@ public func mul(dst: Array<Float64>, s: Array<Float64>): Unit {
     }
 }
 
-public func mulTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
+public func fMulTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
     if (s.size  != t.size) {
         throw Exception(badLength)
     }
@@ -383,7 +377,7 @@ public func mulTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Ar
     return dst
 }
 
-public func nearestIdx(s: Array<Float64>, v:Float64): Int64 {
+public func fNearestIdx(s: Array<Float64>, v:Float64): Int64 {
     if (s.isEmpty()) {
         throw Exception(zeroLength)
     }
@@ -409,7 +403,7 @@ public func nearestIdx(s: Array<Float64>, v:Float64): Int64 {
     return ind
 }
 
-public func nearestIdxForSpan(n: Int64, l: Float64, u: Float64, v: Float64): Int64 {
+public func fNearestIdxForSpan(n: Int64, l: Float64, u: Float64, v: Float64): Int64 {
     if (n < 2) {
         throw Exception(shortSpan)
     }
@@ -486,41 +480,41 @@ func copysign(f: Float64, sign: Float64): Float64 {
     return Float64.fromBits((f.toBits() & (!signBit)) | sign.toBits() & signBit)
 }
 
-public func norm(s: Array<Float64>, L: Float64): Float64 {
+public func fNorm(s: Array<Float64>, L: Float64): Float64 {
     if (s.size == 0) {
         return 0.0
     }
     if (L == 2.0) {
         return l2NormUnitary(s)
     }
-    var norm_: Float64 = 0.0
+    var fNorm_: Float64 = 0.0
     if (L == 1.0) {
         for (val in s) {
-            norm_ += abs(val)
+            fNorm_ += abs(val)
         }
-        return norm_
+        return fNorm_
     }
     if (L == Float64.Inf) {
         for (val in s) {
-            norm_ = fMax(norm_, abs(val))
+            fNorm_ = fMax(fNorm_, abs(val))
         }
-        return norm_
+        return fNorm_
     }
     for (val in s) {
-        norm_ += pow(abs(val), L)
+        fNorm_ += pow(abs(val), L)
     }
-    return pow(norm_, 1.0 / L)
+    return pow(fNorm_, 1.0 / L)
 }
 
-public func prod(s: Array<Float64>): Float64 {
-    var prod_ = 1.0
+public func fProd(s: Array<Float64>): Float64 {
+    var fProd_ = 1.0
     for (val in s) {
-        prod_ *= val
+        fProd_ *= val
     }
-    return prod_
+    return fProd_
 }
 
-public func reverse(s: Array<Float64>): Unit {
+public func fReverse(s: Array<Float64>): Unit {
     s.reverse()
 }
 
@@ -537,13 +531,13 @@ public func fSame(s: Array<Float64>, t: Array<Float64>): Bool {
     return true
 }
 
-public func scale(c: Float64, dst: Array<Float64>): Unit {
+public func fScale(c: Float64, dst: Array<Float64>): Unit {
     if (dst.size > 0) {
         scalUnitary(c, dst)
     }
 }
 
-public func scaleTo(dst: Array<Float64>, c: Float64, s: Array<Float64>): Array<Float64> {
+public func fScaleTo(dst: Array<Float64>, c: Float64, s: Array<Float64>): Array<Float64> {
     if (dst.size != s.size) {
         throw Exception(badDstLength)
     }
@@ -553,7 +547,7 @@ public func scaleTo(dst: Array<Float64>, c: Float64, s: Array<Float64>): Array<F
     return dst
 }
 
-public func span(dst: Array<Float64>, l: Float64, u: Float64): Array<Float64> {
+public func fSpan(dst: Array<Float64>, l: Float64, u: Float64): Array<Float64> {
     let n = dst.size
     if (n < 2) {
         throw Exception(shortSpan)
@@ -608,14 +602,14 @@ public func span(dst: Array<Float64>, l: Float64, u: Float64): Array<Float64> {
     return dst
 }
 
-public func sub(dst: Array<Float64>, s: Array<Float64>): Unit {
+public func fSub(dst: Array<Float64>, s: Array<Float64>): Unit {
     if (dst.size != s.size) {
         throw Exception(badLength)
     }
     axpyUnitaryTo(dst, -1.0, s, dst)
 }
 
-public func subTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
+public func fSubTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Array<Float64> {
     if (s.size != t.size) {
         throw Exception(badLength)
     }
@@ -626,11 +620,11 @@ public func subTo(dst: Array<Float64>, s: Array<Float64>, t: Array<Float64>): Ar
     return dst
 }
 
-public func sum(s: Array<Float64>): Float64 {
-    return f64_sum(s)
+public func fSum(s: Array<Float64>): Float64 {
+    return sum(s)
 }
 
-public func within(s: Array<Float64>, v: Float64): Int64 {
+public func fWithin(s: Array<Float64>, v: Float64): Int64 {
     if (s.size < 2) {
         throw Exception(shortSpan)
     }
@@ -660,18 +654,18 @@ func isSort<T>(arr: Array<T>): Bool where T <: Comparable<T> {
     return true
 }
 
-public func sumCompensated(s: Array<Float64>): Float64 {
-    var sum: Float64 = 0.0
+public func fSumCompensated(s: Array<Float64>): Float64 {
+    var fSum: Float64 = 0.0
     var c: Float64 = 0.0
     for (x in s) {
-        let t = Float64(sum + x)
-        if (abs(sum) >= abs(x)) {
-            c += (sum - t) + x
+        let t = Float64(fSum + x)
+        if (abs(fSum) >= abs(x)) {
+            c += (fSum - t) + x
         } else {
-            c += (x - t) + sum
+            c += (x - t) + fSum
         }
-        sum = t
+        fSum = t
     }
-    return sum + c
+    return fSum + c
 }
 

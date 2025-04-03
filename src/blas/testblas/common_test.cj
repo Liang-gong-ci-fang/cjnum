@@ -180,7 +180,7 @@ public func TestFlattenTriangular() {
     ]
     for (test in flattenTriangularTests) {
         let a = flattenTriangular(test.a, test.ul)
-        @Expect(equal(a, test.ans))
+        @Expect(fEqual(a, test.ans))
     }
 }
 
