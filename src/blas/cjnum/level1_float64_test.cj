@@ -4,59 +4,59 @@ import std.unittest.*
 import std.unittest.testmacro.*
 import cjnum.blas.testblas.*
 
-let float64Implementation = NFloat64Implementation()
+let nFloat64Implementation = NFloat64Implementation()
 
 @Test
 public func testDnrm2() {
-    @Expect(dnrm2Test(float64Implementation))
+    @Expect(dnrm2Test(nFloat64Implementation))
 }
 
 @Test
 public func testDasum() {
-    @Expect(dasumTest(float64Implementation))
+    @Expect(dasumTest(nFloat64Implementation))
 }
 
 @Test
 public func testIdamax() {
-    @Expect(idamaxTest(float64Implementation))
+    @Expect(idamaxTest(nFloat64Implementation))
 }
 
 @Test
 public func testDswap() {
-    @Expect(dswapTest(float64Implementation))
+    @Expect(dswapTest(nFloat64Implementation))
 }
 
 @Test
 public func testDcopy() {
-    @Expect(dcopyTest(float64Implementation))
+    @Expect(dcopyTest(nFloat64Implementation))
 }
 
 @Test
 public func testDaxpy() {
-    @Expect(daxpyTest(float64Implementation))
+    @Expect(daxpyTest(nFloat64Implementation))
 }
 
 @Test
 public func testDrotg() {
-    @Expect(drotgTest(float64Implementation, false))
+    @Expect(drotgTest(nFloat64Implementation, false))
 }
 
 @Test
 public func testDrotmg() {
-    @Expect(drotmgTest(float64Implementation))
+    @Expect(drotmgTest(nFloat64Implementation))
 }
 
 @Test
 public func testDrot() {
-    @Expect(drotTest(float64Implementation))
+    @Expect(drotTest(nFloat64Implementation))
 }
 
 @Test
 public func testDrotm() {
-    @Expect(drotmTest(float64Implementation))
+    @Expect(drotmTest(nFloat64Implementation))
 }
 
 @Test
 public func testDscal() {
-    @Expect(dscalTest(float64Implementation))
+    @Expect(dscalTest(nFloat64Implementation))
 }
