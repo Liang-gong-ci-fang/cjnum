@@ -6,6 +6,6 @@ import cjnum.blas.*
 const blockSize   = 64 
 const minParBlock = 4
 
-public class Float64Implementation {}
+public class NFloat64Implementation {}
 
 // TODO 

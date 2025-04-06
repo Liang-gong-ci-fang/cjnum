@@ -2,7 +2,7 @@ package cjnum.blas.cjnum
 
 import cjnum.blas.*
 
-extend Float64Implementation {
+extend NFloat64Implementation {
     public func dgemv(tA: Transpose, m: Int64, n: Int64, alpha: Float64, a: Array<Float64>, lda: Int64, x: Array<Float64>,
         incX: Int64, beta: Float64, y: Array<Float64>, incY: Int64): Unit {
         //TODO

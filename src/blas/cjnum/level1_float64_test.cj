@@ -4,7 +4,7 @@ import std.unittest.*
 import std.unittest.testmacro.*
 import cjnum.blas.testblas.*
 
-let float64Implementation = Float64Implementation()
+let float64Implementation = NFloat64Implementation()
 
 @Test
 public func testDnrm2() {
