@@ -4,7 +4,7 @@ import cjnum.internal.asm.f64.*
 import cjnum.blas.*
 import std.math.*
 
-extend Float64Implementation <: NFloat64 {
+extend NFloat64Implementation <: NFloat64 {
     public func ddot(n: Int64, x: Array<Float64>, incX: Int64, y: Array<Float64>, incY: Int64): Float64 {
         if (incX == 0) {
             throw Exception(zeroIncX)
