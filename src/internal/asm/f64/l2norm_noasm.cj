@@ -19,11 +19,11 @@ public func l2NormUnitary(x: Array<Float64>): Float64 {
             sumSquares = 1.0 + sumSquares * s * s
             scale = absxi
         } else {
-            var s = scale / absxi
+            var s = absxi / scale
             sumSquares += s * s
         }
     }
-    if (scale.isInf()) {
+    if (scale == Float64.Inf) {
         return Float64.Inf
     }
     return scale * sqrt(sumSquares)
@@ -48,12 +48,12 @@ public func l2NormInc(x: Array<Float64>, n: Int, incX: Int): Float64 {
             sumSquares = 1.0 + sumSquares * s * s
             scale = absxi
         } else {
-            var s = scale / absxi
+            var s = absxi / scale
             sumSquares += s * s
         }
         ix += incX
     }
-    if (scale.isInf()) {
+    if (scale == Float64.Inf) {
         return Float64.Inf
     }
     return scale * sqrt(sumSquares)
@@ -76,11 +76,11 @@ public func l2DistanceUnitary(x: Array<Float64>, y: Array<Float64>): Float64 {
             sumSquares = 1.0 + sumSquares * s * s
             scale = absxi
         } else {
-            var s = scale / absxi
+            var s = absxi / scale
             sumSquares += s * s
         }
     }
-    if (scale.isInf()) {
+    if (scale == Float64.Inf) {
         return Float64.Inf
     }
     return scale * sqrt(sumSquares)

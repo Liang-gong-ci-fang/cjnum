@@ -14,7 +14,7 @@ public class SrotmParams {
 }
 
 public class DrotmParams {
-    public DrotmParams(public let flag: Flag, public let h: Array<Float64>) {}
+    public DrotmParams(public var flag!: Flag = 0, public var h!: Array<Float64> = Array<Float64>(4, item: 0.0)) {}
 }
 
 public type Transpose = UInt8
@@ -112,8 +112,8 @@ public interface Float64Level1 {
     func dswap(n: Int64, x: Array<Float64>, incX: Int64, y: Array<Float64>, incY: Int64): Unit
     func dcopy(n: Int64, x: Array<Float64>, incX: Int64, y: Array<Float64>, incY: Int64): Unit
     func daxpy(n: Int64, alpha: Float64, x: Array<Float64>, incX: Int64, y: Array<Float64>, incY: Int64): Unit
-    func drotg(a: Float64, b: Float64): (Float64, Float64, Float64)
-    func drotmg(d1: Float64, d2: Float64, b1: Float64, b2: Float64): (DrotmParams, Float64, Float64, Float64)
+    func drotg(a: Float64, b: Float64): (Float64, Float64, Float64, Float64)
+    func drotmg(d1: Float64, d2: Float64, x1: Float64, y1: Float64): (DrotmParams, Float64, Float64, Float64)
     func drot(n: Int64, x: Array<Float64>, incX: Int64, y: Array<Float64>, incY: Int64, c: Float64, s: Float64): Unit
     func drotm(n: Int64, x: Array<Float64>, incX: Int64, y: Array<Float64>, incY: Int64, p: DrotmParams): Unit
     func dscal(n: Int64, alpha: Float64, x: Array<Float64>, incX: Int64): Unit
