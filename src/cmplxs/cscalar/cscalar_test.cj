@@ -5,9 +5,7 @@ import cjnum.complex.*
 import std.unittest.*
 import std.unittest.testmacro.*
 
-// TODO: In Cangjie, 4.9406564584124654e-309 is treated as zero due to its extremely small value.
-// TODO: Therefore using 4.9406564584124654e-308, the minimum supported value to finsih test, as a substitute.
-const smallestNonzeroFloat64 = 4.9406564584124654e-308
+const smallestNonzeroFloat64 = 4.9406564584124654e-324
 
 class equalsRelativeTestStruct {
     public equalsRelativeTestStruct(
@@ -52,16 +50,14 @@ public func testEqualsRelative() {
         equalsRelativeTestStruct(0.0, 0.00000001, 0.0, false),
         equalsRelativeTestStruct(-0.00000001, 0.0, 0.0, false),
         equalsRelativeTestStruct(0.0, -0.00000001, 0.0, false),
-        // TODO: In Cangjie, 1e-310 is treated as zero due to its extremely small value.
-        // TODO: Therefore using 1e-161, the minimum supported value to finish test, as a substitute.
-        equalsRelativeTestStruct(0.0, 1e-161, 1.0, true),
-        equalsRelativeTestStruct(1e-161, 0.0, 1.0, true),
-        equalsRelativeTestStruct(1e-161, 0.0, 0.000001, false),
-        equalsRelativeTestStruct(0.0, 1e-161, 0.000001, false),
-        equalsRelativeTestStruct(0.0, -1e-161, 1.0, true),
-        equalsRelativeTestStruct(-1e-161, 0.0, 1.0, true),
-        equalsRelativeTestStruct(-1e-161, 0.0, 0.00000001, false),
-        equalsRelativeTestStruct(0.0, -1e-161, 0.00000001, false),
+        equalsRelativeTestStruct(0.0, 1e-310, 1.0, true),
+        equalsRelativeTestStruct(1e-310, 0.0, 1.0, true),
+        equalsRelativeTestStruct(1e-310, 0.0, 0.000001, false),
+        equalsRelativeTestStruct(0.0, 1e-310, 0.000001, false),
+        equalsRelativeTestStruct(0.0, -1e-310, 1.0, true),
+        equalsRelativeTestStruct(-1e-310, 0.0, 1.0, true),
+        equalsRelativeTestStruct(-1e-310, 0.0, 0.00000001, false),
+        equalsRelativeTestStruct(0.0, -1e-310, 0.00000001, false),
         equalsRelativeTestStruct(Float64.Inf, Float64.Inf, 0.0, true),
         equalsRelativeTestStruct(Float64.Inf, Float64.Max, 0.0, false),
         equalsRelativeTestStruct(-Float64.Inf, -Float64.Max, 0.0, false),
@@ -85,7 +81,7 @@ public func testEqualsRelative() {
         equalsRelativeTestStruct(-1.000000001, 1.0, 0.0, false),
         equalsRelativeTestStruct(1.0, -1.000000001, 0.0, false),
         equalsRelativeTestStruct(10.0 * smallestNonzeroFloat64, 10.0 * (-smallestNonzeroFloat64), 0.0, true),
-        equalsRelativeTestStruct(1e150 * smallestNonzeroFloat64, 1e150 * (-smallestNonzeroFloat64), 0.0, false),
+        equalsRelativeTestStruct(1e11 * smallestNonzeroFloat64, 1e11 * (-smallestNonzeroFloat64), 0.0, false),
         equalsRelativeTestStruct(smallestNonzeroFloat64, -smallestNonzeroFloat64, 0.0, true),
         equalsRelativeTestStruct(-smallestNonzeroFloat64, smallestNonzeroFloat64, 0.0, true),
         equalsRelativeTestStruct(smallestNonzeroFloat64, 0.0, 0.0, true),
@@ -165,6 +161,7 @@ public func testRound() {
         roundTestStruct(Complex128(1500.0), -3, Complex128(2000.0)),
         roundTestStruct(Complex128(1500.0), -4, Complex128(0.0))
     ]
+
     for(sign in roundTests) {
         let result = roundEven(sign.x, sign.prec)
         @Expect(same(result, sign.want))
@@ -195,6 +192,7 @@ public func testSame() {
         sameTestStruct(Complex128(Float64.NaN, Float64.NaN), Complex128(1.0), false),
         sameTestStruct(Complex128(Float64.Inf, Float64.Inf), Complex128(Float64.Inf, Float64.Inf), true)
     ]
+    
     for (test in sameTests) {
         let result = same(test.a, test.b)
         @Expect(result == test.want)

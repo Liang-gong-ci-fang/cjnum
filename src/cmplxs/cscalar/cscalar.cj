@@ -4,28 +4,57 @@ import std.math.*
 import cjnum.floats.scalar
 import cjnum.complex.*
 
-//TODO: Cangjie dones't have function to calculating the modulus of a complex128 number
+const minNormalFloat64 = 0x1p-1022
+
 func complexAbs(a: Complex128): Float64 {
-    return sqrt(pow(a.imag, 2) + pow(a.real, 2))
+    let r = a.real
+    let i = a.imag
+
+    return hypot(r, i)
+}
+
+func hypot(p: Float64, q: Float64): Float64 {
+    var p_ = abs(p)
+    var q_ = abs(q)
+
+    if (p_ == Float64.Inf || q_ == Float64.Inf) {
+        return Float64.Inf
+    }
+
+    if (p_.isNaN() || q_.isNaN()) {
+        return Float64.NaN
+    }
+
+    if (p_ < q_) {
+        let tmp = p_
+        p_ = q_
+        q_ = tmp
+    }
+
+    if (p_ == 0.0) {
+        return 0.0
+    }
+
+    q_ = q_ / p_
+    
+    return p_ * sqrt(1.0 + pow(q_, 2))
 }
 
 public func equalWithinAbs(a: Complex128, b: Complex128, tol: Float64): Bool {
     return a == b || complexAbs(Complex128((a.real - b.real), (a.imag- b.imag))) <= tol
 }
 
-const minNormalFloat64 = 0x1p-1022
-
 public func equalWithinRel(a: Complex128, b: Complex128, tol: Float64): Bool {
     if (a == b) {
         return true
     }
 
-    let delta = complexAbs(Complex128((a.real - b.real), (a.imag- b.imag))) 
+    let delta = complexAbs(a - b) 
 
     if (delta <= minNormalFloat64) {
 		return delta <= tol * minNormalFloat64
 	}
-    return delta/max(complexAbs(a), complexAbs(b)) <= tol
+    return delta / max(complexAbs(a), complexAbs(b)) <= tol
 }
 
 public func equalWithinAbsOrRel(a: Complex128, b: Complex128, absTol: Float64, reTol: Float64): Bool {
