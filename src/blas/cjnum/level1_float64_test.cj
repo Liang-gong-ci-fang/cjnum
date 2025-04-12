@@ -4,7 +4,10 @@ import std.unittest.*
 import std.unittest.testmacro.*
 import cjnum.blas.testblas.*
 
-let nFloat64Implementation = NFloat64Implementation()
+@Test
+public func testDdot() {
+    @Expect(ddotTest(nFloat64Implementation))
+}
 
 @Test
 public func testDnrm2() {

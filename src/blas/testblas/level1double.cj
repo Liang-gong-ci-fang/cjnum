@@ -1352,7 +1352,26 @@ public let doubleTwoVectorCases = [
     )
 ]
 
-// TODO ddotTest
+public func ddotTest(nFloat64: NFloat64): Bool {
+    for (c in doubleTwoVectorCases) {
+        dCopyTwoTmp(c.x, c.xTmp, c.y, c.yTmp)
+        if (c.exception) {
+            let f = { =>
+                nFloat64.ddot(c.n, c.xTmp, c.incx, c.yTmp, c.incy)
+                return 
+            }
+            if (!exception(f)) {
+                throw Exception("${c.name} should panic and does not")
+            }
+            continue
+        }
+        let dot = nFloat64.ddot(c.n, c.xTmp, c.incx, c.yTmp, c.incy)
+        if (!dTolEqual(dot, c.ddotAns)) {
+            throw Exception("ddot: mismatch ${c.name}: expected ${c.ddotAns}, found ${dot}")
+        }
+    }
+    return true
+}
 
 public func dnrm2Test(nFloat64: NFloat64): Bool {
     for (c in doubleOneVectorCases) {
