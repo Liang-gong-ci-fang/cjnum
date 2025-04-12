@@ -117,9 +117,9 @@ func sliceCopy(a: Array<Float64>): Array<Float64> {
     return Array<Float64>(a.size, { i => a[i] })
 }
 
-func flatten(a: Array<Array<Float64>>): ?Array<Float64> {
+func flatten(a: Array<Array<Float64>>): Array<Float64> {
     if (a.size == 0) {
-        return None
+        return []
     }
     let m = a.size
     let n = a[0].size

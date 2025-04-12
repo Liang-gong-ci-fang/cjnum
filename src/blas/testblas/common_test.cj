@@ -145,7 +145,7 @@ public func testFlattenBanded() {
     for (test in flattenBandedTests) {
         let condensed = flattenBanded(test.dense, test.ku, test.kl)
         let correct = flatten(test.condensed)
-        @Expect(fSame(condensed, correct.getOrThrow()))
+        @Expect(fSame(condensed, correct))
         count++
     }
 }

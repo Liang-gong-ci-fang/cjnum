@@ -25,9 +25,23 @@ extend NFloat64Implementation <: NFloat64 {
             if (y.size < n) {
                 throw Exception(shortY)
             }
-            throw Exception("Not implemented") // TODO
+            dotUnitary(x[..n], y[..n])
         }
-        throw Exception("Not implemented")
+        var ix = 0
+        var iy = 0
+        if (incX < 0) {
+            ix = (-n + 1) * incX
+        }
+        if (incY < 0) {
+            iy = (-n + 1) *incY
+        }
+        if (ix > x.size || ix + (n - 1) * incX >= x.size) {
+            throw Exception(shortX)
+        }
+        if (iy > y.size || iy + (n - 1) * incY >= y.size) {
+            throw Exception(shortX)
+        }
+        return dotInc(x, y, n, incX, incY, ix, iy)
     }
     
     public func dnrm2(n: Int64, x: Array<Float64>, incX: Int64): Float64 {
