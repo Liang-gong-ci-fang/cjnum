@@ -10,4 +10,8 @@ public class NFloat64Implementation {}
 
 let nFloat64Implementation = NFloat64Implementation()
 
-// TODO 
+func blocks(dim: Int64, bsize: Int64): Int64 {
+    return (dim + bsize - 1) / bsize
+}
+
+// TODO
