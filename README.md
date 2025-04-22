@@ -103,11 +103,11 @@ let nFloat64 = NFloat64Implementation()
 
 let x = [10.0, 15.0, -6.0, 3.0, 14.0, 7.0]
 let y = [8.0, -2.0, 4.0, 7.0, 6.0, -3.0]
-let incx = 1
-let incy = 1
+let incX = 1
+let incX = 1
 let n = 6
 
-let dot = nFloat64.ddot(n, x, incx, y, y)
+let dot = nFloat64.ddot(n, x, incX, y, incX)
 // result: dot = 110.0
 ```
 
