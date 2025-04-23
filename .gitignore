@@ -1,0 +1,13 @@
+.cache/
+.vscode/
+target/
+cjpm.lock
+.idea/
+*.macrocall
+tmp*
+.devbrain/
+cov_output/
+reports/
+*.gcda
+.arts/
+.DS_Store
