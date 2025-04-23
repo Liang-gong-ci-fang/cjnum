@@ -107,7 +107,7 @@ let incX = 1
 let incX = 1
 let n = 6
 
-let dot = nFloat64.ddot(n, x, incX, y, incX)
+let dot = nFloat64.ddot(n, x, incX, y, incY)
 // result: dot = 110.0
 ```
 
