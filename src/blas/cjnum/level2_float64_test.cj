@@ -5,13 +5,19 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 
-// TODO testDger
+@Test
+public func testDger(): Unit {
+    @Expect(dgerTest(nFloat64Implementation))
+}
 
 @Test func testDgbmv(): Unit {
     @Expect(dgbmvTest(nFloat64Implementation))
 }
 
-// TODO testDgemv
+@Test
+public func testDgemv(): Unit {
+    @Expect(dgemvTest(nFloat64Implementation))
+}
 
 @Test
 public func testDtrmv(): Unit {
