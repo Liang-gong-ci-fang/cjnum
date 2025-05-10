@@ -146,7 +146,7 @@ public class BenchmarkL2NormNetlibTestClass {
     @Strategy[ln in benchmarkSizes]
     func xSlice(ln: Int64): Array<Float64> {
         let num = randomSlice(1, 1)[0]
-        var x = Array(ln) { i => Float64(i) }
+        let x = Array(ln) { i => Float64(i) }
         x[0] = num
         return x[..ln]
     }

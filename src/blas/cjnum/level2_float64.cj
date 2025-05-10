@@ -40,7 +40,8 @@ extend NFloat64Implementation {
         if (alpha == 0.0) {
             return 
         }
-        // TODO
+        
+        ger(m, n, alpha, x, incX, y, incY, a, lda)
     }
 
     public func dgbmv(tA: Transpose, m: Int64, n: Int64, kL: Int64, kU: Int64, alpha: Float64, a: Array<Float64>, lda: Int64,
@@ -257,7 +258,11 @@ extend NFloat64Implementation {
             return  
         }
 
-        // TODO
+        if (tA == NoTrans) {
+            gemvN(m, n, alpha, a, lda, x, incX, beta, y, incY)
+            return 
+        }
+        gemvT(m, n, alpha, a, lda, x, incX, beta, y, incY)
     }
     
     public func dtrmv(ul: Uplo, tA: Transpose, d: Diag, n: Int64, a: Array<Float64>, lda: Int64, x: Array<Float64>, incX: Int64): Unit {
