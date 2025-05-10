@@ -2,6 +2,7 @@ package cjnum.lapack.testlapack
 
 import std.math.*
 import std.random.*
+import std.collection.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.blas.blas64.General as General64
@@ -101,6 +102,116 @@ func randomGeneral(r: Int64, c: Int64, stride: Int64, rnd: Random): General64 {
     return ans
 }
 
+func randomHessenberg(n: Int64, stride: Int64, rnd: Random): General64 {
+    let ans = nanGeneral(n, n, stride)
+    for (i in 0..n) {
+        for (j in 0..i - 1) {
+            ans.data[i * ans.stride + j] = 0.0
+        }
+        for (j in max(0, n - 1)..n) {
+            ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
+        }
+    }
+    return ans
+}
+
+func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (General64, Array<Float64>, Array<Float64>) {
+    let t = randomGeneral(n, n, stride, rnd)
+    let wr = ArrayList<Float64>()
+    let wi = ArrayList<Float64>()
+
+    for (i in 0..t.rows) {
+        for (j in 0..=i) {
+            t.data[i * t.stride + j] = 0.0
+        }
+    }
+    var i = 0
+    while (i < t.rows) {
+        var a = rnd.nextGaussianFloat64()
+        if (bad && rnd.nextFloat64() < 0.5) {
+            if (rnd.nextFloat64() < 0.5) {
+                a = dlamchS
+            } else {
+                a = 0.0
+            }
+        }
+
+        if (rnd.nextFloat64() < 0.5 || i == t.rows - 1) {
+            t.data[i * t.stride + i] = a
+            wr.append(a)
+            wi.append(0.0)
+            i++
+            continue
+        }
+
+        let d = a
+        var c = rnd.nextGaussianFloat64()
+        let b = if (bad && rnd.nextFloat64() < 0.5) {
+            dlamchS
+        } else {
+            rnd.nextGaussianFloat64()
+        }
+        if (signbit(b) == signbit(c)) {
+            c *= -1.0
+        }
+
+        t.data[i * t.stride + i] = a
+        t.data[i * t.stride + i + 1] = b
+        t.data[(i + 1) * t.stride + i] = c
+        t.data[(i + 1) * t.stride + i + 1] = d
+
+        wr.appendAll([a, a])
+        let im = sqrt(abs(b)) * sqrt(abs(c))
+        wi.appendAll([im, -im])
+        i += 2
+    }
+    return (t, wr.toArray(), wi.toArray())
+}
+
+func blockedUpperTriGeneral(r: Int64, c: Int64, k: Int64, l: Int64, stride: Int64, kblock: Bool, rnd: Random): General64 {
+    var t = l
+    if (kblock) {
+        t += k
+    }
+    let ans = zeros(r, c, stride)
+    for (i in 0..min(r, t)) {
+        var v = 0.0
+        while (v == 0.0) {
+            v = rnd.nextGaussianFloat64()
+        }
+        ans.data[i * ans.stride + i + (c - t)] = v
+    }
+    for (i in 0..min(r, t)) {
+        for (j in i + (c - t) + 1..c) {
+            ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
+        }
+    }
+    return ans
+}
+
+func nanTriangular(uplo: Uplo, n: Int64, stride: Int64): Triangular {
+    if (n < 0) {
+        throw Exception("bad matrix size")
+    }
+    if (n == 0) {
+        return Triangular(
+            stride: max(1, stride),
+            uplo: uplo,
+            diag: NonUnitDiag
+        )
+    }
+    if (stride < 0) {
+        throw Exception("bad stride")
+    }
+    return Triangular(
+        n: n,
+        stride: stride,
+        data: nanSlice((n - 1) * stride + n),
+        uplo: uplo,
+        diag: NonUnitDiag
+    )
+}
+
 func generalOutsideAllNaN(a: General64): Bool {
     for (i in 0..a.rows - 1) {
         for (v in a.data[i * a.stride + a.cols..i * a.stride + a.stride]) {
@@ -120,6 +231,345 @@ func generalOutsideAllNaN(a: General64): Bool {
         }
     }
     return true
+}
+
+func triangularOutsideAllNaN(a: Triangular): Bool {
+    if (a.uplo == Upper) {
+        for (i in 0..a.n) {
+            for (v in a.data[i * a.stride..i * a.stride + i]) {
+                if (!v.isNaN()) {
+                    return false
+                }
+            }
+        } 
+
+        for (i in 0..a.n - 1) {
+            for (v in a.data[i * a.stride + a.n..i * a.stride + a.stride]) {
+                if (!v.isNaN()) {
+                    return false
+                }
+            }
+        }
+    } else {
+        for (i in 0..a.n - 1) {
+            for (v in a.data[i * a.stride + a.n..i * a.stride + a.stride]) {
+                if (!v.isNaN()) {
+                    return false
+                }
+            }
+        }
+    }
+
+    for (v in a.data[max(0, a.n - 1) * a.stride + a.n..]) {
+        if (!v.isNaN()) {
+            return false
+        }
+    }
+    return true
+}
+
+func transposeGeneral(a: General64): General64 {
+    let ans = General64(
+        rows: a.cols,
+        cols: a.rows,
+        stride: a.rows,
+        data: Array<Float64>(a.cols * a.rows, item: 0.0)
+    )
+    for (i in 0..a.rows) {
+        for (j in 0..a.cols) {
+            ans.data[j * ans.stride + i] = a.data[i * a.stride + j]
+        }
+    }
+    return ans
+}
+
+func columnNorms(m: Int64, n: Int64, a: Array<Float64>, lda: Int64): Array<Float64> {
+    let nFloat64 = nFloat64Implementation()
+    return Array<Float64>(n, { j => nFloat64.dnrm2(m, a[j..], lda) })
+}
+
+func extractVMat(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, direct: Direct, store: StoreV): General64 {
+    let k = min(m, n)
+    if (direct == Forward && store == ColumnWise) {
+        let v = General64(
+            rows: m,
+            cols: k,
+            stride: k,
+            data: Array<Float64>(m * k, item: 0.0)
+        )
+        for (i in 0..k) {
+            for (j in 0..i) {
+                v.data[j * v.stride + i] = 0.0
+            }
+            v.data[i * v.stride + i] = 1.0
+            for (j in i + 1..m) {
+                v.data[j * v.stride + i] = a[j * lda + i]
+            }
+        }
+        return v
+    } else if (direct == Forward && store == RowWise) {
+        let v = General64(
+            rows: k,
+            cols: n,
+            stride: n,
+            data: Array<Float64>(k * n, item: 0.0)
+        )
+        for (i in 0..k) {
+            for (j in 0..i) {
+                v.data[i * v.stride + j] = 0.0
+            }
+            v.data[i * v.stride + i] = 1.0
+            for (j in i + 1..n) {
+                v.data[i * v.stride + j] = a[i * lda + j]
+            }
+        }
+        return v
+    } else {
+        throw Exception("not implemented")
+    }
+}
+
+func constructBidiagonal(uplo: Uplo, n: Int64, d: Array<Float64>, e: Array<Float64>): General64 {
+    let bMat = General64(
+        rows: n,
+        cols: n,
+        stride: n,
+        data: Array<Float64>(n * n, item: 0.0)
+    )
+
+    for (i in 0..n - 1) {
+        bMat.data[i * bMat.stride + i] = d[i]
+        if (uplo == Upper) {
+            bMat.data[i * bMat.stride + i + 1] = e[i]
+        } else {
+            bMat.data[(i + 1) * bMat.stride + i] = e[i]
+        }
+    }
+    bMat.data[(n - 1) * bMat.stride + n - 1] = d[n - 1]
+    return bMat
+}
+
+func constructVMat(vMat: General64, store: StoreV, direct: Direct): General64 {
+    let m = vMat.rows
+    let k = vMat.cols
+    if (store == ColumnWise && direct == Forward) {
+        let ldv = k
+        let v = Array<Float64>(m * k, item: 0.0)
+        for (i in 0..m) {
+            for (j in 0..k) {
+                if (j > i) {
+                    v[i * ldv + j] = 0.0
+                } else if (j == i) {
+                    v[i * ldv + i] = 1.0
+                } else {
+                    v[i * ldv + j] = vMat.data[i * vMat.stride + j]
+                }
+            }
+        }
+        return General64(
+            rows: m,
+            cols: k,
+            stride: k,
+            data: v
+        )
+    } else if (store == RowWise && direct == Forward) {
+        let ldv = m
+        let v = Array<Float64>(m * k, item: 0.0)
+        for (i in 0..m) {
+            for (j in 0..k) {
+                if (j > i) {
+                    v[j * ldv + i] = 0.0
+                } else if (j == i) {
+                    v[j * ldv + i] = 1.0
+                } else {
+                    v[j * ldv + i] = vMat.data[i * vMat.stride + j]
+                }
+            }
+        }
+        return General64(
+            rows: k,
+            cols: m,
+            stride: m,
+            data: v
+        )
+    } else if (store == ColumnWise && direct == Backward) {
+        let rowsv = m
+        let ldv = k
+        let v = Array<Float64>(m * k, item: 0.0)
+        for (i in 0..m) {
+            for (j in 0..k) {
+                let vrow = rowsv - i - 1
+                let vcol = k - j - 1
+                if (j > i) {
+                    v[vrow * ldv + vcol] = 0.0
+                } else if (j == i) {
+                    v[vrow * ldv + vcol] = 1.0
+                } else {
+                    v[vrow * ldv + vcol] = vMat.data[i * vMat.stride + j]
+                }
+            }
+        }
+        return General64(
+            rows: rowsv,
+            cols: ldv,
+            stride: ldv,
+            data: v
+        )
+    } else if (store == RowWise && direct == Backward) {
+        let rowsv = k
+        let ldv = m
+        let v = Array<Float64>(m * k, item: 0.0)
+        for (i in 0..m) {
+            for (j in 0..k) {
+                let vcol = ldv - i - 1
+                let vrow = k - j - 1
+                if (j > i) {
+                    v[vrow * ldv + vcol] = 0.0
+                } else if (j == i) {
+                    v[vrow * ldv + vcol] = 1.0
+                } else {
+                    v[vrow * ldv + vcol] = vMat.data[i * vMat.stride + j]
+                }
+            }
+        }
+        return General64(
+            rows: rowsv,
+            cols: ldv,
+            stride: ldv,
+            data: v
+        )
+    } else {
+        throw Exception("not implemented")
+    }
+}
+
+func constructH(tau: Array<Float64>, v: General64, store: StoreV, direct: Direct): General64 {
+    let (m, k) = if (store == RowWise) {
+        (v.cols, v.rows)
+    } else {
+        (v.rows, v.cols)
+    }
+    let h = General64(
+        rows: m,
+        cols: m,
+        stride: m,
+        data: Array<Float64>(m * m, item: 0.0)
+    )
+    for (i in 0..m) {
+        h.data[i * m + i] = 1.0
+    }
+    for (i in 0..k) {
+        let vecData = Array<Float64>(m, item: 0.0)
+        if (store == ColumnWise) {
+            for (j in 0..m) {
+                vecData[j] = v.data[j * v.cols + i]
+            }
+        } else {
+            for (j in 0..m) {
+                vecData[j] = v.data[i * v.cols + j]
+            }
+        }
+        let vec = Vector(
+            inc: 1,
+            data: vecData
+        )
+
+        let hi = General64(
+            rows: m,
+            cols: m,
+            stride: m,
+            data: Array<Float64>(m * m, item: 0.0)
+        )
+        for (i in 0..m) {
+            hi.data[i * m + i] = 1.0
+        }
+        ger(-tau[i], vec, vec, hi)
+
+        let hcopy = General64(
+            rows: m,
+            cols: m,
+            stride: m,
+            data: Array<Float64>(m * m, item: 0.0)
+        )
+        copy(hcopy.data, h.data)
+        if (direct == Forward) {
+            gemm(NoTrans, NoTrans, 1.0, hcopy, hi, 0.0, h)
+        } else {
+            gemm(NoTrans, NoTrans, 1.0, hi, hcopy, 0.0, h)
+        }
+    }
+    return h
+}
+
+func constructQ(kind: String, m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>): General64 {
+    let k = min(m, n)
+    return constructQK(kind, m, n, k, a, lda, tau)
+}
+
+func constructQK(kind: String, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>): General64 {
+    let sz = if (kind == "QR") {
+        m
+    } else if (kind == "LQ" || kind == "RQ") {
+        n
+    } else {
+        0
+    }
+
+    let q = General64(
+        rows: sz,
+        cols: sz,
+        stride: max(1, sz),
+        data: Array<Float64>(sz * sz, item: 0.0)
+    )
+    for (i in 0..k) {
+        q.data[i * sz + i] = 1.0
+    }
+    let qCopy = General64(
+        rows: q.rows,
+        cols: q.cols,
+        stride: q.stride,
+        data: Array<Float64>(q.data.size, item: 0.0)
+    )
+    for (i in 0..k) {
+        let h = General64(
+            rows: sz,
+            cols: sz,
+            stride: max(1, sz),
+            data: Array<Float64>(sz * sz, item: 0.0)
+        )
+        for (j in 0..sz) {
+            h.data[j * sz + j] = 1.0
+        }
+        let vVec = Vector(
+            inc: 1,
+            data: Array<Float64>(sz, item: 0.0)
+        )
+        if (kind == "QR") {
+            vVec.data[i] = 1.0
+            for (j in i + 1..sz) {
+                vVec.data[j] = a[j * lda + i]
+            }
+        } else if (kind == "LQ") {
+            vVec.data[i] = 1.0
+            for (j in i + 1..sz) {
+                vVec.data[j] = a[i * lda + j]
+            }
+        } else if (kind == "RQ") {
+            for (j in 0..n - k + i) {
+                vVec.data[j] = a[(m - k + i) * lda + j]
+            }
+            vVec.data[n - k + i] = 1.0
+        }
+
+        ger(-tau[i], vVec, vVec, h)
+        copy(qCopy.data, q.data)
+        if (kind == "QR" || kind == "RQ") {
+            gemm(NoTrans, NoTrans, 1.0, qCopy, h, 0.0, q)
+        } else if (kind == "LQ") {
+            gemm(NoTrans, NoTrans, 1.0, h, qCopy, 0.0, q)
+        }
+    }
+    return q
 }
 
 func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
@@ -197,4 +647,8 @@ func perm(n: Int64, rnd: Random): Array<Int64> {
 func copysign(f: Float64, sign: Float64): Float64 {
     const signBit: UInt64 = 1 << 63
     return Float64.fromBits((f.toBits() & (!signBit)) | sign.toBits() & signBit)
+}
+
+func signbit(x: Float64): Bool {
+    return (x.toBits() & (1 << 63)) != 0
 }
