@@ -53,6 +53,42 @@ public func testDlaswp(): Unit {
 }
 
 @Test
+@Parallel
+public func testDlartf(): Unit {
+    @Expect(dlartgTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlas2(): Unit {
+    @Expect(dlas2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlae2(): Unit {
+    @Expect(dlae2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlacpy(): Unit {
+    @Expect(dlacpyTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlansy(): Unit {
+    @Expect(dlansyTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testIladlc(): Unit {
+    @Expect(iladlcTest(lFloat64Implementation))
+}
+
+@Test
 @Skip
 public func testDtrtri(): Unit {
     @Expect(dtrtriTest(lFloat64Implementation))
