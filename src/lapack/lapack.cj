@@ -62,8 +62,8 @@ public interface LFloat64 {
     func dtrtrs(uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, nrhs: Int64, a: Array<Float64>, lda: Int64,
         b: Array<Float64>, ldb: Int64): Bool
 
-	func drscl(n: Int64, a: Float64, x: Array<Float64>, incX: Int64): Unit
-	func dlassq(n: Int64, x: Array<Float64>, incX: Int64, scale: Float64, sumsq: Float64): (Float64, Float64)
+    func drscl(n: Int64, a: Float64, x: Array<Float64>, incX: Int64): Unit
+    func dlassq(n: Int64, x: Array<Float64>, incX: Int64, scale: Float64, sumsq: Float64): (Float64, Float64)
     func dlatrs(uplo: Uplo, trans: Transpose, diag: Diag, normin: Bool, n: Int64, a: Array<Float64>, lda: Int64,
         x: Array<Float64>, cnorm: Array<Float64>): Float64
     func dlacn2(n: Int64, v: Array<Float64>, x: Array<Float64>, isgn: Array<Int64>, est: Float64, kase: Int64,
@@ -76,6 +76,18 @@ public interface LFloat64 {
     func dlae2(a: Float64, b: Float64, c: Float64): (Float64, Float64)
     func dlacpy(uplo: Uplo, m: Int64, n: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64): Unit
     func iladlc(m: Int64, n: Int64, a: Array<Float64>, lda: Int64): Int64
+    func iladlr(m: Int64, n: Int64, a: Array<Float64>, lda: Int64): Int64
+    func dlaset(uplo: Uplo, m: Int64, n: Int64, alpha: Float64, beta: Float64, a: Array<Float64>, lda: Int64): Unit
+    func dlaqr1(n: Int64, h: Array<Float64>, ldh: Int64, sr1: Float64, si1: Float64, sr2: Float64, si2: Float64,
+        v: Array<Float64>): Unit
+    func dptts2(n: Int64, nrhs: Int64, d: Array<Float64>, e: Array<Float64>, b: Array<Float64>, ldb: Int64): Unit
+    func dpttrs(n: Int64, nrhs: Int64, d: Array<Float64>, e: Array<Float64>, b: Array<Float64>, ldb: Int64): Unit
+    func dpttrf(n: Int64, d: Array<Float64>, e: Array<Float64>): Bool
+    func dlarfg(n: Int64, alpha: Float64, x: Array<Float64>, incX: Int64): (Float64, Float64)
+    func dlarf(side: Side, m: Int64, n: Int64, v: Array<Float64>, incv: Int64, tau: Float64, c: Array<Float64>,
+        ldc: Int64, work: Array<Float64>): Unit
+    func dlanhs(norm: MatrixNorm, n: Int64, a: Array<Float64>, lda: Int64, work: Array<Float64>): Float64
+    func dgeql2(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
 }
 
 type Direct = UInt8

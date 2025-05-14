@@ -29,5 +29,24 @@ public class Complex128 {
     public operator func -(right: Complex128) {
         return Complex128((this.real - right.real), (this.imag - right.imag))
     }
+
+    public operator func +(right: Complex128) {
+        return Complex128((this.real + right.real), (this.imag + right.imag))
+    }
+
+    public operator func *(right: Complex128) {
+        return Complex128(
+            (this.real * right.real - this.imag * right.imag), 
+            (this.real * right.imag + this.imag * right.real)
+        )
+    }
+
+    public operator func /(right: Complex128) {
+        let denominator = right.real * right.real + right.imag * right.imag
+        return Complex128(
+            (this.real * right.real + this.imag * right.imag) / denominator,
+            (this.imag * right.real - this.real * right.imag) / denominator
+        )
+    }
     // TODO: add more operators and functions
 }
