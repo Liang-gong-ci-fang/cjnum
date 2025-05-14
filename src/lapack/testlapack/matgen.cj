@@ -326,4 +326,27 @@ func checkMatrix(m: Int64, n: Int64, a: Array<Float64>, lda: Int64) {
     }
 }
 
+func newRandomSymTridiag(n: Int64, rnd: Random): (Array<Float64>, Array<Float64>) {
+    if (n == 0) {
+        return ([], [])
+    }
+    if (n == 1) {
+        let d = Array<Float64>(1, { _ => rnd.nextFloat64() })
+        return (d, [])
+    }
+
+    let d = Array<Float64>(n, item: 0.0)
+    dlarnv(d, 1, rnd)
+    let e = Array<Float64>(n - 1, item: 0.0)
+    dlarnv(e, 2, rnd)
+
+    d[0] += abs(e[0])
+    for (i in 1..n - 1) {
+        d[i] += abs(e[i]) + abs(e[i - 1])
+    }
+    d[n - 1] += abs(e[n - 2])
+
+    return (d, e)
+}
+
 // TODO

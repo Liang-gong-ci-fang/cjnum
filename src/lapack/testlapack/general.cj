@@ -7,6 +7,7 @@ import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.blas.blas64.General as General64
 import cjnum.lapack.*
+import cjnum.complex.*
 
 const dlamchE = 0x1p-53
 const dlamchB = 2.0
@@ -61,6 +62,17 @@ func uploToString(uplo: Uplo): String {
         throw Exception("invalid uplo")
     }
 }
+
+func sideToString(side: Side): String {
+	return if (side == Left) {
+        "Left"
+    } else if (side == Right) {
+        "Right"
+    } else {
+        throw Exception("invalid side")
+    }
+}
+
 
 func nanSlice(n : Int64): Array<Float64> {
     return Array<Float64>(n, { _ => 
@@ -628,6 +640,32 @@ func rCondTestRatio(rcond: Float64, rcondc: Float64): Float64 {
     }
 }
 
+func residualOrthogonal(q: General64, rowwise: Bool): Float64 {
+	let (m, n) = (q.rows, q.cols)
+	if (m == 0 || n == 0) {
+		return 0.0
+	}
+	let transq = if (m < n || (m == n && rowwise)) {
+		NoTrans
+	} else {
+		Trans
+	}
+	let minmn = min(m, n)
+
+	let work = Symmetric(
+		uplo:   Upper,
+		n:      minmn,
+		data:   Array<Float64>(minmn * minmn, item: 0.0),
+		stride: minmn,
+    )
+	for (i in 0..minmn) {
+		work.data[i * work.stride + i] = 1.0
+	}
+
+	syrk(transq, -1.0, q, 1.0, work)
+	return dlansy(MaxColumnSum, Upper, work.n, work.data, work.stride)
+}
+
 func perm(n: Int64, rnd: Random): Array<Int64> {
     let a = Array<Int64>(n, { i => i })
 
@@ -651,4 +689,35 @@ func copysign(f: Float64, sign: Float64): Float64 {
 
 func signbit(x: Float64): Bool {
     return (x.toBits() & (1 << 63)) != 0
+}
+
+func real(x: Complex128): Float64 {
+    return x.real
+}
+
+func hypot(p: Float64, q: Float64): Float64 {
+    var p_ = abs(p)
+    var q_ = abs(q)
+
+    if (p_ == Float64.Inf || q_ == Float64.Inf) {
+        return Float64.Inf
+    }
+
+    if (p_.isNaN() || q_.isNaN()) {
+        return Float64.NaN
+    }
+
+    if (p_ < q_) {
+        let tmp = p_
+        p_ = q_
+        q_ = tmp
+    }
+
+    if (p_ == 0.0) {
+        return 0.0
+    }
+
+    q_ = q_ / p_
+    
+    return p_ * sqrt(1.0 + pow(q_, 2))
 }
