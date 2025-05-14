@@ -22,10 +22,14 @@ public class Complex128 {
         return this.real.isNaN() || this.imag.isNaN()
     }
 
+    public func conj(): Complex128 {
+        return Complex128(this.real, -this.imag)
+    }
+
     public operator func !=(right: Complex128) {
         return this.real != right.real || this.imag != right.imag
     }
-    
+
     public operator func -(right: Complex128) {
         return Complex128((this.real - right.real), (this.imag - right.imag))
     }
@@ -36,7 +40,7 @@ public class Complex128 {
 
     public operator func *(right: Complex128) {
         return Complex128(
-            (this.real * right.real - this.imag * right.imag), 
+            (this.real * right.real - this.imag * right.imag),
             (this.real * right.imag + this.imag * right.real)
         )
     }
