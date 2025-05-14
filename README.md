@@ -99,7 +99,10 @@ cjpm build
 #### 3.2.1 求向量的点积
 
 ```cangjie
-let nFloat64 = NFloat64Implementation()
+import cjnum.blas.*
+import cjnum.blas.blas64.*
+
+let nFloat64 = nFloat64Implementation()
 
 let x = [10.0, 15.0, -6.0, 3.0, 14.0, 7.0]
 let y = [8.0, -2.0, 4.0, 7.0, 6.0, -3.0]
@@ -114,7 +117,10 @@ let dot = nFloat64.ddot(n, x, incX, y, incY)
 #### 3.2.2 三角矩阵乘向量
 
 ```cangjie
-let nFloat64 = NFloat64Implementation()
+import cjnum.blas.*
+import cjnum.blas.blas64.*
+
+let nFloat64 = nFloat64Implementation()
 
 let n = 3
 let a = [
@@ -126,20 +132,19 @@ let x = [3.0, 4.0, 5.0]
 let d = NonUnitDiag // 对角元素不全为1
 let ul = Lower      // 下三角矩阵
 let tA = Trans      // 取矩阵 a 的转置
-let ans = [74.0, 86.0, 65.0]
 let incX = 1   // 步长
-let extra = 3  // 额外填充
 
-let aFlat = flatten(a)  // 将矩阵 a 扁平化，得到[5, 6, 7, 0, 9, 10, 0, 0, 13]
-let x = makeIncremented(x, incX, extra) // 生成带步长（incX）和额外填充的向量
+let aFlat = flatten(a)  // 将矩阵 a 扁平化，得到[5, 0, 0, 6, 9, 0, 7, 10, 13]
 nFloat64.dtrmv(ul, tA, d, n, aFlat, n, x, incX)
-let ans = makeIncremented(ans, incX, extra)
-// result: ans = [74.0, 86.0, 65.0, 100.0, 101.0, 102.0]
+// result: x = [74.0, 86.0, 65.0]
 ```
 
 #### 3.2.3 通用矩阵乘法
 
 ```cangjie
+import cjnum.blas.*
+import cjnum.blas.blas64.*
+
 let nFloat64 = NFloat64Implementation()
 
 // m, n, k矩阵维度, a是m * k, b是k * n, c是m * n
@@ -175,7 +180,7 @@ let ldb = b[0].size
 let ldc = c[0].size
 
 nFloat64.dgemm(tA, tB, m, n, k, alpha, aFlat, lda, bFlat, ldb, beta, cFlat, ldc)
-// result: cFlat(ansFlat) = [24.0, -18.0, 39.5, 64.0, -32.0, 124.0, 94.5, -55.5, 219.5, 128.5, -78.5, 299.5]
+// result: cFlat = [24.0, -18.0, 39.5, 64.0, -32.0, 124.0, 94.5, -55.5, 219.5, 128.5, -78.5, 299.5]
 ```
 
 ## <img alt="" src="./doc/readme-image/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 4 参与贡献
