@@ -1118,7 +1118,7 @@ func dgemmSerial(aTrans: Bool, bTrans: Bool, m: Int64, n: Int64, k: Int64, a: Ar
     }
 }
 
-func dgemmSerialNotNot(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
+func dgemmSerialNotNot(m: Int64, n: Int64, k: Int64,  a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
     for (i in 0..m) {
         let atmp = a[i * lda..i * lda + k]
         let ctmp = c[i * ldc..i * ldc + n]
