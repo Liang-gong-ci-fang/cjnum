@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "gonum",
+        "License": "BSD 3-Clause "New" or "Revised" License",
+        "License File": "LICENSE",
+        "Version Number": "0.15.1",
+        "Owner" : "gonum.org",
+        "Upstream URL": "https://github.com/gonum/gonum",
+        "Description": "Gonum is a set of numeric libraries for the Go programming language. It contains libraries for matrices, statistics, optimization, and more"
+    }
+]
