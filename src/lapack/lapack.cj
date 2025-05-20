@@ -88,6 +88,8 @@ public interface LFloat64 {
         ldc: Int64, work: Array<Float64>): Unit
     func dlanhs(norm: MatrixNorm, n: Int64, a: Array<Float64>, lda: Int64, work: Array<Float64>): Float64
     func dgeql2(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
+    func dlanv2(a: Float64, b: Float64, c: Float64, d: Float64): (Float64, Float64, Float64, Float64, Float64, Float64, 
+        Float64, Float64, Float64, Float64)
 }
 
 type Direct = UInt8
