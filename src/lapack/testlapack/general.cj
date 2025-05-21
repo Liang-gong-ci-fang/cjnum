@@ -12,19 +12,17 @@ import cjnum.complex.*
 const dlamchE = 0x1p-53
 const dlamchB = 2.0
 const dlamchP = dlamchB * dlamchE
-
 const dlamchS = 0x1p-1022
-
 const safmin = dlamchS
 const safmax = 1.0 / safmin
-const ulp    = dlamchP
+const ulp = dlamchP
 const smlnum = safmin / ulp
 const bignum = safmax * ulp
 
 type worklen = Int64
 
 const minimumWork: worklen = 0
-const mediumWork:  worklen = 1
+const mediumWork: worklen = 1
 const optimumWork: worklen = 2
 
 func worklenTOString(work: worklen): String {
@@ -51,7 +49,7 @@ func normToString(norm: MatrixNorm): String {
     } else {
         throw Exception("invalid norm")
     }
-} 
+}
 
 func uploToString(uplo: Uplo): String {
     return if (uplo == Lower) {
@@ -64,7 +62,7 @@ func uploToString(uplo: Uplo): String {
 }
 
 func sideToString(side: Side): String {
-	return if (side == Left) {
+    return if (side == Left) {
         "Left"
     } else if (side == Right) {
         "Right"
@@ -73,17 +71,22 @@ func sideToString(side: Side): String {
     }
 }
 
-
-func nanSlice(n : Int64): Array<Float64> {
-    return Array<Float64>(n, { _ => 
-        Float64.NaN
-    })
+func nanSlice(n: Int64): Array<Float64> {
+    return Array<Float64>(
+        n,
+        {
+            _ => Float64.NaN
+        }
+    )
 }
 
 func randomSlice(n: Int64, rnd: Random): Array<Float64> {
-    return Array<Float64>(n, { _ =>
-        rnd.nextFloat64()
-    })
+    return Array<Float64>(
+        n,
+        {
+            _ => rnd.nextFloat64()
+        }
+    )
 }
 
 func nanGeneral(r: Int64, c: Int64, stride: Int64): General64 {
@@ -253,7 +256,7 @@ func triangularOutsideAllNaN(a: Triangular): Bool {
                     return false
                 }
             }
-        } 
+        }
 
         for (i in 0..a.n - 1) {
             for (v in a.data[i * a.stride + a.n..i * a.stride + a.stride]) {
@@ -297,7 +300,7 @@ func transposeGeneral(a: General64): General64 {
 
 func columnNorms(m: Int64, n: Int64, a: Array<Float64>, lda: Int64): Array<Float64> {
     let nFloat64 = nFloat64Implementation()
-    return Array<Float64>(n, { j => nFloat64.dnrm2(m, a[j..], lda) })
+    return Array<Float64>(n, {j => nFloat64.dnrm2(m, a[j..], lda)})
 }
 
 func extractVMat(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, direct: Direct, store: StoreV): General64 {
@@ -584,6 +587,213 @@ func constructQK(kind: String, m: Int64, n: Int64, k: Int64, a: Array<Float64>, 
     return q
 }
 
+func checkBidiagonal(lFloat64: LFloat64, m: Int, n: Int, nb: Int, a: Array<Float64>, lda: Int, d: Array<Float64>,
+    e: Array<Float64>, tauP: Array<Float64>, tauQ: Array<Float64>, aCopy: Array<Float64>): Unit {
+    let qMat = constructQPBidiagonal(ApplyQ, m, n, nb, a, lda, tauQ)
+    let pMat = constructQPBidiagonal(ApplyP, m, n, nb, a, lda, tauP)
+
+    var aMat = General64(
+        rows: m,
+        cols: n,
+        stride: lda,
+        data: Array<Float64>(aCopy.size, item: 0.0)
+    )
+    copy(aMat.data, aCopy)
+
+    var tmp1 = General64(
+        rows: m,
+        cols: n,
+        stride: n,
+        data: Array<Float64>(m * n, item: 0.0)
+    )
+    gemm(Trans, NoTrans, 1.0, qMat, aMat, 0.0, tmp1)
+    var tmp2 = General64(
+        rows: m,
+        cols: n,
+        stride: n,
+        data: Array<Float64>(m * n, item: 0.0)
+    )
+    gemm(NoTrans, NoTrans, 1.0, tmp1, pMat, 0.0, tmp2)
+
+    var correctDiag = true
+    var matchD = true
+    var matchE = true
+    for (i in 0..m) {
+        for (j in 0..n) {
+            if (i >= nb && j >= nb) {
+                continue
+            }
+            let v = tmp2.data[i * tmp2.stride + j]
+            if (i == j) {
+                if (abs(d[i] - v) > 1e-12) {
+                    matchD = false
+                }
+                continue
+            }
+            if (m >= n && i == j - 1) {
+                if (abs(e[j - 1] - v) > 1e-12) {
+                    matchE = false
+                }
+                continue
+            }
+            if (m < n && i - 1 == j) {
+                if (abs(e[i - 1] - v) > 1e-12) {
+                    matchE = false
+                }
+                continue
+            }
+            if (abs(v) > 1e-12) {
+                correctDiag = false
+            }
+        }
+    }
+
+    if (!correctDiag) {
+        throw Exception("Updated A not bi-diagonal")
+    }
+    if (!matchD) {
+        throw Exception("D Mismatch")
+    }
+    if (!matchE) {
+        throw Exception("E mismatch")
+    }
+}
+
+public func constructQPBidiagonal(vect: ApplyOrtho, m: Int, n: Int, nb: Int, a: Array<Float64>, lda: Int,
+    tau: Array<Float64>): General64 {
+    var sz = n
+    if (vect == ApplyQ) {
+        sz = m
+    }
+
+    var ldv: Int
+    var v: General64
+    if (vect == ApplyQ) {
+        ldv = nb
+        v = General64(
+            rows: m,
+            cols: nb,
+            stride: ldv,
+            data: Array<Float64>(m * ldv, item: 0.0)
+        )
+    } else {
+        ldv = n
+        v = General64(
+            rows: nb,
+            cols: n,
+            stride: ldv,
+            data: Array<Float64>(m * ldv, item: 0.0)
+        )
+    }
+
+    if (vect == ApplyQ) {
+        if (m >= n) {
+            for (i in 0..m) {
+                for (j in 0..min(nb - 1, i)) {
+                    if (i == j) {
+                        v.data[i * ldv + j] = 1.0
+                        continue
+                    }
+                    v.data[i * ldv + j] = a[i * lda + j]
+                }
+            }
+        } else {
+            for (i in 1..m) {
+                for (j in 0..min(nb - 1, i - 1)) {
+                    if (i - 1 == j) {
+                        v.data[i * ldv + j] = 1.0
+                        continue
+                    }
+                    v.data[i * ldv + j] = a[i * lda + j]
+                }
+            }
+        }
+    } else {
+        if (m < n) {
+            for (i in 0..nb) {
+                for (j in i..n) {
+                    if (i == j) {
+                        v.data[i * ldv + j] = 1.0
+                        continue
+                    }
+                    v.data[i * ldv + j] = a[i * lda + j]
+                }
+            }
+        } else {
+            for (i in 0..nb) {
+                for (j in i + 1..n) {
+                    if (j - 1 == i) {
+                        v.data[i * ldv + j] = 1.0
+                        continue
+                    }
+                    v.data[i * ldv + j] = a[i * lda + j]
+                }
+            }
+        }
+    }
+
+    var qMat = General64(
+        rows: sz,
+        cols: sz,
+        stride: sz,
+        data: Array<Float64>(sz * sz, item: 0.0)
+    )
+    var hMat = General64(
+        rows: sz,
+        cols: sz,
+        stride: sz,
+        data: Array<Float64>(sz * sz, item: 0.0)
+    )
+
+    for (i in 0..sz) {
+        qMat.data[i * qMat.stride + i] = 1.0
+    }
+
+    for (i in 0..nb) {
+        var qCopy = General64(rows: qMat.rows, cols: qMat.cols, stride: qMat.stride,
+            data: Array<Float64>(qMat.data.clone()))
+        copy(qCopy.data, qMat.data)
+
+        for (i in 0..sz) {
+            for (j in 0..sz) {
+                if (i == j) {
+                    hMat.data[i * sz + j] = 1.0
+                } else {
+                    hMat.data[i * sz + j] = 0.0
+                }
+            }
+        }
+
+        var vi: Vector
+
+        if (vect == ApplyQ) {
+            vi = Vector(
+                inc: v.stride,
+                data: v.data[i..]
+            )
+        } else {
+            vi = Vector(
+                inc: 1,
+                data: v.data[i * v.stride..]
+            )
+        }
+
+        ger(-tau[i], vi, vi, hMat)
+
+        gemm(NoTrans, NoTrans, 1.0, qCopy, hMat, 0.0, qMat)
+    }
+
+    return qMat
+}
+
+//TODO func printRowise(a []float64, m, n, lda int, beyond bool) {
+
+//TODO func copyGeneral(dst: General64, src: General64): Unit {  //TODO
+
+//TODO func cloneGeneral(a: General64): General64 {  //TODO
+
+//TODO func equalGeneral(a, b blas64.General) bool {
+
 func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
     if (a.rows != b.rows || a.cols != b.cols) {
         throw Exception("bad input")
@@ -599,6 +809,14 @@ func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
     return true
 }
 
+//TODO func intsEqual(a, b []int) bool {
+
+//TODO func randSymBand(uplo blas.Uplo, n, kd, ldab int, rnd *rand.Rand) []float64 {
+
+//TODO func distSymBand(uplo blas.Uplo, n, kd int, a []float64, lda int, b []float64, ldb int) float64 {
+
+//TODO func eye(n: Int, stride: Int): General64 {  //TODO
+
 func zeros(m: Int64, n: Int64, stride: Int64): General64 {
     let a = nanGeneral(m, n, stride)
     for (i in 0..m) {
@@ -608,6 +826,32 @@ func zeros(m: Int64, n: Int64, stride: Int64): General64 {
     }
     return a
 }
+
+//TODO func extract2x2Block(t []float64, ldt int) (a, b, c, d float64) {
+
+//TODO func isSchurCanonical(a, b, c, d float64) bool {
+
+//TODO func isSchurCanonicalGeneral(t blas64.General) bool {
+
+//TODO func schurBlockEigenvalues(a, b, c, d float64) (ev1, ev2 complex128) {
+
+//TODO func schurBlockSize(t blas64.General, i int) (size int, first bool) {
+
+//TODO func containsComplex(v: Array<Complex128>, z: Complex128, tol: Float64): (Bool, Int) {  //TODO
+
+//TODO func isAllNaN(x: Array<Float64>): Bool {  //TODO
+
+//TODO func isUpperHessenberg(h: General64): Bool {  //TODO
+
+//TODO func isUpperTriangular(a blas64.General) bool {
+
+//TODO func unbalancedSparseGeneral(m, n, stride int, nonzeros int, rnd *rand.Rand) blas64.General {
+
+//TODO func rootsOfUnity(n int) []complex128 {
+
+//TODO func constructGSVDresults(n, p, m, k, l int, a, b blas64.General, alpha, beta []float64) (zeroR, d1, d2 blas64.General) {
+
+//TODO func constructGSVPresults(n, p, m, k, l int, a, b blas64.General) (zeroA, zeroB blas64.General) {
 
 func distFromIdentity(n: Int64, a: Array<Float64>, lda: Int64): Float64 {
     var dist = 0.0
@@ -627,6 +871,14 @@ func distFromIdentity(n: Int64, a: Array<Float64>, lda: Int64): Float64 {
     return dist
 }
 
+//TODO func sameFloat64(a, b float64) bool {
+
+//TODO func sameLowerTri(n int, a []float64, lda int, b []float64, ldb int) bool {
+
+//TODO func sameUpperTri(n int, a []float64, lda int, b []float64, ldb int) bool {
+
+//TODO func svdJobString(job lapack.SVDJob) string {
+
 func rCondTestRatio(rcond: Float64, rcondc: Float64): Float64 {
     const eps = dlamchE
     return if (rcond > 0.0 && rcondc > 0.0) {
@@ -641,33 +893,33 @@ func rCondTestRatio(rcond: Float64, rcondc: Float64): Float64 {
 }
 
 func residualOrthogonal(q: General64, rowwise: Bool): Float64 {
-	let (m, n) = (q.rows, q.cols)
-	if (m == 0 || n == 0) {
-		return 0.0
-	}
-	let transq = if (m < n || (m == n && rowwise)) {
-		NoTrans
-	} else {
-		Trans
-	}
-	let minmn = min(m, n)
+    let (m, n) = (q.rows, q.cols)
+    if (m == 0 || n == 0) {
+        return 0.0
+    }
+    let transq = if (m < n || (m == n && rowwise)) {
+        NoTrans
+    } else {
+        Trans
+    }
+    let minmn = min(m, n)
 
-	let work = Symmetric(
-		uplo:   Upper,
-		n:      minmn,
-		data:   Array<Float64>(minmn * minmn, item: 0.0),
-		stride: minmn,
+    let work = Symmetric(
+        uplo: Upper,
+        n: minmn,
+        data: Array<Float64>(minmn * minmn, item: 0.0),
+        stride: minmn,
     )
-	for (i in 0..minmn) {
-		work.data[i * work.stride + i] = 1.0
-	}
+    for (i in 0..minmn) {
+        work.data[i * work.stride + i] = 1.0
+    }
 
-	syrk(transq, -1.0, q, 1.0, work)
-	return dlansy(MaxColumnSum, Upper, work.n, work.data, work.stride)
+    syrk(transq, -1.0, q, 1.0, work)
+    return dlansy(MaxColumnSum, Upper, work.n, work.data, work.stride)
 }
 
 func perm(n: Int64, rnd: Random): Array<Int64> {
-    let a = Array<Int64>(n, { i => i })
+    let a = Array<Int64>(n, {i => i})
 
     var i = n - 1
     while (i > 0) {
@@ -718,6 +970,6 @@ func hypot(p: Float64, q: Float64): Float64 {
     }
 
     q_ = q_ / p_
-    
+
     return p_ * sqrt(1.0 + pow(q_, 2))
 }
