@@ -137,6 +137,12 @@ public func testDlanv2(): Unit {
 }
 
 @Test
+@Parallel
+public func testDgebd2(): Unit {
+    @Expect(dgebd2Test(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))
