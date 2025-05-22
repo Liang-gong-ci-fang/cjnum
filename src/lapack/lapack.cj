@@ -92,6 +92,8 @@ public interface LFloat64 {
         Float64, Float64, Float64, Float64)
     func dgebd2(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, d: Array<Float64>, e: Array<Float64>,
         tauQ: Array<Float64>, tauP: Array<Float64>, work: Array<Float64>): Unit
+    func dlarfx(side: Side, m: Int64, n: Int64, v: Array<Float64>, tau: Float64, c: Array<Float64>, ldc: Int64,
+        work: Array<Float64>): Unit
 }
 
 type Direct = UInt8

@@ -143,6 +143,18 @@ public func testDgebd2(): Unit {
 }
 
 @Test
+@Parallel
+public func testDlarfx(): Unit {
+    @Expect(dlarfxTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDtrtrs(): Unit {
+    @Expect(dtrtrsTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))
