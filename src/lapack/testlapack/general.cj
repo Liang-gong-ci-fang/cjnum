@@ -37,6 +37,16 @@ func worklenTOString(work: worklen): String {
     }
 }
 
+func diagToString(diag: Diag): String {
+	if (diag == NonUnitDiag) {
+        return "NonUnitDiag"
+    } else if (diag == UnitDiag) {
+        return "UnitDiag"
+    } else {
+        throw Exception("invalid diag")
+    }
+}
+
 func normToString(norm: MatrixNorm): String {
     return if (norm == MaxAbs) {
         "MaxAbs"
