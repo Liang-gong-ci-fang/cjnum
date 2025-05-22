@@ -155,6 +155,36 @@ public func testDtrtrs(): Unit {
 }
 
 @Test
+@Parallel
+public func testDlansb(): Unit {
+    @Expect(dlansbTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlanst(): Unit {
+    @Expect(dlanstTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlantb(): Unit {
+    @Expect(dlantbTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlantr(): Unit {
+    @Expect(dlantrTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlasr(): Unit {
+    @Expect(dlasrTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))

@@ -94,6 +94,13 @@ public interface LFloat64 {
         tauQ: Array<Float64>, tauP: Array<Float64>, work: Array<Float64>): Unit
     func dlarfx(side: Side, m: Int64, n: Int64, v: Array<Float64>, tau: Float64, c: Array<Float64>, ldc: Int64,
         work: Array<Float64>): Unit
+    func dlansb(norm: MatrixNorm, uplo: Uplo, n: Int64, kd: Int64, ab: Array<Float64>, ldab: Int64, work: Array<Float64>): Float64
+    func dlanst(norm: MatrixNorm, n: Int64, d: Array<Float64>, e: Array<Float64>): Float64
+    func dlantb(norm: MatrixNorm, uplo: Uplo, diag: Diag, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
+        work: Array<Float64>): Float64
+    func dlasr(side: Side, pivot: Pivot, direct: Direct, m: Int64, n: Int64, c: Array<Float64>,
+        s: Array<Float64>, a: Array<Float64>, lda: Int64): Unit {
+    }
 }
 
 type Direct = UInt8
