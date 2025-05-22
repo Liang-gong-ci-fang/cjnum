@@ -16,7 +16,7 @@ public func axpyInc(alpha: Float64, x: Array<Float64>, y: Array<Float64>, n: Int
     iy: Int64): Unit {
     var ix_ = ix
     var iy_ = iy
-    for (i in 0..n) {
+    for (_ in 0..n) {
         y[iy_] += alpha * x[ix_]
         ix_ += incX
         iy_ += incY
@@ -28,7 +28,7 @@ public func axpyIncTo(dst: Array<Float64>, incDst: Int64, idst: Int64, alpha: Fl
     var ix_ = ix
     var iy_ = iy
     var idst_ = idst
-    for (i in 0..n) {
+    for (_ in 0..n) {
         dst[idst_] = alpha * x[ix_] + y[iy_]
         ix_ += incX
         iy_ += incY

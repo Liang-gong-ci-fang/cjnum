@@ -9,18 +9,15 @@ import cjnum.blas.blas64.*
 
 func dlarnv(dst: Array<Float64>, dist: Int64, rnd: Random): Unit {
     match (dist) {
-        case 1 => 
-            for (i in 0..dst.size) {
-                dst[i] = rnd.nextFloat64()
-            }
-        case 2 =>
-            for (i in 0..dst.size) {
-                dst[i] = 2.0 * rnd.nextFloat64() - 1.0
-            }
-        case 3 =>
-            for (i in 0..dst.size) {
-                dst[i] = rnd.nextGaussianFloat64()
-            }
+        case 1 => for (i in 0..dst.size) {
+            dst[i] = rnd.nextFloat64()
+        }
+        case 2 => for (i in 0..dst.size) {
+            dst[i] = 2.0 * rnd.nextFloat64() - 1.0
+        }
+        case 3 => for (i in 0..dst.size) {
+            dst[i] = rnd.nextGaussianFloat64()
+        }
         case _ => throw Exception("testlapack: invalid dist")
     }
 }
@@ -53,7 +50,7 @@ func dlattr(imat: Int64, uplo: Uplo, trans: Transpose, n: Int64, a: Array<Float6
     var diag: Diag = NonUnitDiag
 
     match (imat) {
-        case 7 => 
+        case 7 =>
             diag = UnitDiag
             if (uplo == Upper) {
                 for (i in 0..n) {
@@ -138,15 +135,13 @@ func dlattr(imat: Int64, uplo: Uplo, trans: Transpose, n: Int64, a: Array<Float6
                 }
             } else if (uplo == Lower) {
                 for (i in 0..n) {
-                    for (i in 0..n) {
-                        for (j in 0..i) {
-                            a[i * lda + j] = 0.0
-                        }
-                        if ((i & 0x2) == 0) {
-                            a[i * lda + i] = tiny
-                        } else {
-                            a[i * lda + i] = 1.0
-                        }
+                    for (j in 0..i) {
+                        a[i * lda + j] = 0.0
+                    }
+                    if ((i & 0x2) == 0) {
+                        a[i * lda + i] = tiny
+                    } else {
+                        a[i * lda + i] = 1.0
                     }
                 }
             }
@@ -298,8 +293,8 @@ func dlattr(imat: Int64, uplo: Uplo, trans: Transpose, n: Int64, a: Array<Float6
 
     if (trans == Trans) {
         if (uplo == Upper) {
-            for (j in 0.. n / 2) {
-                nFloat64.dswap(n - 2 * j - 1, a[j * lda+ j ..], 1, a[(j + 1) * lda + n - j - 1..], -lda)
+            for (j in 0..n / 2) {
+                nFloat64.dswap(n - 2 * j - 1, a[j * lda + j..], 1, a[(j + 1) * lda + n - j - 1..], -lda)
             }
         } else if (uplo == Lower) {
             for (j in 0..n / 2) {
@@ -331,7 +326,7 @@ func newRandomSymTridiag(n: Int64, rnd: Random): (Array<Float64>, Array<Float64>
         return ([], [])
     }
     if (n == 1) {
-        let d = Array<Float64>(1, { _ => rnd.nextFloat64() })
+        let d = Array<Float64>(1, {_ => rnd.nextFloat64()})
         return (d, [])
     }
 

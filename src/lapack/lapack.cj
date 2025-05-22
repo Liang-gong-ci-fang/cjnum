@@ -98,9 +98,8 @@ public interface LFloat64 {
     func dlanst(norm: MatrixNorm, n: Int64, d: Array<Float64>, e: Array<Float64>): Float64
     func dlantb(norm: MatrixNorm, uplo: Uplo, diag: Diag, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
         work: Array<Float64>): Float64
-    func dlasr(side: Side, pivot: Pivot, direct: Direct, m: Int64, n: Int64, c: Array<Float64>,
-        s: Array<Float64>, a: Array<Float64>, lda: Int64): Unit {
-    }
+    func dlasr(side: Side, pivot: Pivot, direct: Direct, m: Int64, n: Int64, c: Array<Float64>, s: Array<Float64>,
+        a: Array<Float64>, lda: Int64): Unit
 }
 
 type Direct = UInt8

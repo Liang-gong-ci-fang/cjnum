@@ -12,7 +12,7 @@ public func dotInc(x: Array<Float64>, y: Array<Float64>, n: Int, incX: Int, incY
     var sum: Float64 = 0.0
     var ix_ = ix
     var iy_ = iy
-    for (i in 0..n) {
+    for (_ in 0..n) {
         sum += y[iy_] * x[ix_]
         ix_ += incX
         iy_ += incY

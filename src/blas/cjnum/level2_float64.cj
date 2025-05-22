@@ -116,7 +116,7 @@ extend NFloat64Implementation {
             } else {
                 var iy = ky
                 if (beta == 0.0) {
-                    for (i in 0..incY) {
+                    for (_ in 0..incY) {
                         y[iy] = 0.0
                         iy += incY
                     }
@@ -659,7 +659,7 @@ extend NFloat64Implementation {
             } else {
                 var iy = ky
                 if (beta == 0.0) {
-                    for (i in 0..n) {
+                    for (_ in 0..n) {
                         y[iy] = 0.0
                         iy += incY
                     }
@@ -1440,7 +1440,7 @@ extend NFloat64Implementation {
             } else {
                 var iy = ky
                 if (beta == 0.0) { 
-                    for (i in 0..n) {
+                    for (_ in 0..n) {
                         y[iy] = 0.0
                         iy += incY
                     }
@@ -1986,7 +1986,7 @@ extend NFloat64Implementation {
             } else {
                 var iy = ky
                 if (beta == 0.0) {
-                    for (i in 0..n) {
+                    for (_ in 0..n) {
                         y[iy] = 0.0
                         iy += incY
                     }

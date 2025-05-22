@@ -18,7 +18,7 @@ public func axpyInc(alpha: Complex128, x: Array<Complex128>, y: Array<Complex128
     ix: Int64, iy: Int64) {
     var ix_ = ix
     var iy_ = iy
-    for (i in 0..n) {
+    for (_ in 0..n) {
         y[iy_] += alpha * x[ix_]
         ix_ += incX
         iy_ += incY
@@ -30,7 +30,7 @@ public func axpyIncTo(dst: Array<Complex128>, incDst: Int64, idst: Int64, alpha:
     var ix_ = ix
     var iy_ = iy
     var idst_ = idst
-    for (i in 0..n) {
+    for (_ in 0..n) {
         dst[idst_] = alpha * x[ix_] + y[iy_]
         ix_ += incX
         iy_ += incY
@@ -46,7 +46,7 @@ public func dscalUnitary(alpha: Float64, x: Array<Complex128>) {
 
 public func dscalInc(alpha: Complex128, x: Array<Complex128>, n: Int, inc: Int) {
     var ix: Int64 = 0
-    for (i in 0..n) {
+    for (_ in 0..n) {
         x[ix] *= alpha
         ix += inc
     }
@@ -54,7 +54,7 @@ public func dscalInc(alpha: Complex128, x: Array<Complex128>, n: Int, inc: Int) 
 
 public func scalInc(alpha: Complex128, x: Array<Complex128>, n: Int, inc: Int) {
     var ix: Int64 = 0
-    for (i in 0..n) {
+    for (_ in 0..n) {
         x[ix] *= alpha
         ix += inc
     }
@@ -78,7 +78,7 @@ public func dotcInc(x: Array<Complex128>, y: Array<Complex128>, n: Int64, incX: 
     var ix_ = ix
     var iy_ = iy
     var sum = Complex128(0.0)
-    for (i in 0..n) {
+    for (_ in 0..n) {
         sum += y[iy_] * x[ix_].conj()
         ix_ += incX
         iy_ += incY
@@ -98,7 +98,7 @@ public func dotuInc(x: Array<Complex128>, y: Array<Complex128>, n: Int64, incX: 
     var ix_ = ix
     var iy_ = iy
     var sum = Complex128(0.0)
-    for (i in 0..n) {
+    for (_ in 0..n) {
         sum += y[iy_] * x[ix_]
         ix_ += incX
         iy_ += incY

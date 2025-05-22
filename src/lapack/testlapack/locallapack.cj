@@ -128,8 +128,8 @@ func dlantr(norm: MatrixNorm, uplo: Uplo, diag: Diag, m: Int64, n: Int64, a: Arr
     if (minmn == 0) {
         return 0.0
     }
-    match (norm) {
-        case MaxAbs =>
+    match {
+        case norm == MaxAbs =>
             if (diag == UnitDiag) {
                 var value: Float64 = 1.0
                 if (uplo == Upper) {
@@ -187,7 +187,7 @@ func dlantr(norm: MatrixNorm, uplo: Uplo, diag: Diag, m: Int64, n: Int64, a: Arr
             }
             return value
 
-        case MaxColumnSum =>
+        case norm == MaxColumnSum =>
             if (diag == UnitDiag) {
                 for (i in 0..minmn) {
                     work[i] = 1.0
@@ -237,7 +237,7 @@ func dlantr(norm: MatrixNorm, uplo: Uplo, diag: Diag, m: Int64, n: Int64, a: Arr
             }
             return max
 
-        case MaxRowSum =>
+        case norm == MaxRowSum =>
             var maxsum: Float64 = 0.0
             if (diag == UnitDiag) {
                 if (uplo == Upper) {
@@ -307,7 +307,7 @@ func dlantr(norm: MatrixNorm, uplo: Uplo, diag: Diag, m: Int64, n: Int64, a: Arr
                 }
             }
 
-        case Frobenius => throw Exception("not implemented")
+        case norm == Frobenius => throw Exception("not implemented")
         case _ => throw Exception("invalid norm")
     }
 }
