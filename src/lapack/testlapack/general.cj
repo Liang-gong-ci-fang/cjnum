@@ -815,7 +815,16 @@ func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
 
 //TODO func distSymBand(uplo blas.Uplo, n, kd int, a []float64, lda int, b []float64, ldb int) float64 {
 
-//TODO func eye(n: Int, stride: Int): General64 {  //TODO
+func eye(n: Int, stride: Int): General64 {
+    let ans = nanGeneral(n, n, stride)
+    for (i in 0..n) {
+        for (j in 0..n) {
+            ans.data[i * ans.stride + j] = 0.0
+        }
+        ans.data[i * ans.stride + i] = 1.0
+    }
+    return ans
+}
 
 func zeros(m: Int64, n: Int64, stride: Int64): General64 {
     let a = nanGeneral(m, n, stride)
