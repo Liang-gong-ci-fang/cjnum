@@ -1501,7 +1501,6 @@ public func daxpyTest(nFloat64: NFloat64): Bool {
                 }
                 if (!exception(f)) {
                     throw Exception("${c.name} should panic and does not")
-                    return false
                 }
                 continue
             }

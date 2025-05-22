@@ -311,7 +311,7 @@ let sgemvCases = [
 ]
 
 
-func sgemvcomp(test:sgemvCase, trans: Bool, cas: sgemvSubCase, i: Int64) {
+func sgemvcomp(test:sgemvCase, trans: Bool, cas: sgemvSubCase, _: Int64) {
     const tol:Float32 = 1e-6
     const xGdVal:Float32 = 0.5
     const yGdVal: Float32 = 1.5

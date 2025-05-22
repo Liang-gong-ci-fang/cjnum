@@ -50,7 +50,7 @@ public func dgebd2Test(lFloat64: LFloat64): Bool {
 
         lFloat64.dgebd2(m, n, a, lda, d, e, tauQ, tauP, work)
 
-        checkBidiagonal(lFloat64, m, n, nb, a, lda, d, e, tauP, tauQ, aCopy)
+        checkBidiagonal(m, n, nb, a, lda, d, e, tauP, tauQ, aCopy)
     }
     return true
 }

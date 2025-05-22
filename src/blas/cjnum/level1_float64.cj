@@ -170,7 +170,7 @@ extend NFloat64Implementation <: NFloat64 {
         if (incY < 0) {
             iy = (-n + 1) * incY
         }
-        for (i in 0..n) {
+        for (_ in 0..n) {
             let tmp = x[ix]
             x[ix] = y[iy]
             y[iy] = tmp
@@ -210,7 +210,7 @@ extend NFloat64Implementation <: NFloat64 {
         if (incY < 0) {
             iy = (-n + 1) * incY
         }
-        for (i in 0..n) {
+        for (_ in 0..n) {
             y[iy] = x[ix]
             ix += incX
             iy += incY
@@ -448,7 +448,7 @@ extend NFloat64Implementation <: NFloat64 {
         if (incY < 0) {
             iy = (-n + 1) * incY
         }
-        for (i in 0..n) {
+        for (_ in 0..n) {
             let vx = x[ix]
             let vy = y[iy]
             let new_vx = c * vx + s * vy
@@ -507,7 +507,7 @@ extend NFloat64Implementation <: NFloat64 {
             if (incY < 0) {
                 iy = (-n + 1) * incY
             }
-            for (i in 0..n) {
+            for (_ in 0..n) {
                 let vx = x[ix]
                 let vy = y[iy]
                 let new_vx = h11 * vx + h12 * vy
@@ -540,7 +540,7 @@ extend NFloat64Implementation <: NFloat64 {
             if (incY < 0) {
                 iy = (-n + 1) * incY
             }
-            for (i in 0..n) {
+            for (_ in 0..n) {
                 let vx = x[ix]
                 let vy = y[iy]
                 let new_vx = vx + h12 * vy
@@ -572,7 +572,7 @@ extend NFloat64Implementation <: NFloat64 {
             if (incY < 0) {
                 iy = (-n + 1) * incY
             }
-            for (i in 0..n) {
+            for (_ in 0..n) {
                 let vx = x[ix]
                 let vy = y[iy]
                 let new_vx = h11 * vx + vy

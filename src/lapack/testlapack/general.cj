@@ -38,7 +38,7 @@ func worklenTOString(work: worklen): String {
 }
 
 func diagToString(diag: Diag): String {
-	if (diag == NonUnitDiag) {
+    if (diag == NonUnitDiag) {
         return "NonUnitDiag"
     } else if (diag == UnitDiag) {
         return "UnitDiag"
@@ -597,7 +597,7 @@ func constructQK(kind: String, m: Int64, n: Int64, k: Int64, a: Array<Float64>, 
     return q
 }
 
-func checkBidiagonal(lFloat64: LFloat64, m: Int, n: Int, nb: Int, a: Array<Float64>, lda: Int, d: Array<Float64>,
+func checkBidiagonal(m: Int, n: Int, nb: Int, a: Array<Float64>, lda: Int, d: Array<Float64>,
     e: Array<Float64>, tauP: Array<Float64>, tauQ: Array<Float64>, aCopy: Array<Float64>): Unit {
     let qMat = constructQPBidiagonal(ApplyQ, m, n, nb, a, lda, tauQ)
     let pMat = constructQPBidiagonal(ApplyP, m, n, nb, a, lda, tauP)

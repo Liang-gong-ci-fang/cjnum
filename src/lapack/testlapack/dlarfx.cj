@@ -12,7 +12,7 @@ public func dlarfxTest(lFloat64: LFloat64): Bool {
         for (m in 1..12) {
             for (n in 1..12) {
                 for (extra in [0, 1, 11]) {
-                    for (cas in 0..10) {
+                    for (_ in 0..10) {
                         if (!testDlarfx(lFloat64, side, m, n, extra, rnd)) {
                             return false
                         }

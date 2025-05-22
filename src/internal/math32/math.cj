@@ -43,8 +43,6 @@ public func nIsNaN(f: Float32): Bool {
 }
 
 public func nHypot(p: Float32, q: Float32): Float32 {
-    let x: Float32 = Float32.NaN
-
     if (nIsInf(p, 0) || nIsInf(q, 0)) {
         return Float32.Inf
     }
@@ -55,9 +53,7 @@ public func nHypot(p: Float32, q: Float32): Float32 {
     var m = nAbs(p)
     var n = nAbs(q)
     if (m < n) {
-        let temp = m;
-        m = n
-        n = temp
+        (m, n) = (n, m)
     }
     if (m == 0.0) {
         return 0.0
@@ -123,3 +119,9 @@ public func nMin(x: Float32, y: Float32): Float32 {
 public func nNaN(): Float32 {
     return Float32.NaN
 }
+
+let _ = {=> mask}()
+
+let _ = {=> shift}()
+
+let _ = {=> bias}()

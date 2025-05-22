@@ -14,7 +14,7 @@ public func scalUnitaryTo(dst:Array<Float32>, alpha:Float32, x:Array<Float32>) {
 
 public func scalInc(alpha:Float32, x:Array<Float32>, n:Int64, incX:Int64) {
     var ix: Int64 = 0
-    for (i in 0..n) {
+    for (_ in 0..n) {
         x[ix] *= alpha
         ix += incX
     }
@@ -23,7 +23,7 @@ public func scalInc(alpha:Float32, x:Array<Float32>, n:Int64, incX:Int64) {
 public func scalIncTo(dst:Array<Float32>, incDst:Int64, alpha:Float32, x:Array<Float32>, n:Int64, incX:Int64) {
     var idst:Int64 = 0
     var ix:Int64 = 0
-    for (i in 0..n) {
+    for (_ in 0..n) {
         dst[idst] = alpha * x[ix]
         ix += incX
         idst += incDst

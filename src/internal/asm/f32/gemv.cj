@@ -53,7 +53,7 @@ public func gemvT(m: Int64, n: Int64, alpha:Float32, a: Array<Float32>, lda: Int
             }
         } else {
             var iy = ky
-            for (i in 0..n) {
+            for (_ in 0..n) {
                 y[iy] = 0.0
                 iy += incY
             }

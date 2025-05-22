@@ -16,7 +16,7 @@ public func axpyInc(alpha: Float32, x: Array<Float32>, y: Array<Float32>, n: Int
     iy: Int64) {
     var ix_ = ix
     var iy_ = iy
-    for (i in 0..n) {
+    for (_ in 0..n) {
         y[iy_] += alpha * x[ix_]
         ix_ += incX
         iy_ += incY
@@ -28,7 +28,7 @@ public func axpyIncTo(dst: Array<Float32>, incDst: Int64, idst: Int64, alpha: Fl
     var ix_ = ix
     var iy_ = iy
     var idst_ = idst
-    for (i in 0..n) {
+    for (_ in 0..n) {
         dst[idst_] = alpha * x[ix_] + y[iy_]
         ix_ += incX
         iy_ += incY
@@ -48,7 +48,7 @@ public func dotInc(x: Array<Float32>, y: Array<Float32>, n: Int64, incX: Int64, 
     var ix_ = ix
     var iy_ = iy
     var sum: Float32 = 0.0
-    for (i in 0..n) {
+    for (_ in 0..n) {
         sum += y[iy_] * x[ix_]
         ix_ += incX
         iy_ += incY
@@ -68,7 +68,7 @@ public func ddotInc(x: Array<Float32>, y: Array<Float32>, n: Int64, incX: Int64,
     var ix_ = ix
     var iy_ = iy
     var sum: Float64 = 0.0
-    for (i in 0..n) {
+    for (_ in 0..n) {
         sum += Float64(y[iy_]) * Float64(x[ix_])
         ix_ += incX
         iy_ += incY
