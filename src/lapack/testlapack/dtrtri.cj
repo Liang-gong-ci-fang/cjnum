@@ -26,7 +26,7 @@ public func dtrtriTest(lFloat64: LFloat64): Bool {
                 }
 
                 let aCopy = a.clone()
-                let ret = lFloat64.dtrtri(uplo, diag, n, a, lda)
+                lFloat64.dtrtri(uplo, diag, n, a, lda)
                 if (uplo == Upper) {
                     for (i in 1..n) {
                         for (j in 0..i) {

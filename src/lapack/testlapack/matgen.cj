@@ -121,7 +121,7 @@ func dlattr(imat: Int64, uplo: Uplo, trans: Transpose, n: Int64, a: Array<Float6
             }
             dlarnv(b, 2, rnd)
         case 14 =>
-            diag == NonUnitDiag
+            diag = NonUnitDiag
             if (uplo == Upper) {
                 for (i in 0..n) {
                     for (j in i + 1..n) {

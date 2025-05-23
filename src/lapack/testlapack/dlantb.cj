@@ -11,11 +11,10 @@ public func dlantbTest(lFloat64: LFloat64): Bool {
 	for (norm in [MaxAbs, MaxRowSum, MaxColumnSum, Frobenius]) {
 		for (uplo in [Lower, Upper]) {
 			for (diag in [NonUnitDiag, UnitDiag]) {
-				let name = normToString(norm) + uploToString(uplo) + diagToString(diag)
 				for (n in [0, 1, 2, 3, 4, 5, 10]) {
 					for (k in [0, 1, 2, 3, n, n + 2]) {
 						for (lda in [k + 1, k + 3]) {
-							for (iter in 0..10) {
+							for (_ in 0..10) {
 								_dlantbTest(lFloat64, rnd, norm, uplo, diag, n, k, lda)
 							}
 						}

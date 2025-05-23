@@ -50,7 +50,7 @@ public func dlartgTest(lFloat64: LFloat64): Bool {
                 if (rnorm == 0.0) {
                     rnorm = max(abs(fs), abs(gs))
                     if (rnorm == 0.0) {
-                        rnorm == 1.0
+                        rnorm = 1.0
                     }
                 }
                 var resid = abs(rs - (cs * fs + sn * gs)) / rnorm

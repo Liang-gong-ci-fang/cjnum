@@ -10,7 +10,7 @@ import cjnum.blas.blas64.*
 public func dlacn2Test(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
     for (n in [1, 2, 3, 4, 5, 7, 10, 15, 20, 100]) {
-        for (cas in 0..10) {
+        for (_ in 0..10) {
             let a = randomGeneral(n, n, n, rnd)
 
             var norm1 = 0.0

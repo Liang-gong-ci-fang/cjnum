@@ -6,7 +6,6 @@ import cjnum.blas.*
 import std.collection.*
 
 const throwException = true
-
 let znan = Complex128(Float64.NaN, Float64.NaN)
 
 func dTolEqual(a: Float64, b: Float64): Bool {
@@ -50,7 +49,7 @@ func dStridedSliceTolEqual(n: Int64, a: Array<Float64>, inca: Int64, b: Array<Fl
     if (incb <= 0) {
         ib = -(n - 1) * incb
     }
-    for (i in 0..n) {
+    for (_ in 0..n) {
         if (!dTolEqual(a[ia], b[ib])) {
             return false
         }
@@ -98,23 +97,29 @@ func exception(f: () -> Unit): Bool {
     return false
 }
 
-func testpanics(f: () -> Unit, name: String): Bool {
-    if (!exception(f)) {
-        throw Exception("${name} should panic and does not")
-    }
-    return true
-}
+// func testpanics(f: () -> Unit, name: String): Bool {
+//     if (!exception(f)) {
+//         throw Exception("${name} should panic and does not")
+//     }
+//     return true
+// }
 
 func sliceOfSliceCopy(a: Array<Array<Float64>>): Array<Array<Float64>> {
-    return Array<Array<Float64>>(a.size, { i => 
-        Array<Float64>(a[i].size, { j => 
-            a[i][j]
-        })
-    })
+    return Array<Array<Float64>>(
+        a.size,
+        {
+            i => Array<Float64>(
+                a[i].size,
+                {
+                    j => a[i][j]
+                }
+            )
+        }
+    )
 }
 
 func sliceCopy(a: Array<Float64>): Array<Float64> {
-    return Array<Float64>(a.size, { i => a[i] })
+    return Array<Float64>(a.size, {i => a[i]})
 }
 
 func flatten(a: Array<Array<Float64>>): Array<Float64> {
@@ -133,11 +138,17 @@ func flatten(a: Array<Array<Float64>>): Array<Float64> {
 }
 
 func unflatten(a: Array<Float64>, m: Int64, n: Int64): Array<Array<Float64>> {
-    return Array<Array<Float64>>(m, { i => 
-        Array<Float64>(n, { j => 
-            a[i * n + j]
-        })
-    })
+    return Array<Array<Float64>>(
+        m,
+        {
+            i => Array<Float64>(
+                n,
+                {
+                    j => a[i * n + j]
+                }
+            )
+        }
+    )
 }
 
 func flattenTriangular(a: Array<Array<Float64>>, ul: Uplo): Array<Float64> {
@@ -202,39 +213,7 @@ func makeIncremented(x: Array<Float64>, inc: Int64, extra: Int64): Array<Float64
     for (i in 0..xcopy.size) {
         xnew.append(xcopy[i])
         if (i != x.size - 1) {
-            for (j in 0..absinc - 1) {
-                xnew.append(counter)
-                counter += 1.0
-            }
-        }
-    }
-    for (i in 0..extra) {
-        xnew.append(counter)
-        counter += 1.0
-    }
-    return xnew.toArray()
-}
-
-func makeIncremented32(x: Array<Float32>, inc: Int64, extra: Int64): Array<Float32> {
-    if (inc == 0) {
-        throw Exception("zero inc")
-    }
-    let absinc = abs(inc)
-    let xcopy = Array<Float32>(x.size, item: 0.0)
-    if (inc > 0) {
-        copy(xcopy, x)
-    } else {
-        for (i in 0..x.size) {
-            xcopy[i] = x[x.size - i - 1]
-        }
-    }
-
-    var counter: Float32 = 100.0
-    let xnew = ArrayList<Float32>()
-    for (i in 0..xcopy.size) {
-        xnew.append(xcopy[i])
-        if (i != x.size - 1) {
-            for (j in 0..absinc - 1) {
+            for (_ in 0..absinc - 1) {
                 xnew.append(counter)
                 counter += 1.0
             }
@@ -247,33 +226,65 @@ func makeIncremented32(x: Array<Float32>, inc: Int64, extra: Int64): Array<Float
     return xnew.toArray()
 }
 
-func allPairs(x: Array<Int64>, y: Array<Int64>): Array<Array<Int64>> {
-    let p = ArrayList<Array<Int64>>()
-    for (v0 in x) {
-        for (v1 in y) {
-            p.append([v0, v1])
-        }
-    }
-    return p.toArray()
-}
+// func makeIncremented32(x: Array<Float32>, inc: Int64, extra: Int64): Array<Float32> {
+//     if (inc == 0) {
+//         throw Exception("zero inc")
+//     }
+//     let absinc = abs(inc)
+//     let xcopy = Array<Float32>(x.size, item: 0.0)
+//     if (inc > 0) {
+//         copy(xcopy, x)
+//     } else {
+//         for (i in 0..x.size) {
+//             xcopy[i] = x[x.size - i - 1]
+//         }
+//     }
 
-func sameFloat64(a: Float64, b: Float64): Bool {
-    return a == b || a.isNaN() && b.isNaN()
-}
+//     var counter: Float32 = 100.0
+//     let xnew = ArrayList<Float32>()
+//     for (i in 0..xcopy.size) {
+//         xnew.append(xcopy[i])
+//         if (i != x.size - 1) {
+//             for (_ in 0..absinc - 1) {
+//                 xnew.append(counter)
+//                 counter += 1.0
+//             }
+//         }
+//     }
+//     for (_ in 0..extra) {
+//         xnew.append(counter)
+//         counter += 1.0
+//     }
+//     return xnew.toArray()
+// }
+
+// func allPairs(x: Array<Int64>, y: Array<Int64>): Array<Array<Int64>> {
+//     let p = ArrayList<Array<Int64>>()
+//     for (v0 in x) {
+//         for (v1 in y) {
+//             p.append([v0, v1])
+//         }
+//     }
+//     return p.toArray()
+// }
+
+// func sameFloat64(a: Float64, b: Float64): Bool {
+//     return a == b || a.isNaN() && b.isNaN()
+// }
 
 // TODO Complex
 
-func transString(t: Transpose): String {
-    return if (t == NoTrans) {
-        "NoTrans"
-    } else if (t == Trans) {
-        "Trans"
-    } else if (t == ConjTrans) {
-        "ConjTrans"
-    } else {
-        "unknown trans"
-    }
-}
+// func transString(t: Transpose): String {
+//     return if (t == NoTrans) {
+//         "NoTrans"
+//     } else if (t == Trans) {
+//         "Trans"
+//     } else if (t == ConjTrans) {
+//         "ConjTrans"
+//     } else {
+//         "unknown trans"
+//     }
+// }
 
 // func uploString(uplo: Uplo): String {
 //     return if (uplo == Lower) {
@@ -306,3 +317,7 @@ func transString(t: Transpose): String {
 // }
 
 // TODO complex
+
+let _ = {=> throwException}()
+
+let _ = {=> znan}()

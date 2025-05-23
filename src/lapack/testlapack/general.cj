@@ -25,27 +25,27 @@ const minimumWork: worklen = 0
 const mediumWork: worklen = 1
 const optimumWork: worklen = 2
 
-func worklenTOString(work: worklen): String {
-    return if (work == minimumWork) {
-        "minimum"
-    } else if (work == mediumWork) {
-        "medium"
-    } else if (work == optimumWork) {
-        "optimum"
-    } else {
-        ""
-    }
-}
+// func worklenTOString(work: worklen): String {
+//     return if (work == minimumWork) {
+//         "minimum"
+//     } else if (work == mediumWork) {
+//         "medium"
+//     } else if (work == optimumWork) {
+//         "optimum"
+//     } else {
+//         ""
+//     }
+// }
 
-func diagToString(diag: Diag): String {
-    if (diag == NonUnitDiag) {
-        return "NonUnitDiag"
-    } else if (diag == UnitDiag) {
-        return "UnitDiag"
-    } else {
-        throw Exception("invalid diag")
-    }
-}
+// func diagToString(diag: Diag): String {
+//     if (diag == NonUnitDiag) {
+//         return "NonUnitDiag"
+//     } else if (diag == UnitDiag) {
+//         return "UnitDiag"
+//     } else {
+//         throw Exception("invalid diag")
+//     }
+// }
 
 func normToString(norm: MatrixNorm): String {
     return if (norm == MaxAbs) {
@@ -61,25 +61,25 @@ func normToString(norm: MatrixNorm): String {
     }
 }
 
-func uploToString(uplo: Uplo): String {
-    return if (uplo == Lower) {
-        "Lower"
-    } else if (uplo == Upper) {
-        "Upper"
-    } else {
-        throw Exception("invalid uplo")
-    }
-}
+// func uploToString(uplo: Uplo): String {
+//     return if (uplo == Lower) {
+//         "Lower"
+//     } else if (uplo == Upper) {
+//         "Upper"
+//     } else {
+//         throw Exception("invalid uplo")
+//     }
+// }
 
-func sideToString(side: Side): String {
-    return if (side == Left) {
-        "Left"
-    } else if (side == Right) {
-        "Right"
-    } else {
-        throw Exception("invalid side")
-    }
-}
+// func sideToString(side: Side): String {
+//     return if (side == Left) {
+//         "Left"
+//     } else if (side == Right) {
+//         "Right"
+//     } else {
+//         throw Exception("invalid side")
+//     }
+// }
 
 func nanSlice(n: Int64): Array<Float64> {
     return Array<Float64>(
@@ -127,115 +127,115 @@ func randomGeneral(r: Int64, c: Int64, stride: Int64, rnd: Random): General64 {
     return ans
 }
 
-func randomHessenberg(n: Int64, stride: Int64, rnd: Random): General64 {
-    let ans = nanGeneral(n, n, stride)
-    for (i in 0..n) {
-        for (j in 0..i - 1) {
-            ans.data[i * ans.stride + j] = 0.0
-        }
-        for (j in max(0, n - 1)..n) {
-            ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
-        }
-    }
-    return ans
-}
+// func randomHessenberg(n: Int64, stride: Int64, rnd: Random): General64 {
+//     let ans = nanGeneral(n, n, stride)
+//     for (i in 0..n) {
+//         for (j in 0..i - 1) {
+//             ans.data[i * ans.stride + j] = 0.0
+//         }
+//         for (j in max(0, n - 1)..n) {
+//             ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
+//         }
+//     }
+//     return ans
+// }
 
-func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (General64, Array<Float64>, Array<Float64>) {
-    let t = randomGeneral(n, n, stride, rnd)
-    let wr = ArrayList<Float64>()
-    let wi = ArrayList<Float64>()
+// func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (General64, Array<Float64>, Array<Float64>) {
+//     let t = randomGeneral(n, n, stride, rnd)
+//     let wr = ArrayList<Float64>()
+//     let wi = ArrayList<Float64>()
 
-    for (i in 0..t.rows) {
-        for (j in 0..=i) {
-            t.data[i * t.stride + j] = 0.0
-        }
-    }
-    var i = 0
-    while (i < t.rows) {
-        var a = rnd.nextGaussianFloat64()
-        if (bad && rnd.nextFloat64() < 0.5) {
-            if (rnd.nextFloat64() < 0.5) {
-                a = dlamchS
-            } else {
-                a = 0.0
-            }
-        }
+//     for (i in 0..t.rows) {
+//         for (j in 0..=i) {
+//             t.data[i * t.stride + j] = 0.0
+//         }
+//     }
+//     var i = 0
+//     while (i < t.rows) {
+//         var a = rnd.nextGaussianFloat64()
+//         if (bad && rnd.nextFloat64() < 0.5) {
+//             if (rnd.nextFloat64() < 0.5) {
+//                 a = dlamchS
+//             } else {
+//                 a = 0.0
+//             }
+//         }
 
-        if (rnd.nextFloat64() < 0.5 || i == t.rows - 1) {
-            t.data[i * t.stride + i] = a
-            wr.append(a)
-            wi.append(0.0)
-            i++
-            continue
-        }
+//         if (rnd.nextFloat64() < 0.5 || i == t.rows - 1) {
+//             t.data[i * t.stride + i] = a
+//             wr.append(a)
+//             wi.append(0.0)
+//             i++
+//             continue
+//         }
 
-        let d = a
-        var c = rnd.nextGaussianFloat64()
-        let b = if (bad && rnd.nextFloat64() < 0.5) {
-            dlamchS
-        } else {
-            rnd.nextGaussianFloat64()
-        }
-        if (signbit(b) == signbit(c)) {
-            c *= -1.0
-        }
+//         let d = a
+//         var c = rnd.nextGaussianFloat64()
+//         let b = if (bad && rnd.nextFloat64() < 0.5) {
+//             dlamchS
+//         } else {
+//             rnd.nextGaussianFloat64()
+//         }
+//         if (signbit(b) == signbit(c)) {
+//             c *= -1.0
+//         }
 
-        t.data[i * t.stride + i] = a
-        t.data[i * t.stride + i + 1] = b
-        t.data[(i + 1) * t.stride + i] = c
-        t.data[(i + 1) * t.stride + i + 1] = d
+//         t.data[i * t.stride + i] = a
+//         t.data[i * t.stride + i + 1] = b
+//         t.data[(i + 1) * t.stride + i] = c
+//         t.data[(i + 1) * t.stride + i + 1] = d
 
-        wr.appendAll([a, a])
-        let im = sqrt(abs(b)) * sqrt(abs(c))
-        wi.appendAll([im, -im])
-        i += 2
-    }
-    return (t, wr.toArray(), wi.toArray())
-}
+//         wr.appendAll([a, a])
+//         let im = sqrt(abs(b)) * sqrt(abs(c))
+//         wi.appendAll([im, -im])
+//         i += 2
+//     }
+//     return (t, wr.toArray(), wi.toArray())
+// }
 
-func blockedUpperTriGeneral(r: Int64, c: Int64, k: Int64, l: Int64, stride: Int64, kblock: Bool, rnd: Random): General64 {
-    var t = l
-    if (kblock) {
-        t += k
-    }
-    let ans = zeros(r, c, stride)
-    for (i in 0..min(r, t)) {
-        var v = 0.0
-        while (v == 0.0) {
-            v = rnd.nextGaussianFloat64()
-        }
-        ans.data[i * ans.stride + i + (c - t)] = v
-    }
-    for (i in 0..min(r, t)) {
-        for (j in i + (c - t) + 1..c) {
-            ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
-        }
-    }
-    return ans
-}
+// func blockedUpperTriGeneral(r: Int64, c: Int64, k: Int64, l: Int64, stride: Int64, kblock: Bool, rnd: Random): General64 {
+//     var t = l
+//     if (kblock) {
+//         t += k
+//     }
+//     let ans = zeros(r, c, stride)
+//     for (i in 0..min(r, t)) {
+//         var v = 0.0
+//         while (v == 0.0) {
+//             v = rnd.nextGaussianFloat64()
+//         }
+//         ans.data[i * ans.stride + i + (c - t)] = v
+//     }
+//     for (i in 0..min(r, t)) {
+//         for (j in i + (c - t) + 1..c) {
+//             ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
+//         }
+//     }
+//     return ans
+// }
 
-func nanTriangular(uplo: Uplo, n: Int64, stride: Int64): Triangular {
-    if (n < 0) {
-        throw Exception("bad matrix size")
-    }
-    if (n == 0) {
-        return Triangular(
-            stride: max(1, stride),
-            uplo: uplo,
-            diag: NonUnitDiag
-        )
-    }
-    if (stride < 0) {
-        throw Exception("bad stride")
-    }
-    return Triangular(
-        n: n,
-        stride: stride,
-        data: nanSlice((n - 1) * stride + n),
-        uplo: uplo,
-        diag: NonUnitDiag
-    )
-}
+// func nanTriangular(uplo: Uplo, n: Int64, stride: Int64): Triangular {
+//     if (n < 0) {
+//         throw Exception("bad matrix size")
+//     }
+//     if (n == 0) {
+//         return Triangular(
+//             stride: max(1, stride),
+//             uplo: uplo,
+//             diag: NonUnitDiag
+//         )
+//     }
+//     if (stride < 0) {
+//         throw Exception("bad stride")
+//     }
+//     return Triangular(
+//         n: n,
+//         stride: stride,
+//         data: nanSlice((n - 1) * stride + n),
+//         uplo: uplo,
+//         diag: NonUnitDiag
+//     )
+// }
 
 func generalOutsideAllNaN(a: General64): Bool {
     for (i in 0..a.rows - 1) {
@@ -960,9 +960,9 @@ func copysign(f: Float64, sign: Float64): Float64 {
     return Float64.fromBits((f.toBits() & (!signBit)) | sign.toBits() & signBit)
 }
 
-func signbit(x: Float64): Bool {
-    return (x.toBits() & (1 << 63)) != 0
-}
+// func signbit(x: Float64): Bool {
+//     return (x.toBits() & (1 << 63)) != 0
+// }
 
 func real(x: Complex128): Float64 {
     return x.real

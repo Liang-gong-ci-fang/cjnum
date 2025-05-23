@@ -23,3 +23,5 @@ func copysign(f: Float64, sign: Float64): Float64 {
     const signBit: UInt64 = 1 << 63
     return Float64.fromBits((f.toBits() & (!signBit)) | sign.toBits() & signBit)
 }
+
+let _ = {=>lFloat64Implementation}()

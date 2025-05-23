@@ -14,7 +14,7 @@ public func dlanv2Test(lFloat64: LFloat64): Bool {
             return false
         }
     }
-    for (i in 0..10) {
+    for (_ in 0..10) {
         let a = rnd.nextFloat64()
         let c = rnd.nextFloat64()
         let d = rnd.nextFloat64()
@@ -33,7 +33,7 @@ public func dlanv2Test(lFloat64: LFloat64): Bool {
             return false
         }
     }
-    for (i in 0..10) {
+    for (_ in 0..10) {
         let a = rnd.nextFloat64()
         let b = rnd.nextFloat64()
         let c = rnd.nextFloat64()
