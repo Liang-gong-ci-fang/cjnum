@@ -119,3 +119,13 @@ func newIncToSet(inc: Array<Int64>): Array<IncToSet> {
     }
     return is_
 }
+
+let _ = {=> inf}()
+
+let _ = {=> benchSink}()
+
+let _ = {=> align1}()
+
+let _ = {=> align2}()
+
+let _ = {=> align3}()

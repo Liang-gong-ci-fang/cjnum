@@ -71,13 +71,13 @@ func checkValidIncGuard(v: Array<Float32>, g: Float32, inc: Int64, gdLn: Int64):
     let srcLn = v.size - 2 * gdLn
     for (i in 0..v.size) {
         if (same(v[i], g)) {
-            // correct value
+        // correct value
         } else if (i < gdLn) {
             return false
         } else if (i > gdLn + srcLn) {
             return false
         } else if ((i - gdLn) % inc == 0 && (i - gdLn) / inc < v.size) {
-            // correct value
+        // correct value
         } else {
             return false
         }
@@ -129,3 +129,7 @@ func newIncToSet(inc: Array<Int64>): Array<IncToSet> {
     }
     return is_
 }
+
+let _ = {=> align2}()
+
+let _ = {=> align3}()

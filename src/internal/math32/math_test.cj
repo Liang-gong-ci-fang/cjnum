@@ -142,12 +142,12 @@ func nSqrt(x: Float32) : Float32 {
     return Float32.fromBits(ix)
 }
 
-func alike(a: Float32,b :Float32) : Bool {
-    if(nIsNaN(a) && nIsNaN(b)){
-        return true
-    }
-    if(a == b){
-        return nSignbit(a) == nSignbit(b)
-    }
-	return false
-}
+// func alike(a: Float32,b :Float32) : Bool {
+//     if(nIsNaN(a) && nIsNaN(b)){
+//         return true
+//     }
+//     if(a == b){
+//         return nSignbit(a) == nSignbit(b)
+//     }
+// 	return false
+// }

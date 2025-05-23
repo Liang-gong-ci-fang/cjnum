@@ -10,10 +10,10 @@ import cjnum.floats.scalar.equalWithinAbsOrRel
 import cjnum.floats.scalar.same as scalar_fSame
 
 const EqTolerance = 1e-14
-const Small       = 10
-const Medium      = 1000
-const Large       = 100000
-const Huge        = 10000000
+const Small = 10
+const Medium = 1000
+const Large = 100000
+const Huge = 10000000
 
 func areSlicesEqual(truth: Array<Float64>, comp: Array<Float64>): Bool {
     return fEqualApprox(truth, comp, EqTolerance)
@@ -160,7 +160,7 @@ public func testArgsortStable() {
 @Parallel
 public func testCount() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
-    let f = { v: Float64 => v > 3.5}
+    let f = {v: Float64 => v > 3.5}
     @Expect(fCount(f, s), 3)
 }
 
@@ -314,7 +314,7 @@ public func testEqualApprox() {
 public func testEqualFunc() {
     let s1 = [1.0, 2.0, 3.0, 4.0]
     var s2 = [1.0, 2.0, 3.0, 4.0]
-    let eq = { x: Float64, y: Float64 => x == y }
+    let eq = {x: Float64, y: Float64 => x == y}
     @Expect(fEqualFunc(s1, s2, eq))
     s2 = [1.0, 2.0, 3.0, 4.0 + 1e-14]
     @Expect(!fEqualFunc(s1, s2, eq))
@@ -451,9 +451,9 @@ func eqIntSlice(one: Array<Int64>, two: Array<Int64>): String {
 @Parallel
 public func testFind() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
-    let f = { v: Float64 => v > 3.5}
+    let f = {v: Float64 => v > 3.5}
     let allTrueInds = [1, 3, 4]
-    
+
     var inds = fFind(f, s, 2)
     let trueInds = allTrueInds[0..2]
     @Expect(eqIntSlice(inds.toArray(), trueInds), "")
@@ -473,7 +473,7 @@ public func testFind() {
         // fall
     }
     @Expect(eqIntSlice(inds.toArray(), allTrueInds), "")
-    
+
     inds = fFind(f, s, -1)
     @Expect(eqIntSlice(inds.toArray(), allTrueInds), "")
 }
@@ -684,7 +684,8 @@ public func testNearestIdxForSpan() {
         NearestIdxForSpanTestStruct(length: 13, lower: 7.0, upper: 8.2, value: 7.2, idx: 2),
         NearestIdxForSpanTestStruct(length: 13, lower: 7.0, upper: 8.2, value: 7.151, idx: 2),
         NearestIdxForSpanTestStruct(length: 13, lower: 7.0, upper: 8.2, value: 7.249, idx: 2),
-        NearestIdxForSpanTestStruct(length: 4, lower: -Float64.Inf, upper: Float64.Inf, value: copysign(0.0, -1.0), idx: 0),
+        NearestIdxForSpanTestStruct(length: 4, lower: -Float64.Inf, upper: Float64.Inf, value: copysign(0.0, -1.0),
+            idx: 0),
         NearestIdxForSpanTestStruct(length: 5, lower: -Float64.Inf, upper: Float64.Inf, value: 0.0, idx: 2),
         NearestIdxForSpanTestStruct(length: 5, lower: -Float64.Inf, upper: Float64.Inf, value: -Float64.Inf, idx: 0),
         NearestIdxForSpanTestStruct(length: 5, lower: -Float64.Inf, upper: Float64.Inf, value: Float64.Inf, idx: 3),
@@ -805,7 +806,7 @@ public func testSame() {
     s1 = [1.0, 2.0, Float64.NaN, 4.0]
     s2 = [1.0, Float64.NaN, 3.0, 4.0]
     @Expect(!fSame(s1, s2))
-} 
+}
 
 class fSpanTestStruct {
     fSpanTestStruct(
@@ -831,20 +832,32 @@ public func testSpan() {
     @Expect(exception({ => fSpan(Array<Float64>(1, item: 0.0), 1.0, 5.0) }))
 
     let tests = [
-        fSpanTestStruct(n: 4, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, Float64.Inf, Float64.Inf]),
-        fSpanTestStruct(n: 4, l: Float64.Inf, u: -Float64.Inf, want: [Float64.Inf, Float64.Inf, -Float64.Inf, -Float64.Inf]),
-        fSpanTestStruct(n: 5, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, 0.0, Float64.Inf, Float64.Inf]),
-        fSpanTestStruct(n: 5, l: Float64.Inf, u: -Float64.Inf, want: [Float64.Inf, Float64.Inf, 0.0, -Float64.Inf, -Float64.Inf]),
-        fSpanTestStruct(n: 5, l: Float64.Inf, u: Float64.Inf, want: [Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf]),
-        fSpanTestStruct(n: 5, l: -Float64.Inf, u: -Float64.Inf, want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf]),
-        fSpanTestStruct(n: 5, l: -Float64.Inf, u: Float64.NaN, want: [-Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
-        fSpanTestStruct(n: 5, l: Float64.Inf, u: Float64.NaN, want: [Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
-        fSpanTestStruct(n: 5, l: Float64.NaN, u: -Float64.Inf, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, -Float64.Inf]),
-        fSpanTestStruct(n: 5, l: Float64.NaN, u: Float64.Inf, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, Float64.Inf]),
-        fSpanTestStruct(n: 5, l: 42.0, u: -Float64.Inf, want: [42.0, -Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf]),
+        fSpanTestStruct(n: 4, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, Float64.Inf,
+            Float64.Inf]),
+        fSpanTestStruct(n: 4, l: Float64.Inf, u: -Float64.Inf, want: [Float64.Inf, Float64.Inf, -Float64.Inf,
+            -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: Float64.Inf,
+            want: [-Float64.Inf, -Float64.Inf, 0.0, Float64.Inf, Float64.Inf]),
+        fSpanTestStruct(n: 5, l: Float64.Inf, u: -Float64.Inf,
+            want: [Float64.Inf, Float64.Inf, 0.0, -Float64.Inf, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: Float64.Inf, u: Float64.Inf,
+            want: [Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: -Float64.Inf,
+            want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: Float64.NaN,
+            want: [-Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
+        fSpanTestStruct(n: 5, l: Float64.Inf, u: Float64.NaN,
+            want: [Float64.Inf, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
+        fSpanTestStruct(n: 5, l: Float64.NaN, u: -Float64.Inf,
+            want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, -Float64.Inf]),
+        fSpanTestStruct(n: 5, l: Float64.NaN, u: Float64.Inf,
+            want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, Float64.Inf]),
+        fSpanTestStruct(n: 5, l: 42.0, u: -Float64.Inf, want: [42.0, -Float64.Inf, -Float64.Inf, -Float64.Inf,
+            -Float64.Inf]),
         fSpanTestStruct(n: 5, l: 42.0, u: Float64.Inf, want: [42.0, Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf]),
         fSpanTestStruct(n: 5, l: 42.0, u: Float64.NaN, want: [42.0, Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN]),
-        fSpanTestStruct(n: 5, l: -Float64.Inf, u: 42.0, want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf, 42.0]),
+        fSpanTestStruct(n: 5, l: -Float64.Inf, u: 42.0, want: [-Float64.Inf, -Float64.Inf, -Float64.Inf, -Float64.Inf,
+            42.0]),
         fSpanTestStruct(n: 5, l: Float64.Inf, u: 42.0, want: [Float64.Inf, Float64.Inf, Float64.Inf, Float64.Inf, 42.0]),
         fSpanTestStruct(n: 5, l: Float64.NaN, u: 42.0, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, 42.0])
     ]
@@ -920,7 +933,7 @@ public func testWithIn() {
         try {
             idx = fWithin(test.s, test.v)
         } catch (e: Exception) {
-            @Expect(test.exception) 
+            @Expect(test.exception)
             continue
         }
         if (test.exception) {
@@ -964,3 +977,13 @@ public func testSumCompensated() {
         @Expect(abs(got - test.want) <= EqTolerance, true)
     }
 }
+
+let _ = {=> EqTolerance}()
+
+let _ = {=> Small}()
+
+let _ = {=> Medium}()
+
+let _ = {=> Large}()
+
+let _ = {=> Huge}()

@@ -119,7 +119,7 @@ public func testEqualsULP() {
 
 func nextAfterN(x: Float64, y: Float64, n: Int64): Float64 {
     var xx = x
-    for (i in 0..n) {
+    for (_ in 0..n) {
         xx = nextAfter(xx, y)
     }
     return xx

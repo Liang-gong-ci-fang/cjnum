@@ -324,7 +324,7 @@ public func testGemv() {
     }
 }
 
-func dgemvcomp(test: dgemvCase, trans: Bool, cas: dgemvSubcase, i: Int64){
+func dgemvcomp(test: dgemvCase, trans: Bool, cas: dgemvSubcase, _: Int64){
     const tol = 1e-15
     const xGdval = 0.5
     const yGdVal = 1.5

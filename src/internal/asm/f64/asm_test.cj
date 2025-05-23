@@ -166,3 +166,9 @@ func randSlice(n: Int64, inc: Int64, r: Random): Array<Float64> {
     let inc_ = abs(inc)
     return Array<Float64>((n - 1) * inc_ + 1, {_ => r.nextFloat64()})
 }
+
+let _ = {=> msgVal}()
+
+let _ = {=> msgGuard}()
+
+let _ = {=> msgReadOnly}()
