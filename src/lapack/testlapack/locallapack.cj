@@ -78,7 +78,7 @@ func dlansy(norm: MatrixNorm, uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int6
                 }
             }
             return max
-        case norm == Frobenius => throw Exception("not implemented")
+        case norm == Frobenius => throw Exception("not implemented") // TODO
         case _ => throw Exception("invalid norm")
     }
 }
@@ -307,7 +307,7 @@ func dlantr(norm: MatrixNorm, uplo: Uplo, diag: Diag, m: Int64, n: Int64, a: Arr
                 }
             }
 
-        case norm == Frobenius => throw Exception("not implemented")
+        case norm == Frobenius => throw Exception("not implemented") // TODO
         case _ => throw Exception("invalid norm")
     }
 }
@@ -340,7 +340,7 @@ func dlanst(norm: MatrixNorm, n: Int64, d: Array<Float64>, e: Array<Float64>): F
                 value = max(value, sum)
             }
         }
-        case norm == Frobenius => throw Exception("not implemented")
+        case norm == Frobenius => throw Exception("not implemented") // TODO
         case _ => throw Exception("invalid norm")
     }
     return value

@@ -102,7 +102,7 @@ extend LFloat64Implementation {
                     let ctmp = c[j - 1]
                     let stmp = s[j - 1]
                     if (ctmp != 1.0 || stmp != 0.0) {
-                        for (i in 0..n) {
+                        for (_ in 0..n) {
                             let ctmp = c[j - 1]
                             let stmp = s[j - 1]
                             if (ctmp != 1.0 || stmp != 0.0) {

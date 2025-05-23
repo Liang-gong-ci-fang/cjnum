@@ -39,7 +39,7 @@ extend LFloat64Implementation {
         var amed = 0.0
         var abig = 0.0
         var ix = 0
-        for (i in 0..n) {
+        for (_ in 0..n) {
             var ax = abs(x[ix])
             if (ax > dtbig) {
                 ax *= dsbig

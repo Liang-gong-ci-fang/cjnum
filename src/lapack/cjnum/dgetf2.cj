@@ -46,7 +46,7 @@ extend LFloat64Implementation {
                     if (abs(aj) >= sfmin) {
                         nFloat64.dscal(m - j - 1, 1.0 / aj, a[(j + 1) * lda + j..], lda)
                     } else {
-                        for (i in 0..m - j - 1) {
+                        for (_ in 0..m - j - 1) {
                             a[(j + 1) * lda + j] = a[(j + 1) * lda + j] / a[lda * j + j]
                         }
                     }
