@@ -47,7 +47,7 @@ extend LFloat64Implementation {
         }
         let tau = (beta - alpha_) / beta
         nFloat64.dscal(n - 1, 1.0 / (alpha_ - beta), x, incX)
-        for (j in 0..knt) {
+        for (_ in 0..knt) {
             beta *= safmin
         }
         return (beta, tau)

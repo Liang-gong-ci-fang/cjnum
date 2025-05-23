@@ -67,7 +67,7 @@ extend LFloat64Implementation {
                 let safmx2 = 1.0 / safmn2
                 var sigma = b + c
 
-                for (iter in 0..20) {
+                for (_ in 0..20) {
                     scale = max(abs(temp), abs(sigma))
                     if (scale >= safmx2) {
                         sigma *= safmn2

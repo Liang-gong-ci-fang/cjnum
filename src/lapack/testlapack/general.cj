@@ -350,6 +350,7 @@ func extractVMat(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, direct: Dire
         }
         return v
     } else {
+        // TODO
         throw Exception("not implemented")
     }
 }
@@ -464,6 +465,7 @@ func constructVMat(vMat: General64, store: StoreV, direct: Direct): General64 {
             data: v
         )
     } else {
+        // TODO
         throw Exception("not implemented")
     }
 }
