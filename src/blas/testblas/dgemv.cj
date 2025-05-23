@@ -635,6 +635,7 @@ func dgemvcomp(test: DgemvTestStruct, cas: DgemvSubcase, i: Int64, nFloat64: NFl
     }
     if (exception(f)) {
         throw Exception("Test ${test.name} case ${i}: unexpected panic")
+        // TODO fix
         if (throwException) {
             nFloat64.dgemv(test.tA, test.m, test.n, cas.alpha, aFlat, lda, x, incX, cas.beta, y, incY)
         }

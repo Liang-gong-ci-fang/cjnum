@@ -240,7 +240,7 @@ func makeIncremented32(x: Array<Float32>, inc: Int64, extra: Int64): Array<Float
             }
         }
     }
-    for (i in 0..extra) {
+    for (_ in 0..extra) {
         xnew.append(counter)
         counter += 1.0
     }
@@ -275,34 +275,34 @@ func transString(t: Transpose): String {
     }
 }
 
-func uploString(uplo: Uplo): String {
-    return if (uplo == Lower) {
-        "Lower"
-    } else if (uplo == Upper) {
-        "Upper"
-    } else {
-        "unknown uplo"
-    }
-}
+// func uploString(uplo: Uplo): String {
+//     return if (uplo == Lower) {
+//         "Lower"
+//     } else if (uplo == Upper) {
+//         "Upper"
+//     } else {
+//         "unknown uplo"
+//     }
+// }
 
-func sideString(side: Side): String {
-    return if (side == Left) {
-        "Left"
-    } else if (side == Right) {
-        "Right"
-    } else {
-        "unknown side"
-    }
-}
+// func sideString(side: Side): String {
+//     return if (side == Left) {
+//         "Left"
+//     } else if (side == Right) {
+//         "Right"
+//     } else {
+//         "unknown side"
+//     }
+// }
 
-func diagString(diag: Diag): String {
-    return if (diag == UnitDiag) {
-        "UnitDiag"
-    } else if (diag == NonUnitDiag) {
-        "NonUnitDiag"
-    } else {
-        "unknown diag"
-    }
-}
+// func diagString(diag: Diag): String {
+//     return if (diag == UnitDiag) {
+//         "UnitDiag"
+//     } else if (diag == NonUnitDiag) {
+//         "NonUnitDiag"
+//     } else {
+//         "unknown diag"
+//     }
+// }
 
 // TODO complex

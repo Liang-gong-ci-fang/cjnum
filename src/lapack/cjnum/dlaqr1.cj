@@ -4,7 +4,12 @@ import std.math.*
 import std.math.numeric.*
 
 extend LFloat64Implementation {
-    public func dlaqr1(n: Int64, h: Array<Float64>, ldh: Int64, sr1: Float64, si1: Float64, sr2: Float64, si2: Float64, v: Array<Float64>): Unit {
+    /*
+    public func dlaqr1(n: Int64, h: Array<Float64>, ldh: Int64, sr1: Float64, si1: Float64, sr2: Float64, si2: Float64,
+        v: Array<Float64>): Unit {
+    */
+    public func dlaqr1(_: Int64, _: Array<Float64>, _: Int64, _: Float64, _: Float64, _: Float64, _: Float64,
+        _: Array<Float64>): Unit {
         // TODO
         throw Exception("not implemented")
         // if (n != 2 && n != 3) {

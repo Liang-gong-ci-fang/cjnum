@@ -6,7 +6,8 @@ import cjnum.blas.*
 import cjnum.blas.blas64.*
 
 extend LFloat64Implementation {
-    public func dgetrf(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, ipiv: Array<Int64>): Bool {
+    // public func dgetrf(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, ipiv: Array<Int64>): Bool {
+    public func dgetrf(_: Int64, _: Int64, _: Array<Float64>, _: Int64, _: Array<Int64>): Bool {
         // TODO
         throw Exception("not implemented")
         // let mn = min(m, n)

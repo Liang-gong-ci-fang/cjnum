@@ -1402,14 +1402,12 @@ public func dasumTest(nFloat64: NFloat64): Bool {
             }
             if (!exception(f)) {
                 throw Exception("${c.name} should panic and does not")
-                return false
             }
             continue
         }
         let v = nFloat64.dasum(c.n, c.x, c.incx)
         if (!dTolEqual(v, c.dasum)) {
             throw Exception("dasum: mismatch ${c.name}: expected ${c.dnrm2}, found ${v}")
-            return false
         }
     }
     return true
@@ -1424,7 +1422,6 @@ public func idamaxTest(nFloat64: NFloat64): Bool {
             }
             if (!exception(f)) {
                 throw Exception("${c.name} should panic and does not")
-                return false
             }
             continue
         }
@@ -1479,11 +1476,9 @@ public func dcopyTest(nFloat64: NFloat64): Bool {
         nFloat64.dcopy(c.n, c.xTmp, c.incx, c.yTmp, c.incy)
         if (!dSliceTolEqual(c.xTmp, c.dcopyAns.x)) {
             throw Exception("dcopy: mismatch ${c.name} (x): expected ${c.dcopyAns.x}, found ${c.xTmp}")
-            return false
         }
         if (!dSliceTolEqual(c.yTmp, c.dcopyAns.y)) {
             throw Exception("dcopy: mismatch ${c.name} (y): expected ${c.dcopyAns.y}, found ${c.yTmp}")
-            return false
         }
     }
     return true
