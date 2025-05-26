@@ -176,14 +176,13 @@ func randomGeneral(r: Int64, c: Int64, stride: Int64, rnd: Random): General64 {
 //         } else {
 //             rnd.nextGaussianFloat64()
 //         }
+
 //         if (signbit(b) == signbit(c)) {
 //             c *= -1.0
 //         }
 
-//         t.data[i * t.stride + i] = a
-//         t.data[i * t.stride + i + 1] = b
-//         t.data[(i + 1) * t.stride + i] = c
-//         t.data[(i + 1) * t.stride + i + 1] = d
+//         (t.data[i * t.stride + i], t.data[i * t.stride + i + 1]) = (a, b)
+//         (t.data[(i + 1) * t.stride + i], t.data[(i + 1) * t.stride + i + 1]) = (c, d)
 
 //         wr.appendAll([a, a])
 //         let im = sqrt(abs(b)) * sqrt(abs(c))
@@ -802,9 +801,25 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int, n: Int, nb: Int, a: 
 
 //TODO func copyGeneral(dst: General64, src: General64): Unit {  //TODO
 
-//TODO func cloneGeneral(a: General64): General64 {  //TODO
+func cloneGeneral(a: General64): General64 {
+    let c = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, item: 0.0))
+    copy(c.data, a.data)
+    return c
+}
 
-//TODO func equalGeneral(a, b blas64.General) bool {
+func equalGeneral(a: General64, b: General64): Bool {
+    if (a.rows != b.rows || a.cols != b.cols) {
+        throw Exception("bad input")
+    }
+    for (i in 0..a.rows) {
+        for (j in 0..a.cols) {
+            if (a.data[i * a.stride + j] != b.data[i * b.stride + j]) {
+                return false
+            }
+        }
+    }
+    return true
+}
 
 func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
     if (a.rows != b.rows || a.cols != b.cols) {
@@ -929,7 +944,7 @@ func residualOrthogonal(q: General64, rowwise: Bool): Float64 {
         uplo: Upper,
         n: minmn,
         data: Array<Float64>(minmn * minmn, item: 0.0),
-        stride: minmn,
+        stride: minmn
     )
     for (i in 0..minmn) {
         work.data[i * work.stride + i] = 1.0

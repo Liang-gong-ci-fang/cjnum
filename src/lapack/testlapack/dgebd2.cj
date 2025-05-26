@@ -5,15 +5,11 @@ import std.random.*
 import cjnum.lapack.*
 
 class dgebd2TestStruct {
-    let m: Int
-    let n: Int
-    let lda: Int
-
-    init(m: Int, n: Int, lda: Int) {
-        this.m = m
-        this.n = n
-        this.lda = lda
-    }
+    dgebd2TestStruct(
+        let m: Int,
+        let n: Int,
+        let lda: Int
+    ) {}
 }
 
 public func dgebd2Test(lFloat64: LFloat64): Bool {

@@ -100,6 +100,11 @@ public interface LFloat64 {
         work: Array<Float64>): Float64
     func dlasr(side: Side, pivot: Pivot, direct: Direct, m: Int64, n: Int64, c: Array<Float64>, s: Array<Float64>,
         a: Array<Float64>, lda: Int64): Unit
+    func dlasy2(tranl: Bool, tranr: Bool, isgn: Int, n1: Int, n2: Int, tl: Array<Float64>, ldtl: Int,
+        tr: Array<Float64>, ldtr: Int, b: Array<Float64>, ldb: Int, x: Array<Float64>, ldx: Int): (Float64, Float64, 
+        Bool)
+    func dlascl(kind: MatrixType, kl: Int, ku: Int, cfrom: Float64, cto: Float64, m: Int, n: Int, a: Array<Float64>,
+        lda: Int): Unit
 }
 
 type Direct = UInt8
