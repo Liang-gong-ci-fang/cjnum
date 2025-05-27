@@ -58,3 +58,11 @@ public func nanSqrt(x: Float64): Float64 {
     }
     return sqrt(x)
 }
+
+public func hypot(p: Float64, q: Float64): Float64 { // 补充hypot函数，返回以p, q为直角边的斜边长度
+    if (p.isInf() || q.isInf()) {
+        return Float64.Inf
+    } else {
+        return sqrt(p * p + q * q)
+    }
+}

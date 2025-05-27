@@ -105,6 +105,13 @@ public interface LFloat64 {
         Bool)
     func dlascl(kind: MatrixType, kl: Int, ku: Int, cfrom: Float64, cto: Float64, m: Int, n: Int, a: Array<Float64>,
         lda: Int): Unit
+    func dlaexc(wantq: Bool, n: Int, t: Array<Float64>, ldt: Int, q: Array<Float64>, ldq: Int, j1: Int, n1: Int,
+        n2: Int, work: Array<Float64>): Bool
+    func dlasv2(f: Float64, g: Float64, h: Float64): (ssmin: Float64, ssmax: Float64, snr: Float64, csr: Float64, 
+        snl: Float64, csl: Float64)
+    func dlauu2(uplo: Uplo, n: Int, a: Array<Float64>, lda: Int): Unit
+    func dpotf2(uplo: Uplo, n: Int, a: Array<Float64>, lda: Int): Bool
+    func dpbtf2(uplo: Uplo, n: Int, kd: Int, ab: Array<Float64>, ldab: Int): Bool
 }
 
 type Direct = UInt8

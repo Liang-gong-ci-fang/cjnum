@@ -197,6 +197,36 @@ public func testDlascl(): Unit {
 }
 
 @Test
+@Parallel
+public func testDlaexc(): Unit {
+    @Expect(dlaexcTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlasv2(): Unit {
+    @Expect(dlasv2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlauu2(): Unit {
+    @Expect(dlauu2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDpotf2(): Unit {
+    @Expect(dpotf2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testdpbtf2(): Unit {
+    @Expect(dpbtf2Test(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))
