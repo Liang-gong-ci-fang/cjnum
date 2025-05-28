@@ -112,6 +112,10 @@ public interface LFloat64 {
     func dlauu2(uplo: Uplo, n: Int, a: Array<Float64>, lda: Int): Unit
     func dpotf2(uplo: Uplo, n: Int, a: Array<Float64>, lda: Int): Bool
     func dpbtf2(uplo: Uplo, n: Int, kd: Int, ab: Array<Float64>, ldab: Int): Bool
+    func dgetc2(n: Int, a: Array<Float64>, lda: Int, ipiv: Array<Int>, jpiv: Array<Int>): Int
+    func dgesc2(n: Int, a: Array<Float64>, lda: Int, rhs: Array<Float64>, ipiv: Array<Int>, jpiv: Array<Int>): Float64
+    func dgghrd(compq: OrthoComp, compz: OrthoComp, n: Int, ilo: Int, ihi: Int, a: Array<Float64>, lda: Int,
+        b: Array<Float64>, ldb: Int, q: Array<Float64>, ldq: Int, z: Array<Float64>, ldz: Int): Unit
 }
 
 type Direct = UInt8

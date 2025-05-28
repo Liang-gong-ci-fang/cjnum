@@ -4,6 +4,9 @@ import std.random.*
 import std.math.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
+import cjnum.blas.blas64.General as General64
+import cjnum.floats.*
+import cjnum.util.*
 
 // TODO
 
@@ -318,6 +321,80 @@ func checkMatrix(m: Int64, n: Int64, a: Array<Float64>, lda: Int64) {
     }
     if (a.size < (m - 1) * lda + n) {
         throw Exception("testlapack: insufficient matrix slice length")
+    }
+}
+
+func randomOrthogonal(n: Int, rnd: Random): General64 {
+    let q = eye(n, n)
+    let x = Array<Float64>(n, item: 0.0)
+    let v = Array<Float64>(n, item: 0.0)
+    for (j in 0..n - 1) {
+        for (i in 0..j) {
+            x[i] = 0.0
+        }
+        for (i in j..n) {
+            x[i] = rnd.nextGaussianFloat64()
+        }
+        reflector(v, x, j)
+        applyReflector(q, q, v)
+    }
+    return q
+}
+
+func reflector(v: Array<Float64>, col: Array<Float64>, j: Int): Unit {
+    let n = col.size
+    if (v.size != n) {
+        throw Exception("slice length mismatch")
+    }
+    if (j < 0 || n <= j) {
+        throw Exception("invalid column index")
+    }
+
+    for (i in 0..v.size) {
+        v[i] = 0.0
+    }
+    if (j == n - 1) {
+        return
+    }
+    var s = fNorm(col[j..], 2.0)
+    if (s == 0.0) {
+        return
+    }
+    v[j] = col[j] + copysign(s, col[j])
+    copy(v[j + 1..], col[j + 1..])
+    s = fNorm(v[j..], 2.0)
+    fScale(1.0 / s, v[j..])
+}
+
+func applyReflector(qh: General64, q: General64, v: Array<Float64>): Unit {
+    let n = v.size
+    if (qh.rows != n || qh.cols != n) {
+        throw Exception("bad size of qh")
+    }
+    if (q.rows != n || q.cols != n) {
+        throw Exception("bad size of q")
+    }
+    let qv = Array<Float64>(n, item: 0.0)
+    gemv(NoTrans, 1.0, q, Vector(data: v, inc: 1), 0.0, Vector(data: qv, inc: 1))
+    for (i in 0..n) {
+        for (j in 0..n) {
+            qh.data[i * qh.stride + j] = q.data[i * q.stride + j]
+        }
+    }
+    for (i in 0..n) {
+        for (j in 0..n) {
+            qh.data[i * qh.stride + j] -= 2.0 * qv[i] * v[j]
+        }
+    }
+    var norm2: Float64 = 0.0
+    for (vi in v) {
+        norm2 += vi * vi
+    }
+    let norm2inv = 1.0 / norm2
+    for (i in 0..n) {
+        for (j in 0..n) {
+            qh.data[i * qh.stride + j] *= norm2inv
+        }
     }
 }
 
