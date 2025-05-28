@@ -227,6 +227,24 @@ public func testdpbtf2(): Unit {
 }
 
 @Test
+@Parallel
+public func testdgetc2(): Unit {
+    @Expect(dgetc2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testdgesc2(): Unit {
+    @Expect(dgesc2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDgghrd(): Unit {
+    @Expect(dgghrdTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))

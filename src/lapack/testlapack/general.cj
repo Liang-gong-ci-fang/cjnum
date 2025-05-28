@@ -836,7 +836,17 @@ func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
     return true
 }
 
-//TODO func intsEqual(a, b []int) bool {
+func intsEqual(a: Array<Int>, b: Array<Int>): Bool {
+    if (a.size != b.size) {
+        return false
+    }
+    for (i in 0..a.size) {
+        if (b[i] != a[i]) {
+            return false
+        }
+    }
+    return true
+}
 
 func randSymBand(uplo: Uplo, n: Int, kd: Int, ldab: Int, rnd: Random): Array<Float64> {
     var ab: Array<Float64> = []
@@ -950,9 +960,35 @@ func isSchurCanonicalGeneral(t: General64): Bool {
 
 //TODO func isAllNaN(x: Array<Float64>): Bool {  //TODO
 
-//TODO func isUpperHessenberg(h: General64): Bool {  //TODO
+func isUpperHessenberg(h: General64): Bool {
+    if (h.rows != h.cols) {
+        throw Exception("matrix not square")
+    }
+    let n = h.rows
+    for (i in 0..n) {
+        for (j in 0..n) {
+            if (i > j + 1 && h.data[i * h.stride + j] != 0.0) {
+                return false
+            }
+        }
+    }
+    return true
+}
 
-//TODO func isUpperTriangular(a blas64.General) bool {
+func isUpperTriangular(a: General64): Bool {
+    if (a.rows != a.cols) {
+        throw Exception("matrix not square")
+    }
+    let n = a.rows
+    for (i in 1..n) {
+        for (j in 0..i) {
+            if (a.data[i * a.stride + j] != 0.0) {
+                return false
+            }
+        }
+    }
+    return true
+}
 
 //TODO func unbalancedSparseGeneral(m, n, stride int, nonzeros int, rnd *rand.Rand) blas64.General {
 
