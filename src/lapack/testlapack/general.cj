@@ -6,6 +6,7 @@ import std.collection.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.blas.blas64.General as General64
+import cjnum.util.*
 import cjnum.lapack.*
 import cjnum.complex.*
 
@@ -1070,10 +1071,6 @@ func perm(n: Int64, rnd: Random): Array<Int64> {
 func copysign(f: Float64, sign: Float64): Float64 {
     const signBit: UInt64 = 1 << 63
     return Float64.fromBits((f.toBits() & (!signBit)) | sign.toBits() & signBit)
-}
-
-func signbit(x: Float64): Bool {
-    return (x.toBits() & (1 << 63)) != 0
 }
 
 func real(x: Complex128): Float64 {

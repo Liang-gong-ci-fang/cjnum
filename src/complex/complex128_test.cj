@@ -28,5 +28,4 @@ public class Complex128Test {
         @Expect(!(c1 == c3))
         @Expect(c1 != c3)
     }
-
 }
