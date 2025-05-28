@@ -140,57 +140,57 @@ func randomGeneral(r: Int64, c: Int64, stride: Int64, rnd: Random): General64 {
 //     return ans
 // }
 
-// func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (General64, Array<Float64>, Array<Float64>) {
-//     let t = randomGeneral(n, n, stride, rnd)
-//     let wr = ArrayList<Float64>()
-//     let wi = ArrayList<Float64>()
+func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (General64, Array<Float64>, Array<Float64>) {
+    let t = randomGeneral(n, n, stride, rnd)
+    let wr = ArrayList<Float64>()
+    let wi = ArrayList<Float64>()
 
-//     for (i in 0..t.rows) {
-//         for (j in 0..=i) {
-//             t.data[i * t.stride + j] = 0.0
-//         }
-//     }
-//     var i = 0
-//     while (i < t.rows) {
-//         var a = rnd.nextGaussianFloat64()
-//         if (bad && rnd.nextFloat64() < 0.5) {
-//             if (rnd.nextFloat64() < 0.5) {
-//                 a = dlamchS
-//             } else {
-//                 a = 0.0
-//             }
-//         }
+    for (i in 0..t.rows) {
+        for (j in 0..=i) {
+            t.data[i * t.stride + j] = 0.0
+        }
+    }
+    var i = 0
+    while (i < t.rows) {
+        var a = rnd.nextGaussianFloat64()
+        if (bad && rnd.nextFloat64() < 0.5) {
+            if (rnd.nextFloat64() < 0.5) {
+                a = dlamchS
+            } else {
+                a = 0.0
+            }
+        }
 
-//         if (rnd.nextFloat64() < 0.5 || i == t.rows - 1) {
-//             t.data[i * t.stride + i] = a
-//             wr.append(a)
-//             wi.append(0.0)
-//             i++
-//             continue
-//         }
+        if (rnd.nextFloat64() < 0.5 || i == t.rows - 1) {
+            t.data[i * t.stride + i] = a
+            wr.append(a)
+            wi.append(0.0)
+            i++
+            continue
+        }
 
-//         let d = a
-//         var c = rnd.nextGaussianFloat64()
-//         let b = if (bad && rnd.nextFloat64() < 0.5) {
-//             dlamchS
-//         } else {
-//             rnd.nextGaussianFloat64()
-//         }
+        let d = a
+        var c = rnd.nextGaussianFloat64()
+        let b = if (bad && rnd.nextFloat64() < 0.5) {
+            dlamchS
+        } else {
+            rnd.nextGaussianFloat64()
+        }
 
-//         if (signbit(b) == signbit(c)) {
-//             c *= -1.0
-//         }
+        if (signbit(b) == signbit(c)) {
+            c *= -1.0
+        }
 
-//         (t.data[i * t.stride + i], t.data[i * t.stride + i + 1]) = (a, b)
-//         (t.data[(i + 1) * t.stride + i], t.data[(i + 1) * t.stride + i + 1]) = (c, d)
+        (t.data[i * t.stride + i], t.data[i * t.stride + i + 1]) = (a, b)
+        (t.data[(i + 1) * t.stride + i], t.data[(i + 1) * t.stride + i + 1]) = (c, d)
 
-//         wr.appendAll([a, a])
-//         let im = sqrt(abs(b)) * sqrt(abs(c))
-//         wi.appendAll([im, -im])
-//         i += 2
-//     }
-//     return (t, wr.toArray(), wi.toArray())
-// }
+        wr.appendAll([a, a])
+        let im = sqrt(abs(b)) * sqrt(abs(c))
+        wi.appendAll([im, -im])
+        i += 2
+    }
+    return (t, wr.toArray(), wi.toArray())
+}
 
 // func blockedUpperTriGeneral(r: Int64, c: Int64, k: Int64, l: Int64, stride: Int64, kblock: Bool, rnd: Random): General64 {
 //     var t = l
@@ -838,9 +838,45 @@ func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
 
 //TODO func intsEqual(a, b []int) bool {
 
-//TODO func randSymBand(uplo blas.Uplo, n, kd, ldab int, rnd *rand.Rand) []float64 {
+func randSymBand(uplo: Uplo, n: Int, kd: Int, ldab: Int, rnd: Random): Array<Float64> {
+    var ab: Array<Float64> = []
+    if (n > 0) {
+        ab = Array<Float64>((n - 1) * ldab + kd + 1, item: 0.0)
+    }
+    for (i in 0..ab.size) {
+        ab[i] = rnd.nextGaussianFloat64()
+    }
+    if (uplo == Upper) {
+        for (i in 0..n) {
+            ab[i * ldab] = Float64(n) + rnd.nextFloat64()
+        }
+    } else if (uplo == Lower) {
+        for (i in 0..n) {
+            ab[i * ldab + kd] = Float64(n) + rnd.nextFloat64()
+        }
+    }
 
-//TODO func distSymBand(uplo blas.Uplo, n, kd int, a []float64, lda int, b []float64, ldb int) float64 {
+    dsbmm(uplo, n, kd, ab, ldab)
+    return ab
+}
+
+func distSymBand(uplo: Uplo, n: Int, kd: Int, a: Array<Float64>, lda: Int, b: Array<Float64>, ldb: Int): Float64 {
+    var dist: Float64 = 0.0
+    if (uplo == Upper) {
+        for (i in 0..n) {
+            for (j in 0..min(kd + 1, n - i)) {
+                dist = max(dist, abs(a[i * lda + j] - b[i * ldb + j]))
+            }
+        }
+    } else if (uplo == Lower) {
+        for (i in 0..n) {
+            for (j in max(0, kd - i)..kd + 1) {
+                dist = max(dist, abs(a[i * lda + j] - b[i * ldb + j]))
+            }
+        }
+    }
+    return dist
+}
 
 func eye(n: Int, stride: Int): General64 {
     let ans = nanGeneral(n, n, stride)
@@ -863,11 +899,48 @@ func zeros(m: Int64, n: Int64, stride: Int64): General64 {
     return a
 }
 
-//TODO func extract2x2Block(t []float64, ldt int) (a, b, c, d float64) {
+func extract2x2Block(t: Array<Float64>, ldt: Int): (a: Float64, b: Float64, c: Float64, d: Float64) {
+    return (t[0], t[1], t[ldt], t[ldt + 1])
+}
 
-//TODO func isSchurCanonical(a, b, c, d float64) bool {
+func isSchurCanonical(a: Float64, b: Float64, c: Float64, d: Float64): Bool {
+    return c == 0.0 || (b != 0.0 && a == d && signbit(b) != signbit(c))
+}
 
-//TODO func isSchurCanonicalGeneral(t blas64.General) bool {
+func isSchurCanonicalGeneral(t: General64): Bool {
+    let n = t.cols
+    if (t.rows != n) {
+        throw Exception("invalid matrix")
+    }
+    var j = 0
+    while (j < n - 1) {
+        if (t.data[(j + 1) * t.stride + j] == 0.0) {
+            for (i in j + 1..n) {
+                if (t.data[i * t.stride + j] != 0.0) {
+                    return false
+                }
+            }
+            j++
+            continue
+        }
+        let (a, b, c, d) = extract2x2Block(t.data[j * t.stride + j..], t.stride)
+        if (!isSchurCanonical(a, b, c, d)) {
+            return false
+        }
+        for (i in j + 2..n) {
+            if (t.data[i * t.stride + j] != 0.0) {
+                return false
+            }
+        }
+        for (i in j + 2..n) {
+            if (t.data[i * t.stride + j + 1] != 0.0) {
+                return false
+            }
+        }
+        j += 2
+    }
+    return true
+}
 
 //TODO func schurBlockEigenvalues(a, b, c, d float64) (ev1, ev2 complex128) {
 
@@ -907,11 +980,35 @@ func distFromIdentity(n: Int64, a: Array<Float64>, lda: Int64): Float64 {
     return dist
 }
 
-//TODO func sameFloat64(a, b float64) bool {
+func sameFloat64(a: Float64, b: Float64): Bool {
+    return a == b || (a.isNaN() && b.isNaN())
+}
 
-//TODO func sameLowerTri(n int, a []float64, lda int, b []float64, ldb int) bool {
+func sameLowerTri(n: Int, a: Array<Float64>, lda: Int, b: Array<Float64>, ldb: Int): Bool {
+    for (i in 1..n) {
+        for (j in 0..i) {
+            let aij = a[i * lda + j]
+            let bij = b[i * ldb + j]
+            if (!sameFloat64(aij, bij)) {
+                return false
+            }
+        }
+    }
+    return true
+}
 
-//TODO func sameUpperTri(n int, a []float64, lda int, b []float64, ldb int) bool {
+func sameUpperTri(n: Int, a: Array<Float64>, lda: Int, b: Array<Float64>, ldb: Int): Bool {
+    for (i in 0..n - 1) {
+        for (j in i + 1..n) {
+            let aij = a[i * lda + j]
+            let bij = b[i * ldb + j]
+            if (!sameFloat64(aij, bij)) {
+                return false
+            }
+        }
+    }
+    return true
+}
 
 //TODO func svdJobString(job lapack.SVDJob) string {
 
@@ -975,9 +1072,9 @@ func copysign(f: Float64, sign: Float64): Float64 {
     return Float64.fromBits((f.toBits() & (!signBit)) | sign.toBits() & signBit)
 }
 
-// func signbit(x: Float64): Bool {
-//     return (x.toBits() & (1 << 63)) != 0
-// }
+func signbit(x: Float64): Bool {
+    return (x.toBits() & (1 << 63)) != 0
+}
 
 func real(x: Complex128): Float64 {
     return x.real
