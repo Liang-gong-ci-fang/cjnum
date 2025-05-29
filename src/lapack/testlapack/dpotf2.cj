@@ -53,7 +53,7 @@ public func dpotf2Test(lFloat64: LFloat64): Bool {
     return true
 }
 
-func testDpotf2(lFloat64: LFloat64, testPos: Bool, a: Array<Array<Float64>>, ans: Array<Array<Float64>>, stride: Int,
+func testDpotf2(lFloat64: LFloat64, testPos: Bool, a: Array<Array<Float64>>, ans: Array<Array<Float64>>, stride: Int64,
     ul: Uplo): Bool {
     let aFlat = flattenTri(a, stride, ul)
     let ansFlat = flattenTri(ans, stride, ul)
@@ -68,7 +68,7 @@ func testDpotf2(lFloat64: LFloat64, testPos: Bool, a: Array<Array<Float64>>, ans
     return true
 }
 
-func flattenTri(a: Array<Array<Float64>>, stride: Int, ul: Uplo): Array<Float64> {
+func flattenTri(a: Array<Array<Float64>>, stride: Int64, ul: Uplo): Array<Float64> {
     let m = a.size
     let n = a[0].size
     if (stride < n) {

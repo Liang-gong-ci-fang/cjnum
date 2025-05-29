@@ -31,7 +31,7 @@ public func dlasy2Test(lFloat64: LFloat64) {
     return true
 }
 
-func testDlasy2(lFloat64: LFloat64, tranl: Bool, tranr: Bool, isgn: Int, n1: Int, n2: Int, extra: Int, big: Bool,
+func testDlasy2(lFloat64: LFloat64, tranl: Bool, tranr: Bool, isgn: Int64, n1: Int64, n2: Int64, extra: Int64, big: Bool,
     rnd: Random): Bool {
     const tol = 1e-14
 

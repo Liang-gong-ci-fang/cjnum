@@ -21,7 +21,7 @@ public func dgetc2Test(lFloat64: LFloat64): Bool {
     return true
 }
 
-func dgetc2Test(lFloat64: LFloat64, rnd: Random, n: Int, lda: Int, perturb: Bool): Bool {
+func dgetc2Test(lFloat64: LFloat64, rnd: Random, n: Int64, lda: Int64, perturb: Bool): Bool {
     const tol = 1e-14
 
     let name = "n=${n},lda=${lda},perturb=${perturb}"
@@ -48,8 +48,8 @@ func dgetc2Test(lFloat64: LFloat64, rnd: Random, n: Int, lda: Int, perturb: Bool
     let a = zeros(n, n, max(1, lda))
     gemm(NoTrans, NoTrans, 1.0, l, u, 0.0, a)
 
-    let ipiv = Array<Int>(n, item: 0)
-    let jpiv = Array<Int>(n, item: 0)
+    let ipiv = Array<Int64>(n, item: 0)
+    let jpiv = Array<Int64>(n, item: 0)
     for (i in 0..n) {
         ipiv[i] = -1
         jpiv[i] = -1

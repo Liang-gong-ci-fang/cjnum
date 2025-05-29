@@ -4,8 +4,8 @@ import cjnum.lapack.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dlascl(kind: MatrixType, _: Int, _: Int, cfrom: Float64, cto: Float64, m: Int, n: Int,
-        a: Array<Float64>, lda: Int): Unit {
+    public func dlascl(kind: MatrixType, _: Int64, _: Int64, cfrom: Float64, cto: Float64, m: Int64, n: Int64,
+        a: Array<Float64>, lda: Int64): Unit {
         match {
             case kind == b'H' || kind == b'B' || kind == b'Q' || kind == b'Z' => //UInt8 var a = b'x' // a is 120 with type UInt8
                 throw Exception("not implemented")

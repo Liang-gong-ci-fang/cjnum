@@ -6,8 +6,8 @@ import cjnum.lapack.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dgghrd(compq: OrthoComp, compz: OrthoComp, n: Int, ilo: Int, ihi: Int, a: Array<Float64>, lda: Int,
-        b: Array<Float64>, ldb: Int, q: Array<Float64>, ldq: Int, z: Array<Float64>, ldz: Int): Unit {
+    public func dgghrd(compq: OrthoComp, compz: OrthoComp, n: Int64, ilo: Int64, ihi: Int64, a: Array<Float64>, lda: Int64,
+        b: Array<Float64>, ldb: Int64, q: Array<Float64>, ldq: Int64, z: Array<Float64>, ldz: Int64): Unit {
         if (compq != OrthoNone && compq != OrthoExplicit && compq != OrthoPostmul) {
             throw Exception(badOrthoComp)
         } else if (compz != OrthoNone && compz != OrthoExplicit && compz != OrthoPostmul) {

@@ -24,8 +24,8 @@ public func dgghrdTest(lFloat64: LFloat64): Bool {
     return true
 }
 
-func testDgghrd(lFloat64: LFloat64, rnd: Random, compq: OrthoComp, compz: OrthoComp, n: Int, ilo: Int, ihi: Int,
-    lda: Int, ldb: Int, ldq: Int, ldz: Int): Bool {
+func testDgghrd(lFloat64: LFloat64, rnd: Random, compq: OrthoComp, compz: OrthoComp, n: Int64, ilo: Int64, ihi: Int64,
+    lda: Int64, ldb: Int64, ldq: Int64, ldz: Int64): Bool {
     let tol = 1e-13
 
     let a = randomGeneral(n, n, lda, rnd)

@@ -599,7 +599,7 @@ func generalOutsideAllNaN(a: General64): Bool {
 //     return q
 // }
 
-func checkBidiagonal(m: Int, n: Int, nb: Int, a: Array<Float64>, lda: Int, d: Array<Float64>, e: Array<Float64>,
+func checkBidiagonal(m: Int64, n: Int64, nb: Int64, a: Array<Float64>, lda: Int64, d: Array<Float64>, e: Array<Float64>,
     tauP: Array<Float64>, tauQ: Array<Float64>, aCopy: Array<Float64>): Unit {
     let qMat = constructQPBidiagonal(ApplyQ, m, n, nb, a, lda, tauQ)
     let pMat = constructQPBidiagonal(ApplyP, m, n, nb, a, lda, tauP)
@@ -671,14 +671,14 @@ func checkBidiagonal(m: Int, n: Int, nb: Int, a: Array<Float64>, lda: Int, d: Ar
     }
 }
 
-public func constructQPBidiagonal(vect: ApplyOrtho, m: Int, n: Int, nb: Int, a: Array<Float64>, lda: Int,
+public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int64, a: Array<Float64>, lda: Int64,
     tau: Array<Float64>): General64 {
     var sz = n
     if (vect == ApplyQ) {
         sz = m
     }
 
-    var ldv: Int
+    var ldv: Int64
     var v: General64
     if (vect == ApplyQ) {
         ldv = nb
@@ -837,7 +837,7 @@ func equalApproxGeneral(a: General64, b: General64, tol: Float64): Bool {
     return true
 }
 
-func intsEqual(a: Array<Int>, b: Array<Int>): Bool {
+func intsEqual(a: Array<Int64>, b: Array<Int64>): Bool {
     if (a.size != b.size) {
         return false
     }
@@ -849,7 +849,7 @@ func intsEqual(a: Array<Int>, b: Array<Int>): Bool {
     return true
 }
 
-func randSymBand(uplo: Uplo, n: Int, kd: Int, ldab: Int, rnd: Random): Array<Float64> {
+func randSymBand(uplo: Uplo, n: Int64, kd: Int64, ldab: Int64, rnd: Random): Array<Float64> {
     var ab: Array<Float64> = []
     if (n > 0) {
         ab = Array<Float64>((n - 1) * ldab + kd + 1, item: 0.0)
@@ -871,7 +871,7 @@ func randSymBand(uplo: Uplo, n: Int, kd: Int, ldab: Int, rnd: Random): Array<Flo
     return ab
 }
 
-func distSymBand(uplo: Uplo, n: Int, kd: Int, a: Array<Float64>, lda: Int, b: Array<Float64>, ldb: Int): Float64 {
+func distSymBand(uplo: Uplo, n: Int64, kd: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64): Float64 {
     var dist: Float64 = 0.0
     if (uplo == Upper) {
         for (i in 0..n) {
@@ -889,7 +889,7 @@ func distSymBand(uplo: Uplo, n: Int, kd: Int, a: Array<Float64>, lda: Int, b: Ar
     return dist
 }
 
-func eye(n: Int, stride: Int): General64 {
+func eye(n: Int64, stride: Int64): General64 {
     let ans = nanGeneral(n, n, stride)
     for (i in 0..n) {
         for (j in 0..n) {
@@ -910,7 +910,7 @@ func zeros(m: Int64, n: Int64, stride: Int64): General64 {
     return a
 }
 
-func extract2x2Block(t: Array<Float64>, ldt: Int): (a: Float64, b: Float64, c: Float64, d: Float64) {
+func extract2x2Block(t: Array<Float64>, ldt: Int64): (a: Float64, b: Float64, c: Float64, d: Float64) {
     return (t[0], t[1], t[ldt], t[ldt + 1])
 }
 
@@ -957,7 +957,7 @@ func isSchurCanonicalGeneral(t: General64): Bool {
 
 //TODO func schurBlockSize(t blas64.General, i int) (size int, first bool) {
 
-//TODO func containsComplex(v: Array<Complex128>, z: Complex128, tol: Float64): (Bool, Int) {  //TODO
+//TODO func containsComplex(v: Array<Complex128>, z: Complex128, tol: Float64): (Bool, Int64) {  //TODO
 
 //TODO func isAllNaN(x: Array<Float64>): Bool {  //TODO
 
@@ -1021,7 +1021,7 @@ func sameFloat64(a: Float64, b: Float64): Bool {
     return a == b || (a.isNaN() && b.isNaN())
 }
 
-func sameLowerTri(n: Int, a: Array<Float64>, lda: Int, b: Array<Float64>, ldb: Int): Bool {
+func sameLowerTri(n: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64): Bool {
     for (i in 1..n) {
         for (j in 0..i) {
             let aij = a[i * lda + j]
@@ -1034,7 +1034,7 @@ func sameLowerTri(n: Int, a: Array<Float64>, lda: Int, b: Array<Float64>, ldb: I
     return true
 }
 
-func sameUpperTri(n: Int, a: Array<Float64>, lda: Int, b: Array<Float64>, ldb: Int): Bool {
+func sameUpperTri(n: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64): Bool {
     for (i in 0..n - 1) {
         for (j in i + 1..n) {
             let aij = a[i * lda + j]

@@ -22,7 +22,7 @@ import std.random.*
 //     return true
 // }
 
-// func dpbtrfTest(lFloat64: LFloat64, uplo: Uplo, n: Int, kd: Int, ldab: Int, rnd: Random): Bool {
+// func dpbtrfTest(lFloat64: LFloat64, uplo: Uplo, n: Int64, kd: Int64, ldab: Int64, rnd: Random): Bool {
 //     const tol = 1e-12
 
 //     let name = "uplo=${uplo.toString()},n=${n},kd=${kd},ldab=${ldab}"
@@ -45,7 +45,7 @@ import std.random.*
 //     return true
 // }
 
-func dsbmm(uplo: Uplo, n: Int, kd: Int, ab: Array<Float64>, ldab: Int) {
+func dsbmm(uplo: Uplo, n: Int64, kd: Int64, ab: Array<Float64>, ldab: Int64) {
     let nFloat64 = nFloat64Implementation()
     if (uplo == Upper) {
         for (k in n - 1..=0 : -1) {

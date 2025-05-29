@@ -245,6 +245,24 @@ public func testDgghrd(): Unit {
 }
 
 @Test
+@Parallel
+public func testDgtsv(): Unit {
+    @Expect(dgtsvTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDgehd2(): Unit {
+    @Expect(dgehd2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlatrd(): Unit {
+    @Expect(dlatrdTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))

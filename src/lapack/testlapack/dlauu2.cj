@@ -17,7 +17,7 @@ public func dlauu2Test(lFloat64: LFloat64): Bool {
     return true
 }
 
-func dlauuTest(f: (uplo: Uplo, n: Int, a: Array<Float64>, lda: Int) -> Unit, uplo: Uplo, ns: Array<Int>): Bool {
+func dlauuTest(f: (uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64) -> Unit, uplo: Uplo, ns: Array<Int64>): Bool {
     const tol = 1e-13
 
     let nFloat64 = nFloat64Implementation()

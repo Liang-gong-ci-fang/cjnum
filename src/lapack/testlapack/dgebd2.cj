@@ -6,9 +6,9 @@ import cjnum.lapack.*
 
 class dgebd2TestStruct {
     dgebd2TestStruct(
-        let m: Int,
-        let n: Int,
-        let lda: Int
+        let m: Int64,
+        let n: Int64,
+        let lda: Int64
     ) {}
 }
 

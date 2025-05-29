@@ -5,7 +5,7 @@ import cjnum.lapack.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dgesc2(n: Int, a: Array<Float64>, lda: Int, rhs: Array<Float64>, ipiv: Array<Int>, jpiv: Array<Int>): Float64 {
+    public func dgesc2(n: Int64, a: Array<Float64>, lda: Int64, rhs: Array<Float64>, ipiv: Array<Int64>, jpiv: Array<Int64>): Float64 {
         if (n < 0) {
             throw Exception(nLT0)
         } else if (lda < max(1, n)) {

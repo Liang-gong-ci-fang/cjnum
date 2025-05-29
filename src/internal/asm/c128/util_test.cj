@@ -15,7 +15,7 @@ func copy<T>(dst: Array<T>, src: Array<T>): Int64 {
     return minSize
 }
 
-func guardVector(vec: Array<Complex128>, guard_val: Complex128, guard_len: Int): Array<Complex128> {
+func guardVector(vec: Array<Complex128>, guard_val: Complex128, guard_len: Int64): Array<Complex128> {
     var guarded = Array<Complex128>(vec.size + guard_len * 2, item: Complex128(0.0))
     copy(guarded[guard_len..], vec)
     for (i in 0..guard_len) {
@@ -34,7 +34,7 @@ func isValidGuard(vec: Array<Complex128>, guard_val: Complex128, guard_len: Int6
     return true
 }
 
-func guardIncVector(vec: Array<Complex128>, guard_val: Complex128, inc: Int, guard_len: Int): Array<Complex128> {
+func guardIncVector(vec: Array<Complex128>, guard_val: Complex128, inc: Int64, guard_len: Int64): Array<Complex128> {
     var s_ln = vec.size * inc
     if (inc < 0) {
         s_ln = vec.size * -inc
@@ -53,7 +53,7 @@ func guardIncVector(vec: Array<Complex128>, guard_val: Complex128, inc: Int, gua
     return guarded
 }
 
-func checkValidIncGuard(vec: Array<Complex128>, guard_val: Complex128, inc: Int, guard_len: Int): Bool {
+func checkValidIncGuard(vec: Array<Complex128>, guard_val: Complex128, inc: Int64, guard_len: Int64): Bool {
     var s_ln = vec.size - 2 * guard_len
     if (inc < 0) {
         s_ln = vec.size * -inc
@@ -74,7 +74,7 @@ func checkValidIncGuard(vec: Array<Complex128>, guard_val: Complex128, inc: Int,
     return true
 }
 
-var align1: Array<Int> = [0, 1]
+var align1: Array<Int64> = [0, 1]
 var align2 = newIncSet(0, 1)
 var align3 = newIncToSet(0, 1)
 

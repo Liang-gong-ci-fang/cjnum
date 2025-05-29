@@ -7,7 +7,7 @@ import cjnum.blas.blas64.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dlauu2(uplo: Uplo, n: Int, a: Array<Float64>, lda: Int): Unit {
+    public func dlauu2(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64): Unit {
         if (uplo != Upper && uplo != Lower) {
             throw Exception(badUplo)
         } else if (n < 0) {

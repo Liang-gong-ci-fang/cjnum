@@ -37,7 +37,7 @@ public func testL2NormUnitary() {
 
 class l2NormIncTestStruct {
     l2NormIncTestStruct(
-        let inc: Int,
+        let inc: Int64,
         let want: Float32,
         var x: Array<Float32>
     ) {}
