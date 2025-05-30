@@ -22,7 +22,7 @@ public func dgesc2Test(lFloat64: LFloat64): Bool {
     return true
 }
 
-func testDgesc2(lFloat64: LFloat64, rnd: Random, n: Int, lda: Int, big: Bool): Bool {
+func testDgesc2(lFloat64: LFloat64, rnd: Random, n: Int64, lda: Int64, big: Bool): Bool {
     const tol = 1e-14
 
     let name = "n=${n},lda=${lda},big=${big}"
@@ -37,14 +37,14 @@ func testDgesc2(lFloat64: LFloat64, rnd: Random, n: Int, lda: Int, big: Bool): B
     }
 
     let lu = cloneGeneral(a)
-    let ipiv = Array<Int>(n, item: 0)
-    let jpiv = Array<Int>(n, item: 0)
+    let ipiv = Array<Int64>(n, item: 0)
+    let jpiv = Array<Int64>(n, item: 0)
     lFloat64.dgetc2(n, lu.data, lu.stride, ipiv, jpiv)
 
     let luCopy = cloneGeneral(lu)
-    let ipivCopy = Array<Int>(ipiv.size, item: 0)
+    let ipivCopy = Array<Int64>(ipiv.size, item: 0)
     copy(ipivCopy, ipiv)
-    let jpivCopy = Array<Int>(jpiv.size, item: 0)
+    let jpivCopy = Array<Int64>(jpiv.size, item: 0)
     copy(jpivCopy, jpiv)
 
     let x = cloneGeneral(b)
@@ -85,7 +85,7 @@ func testDgesc2(lFloat64: LFloat64, rnd: Random, n: Int, lda: Int, big: Bool): B
     return true
 }
 
-func copy(dst: Array<Int>, src: Array<Int>): Int64 {
+func copy(dst: Array<Int64>, src: Array<Int64>): Int64 {
     let minSize = min(src.size, dst.size)
     dst[0..minSize] = src[0..minSize]
     return minSize

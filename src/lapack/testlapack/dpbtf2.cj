@@ -20,7 +20,7 @@ public func dpbtf2Test(lFloat64: LFloat64): Bool {
     return true
 }
 
-func dpbtf2Test(lFloat64: LFloat64, rnd: Random, uplo: Uplo, n: Int, kd: Int, ldab: Int): Bool {
+func dpbtf2Test(lFloat64: LFloat64, rnd: Random, uplo: Uplo, n: Int64, kd: Int64, ldab: Int64): Bool {
     const tol = 1e-12
 
     let name = "uplo=${uplo},n=${n},kd=${kd},ldab=${ldab}"

@@ -39,8 +39,8 @@ public func dtrtrsTest(lFloat64: LFloat64): Bool {
     return true
 }
 
-func dtrtrsTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, trans: Transpose, diag: Diag, n: Int, nrhs: Int, lda: Int,
-    ldb: Int, singular: Bool): Bool {
+func dtrtrsTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, nrhs: Int64, lda: Int64,
+    ldb: Int64, singular: Bool): Bool {
     var singular_ = singular
     if (singular_ && diag == UnitDiag) {
         throw Exception("blas.Unit triangular matrix cannot be singular")

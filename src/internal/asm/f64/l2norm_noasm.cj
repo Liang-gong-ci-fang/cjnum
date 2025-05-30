@@ -29,7 +29,7 @@ public func l2NormUnitary(x: Array<Float64>): Float64 {
     return scale * sqrt(sumSquares)
 }
 
-public func l2NormInc(x: Array<Float64>, n: Int, incX: Int): Float64 {
+public func l2NormInc(x: Array<Float64>, n: Int64, incX: Int64): Float64 {
     var scale: Float64 = 0.0
     var sumSquares: Float64 = 1.0
     var ix = 0

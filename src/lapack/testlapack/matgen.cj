@@ -324,7 +324,7 @@ func checkMatrix(m: Int64, n: Int64, a: Array<Float64>, lda: Int64) {
     }
 }
 
-func randomOrthogonal(n: Int, rnd: Random): General64 {
+func randomOrthogonal(n: Int64, rnd: Random): General64 {
     let q = eye(n, n)
     let x = Array<Float64>(n, item: 0.0)
     let v = Array<Float64>(n, item: 0.0)
@@ -341,7 +341,7 @@ func randomOrthogonal(n: Int, rnd: Random): General64 {
     return q
 }
 
-func reflector(v: Array<Float64>, col: Array<Float64>, j: Int): Unit {
+func reflector(v: Array<Float64>, col: Array<Float64>, j: Int64): Unit {
     let n = col.size
     if (v.size != n) {
         throw Exception("slice length mismatch")

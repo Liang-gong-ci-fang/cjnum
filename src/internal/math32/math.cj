@@ -24,7 +24,7 @@ public func nCopysign(x: Float32, y: Float32): Float32 {
     return Float32.fromBits(resultBits)
 }
 
-public func nInf(sign: Int): Float32 {
+public func nInf(sign: Int64): Float32 {
     var v: Float32
     if (sign >= 0) {
         v = Float32.Inf
@@ -34,7 +34,7 @@ public func nInf(sign: Int): Float32 {
     return v
 }
 
-public func nIsInf(f: Float32, sign: Int): Bool {
+public func nIsInf(f: Float32, sign: Int64): Bool {
     return sign >= 0 && f == Float32.Inf || sign <= 0 && f == -Float32.Inf
 }
 

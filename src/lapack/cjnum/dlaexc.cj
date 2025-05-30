@@ -6,8 +6,8 @@ import cjnum.lapack.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dlaexc(wantq: Bool, n: Int, t: Array<Float64>, ldt: Int, q: Array<Float64>, ldq: Int, j1: Int, n1: Int,
-        n2: Int, work: Array<Float64>): Bool {
+    public func dlaexc(wantq: Bool, n: Int64, t: Array<Float64>, ldt: Int64, q: Array<Float64>, ldq: Int64, j1: Int64, n1: Int64,
+        n2: Int64, work: Array<Float64>): Bool {
         if (n < 0) {
             throw Exception(nLT0)
         } else if (ldt < max(1, n)) {

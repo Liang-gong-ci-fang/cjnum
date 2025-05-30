@@ -4,8 +4,8 @@ import cjnum.blas.blas64.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dlasy2(tranl: Bool, tranr: Bool, isgn: Int, n1: Int, n2: Int, tl: Array<Float64>, ldtl: Int,
-        tr: Array<Float64>, ldtr: Int, b: Array<Float64>, ldb: Int, x: Array<Float64>, ldx: Int): (Float64, Float64, 
+    public func dlasy2(tranl: Bool, tranr: Bool, isgn: Int64, n1: Int64, n2: Int64, tl: Array<Float64>, ldtl: Int64,
+        tr: Array<Float64>, ldtr: Int64, b: Array<Float64>, ldb: Int64, x: Array<Float64>, ldx: Int64): (Float64, Float64, 
         Bool) {
         var scale: Float64 = 0.0
         var xnorm: Float64 = 0.0
@@ -83,11 +83,11 @@ extend LFloat64Implementation {
                 ok = false
                 u11 = smin
             }
-            let locu12 = Array<Int>([1, 0, 3, 2])
+            let locu12 = Array<Int64>([1, 0, 3, 2])
             let u12 = tmp[locu12[ipiv]]
-            let locl21 = Array<Int>([2, 3, 0, 1])
+            let locl21 = Array<Int64>([2, 3, 0, 1])
             let l21 = tmp[locl21[ipiv]] / u11
-            let locu22 = Array<Int>([3, 2, 1, 0])
+            let locu22 = Array<Int64>([3, 2, 1, 0])
             var u22 = tmp[locu22[ipiv]] - l21 * u12
             if (abs(u22) <= smin) {
                 ok = false
@@ -163,11 +163,11 @@ extend LFloat64Implementation {
         btmp[2] = b[ldb]
         btmp[3] = b[ldb + 1]
 
-        var jpiv = Array<Int>(4, item: 0)
+        var jpiv = Array<Int64>(4, item: 0)
         for (i in 0..3) {
             var xmax: Float64 = 0.0
-            var ipsv: Int = 0
-            var jpsv: Int = 0
+            var ipsv: Int64 = 0
+            var jpsv: Int64 = 0
             for (ip in i..4) {
                 for (jp in i..4) {
                     if (abs(t[ip][jp]) >= xmax) {

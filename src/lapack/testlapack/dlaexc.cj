@@ -20,7 +20,7 @@ public func dlaexcTest(lFloat64: LFloat64): Bool {
     return true
 }
 
-func testDlaexc(lFloat64: LFloat64, rnd: Random, n: Int, extra: Int): Bool {
+func testDlaexc(lFloat64: LFloat64, rnd: Random, n: Int64, extra: Int64): Bool {
     const tol = 1e-14
 
     let (tmat, _, _) = randomSchurCanonical(n, n + extra, true, rnd)
@@ -31,8 +31,8 @@ func testDlaexc(lFloat64: LFloat64, rnd: Random, n: Int, extra: Int): Bool {
         j1--
     }
 
-    var n1: Int
-    var n2: Int
+    var n1: Int64
+    var n2: Int64
     match {
         case j1 == n - 1 => (n1, n2) = (1, 0)
         case j1 == n - 2 => if (tmat.data[(j1 + 1) * tmat.stride + j1] == 0.0) {

@@ -6,8 +6,8 @@ import cjnum.lapack.*
 
 class dlasclTestStruct {
     dlasclTestStruct(
-        let m: Int,
-        let n: Int
+        let m: Int64,
+        let n: Int64
     ) {}
 }
 

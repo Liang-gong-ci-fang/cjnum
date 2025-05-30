@@ -5,9 +5,172 @@ import cjnum.blas.*
 import cjnum.internal.asm.f64.*
 import cjnum.lapack.*
 
-//TODO func dlagtm(trans blas.Transpose, m, n int, alpha float64, dl, d, du []float64, b []float64, ldb int, beta float64, c []float64, ldc int)
+func dlagtm(trans: Transpose, m: Int64, n: Int64, alpha: Float64, dl: Array<Float64>, d: Array<Float64>, du: Array<Float64>,
+    b: Array<Float64>, ldb: Int64, beta: Float64, c: Array<Float64>, ldc: Int64) {
+    if (m == 0 || n == 0) {
+        return
+    }
 
-//TODO func dlangt(norm lapack.MatrixNorm, n int, dl, d, du []float64) float64
+    if (beta != 1.0) {
+        if (beta == 0.0) {
+            for (i in 0..m) {
+                let ci = c[i * ldc..i * ldc + n]
+                for (j in 0..ci.size) {
+                    ci[j] = 0.0
+                }
+            }
+        } else {
+            for (i in 0..m) {
+                let ci = c[i * ldc..i * ldc + n]
+                for (j in 0..ci.size) {
+                    ci[j] *= beta
+                }
+            }
+        }
+    }
+
+    if (alpha == 0.0) {
+        return
+    }
+
+    if (m == 1) {
+        if (alpha == 1.0) {
+            for (j in 0..n) {
+                c[j] += d[0] * b[j]
+            }
+        } else {
+            for (j in 0..n) {
+                c[j] += alpha * d[0] * b[j]
+            }
+        }
+        return
+    }
+
+    let (dl_, du_) = if (trans != NoTrans) {
+        (du, dl)
+    } else {
+        (dl, du)
+    }
+
+    if (alpha == 1.0) {
+        for (j in 0..n) {
+            c[j] += d[0] * b[j] + du_[0] * b[ldb + j]
+        }
+
+        for (i in 1..m - 1) {
+            for (j in 0..n) {
+                c[i * ldc + j] += dl_[i - 1] * b[(i - 1) * ldb + j] + d[i] * b[i * ldb + j] + du_[i] * b[(i + 1) * ldb +
+                        j]
+            }
+        }
+
+        for (j in 0..n) {
+            c[(m - 1) * ldc + j] += dl_[m - 2] * b[(m - 2) * ldb + j] + d[m - 1] * b[(m - 1) * ldb + j]
+        }
+    } else {
+        for (j in 0..n) {
+            c[j] += alpha * (d[0] * b[j] + du_[0] * b[ldb + j])
+        }
+
+        for (i in 1..m - 1) {
+            for (j in 0..n) {
+                c[i * ldc + j] += alpha * (dl_[i - 1] * b[(i - 1) * ldb + j] + d[i] * b[i * ldb + j] + du_[i] * b[(i + 1) *
+                        ldb + j])
+            }
+        }
+
+        for (j in 0..n) {
+            c[(m - 1) * ldc + j] += alpha * (dl_[m - 2] * b[(m - 2) * ldb + j] + d[m - 1] * b[(m - 1) * ldb + j])
+        }
+    }
+}
+
+func dlangt(norm: MatrixNorm, n: Int64, dl: Array<Float64>, d: Array<Float64>, du: Array<Float64>): Float64 {
+    if (n == 0) {
+        return 0.0
+    }
+
+    let dl_ = dl[0..n - 1]
+    let d_ = d[0..n]
+    let du_ = du[0..n - 1]
+
+    var anorm = 0.0
+
+    if (norm == MaxAbs) {
+        for (diag in [dl_, d_, du_]) {
+            for (i in 0..diag.size) {
+                var di = diag[i]
+                if (di.isNaN()) {
+                    return di
+                }
+                di = abs(di)
+                if (di > anorm) {
+                    anorm = di
+                }
+            }
+        }
+    } else if (norm == MaxColumnSum) {
+        if (n == 1) {
+            return abs(d_[0])
+        }
+
+        anorm = abs(d_[0]) + abs(dl_[0])
+        if (anorm.isNaN()) {
+            return anorm
+        }
+
+        var tmp = abs(du_[n - 2]) + abs(d_[n - 1])
+        if (tmp.isNaN()) {
+            return tmp
+        }
+        if (tmp > anorm) {
+            anorm = tmp
+        }
+
+        for (i in 1..n - 1) {
+            tmp = abs(du_[i - 1]) + abs(d_[i]) + abs(dl_[i])
+            if (tmp.isNaN()) {
+                return tmp
+            }
+            if (tmp > anorm) {
+                anorm = tmp
+            }
+        }
+    } else if (norm == MaxRowSum) {
+        if (n == 1) {
+            return abs(d_[0])
+        }
+
+        anorm = abs(d_[0]) + abs(du_[0])
+        if (anorm.isNaN()) {
+            return anorm
+        }
+
+        var tmp = abs(dl_[n - 2]) + abs(d_[n - 1])
+        if (tmp.isNaN()) {
+            return tmp
+        }
+        if (tmp > anorm) {
+            anorm = tmp
+        }
+
+        for (i in 1..n - 1) {
+            tmp = abs(dl_[i - 1]) + abs(d_[i]) + abs(du_[i])
+            if (tmp.isNaN()) {
+                return tmp
+            }
+            if (tmp > anorm) {
+                anorm = tmp
+            }
+        }
+    } else if (norm == Frobenius) {
+        throw Exception("not implemented")
+    } else {
+        throw Exception("invalid norm")
+    }
+
+    return anorm
+}
 
 func dlansy(norm: MatrixNorm, uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64): Float64 {
     if (n == 0) {

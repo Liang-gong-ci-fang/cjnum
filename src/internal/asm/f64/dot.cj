@@ -8,7 +8,7 @@ public func dotUnitary(x: Array<Float64>, y: Array<Float64>): Float64 {
     return sum
 }
 
-public func dotInc(x: Array<Float64>, y: Array<Float64>, n: Int, incX: Int, incY: Int, ix: Int, iy: Int): Float64 {
+public func dotInc(x: Array<Float64>, y: Array<Float64>, n: Int64, incX: Int64, incY: Int64, ix: Int64, iy: Int64): Float64 {
     var sum: Float64 = 0.0
     var ix_ = ix
     var iy_ = iy

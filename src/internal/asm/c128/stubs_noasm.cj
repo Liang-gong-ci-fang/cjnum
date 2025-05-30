@@ -44,7 +44,7 @@ public func dscalUnitary(alpha: Float64, x: Array<Complex128>) {
     }
 }
 
-public func dscalInc(alpha: Complex128, x: Array<Complex128>, n: Int, inc: Int) {
+public func dscalInc(alpha: Complex128, x: Array<Complex128>, n: Int64, inc: Int64) {
     var ix: Int64 = 0
     for (_ in 0..n) {
         x[ix] *= alpha
@@ -52,7 +52,7 @@ public func dscalInc(alpha: Complex128, x: Array<Complex128>, n: Int, inc: Int) 
     }
 }
 
-public func scalInc(alpha: Complex128, x: Array<Complex128>, n: Int, inc: Int) {
+public func scalInc(alpha: Complex128, x: Array<Complex128>, n: Int64, inc: Int64) {
     var ix: Int64 = 0
     for (_ in 0..n) {
         x[ix] *= alpha

@@ -5,7 +5,7 @@ import cjnum.blas.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dpbtf2(uplo: Uplo, n: Int, kd: Int, ab: Array<Float64>, ldab: Int): Bool {
+    public func dpbtf2(uplo: Uplo, n: Int64, kd: Int64, ab: Array<Float64>, ldab: Int64): Bool {
         if (uplo != Upper && uplo != Lower) {
             throw Exception(badUplo)
         } else if (n < 0) {
