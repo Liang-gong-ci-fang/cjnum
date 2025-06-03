@@ -263,6 +263,12 @@ public func testDlatrd(): Unit {
 }
 
 @Test
+@Parallel
+public func testDorg2l(): Unit {
+    @Expect(dorg2lTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))

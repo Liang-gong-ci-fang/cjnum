@@ -101,12 +101,12 @@ public interface LFloat64 {
     func dlasr(side: Side, pivot: Pivot, direct: Direct, m: Int64, n: Int64, c: Array<Float64>, s: Array<Float64>,
         a: Array<Float64>, lda: Int64): Unit
     func dlasy2(tranl: Bool, tranr: Bool, isgn: Int64, n1: Int64, n2: Int64, tl: Array<Float64>, ldtl: Int64,
-        tr: Array<Float64>, ldtr: Int64, b: Array<Float64>, ldb: Int64, x: Array<Float64>, ldx: Int64): (Float64, Float64, 
-        Bool)
-    func dlascl(kind: MatrixType, kl: Int64, ku: Int64, cfrom: Float64, cto: Float64, m: Int64, n: Int64, a: Array<Float64>,
-        lda: Int64): Unit
-    func dlaexc(wantq: Bool, n: Int64, t: Array<Float64>, ldt: Int64, q: Array<Float64>, ldq: Int64, j1: Int64, n1: Int64,
-        n2: Int64, work: Array<Float64>): Bool
+        tr: Array<Float64>, ldtr: Int64, b: Array<Float64>, ldb: Int64, x: Array<Float64>, ldx: Int64): (Float64, 
+        Float64, Bool)
+    func dlascl(kind: MatrixType, kl: Int64, ku: Int64, cfrom: Float64, cto: Float64, m: Int64, n: Int64,
+        a: Array<Float64>, lda: Int64): Unit
+    func dlaexc(wantq: Bool, n: Int64, t: Array<Float64>, ldt: Int64, q: Array<Float64>, ldq: Int64, j1: Int64,
+        n1: Int64, n2: Int64, work: Array<Float64>): Bool
     func dlasv2(f: Float64, g: Float64, h: Float64): (ssmin: Float64, ssmax: Float64, snr: Float64, csr: Float64, 
         snl: Float64, csl: Float64)
     func dlauu2(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64): Unit
@@ -116,10 +116,13 @@ public interface LFloat64 {
     func dgesc2(n: Int64, a: Array<Float64>, lda: Int64, rhs: Array<Float64>, ipiv: Array<Int64>, jpiv: Array<Int64>): Float64
     func dgghrd(compq: OrthoComp, compz: OrthoComp, n: Int64, ilo: Int64, ihi: Int64, a: Array<Float64>, lda: Int64,
         b: Array<Float64>, ldb: Int64, q: Array<Float64>, ldq: Int64, z: Array<Float64>, ldz: Int64): Unit
-    func dgtsv(n: Int64, nrhs: Int64, dl: Array<Float64>, d: Array<Float64>, du: Array<Float64>, b: Array<Float64>, ldb: Int64): Bool
-    func dgehd2(n: Int64, ilo: Int64, ihi: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
+    func dgtsv(n: Int64, nrhs: Int64, dl: Array<Float64>, d: Array<Float64>, du: Array<Float64>, b: Array<Float64>,
+        ldb: Int64): Bool
+    func dgehd2(n: Int64, ilo: Int64, ihi: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>,
+        work: Array<Float64>): Unit
     func dlatrd(uplo: Uplo, n: Int64, nb: Int64, a: Array<Float64>, lda: Int64, e: Array<Float64>, tau: Array<Float64>,
         w: Array<Float64>, ldw: Int64): Unit
+    func dorg2l(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
 }
 
 type Direct = UInt8
