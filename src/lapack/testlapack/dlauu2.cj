@@ -74,9 +74,7 @@ func dlauuTest(f: (uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64) -> Unit,
                 nFloat64.dgemm(Trans, NoTrans, n, n, n, 1.0, l, ldl, l, ldl, -1.0, r.data, r.stride)
             }
             let resid = dlange(MaxColumnSum, r.rows, r.cols, r.data, r.stride)
-            println("0# resid = ${resid}, tol*Float64(n)=${tol*Float64(n)}, n=${n}")
             if (resid > tol * Float64(n)) {
-                println("1# resid = ${resid}, tol*Float64(n)=${tol*Float64(n)}, n=${n}")
                 throw Exception("${prefix}: unexpected result")
             }
         }
