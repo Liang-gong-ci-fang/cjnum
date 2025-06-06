@@ -251,34 +251,37 @@ func dlange(norm: MatrixNorm, m: Int64, n: Int64, a: Array<Float64>, lda: Int64)
         return 0.0
     }
     var value = 0.0
-    match {
-        case norm == MaxAbs => for (i in 0..m) {
+    if (norm == MaxAbs) {
+        for (i in 0..m) {
             for (j in 0..n) {
                 value = max(value, abs(a[i * lda + j]))
             }
         }
-        case norm == MaxColumnSum =>
-            let work = Array<Float64>(n, item: 0.0)
-            for (i in 0..m) {
-                for (j in 0..n) {
-                    work[j] += abs(a[i * lda + j])
-                }
+    } else if (norm == MaxColumnSum) {
+        let work = Array<Float64>(n, item: 0.0)
+        for (i in 0..m) {
+            for (j in 0..n) {
+                work[j] += abs(a[i * lda + j])
             }
-            for (i in 0..n) {
-                value = max(value, work[i])
-            }
-        case norm == MaxRowSum => for (i in 0..m) {
+        }
+        for (i in 0..n) {
+            value = max(value, work[i])
+        }
+    } else if (norm == MaxRowSum) {
+        for (i in 0..m) {
             var sum = 0.0
             for (j in 0..n) {
                 sum += abs(a[i * lda + j])
             }
             value = max(value, sum)
         }
-        case norm == Frobenius => for (i in 0..m) {
+    } else if (norm == Frobenius) {
+        for (i in 0..m) {
             let row = l2NormUnitary(a[i * lda..i * lda + n])
             value = hypot(value, row)
         }
-        case _ => throw Exception("invalid norm")
+    } else {
+        throw Exception("invalid norm")
     }
     return value
 }
