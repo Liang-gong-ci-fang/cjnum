@@ -12,7 +12,7 @@ import std.math.*
 //	Atan(±0) = ±0
 //	Atan(±Inf) = ±Pi/2
 public func uAtan(x: Float64): Float64 {
-	// TODO if haveArchAtan2 {
+    // TODO if haveArchAtan2 {
     return _atan(x)
 }
 
@@ -244,6 +244,17 @@ public func sincos(x_: Float64): (sinX: Float64, cosX: Float64) {
         sin = -sin
     }
     return (sin, cos)
+}
+
+// calculate sinh and cosh.
+public func sinhcosh(x: Float64): (Float64, Float64) {
+    if (abs(x) <= 0.5) {
+        return (sinh(x), cosh(x))
+    }
+    var e = exp(x)
+    let ei = 0.5 / e
+    e *= 0.5
+    return (e - ei, e + ei)
 }
 
 // mPi4 is the binary digits of 4/pi as a uint64 array,

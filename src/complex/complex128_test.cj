@@ -10,7 +10,7 @@ public class Complex128Test {
     public func testIsNaN(): Unit {
         let c1 = Complex128(0.0, 0.0)
         @Expect(!c1.isNaN())
-        let c2 = Complex128(Float64.NaN, Float64.NaN)
+        let c2 = Complex128.NaN
         @Expect(c2.isNaN())
         let c3 = Complex128(0.0, Float64.NaN)
         @Expect(c3.isNaN())
