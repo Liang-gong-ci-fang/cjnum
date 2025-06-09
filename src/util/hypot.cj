@@ -32,7 +32,9 @@ private func _hypot(p_: Float64, q_: Float64): Float64 {
         return Float64.NaN
     }
     if (p < q) {
-        (p, q) = (q, p)
+        var temp = p
+        p = q
+        q = temp
     }
     if (p == 0.0) {
         return 0.0
