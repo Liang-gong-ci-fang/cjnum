@@ -6,44 +6,44 @@ import cjnum.lapack.*
 import std.math.*
 import std.random.*
 
-// public func dpbtrfTest(lFloat64: LFloat64): Bool {
-//     let rnd = Random(1)
-//     for (n in [0, 1, 2, 3, 4, 5, 64, 65, 66, 91, 96, 97, 101, 128, 130]) {
-//         for (kd in [(n + 1) / 4, (3 * n - 1) / 4, (5 * n + 1) / 4]) {
-//             for (uplo in [Upper, Lower]) {
-//                 for (ldab in [kd + 1, kd + 1 + 7]) {
-//                     if (!dpbtrfTest(lFloat64, uplo, n, kd, ldab, rnd)) {
-//                         return false
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     return true
-// }
+public func dpbtrfTest(lFloat64: LFloat64): Bool {
+    let rnd = Random(1)
+    for (n in [0, 1, 2, 3, 4, 5, 64, 65, 66, 91, 96, 97, 101, 128, 130]) {
+        for (kd in [(n + 1) / 4, (3 * n - 1) / 4, (5 * n + 1) / 4]) {
+            for (uplo in [Upper, Lower]) {
+                for (ldab in [kd + 1, kd + 1 + 7]) {
+                    if (!dpbtrfTest(lFloat64, uplo, n, kd, ldab, rnd)) {
+                        return false
+                    }
+                }
+            }
+        }
+    }
+    return true
+}
 
-// func dpbtrfTest(lFloat64: LFloat64, uplo: Uplo, n: Int64, kd: Int64, ldab: Int64, rnd: Random): Bool {
-//     const tol = 1e-12
+func dpbtrfTest(lFloat64: LFloat64, uplo: Uplo, n: Int64, kd: Int64, ldab: Int64, rnd: Random): Bool {
+    const tol = 1e-12
 
-//     let name = "uplo=${uplo.toString()},n=${n},kd=${kd},ldab=${ldab}"
+    let name = "uplo=${uplo.toString()},n=${n},kd=${kd},ldab=${ldab}"
 
-//     let ab = randSymBand(uplo, n, kd, ldab, rnd)
+    let ab = randSymBand(uplo, n, kd, ldab, rnd)
 
-//     let abFac = Array<Float64>(ab.size, item: 0.0)
-//     copy(abFac, ab)
-//     let ok = lFloat64.dpbtrf(uplo, n, kd, abFac, ldab)
-//     if (!ok) {
-//         throw Exception("${name}: bad test matrix, Dpbtrf failed")
-//     }
+    let abFac = Array<Float64>(ab.size, item: 0.0)
+    copy(abFac, ab)
+    let ok = lFloat64.dpbtrf(uplo, n, kd, abFac, ldab)
+    if (!ok) {
+        throw Exception("${name}: bad test matrix, Dpbtrf failed")
+    }
 
-//     dsbmm(uplo, n, kd, abFac, ldab)
+    dsbmm(uplo, n, kd, abFac, ldab)
 
-//     let dist = distSymBand(uplo, n, kd, abFac, ldab, ab, ldab)
-//     if (dist > tol * Float64(n)) {
-//         throw Exception("${name}: unexpected result, diff=${dist}")
-//     }
-//     return true
-// }
+    let dist = distSymBand(uplo, n, kd, abFac, ldab, ab, ldab)
+    if (dist > tol * Float64(n)) {
+        throw Exception("${name}: unexpected result, diff=${dist}")
+    }
+    return true
+}
 
 func dsbmm(uplo: Uplo, n: Int64, kd: Int64, ab: Array<Float64>, ldab: Int64) {
     let nFloat64 = nFloat64Implementation()

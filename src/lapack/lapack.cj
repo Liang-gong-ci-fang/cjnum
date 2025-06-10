@@ -128,6 +128,13 @@ public interface LFloat64 {
         t: Array<Float64>, ldt: Int64): Unit
     func dtrexc(compq: UpdateSchurComp, n: Int64, t: Array<Float64>, ldt: Int64, q: Array<Float64>, ldq: Int64,
         ifst: Int64, ilst: Int64, work: Array<Float64>): (Int64, Int64, Bool)
+    func dlasrt(s: Sort, n: Int64, d: Array<Float64>): Unit
+    func dlaev2(a: Float64, b: Float64, c: Float64): (Float64, Float64, Float64, Float64)
+    func dlarfb(side: Side, trans: Transpose, direct: Direct, store: StoreV, m: Int64, n: Int64, k: Int64,
+        v: Array<Float64>, ldv: Int64, t: Array<Float64>, ldt: Int64, c: Array<Float64>, ldc: Int64,
+        work: Array<Float64>, ldwork: Int64): Unit
+    func dpstf2(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64, piv: Array<Int64>, tol: Float64,
+        work: Array<Float64>): (Int64, Bool)
 }
 
 type Direct = UInt8

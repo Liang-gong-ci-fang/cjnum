@@ -287,6 +287,36 @@ public func testDtrexc(): Unit {
 }
 
 @Test
+@Parallel
+public func testDlasrt(): Unit {
+    @Expect(dlasrtTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlaev2(): Unit {
+    @Expect(dlaev2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlarfb(): Unit {
+    @Expect(dlarfbTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDpbtrf(): Unit {
+    @Expect(dpbtrfTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDpstf2(): Unit {
+    @Expect(dpstf2Test(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))
