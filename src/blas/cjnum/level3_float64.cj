@@ -889,6 +889,7 @@ extend NFloat64Implementation {
                     while (k >= 0) {
                         let tmp = alpha * btmp[k]
                         if (tmp == 0.0) {
+                            k--
                             continue
                         }
                         btmp[k] = tmp
