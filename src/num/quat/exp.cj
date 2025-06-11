@@ -4,7 +4,7 @@ import cjnum.util.*
 import std.math.*
 
 // Exp returns e**q, the base-e exponential of q.
-public func nqExp(q: Number): Number {
+public func nqExp(q: NqNumber): NqNumber {
     var (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(exp(w))
@@ -16,7 +16,7 @@ public func nqExp(q: Number): Number {
 }
 
 // Log returns the natural logarithm of q.
-public func nqLog(q: Number): Number {
+public func nqLog(q: NqNumber): NqNumber {
     var (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(log(w))
@@ -31,14 +31,14 @@ public func nqLog(q: Number): Number {
 //	Pow(0, ±0) returns 1+0i+0j+0k
 //	Pow(0, c) for real(c)<0 returns Inf+0i+0j+0k if imag(c), jmag(c), kmag(c) are zero,
 //	    otherwise Inf+Inf i+Inf j+Inf k.
-public func nqPow(q: Number, r: Number): Number {
+public func nqPow(q: NqNumber, r: NqNumber): NqNumber {
     if (q.nqEqual(zero)) {
         var (w, uv) = nqSplit(r)
         if (w == 0.0) {
-            return Number(1.0, 0.0, 0.0, 0.0)
+            return NqNumber(1.0, 0.0, 0.0, 0.0)
         } else if (w < 0.0) {
             if (uv.nqEqual(zero)) {
-                return Number(Float64.Inf, 0.0, 0.0, 0.0)
+                return NqNumber(Float64.Inf, 0.0, 0.0, 0.0)
             }
             return nqInf()
         } else if (w > 0.0) {
@@ -53,10 +53,10 @@ public func nqPow(q: Number, r: Number): Number {
 //
 //	PowReal(0, ±0) returns 1+0i+0j+0k
 //	PowReal(0, c) for c<0 returns Inf+0i+0j+0k.
-public func nqPowReal(q: Number, r: Float64): Number {
+public func nqPowReal(q: NqNumber, r: Float64): NqNumber {
     if (q.nqEqual(zero)) {
         if (r == 0.0) {
-            return Number(1.0, 0.0, 0.0, 0.0)
+            return NqNumber(1.0, 0.0, 0.0, 0.0)
         } else if (r < 0.0) {
             return nqInf()
         } else if (r > 0.0) {
@@ -67,7 +67,7 @@ public func nqPowReal(q: Number, r: Float64): Number {
 }
 
 // Sqrt returns the square root of q.
-public func nqSqrt(q: Number): Number {
+public func nqSqrt(q: NqNumber): NqNumber {
     if (q.nqEqual(zero)) {
         return zero
     }

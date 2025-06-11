@@ -5,9 +5,9 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 private class NaNTest{
-    let q:Number
+    let q:NqNumber
     let want:Bool
-    public init(q:Number,want:Bool) {
+    public init(q:NqNumber,want:Bool) {
         this.q=q
         this.want=want
     }
@@ -15,20 +15,20 @@ private class NaNTest{
 
 private let nanTests:Array<NaNTest>=[
     NaNTest(nqNaN(), true),
-    NaNTest(Number(nan, nan, nan, nan), true),
-    NaNTest(Number(nan, 0.0, 0.0, 0.0), true),
-    NaNTest(Number(0.0, nan, 0.0, 0.0), true),
-    NaNTest(Number(0.0, 0.0, nan, 0.0), true),
-    NaNTest(Number(0.0, 0.0, 0.0, nan), true),
-    NaNTest(Number(inf, nan, nan, nan), false),
-    NaNTest(Number(nan, inf, nan, nan), false),
-    NaNTest(Number(nan, nan, inf, nan), false),
-    NaNTest(Number(nan, nan, nan, inf), false),
-    NaNTest(Number(-inf, nan, nan, nan), false),
-    NaNTest(Number(nan, -inf, nan, nan), false),
-    NaNTest(Number(nan, nan, -inf, nan), false),
-    NaNTest(Number(nan, nan, nan, -inf), false),
-    NaNTest(Number(0.0,0.0,0.0,0.0), false)
+    NaNTest(NqNumber(nan, nan, nan, nan), true),
+    NaNTest(NqNumber(nan, 0.0, 0.0, 0.0), true),
+    NaNTest(NqNumber(0.0, nan, 0.0, 0.0), true),
+    NaNTest(NqNumber(0.0, 0.0, nan, 0.0), true),
+    NaNTest(NqNumber(0.0, 0.0, 0.0, nan), true),
+    NaNTest(NqNumber(inf, nan, nan, nan), false),
+    NaNTest(NqNumber(nan, inf, nan, nan), false),
+    NaNTest(NqNumber(nan, nan, inf, nan), false),
+    NaNTest(NqNumber(nan, nan, nan, inf), false),
+    NaNTest(NqNumber(-inf, nan, nan, nan), false),
+    NaNTest(NqNumber(nan, -inf, nan, nan), false),
+    NaNTest(NqNumber(nan, nan, -inf, nan), false),
+    NaNTest(NqNumber(nan, nan, nan, -inf), false),
+    NaNTest(NqNumber(0.0,0.0,0.0,0.0), false)
 ]
 
 @Test

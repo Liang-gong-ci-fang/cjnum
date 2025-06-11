@@ -5,9 +5,9 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 private class InfTest{
-    let q:Number
+    let q:NqNumber
     let want:Bool
-    public init(q:Number,want:Bool){
+    public init(q:NqNumber,want:Bool){
         this.q=q
         this.want=want
     }
@@ -15,25 +15,25 @@ private class InfTest{
 
 private let infTests:Array<InfTest>=[
     InfTest(nqInf(),true),
-    InfTest(Number(inf, inf, inf, inf), true),
-    InfTest(Number(-inf, -inf, -inf, -inf), true),
-    InfTest(Number(inf, nan, nan, nan), true),
-    InfTest(Number(nan, inf, nan, nan), true),
-    InfTest(Number(nan, nan, inf, nan), true),
-    InfTest(Number(nan, nan, nan, inf), true),
-    InfTest(Number(-inf, nan, nan, nan), true),
-    InfTest(Number(nan, -inf, nan, nan), true),
-    InfTest(Number(nan, nan, -inf, nan), true),
-    InfTest(Number(nan, nan, nan, -inf), true),
-    InfTest(Number(inf, 0.0, 0.0, 0.0), true),
-    InfTest(Number(0.0, inf, 0.0, 0.0), true),
-    InfTest(Number(0.0, 0.0, inf, 0.0), true),
-    InfTest(Number(0.0, 0.0, 0.0, inf), true),
-    InfTest(Number(-inf, 0.0, 0.0, 0.0), true),
-    InfTest(Number(0.0, -inf, 0.0, 0.0), true),
-    InfTest(Number(0.0, 0.0, -inf, 0.0), true),
-    InfTest(Number(0.0, 0.0, 0.0, -inf), true),
-    InfTest(Number(0.0,0.0,0.0,0.0), false)
+    InfTest(NqNumber(inf, inf, inf, inf), true),
+    InfTest(NqNumber(-inf, -inf, -inf, -inf), true),
+    InfTest(NqNumber(inf, nan, nan, nan), true),
+    InfTest(NqNumber(nan, inf, nan, nan), true),
+    InfTest(NqNumber(nan, nan, inf, nan), true),
+    InfTest(NqNumber(nan, nan, nan, inf), true),
+    InfTest(NqNumber(-inf, nan, nan, nan), true),
+    InfTest(NqNumber(nan, -inf, nan, nan), true),
+    InfTest(NqNumber(nan, nan, -inf, nan), true),
+    InfTest(NqNumber(nan, nan, nan, -inf), true),
+    InfTest(NqNumber(inf, 0.0, 0.0, 0.0), true),
+    InfTest(NqNumber(0.0, inf, 0.0, 0.0), true),
+    InfTest(NqNumber(0.0, 0.0, inf, 0.0), true),
+    InfTest(NqNumber(0.0, 0.0, 0.0, inf), true),
+    InfTest(NqNumber(-inf, 0.0, 0.0, 0.0), true),
+    InfTest(NqNumber(0.0, -inf, 0.0, 0.0), true),
+    InfTest(NqNumber(0.0, 0.0, -inf, 0.0), true),
+    InfTest(NqNumber(0.0, 0.0, 0.0, -inf), true),
+    InfTest(NqNumber(0.0,0.0,0.0,0.0), false)
 ]
 
 @Test

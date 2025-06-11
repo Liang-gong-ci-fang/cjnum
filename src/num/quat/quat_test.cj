@@ -14,14 +14,14 @@ public let inf = Float64.Inf
 public let nan = Float64.NaN
 
 private class ArithTest {
-    let x: Number
-    let y: Number
+    let x: NqNumber
+    let y: NqNumber
     let f: Float64
-    let wantAdd: Number
-    let wantSub: Number
-    let wantMul: Number
-    let wantScale: Number
-    public init(x: Number, y: Number, f: Float64, wantAdd: Number, wantSub: Number, wantMul: Number, wantScale: Number) {
+    let wantAdd: NqNumber
+    let wantSub: NqNumber
+    let wantMul: NqNumber
+    let wantScale: NqNumber
+    public init(x: NqNumber, y: NqNumber, f: Float64, wantAdd: NqNumber, wantSub: NqNumber, wantMul: NqNumber, wantScale: NqNumber) {
         this.x = x
         this.y = y
         this.f = f
@@ -34,49 +34,49 @@ private class ArithTest {
 
 private let arithTests: Array<ArithTest> = [
     ArithTest(
-        Number(1.0, 1.0, 1.0, 1.0),
-        Number(1.0, 1.0, 1.0, 1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
         2.0,
-        Number(2.0, 2.0, 2.0, 2.0),
-        Number(0.0, 0.0, 0.0, 0.0),
-        Number(-2.0, 2.0, 2.0, 2.0),
-        Number(2.0, 2.0, 2.0, 2.0),
+        NqNumber(2.0, 2.0, 2.0, 2.0),
+        NqNumber(0.0, 0.0, 0.0, 0.0),
+        NqNumber(-2.0, 2.0, 2.0, 2.0),
+        NqNumber(2.0, 2.0, 2.0, 2.0),
     ),
     ArithTest(
-        Number(1.0, 1.0, 1.0, 1.0),
-        Number(2.0, -1.0, 1.0, -1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
+        NqNumber(2.0, -1.0, 1.0, -1.0),
         -2.0,
-        Number(3.0, 0.0, 2.0, 0.0),
-        Number(-1.0, 2.0, 0.0, 2.0),
-        Number(3.0, -1.0, 3.0, 3.0),
-        Number(-2.0, -2.0, -2.0, -2.0),
+        NqNumber(3.0, 0.0, 2.0, 0.0),
+        NqNumber(-1.0, 2.0, 0.0, 2.0),
+        NqNumber(3.0, -1.0, 3.0, 3.0),
+        NqNumber(-2.0, -2.0, -2.0, -2.0),
     ),
     ArithTest(
-        Number(1.0, 2.0, 3.0, 4.0),
-        Number(4.0, -3.0, 2.0, -1.0),
+        NqNumber(1.0, 2.0, 3.0, 4.0),
+        NqNumber(4.0, -3.0, 2.0, -1.0),
         2.0,
-        Number(5.0, -1.0, 5.0, 3.0),
-        Number(-3.0, 5.0, 1.0, 5.0),
-        Number(8.0, -6.0, 4.0, 28.0),
-        Number(2.0, 4.0, 6.0, 8.0),
+        NqNumber(5.0, -1.0, 5.0, 3.0),
+        NqNumber(-3.0, 5.0, 1.0, 5.0),
+        NqNumber(8.0, -6.0, 4.0, 28.0),
+        NqNumber(2.0, 4.0, 6.0, 8.0),
     ),
     ArithTest(
-        Number(1.0, 2.0, 3.0, 4.0),
-        Number(-4.0, 3.0, -2.0, 1.0),
+        NqNumber(1.0, 2.0, 3.0, 4.0),
+        NqNumber(-4.0, 3.0, -2.0, 1.0),
         -2.0,
-        Number(-3.0, 5.0, 1.0, 5.0),
-        Number(5.0, -1.0, 5.0, 3.0),
-        Number(-8.0, 6.0, -4.0, -28.0),
-        Number(-2.0, -4.0, -6.0, -8.0),
+        NqNumber(-3.0, 5.0, 1.0, 5.0),
+        NqNumber(5.0, -1.0, 5.0, 3.0),
+        NqNumber(-8.0, 6.0, -4.0, -28.0),
+        NqNumber(-2.0, -4.0, -6.0, -8.0),
     ),
     ArithTest(
-        Number(-4.0, 3.0, -2.0, 1.0),
-        Number(1.0, 2.0, 3.0, 4.0),
+        NqNumber(-4.0, 3.0, -2.0, 1.0),
+        NqNumber(1.0, 2.0, 3.0, 4.0),
         0.5,
-        Number(-3.0, 5.0, 1.0, 5.0),
-        Number(-5.0, 1.0, -5.0, -3.0),
-        Number(-8.0, -16.0, -24.0, -2.0),
-        Number(-2.0, 1.5, -1.0, 0.5),
+        NqNumber(-3.0, 5.0, 1.0, 5.0),
+        NqNumber(-5.0, 1.0, -5.0, -3.0),
+        NqNumber(-8.0, -16.0, -24.0, -2.0),
+        NqNumber(-2.0, 1.5, -1.0, 0.5),
     )
 ]
 
@@ -100,9 +100,9 @@ public func testArithmetic(): Unit {
 
 private class ParseTest {
     let s: String
-    let want: Number
+    let want: NqNumber
     let wantErr: ParseError
-    public init(s: String, want: Number, wantErr: ParseError) {
+    public init(s: String, want: NqNumber, wantErr: ParseError) {
         this.s = s
         this.want = want
         this.wantErr = wantErr
@@ -111,50 +111,50 @@ private class ParseTest {
 
 private let parseTests: Array<ParseTest> = [
     // Simple error states:
-    ParseTest("", Number(0.0, 0.0, 0.0, 0.0), ParseError("", -1, r'0')),
-    ParseTest("()", Number(0.0, 0.0, 0.0, 0.0), ParseError("()", -1, r'0')),
-    ParseTest("(1", Number(0.0, 0.0, 0.0, 0.0), ParseError("(1", -1, r'0')),
-    ParseTest("1)", Number(0.0, 0.0, 0.0, 0.0), ParseError("1)", -1, r'0')),
+    ParseTest("", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("", -1, r'0')),
+    ParseTest("()", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("()", -1, r'0')),
+    ParseTest("(1", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("(1", -1, r'0')),
+    ParseTest("1)", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("1)", -1, r'0')),
 
     // Ambiguous parse error states:
-    ParseTest("1+2i+3i", Number(0.0, 0.0, 0.0, 0.0), ParseError("1+2i+3i", -1, r'0')),
-    ParseTest("1+2i3j", Number(0.0, 0.0, 0.0, 0.0), ParseError("1+2i3j", -1, r'0')),
-    ParseTest("1e-4i-4k+10.3e6j+", Number(0.0, 0.0, 0.0, 0.0), ParseError("1e-4i-4k+10.3e6j+", -1, r'0')),
-    ParseTest("1e-4i-4k+10.3e6j-", Number(0.0, 0.0, 0.0, 0.0), ParseError("1e-4i-4k+10.3e6j-", -1, r'0')),
+    ParseTest("1+2i+3i", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("1+2i+3i", -1, r'0')),
+    ParseTest("1+2i3j", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("1+2i3j", -1, r'0')),
+    ParseTest("1e-4i-4k+10.3e6j+", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("1e-4i-4k+10.3e6j+", -1, r'0')),
+    ParseTest("1e-4i-4k+10.3e6j-", NqNumber(0.0, 0.0, 0.0, 0.0), ParseError("1e-4i-4k+10.3e6j-", -1, r'0')),
 
     // Valid input:
-    ParseTest("1+4i", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("4i+1", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("+1+4i", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("+4i+1", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("1e-4-4k+10.3e6j+1i", Number(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("1e-4-4k+10.3e6j+i", Number(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("1e-4-4k+10.3e6j-i", Number(1e-4, -1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("1e-4i-4k+10.3e6j-1", Number(-1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("1e-4i-4k+10.3e6j+1", Number(1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("(1+4i)", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(4i+1)", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(+1+4i)", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(+4i+1)", Number(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(1e-4-4k+10.3e6j+1i)", Number(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("(1e-4-4k+10.3e6j+i)", Number(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("(1e-4-4k+10.3e6j-i)", Number(1e-4, -1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("(1e-4i-4k+10.3e6j-1)", Number(-1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
-    ParseTest("(1e-4i-4k+10.3e6j+1)", Number(1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("1+4i", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("4i+1", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("+1+4i", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("+4i+1", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("1e-4-4k+10.3e6j+1i", NqNumber(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("1e-4-4k+10.3e6j+i", NqNumber(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("1e-4-4k+10.3e6j-i", NqNumber(1e-4, -1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("1e-4i-4k+10.3e6j-1", NqNumber(-1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("1e-4i-4k+10.3e6j+1", NqNumber(1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("(1+4i)", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(4i+1)", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(+1+4i)", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(+4i+1)", NqNumber(1.0, 4.0, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(1e-4-4k+10.3e6j+1i)", NqNumber(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("(1e-4-4k+10.3e6j+i)", NqNumber(1e-4, 1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("(1e-4-4k+10.3e6j-i)", NqNumber(1e-4, -1.0, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("(1e-4i-4k+10.3e6j-1)", NqNumber(-1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
+    ParseTest("(1e-4i-4k+10.3e6j+1)", NqNumber(1.0, 1e-4, 10.3e6, -4.0), ParseError("", 0, r'0')),
     ParseTest("NaN", nqNaN(), ParseError("", 0, r'0')),
     ParseTest("nan", nqNaN(), ParseError("", 0, r'0')),
     ParseTest("Inf", nqInf(), ParseError("", 0, r'0')),
     ParseTest("inf", nqInf(), ParseError("", 0, r'0')),
-    ParseTest("(Inf+Infi)", Number(Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(-Inf+Infi)", Number(-Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(+Inf-Infi)", Number(Float64.Inf, -Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(inf+infi)", Number(Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(-inf+infi)", Number(-Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(+inf-infi)", Number(Float64.Inf, -Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(nan+nani)", Number(Float64.NaN, Float64.NaN, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(nan-nani)", Number(Float64.NaN, Float64.NaN, 0.0, 0.0), ParseError("", 0, r'0')),
-    ParseTest("(nan+nani+1k)", Number(Float64.NaN, Float64.NaN, 0.0, 1.0), ParseError("", 0, r'0')),
-    ParseTest("(nan-nani+1k)", Number(Float64.NaN, Float64.NaN, 0.0, 1.0), ParseError("", 0, r'0'))
+    ParseTest("(Inf+Infi)", NqNumber(Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(-Inf+Infi)", NqNumber(-Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(+Inf-Infi)", NqNumber(Float64.Inf, -Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(inf+infi)", NqNumber(Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(-inf+infi)", NqNumber(-Float64.Inf, Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(+inf-infi)", NqNumber(Float64.Inf, -Float64.Inf, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(nan+nani)", NqNumber(Float64.NaN, Float64.NaN, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(nan-nani)", NqNumber(Float64.NaN, Float64.NaN, 0.0, 0.0), ParseError("", 0, r'0')),
+    ParseTest("(nan+nani+1k)", NqNumber(Float64.NaN, Float64.NaN, 0.0, 1.0), ParseError("", 0, r'0')),
+    ParseTest("(nan-nani+1k)", NqNumber(Float64.NaN, Float64.NaN, 0.0, 1.0), ParseError("", 0, r'0'))
 ]
 
 @Test
@@ -169,12 +169,12 @@ public func testParse(): Unit {
     }
 }
 
-public func nqEqualApprox(a: Number, b: Number, tol: Float64): Bool {
+public func nqEqualApprox(a: NqNumber, b: NqNumber, tol: Float64): Bool {
     return equalWithinAbsOrRel(a.real, b.real, tol, tol) && equalWithinAbsOrRel(a.imag, b.imag, tol, tol) &&
         equalWithinAbsOrRel(a.jmag, b.jmag, tol, tol) && equalWithinAbsOrRel(a.kmag, b.kmag, tol, tol)
 }
 
-public func nqSameApprox(a: Number, b: Number, tol: Float64): Bool {
+public func nqSameApprox(a: NqNumber, b: NqNumber, tol: Float64): Bool {
     if (a.real == 0.0 && b.real == 0.0) {
         return signbit(a.real) == signbit(b.real)
     } else if (a.imag == 0.0 && b.imag == 0.0) {
@@ -189,7 +189,7 @@ public func nqSameApprox(a: Number, b: Number, tol: Float64): Bool {
         b.jmag, tol, tol)) && (sameFloat(a.kmag, b.kmag) || equalWithinAbsOrRel(a.kmag, b.kmag, tol, tol))
 }
 
-private func sameNumber(a: Number, b: Number): Bool {
+private func sameNumber(a: NqNumber, b: NqNumber): Bool {
     return sameFloat(a.real, b.real) && sameFloat(a.imag, b.imag) && sameFloat(a.jmag, b.jmag) && sameFloat(a.kmag,
         b.kmag)
 }

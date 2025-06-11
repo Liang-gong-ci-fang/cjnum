@@ -6,9 +6,9 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 private class InvTest {
-    let q: Number
+    let q: NqNumber
     let wantNaN: Bool
-    public init(q: Number, wantNaN: Bool) {
+    public init(q: NqNumber, wantNaN: Bool) {
         this.q = q
         this.wantNaN = wantNaN
     }
@@ -19,14 +19,14 @@ private class InvTest {
 表示期望得到正常的四元数结果)在测试用例中以false代替了空值wantNaN
  */
 private let invTests: Array<InvTest> = [
-    InvTest(Number(1.0, 1.0, 1.0, 1.0), false),
-    InvTest(Number(3.0, -1.0, 5.0, -40.0), false),
-    InvTest(Number(1e6, -1e5, 4.0, -10.0), false),
-    InvTest(Number(0.0, 1.0, 1.0, 1.0), false),
-    InvTest(Number(1.0, 0.0, 1.0, 1.0), false),
-    InvTest(Number(1.0, 1.0, 0.0, 1.0), false),
-    InvTest(Number(1.0, 1.0, 1.0, 0.0), false),
-    InvTest(Number(0.0, 0.0, 0.0, 0.0), true)
+    InvTest(NqNumber(1.0, 1.0, 1.0, 1.0), false),
+    InvTest(NqNumber(3.0, -1.0, 5.0, -40.0), false),
+    InvTest(NqNumber(1e6, -1e5, 4.0, -10.0), false),
+    InvTest(NqNumber(0.0, 1.0, 1.0, 1.0), false),
+    InvTest(NqNumber(1.0, 0.0, 1.0, 1.0), false),
+    InvTest(NqNumber(1.0, 1.0, 0.0, 1.0), false),
+    InvTest(NqNumber(1.0, 1.0, 1.0, 0.0), false),
+    InvTest(NqNumber(0.0, 0.0, 0.0, 0.0), true)
 ]
 
 @Test

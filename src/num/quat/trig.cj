@@ -4,7 +4,7 @@ import cjnum.util.*
 import std.math.*
 
 // Sin returns the sine of q.
-public func nqSin(q: Number): Number {
+public func nqSin(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(sin(w))
@@ -16,7 +16,7 @@ public func nqSin(q: Number): Number {
 }
 
 // Sinh returns the hyperbolic sine of q.
-public func nqSinh(q: Number): Number {
+public func nqSinh(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(sinh(w))
@@ -28,7 +28,7 @@ public func nqSinh(q: Number): Number {
 }
 
 // Cos returns the cosine of q.
-public func nqCos(q: Number): Number {
+public func nqCos(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(cos(w))
@@ -40,7 +40,7 @@ public func nqCos(q: Number): Number {
 }
 
 // Cosh returns the hyperbolic cosine of q.
-public func nqCosh(q: Number): Number {
+public func nqCosh(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(cosh(w))
@@ -52,7 +52,7 @@ public func nqCosh(q: Number): Number {
 }
 
 // Tan returns the tangent of q.
-public func nqTan(q: Number): Number {
+public func nqTan(q: NqNumber): NqNumber {
     let d = nqCos(q)
     if (d.nqEqual(zero)) {
         return nqInf()
@@ -61,9 +61,9 @@ public func nqTan(q: Number): Number {
 }
 
 // Tanh returns the hyperbolic tangent of q.
-public func nqTanh(q: Number): Number {
+public func nqTanh(q: NqNumber): NqNumber {
     if (q.real.isInf() && q.real > 0.0) {
-        var r = Number(1.0, 0.0, 0.0, 0.0)
+        var r = NqNumber(1.0, 0.0, 0.0, 0.0)
         // Change signs dependent on imaginary parts.
         r.imag *= sin(2.0 * q.imag)
         r.jmag *= sin(2.0 * q.jmag)
@@ -78,28 +78,28 @@ public func nqTanh(q: Number): Number {
 }
 
 // Asin returns the inverse sine of q.
-public func nqAsin(q: Number): Number {
+public func nqAsin(q: NqNumber): NqNumber {
     let (_, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(asin(q.real))
     }
     let u = nqUnit(uv)
-    return nqMul(nqScale(-1.0, u), nqLog(nqAdd(nqMul(u, q), nqSqrt(nqSub(Number(1.0, 0.0, 0.0, 0.0), nqMul(q, q))))))
+    return nqMul(nqScale(-1.0, u), nqLog(nqAdd(nqMul(u, q), nqSqrt(nqSub(NqNumber(1.0, 0.0, 0.0, 0.0), nqMul(q, q))))))
 }
 
 // Asinh returns the inverse hyperbolic sine of q.
-public func nqAsinh(q: Number): Number {
-    return nqLog(nqAdd(q, nqSqrt(nqAdd(Number(1.0, 0.0, 0.0, 0.0), nqMul(q, q)))))
+public func nqAsinh(q: NqNumber): NqNumber {
+    return nqLog(nqAdd(q, nqSqrt(nqAdd(NqNumber(1.0, 0.0, 0.0, 0.0), nqMul(q, q)))))
 }
 
 // Acos returns the inverse cosine of q.
-public func nqAcos(q: Number): Number {
+public func nqAcos(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(nqAsin(q))
     return nqJoin(Float64.PI / 2.0 - w, nqScale(-1.0, uv))
 }
 
 // Acosh returns the inverse hyperbolic cosine of q.
-public func nqAcosh(q: Number): Number {
+public func nqAcosh(q: NqNumber): NqNumber {
     var w = nqAcos(q)
     let (_, uv) = nqSplit(w)
     if (uv.nqEqual(zero)) {
@@ -113,7 +113,7 @@ public func nqAcosh(q: Number): Number {
 }
 
 // Atan returns the inverse tangent of q.
-public func nqAtan(q: Number): Number {
+public func nqAtan(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(atan(w))
@@ -123,7 +123,7 @@ public func nqAtan(q: Number): Number {
 }
 
 // Atanh returns the inverse hyperbolic tangent of q.
-public func nqAtanh(q: Number): Number {
+public func nqAtanh(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(q)
     if (uv.nqEqual(zero)) {
         return nqLift(nanAtanh(w))
@@ -144,9 +144,9 @@ public func nqSinhcosh(x: Float64): (Float64, Float64) {
 }
 
 // scale returns q scaled by f, except that inf×0 is 0.
-private func scale(f: Float64, q: Number): Number {
+private func scale(f: Float64, q: NqNumber): NqNumber {
     if (f == 0.0) {
-        return Number(0.0, 0.0, 0.0, 0.0)
+        return NqNumber(0.0, 0.0, 0.0, 0.0)
     }
     if (q.real != 0.0) {
         q.real *= f
