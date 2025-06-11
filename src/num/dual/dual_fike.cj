@@ -30,7 +30,7 @@ import std.math.*
 //	PowReal(+Inf, y) = +0 for y < 0
 //	PowReal(-Inf, y) = Pow(-0, -y)
 //	PowReal(x, y) = NaN+NaNϵ for finite x < 0 and finite non-integer y
-public func ndPowReal(d: Number, p: Float64): Number {
+public func ndPowReal(d: NdNumber, p: Float64): NdNumber {
     let tol = 1e-15
 
     var r = d.real
@@ -43,7 +43,7 @@ public func ndPowReal(d: Number, p: Float64): Number {
         }
     }
     let deriv = p * pow(r, p - 1.0)
-    return Number(
+    return NdNumber(
         pow(d.real, p),
         d.emag * deriv,
     )
@@ -57,15 +57,15 @@ public func ndPowReal(d: Number, p: Float64): Number {
 //	Sqrt(±0) = (±0+Infϵ)
 //	Sqrt(x < 0) = NaN
 //	Sqrt(NaN) = NaN
-public func ndSqrt(d: Number): Number {
+public func ndSqrt(d: NdNumber): NdNumber {
     if (d.real <= 0.0) {
         if (d.real == 0.0) {
-            return Number(
+            return NdNumber(
                 d.real,
                 Float64.Inf,
             )
         }
-        return Number(
+        return NdNumber(
             Float64.NaN,
             Float64.NaN,
         )
@@ -82,9 +82,9 @@ public func ndSqrt(d: Number): Number {
 //
 // Very large values overflow to 0 or +Inf.
 // Very small values underflow to 1.
-public func ndExp(d: Number): Number {
+public func ndExp(d: NdNumber): NdNumber {
     let fnDeriv = exp(d.real)
-    return Number(
+    return NdNumber(
         fnDeriv,
         fnDeriv * d.emag,
     )
@@ -98,25 +98,25 @@ public func ndExp(d: Number): Number {
 //	Log(0) = (-Inf±Infϵ)
 //	Log(x < 0) = NaN
 //	Log(NaN) = NaN
-public func ndLog(d: Number): Number {
+public func ndLog(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             log(d.real),
             copysign(Float64.Inf, d.real)
         )
     } else if (d.real == Float64.Inf) {
-        return Number(
+        return NdNumber(
             log(d.real),
             0.0,
         )
     }
     if (d.real < 0.0) {
-        return Number(
+        return NdNumber(
             Float64.NaN,
             Float64.NaN,
         )
     }
-    return Number(
+    return NdNumber(
         log(d.real),
         d.emag / d.real,
     )
@@ -129,16 +129,16 @@ public func ndLog(d: Number): Number {
 //	Sin(±0) = (±0+Nϵ)
 //	Sin(±Inf) = NaN
 //	Sin(NaN) = NaN
-public func ndSin(d: Number): Number {
+public func ndSin(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag,
         )
     }
     let fn = sin(d.real)
     let deriv = cos(d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -150,10 +150,10 @@ public func ndSin(d: Number): Number {
 //
 //	Cos(±Inf) = NaN
 //	Cos(NaN) = NaN
-public func ndCos(d: Number): Number {
+public func ndCos(d: NdNumber): NdNumber {
     let fn = cos(d.real)
     let deriv = -sin(d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -166,16 +166,16 @@ public func ndCos(d: Number): Number {
 //	Tan(±0) = (±0+Nϵ)
 //	Tan(±Inf) = NaN
 //	Tan(NaN) = NaN
-public func ndTan(d: Number): Number {
+public func ndTan(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag,
         )
     }
     let fn = tan(d.real)
     let deriv = 1.0 + fn * fn
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -188,28 +188,28 @@ public func ndTan(d: Number): Number {
 //	Asin(±0) = (±0+Nϵ)
 //	Asin(±1) = (±Inf+Infϵ)
 //	Asin(x) = NaN if x < -1 or x > 1
-public func ndAsin(d: Number): Number {
+public func ndAsin(d: NdNumber): NdNumber {
     let m = abs(d.real);
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag,
         )
     } else if (m >= 1.0) {
         if (m == 1.0) {
-            return Number(
+            return NdNumber(
                 asin(d.real),
                 Float64.Inf,
             )
         }
-        return Number(
+        return NdNumber(
             Float64.NaN,
             Float64.NaN,
         )
     }
     let fn = asin(d.real)
     let deriv = 1.0 / sqrt(1.0 - d.real * d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -222,23 +222,23 @@ public func ndAsin(d: Number): Number {
 //	Acos(-1) = (Pi-Infϵ)
 //	Acos(1) = (0-Infϵ)
 //	Acos(x) = NaN if x < -1 or x > 1
-public func ndAcos(d: Number): Number {
+public func ndAcos(d: NdNumber): NdNumber {
     let m = abs(d.real)
     if (m >= 1.0) {
         if (m == 1.0) {
-            return Number(
+            return NdNumber(
                 acos(d.real),
                 -Float64.Inf,
             )
         }
-        return Number(
+        return NdNumber(
             Float64.NaN,
             Float64.NaN,
         )
     }
     let fn = acos(d.real)
     let deriv = -1.0 / sqrt(1.0 - d.real * d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -250,16 +250,16 @@ public func ndAcos(d: Number): Number {
 //
 //	Atan(±0) = (±0+Nϵ)
 //	Atan(±Inf) = (±Pi/2+0ϵ)
-public func ndAtan(d: Number): Number {
+public func ndAtan(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag,
         )
     }
     let fn = atan(d.real)
     let deriv = 1.0 / (1.0 + d.real * d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )

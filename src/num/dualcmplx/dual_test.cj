@@ -52,10 +52,10 @@ private let negThree = Complex128(-3.0, 3.0)
 private class DualTest {
     let name: String
     let x: Array<Complex128>
-    let fnDual: (x: Number) -> Number
+    let fnDual: (x: NdcNumber) -> NdcNumber
     let fn: (x: Complex128) -> Complex128
     let dFn: (x: Complex128) -> Complex128
-    public init(name: String, x: Array<Complex128>, fnDual: (x: Number) -> Number, fn: (x: Complex128) -> Complex128,
+    public init(name: String, x: Array<Complex128>, fnDual: (x: NdcNumber) -> NdcNumber, fn: (x: Complex128) -> Complex128,
         dFn: (x: Complex128) -> Complex128) {
         this.name = name
         this.x = x
@@ -108,7 +108,7 @@ private func testNumber(): Unit {
     let tol = 1e-15
     for (test in dualTests) {
         for (x in test.x) {
-            let fxDual = test.fnDual(Number(x, Complex128(1.0, 0.0)))
+            let fxDual = test.fnDual(NdcNumber(x, Complex128(1.0, 0.0)))
             let fx = test.fn(x)
             @Expect(same(fxDual.real, fx, tol))
             let dFx = test.dFn(x)
@@ -117,32 +117,32 @@ private func testNumber(): Unit {
     }
 }
 
-private var invTests: Array<Number> = [
-    Number(
+private var invTests: Array<NdcNumber> = [
+    NdcNumber(
         Complex128(1.0, 0.0),
         Complex128(0.0, 0.0)
     ),
-    Number(
+    NdcNumber(
         Complex128(1.0, 0.0),
         Complex128(1.0, 0.0)
     ),
-    Number(
+    NdcNumber(
         Complex128(0.0, 1.0),
         Complex128(1.0, 0.0)
     ),
-    Number(
+    NdcNumber(
         Complex128(1.0, 0.0),
         Complex128(1.0, 1.0)
     ),
-    Number(
+    NdcNumber(
         Complex128(1.0, 1.0),
         Complex128(1.0, 1.0)
     ),
-    Number(
+    NdcNumber(
         Complex128(1.0, 10.0),
         Complex128(1.0, 5.0)
     ),
-    Number(
+    NdcNumber(
         Complex128(10.0, 1.0),
         Complex128(5.0, 1.0)
     )
@@ -153,36 +153,36 @@ private func testInv(): Unit {
     let tol = 1e-15
     for (x in invTests) {
         let got = ndcMul(x, ndcInv(x))
-        let want = Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))
+        let want = NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))
         @Expect(sameDual(got, want, tol))
     }
 }
 
-private var expLogTests: Array<Number> = [
-    Number(Complex128(0.0, 1.0), Complex128(0.0, 1.0)),
-    Number(Complex128(1.0, 1.0), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.1), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.01), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.0001), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.000001), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.00000001), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.0000000001), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.000000000001), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.00000000000001), Complex128(1.0, 1.0)),
-    Number(Complex128(0.0, 0.0), Complex128(1.0, 1.0)),
-    Number(Complex128(0.0, 0.0), Complex128(1.0, 2.0)),
-    Number(Complex128(0.0, 0.0), Complex128(2.0, 1.0)),
-    Number(Complex128(0.0, 0.0), Complex128(2.0, 2.0)),
-    Number(Complex128(0.0, 0.0), Complex128(1.0, 1.0)),
-    Number(Complex128(0.0, 0.0), Complex128(1.0, 5.0)),
-    Number(Complex128(0.0, 0.0), Complex128(5.0, 1.0)),
-    Number(Complex128(1.0, 0.0), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 0.0), Complex128(1.0, 2.0)),
-    Number(Complex128(1.0, 0.0), Complex128(2.0, 1.0)),
-    Number(Complex128(1.0, 0.0), Complex128(2.0, 2.0)),
-    Number(Complex128(1.0, 1.0), Complex128(1.0, 1.0)),
-    Number(Complex128(1.0, 3.0), Complex128(1.0, 5.0)),
-    Number(Complex128(2.0, 1.0), Complex128(5.0, 1.0))
+private var expLogTests: Array<NdcNumber> = [
+    NdcNumber(Complex128(0.0, 1.0), Complex128(0.0, 1.0)),
+    NdcNumber(Complex128(1.0, 1.0), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.1), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.01), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.0001), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.000001), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.00000001), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.0000000001), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.000000000001), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.00000000000001), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 2.0)),
+    NdcNumber(Complex128(0.0, 0.0), Complex128(2.0, 1.0)),
+    NdcNumber(Complex128(0.0, 0.0), Complex128(2.0, 2.0)),
+    NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 5.0)),
+    NdcNumber(Complex128(0.0, 0.0), Complex128(5.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.0), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.0), Complex128(1.0, 2.0)),
+    NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 1.0)),
+    NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 2.0)),
+    NdcNumber(Complex128(1.0, 1.0), Complex128(1.0, 1.0)),
+    NdcNumber(Complex128(1.0, 3.0), Complex128(1.0, 5.0)),
+    NdcNumber(Complex128(2.0, 1.0), Complex128(5.0, 1.0))
 ]
 
 @Test
@@ -209,10 +209,10 @@ private func testLogExp(): Unit {
 }
 
 private class PowRealSpecialTest {
-    let d: Number
+    let d: NdcNumber
     let p: Float64
-    let want: Number
-    public init(d: Number, p: Float64, want: Number) {
+    let want: NdcNumber
+    public init(d: NdcNumber, p: Float64, want: NdcNumber) {
         this.d = d
         this.p = p
         this.want = want
@@ -221,153 +221,153 @@ private class PowRealSpecialTest {
 
 private let powRealSpecialTests: Array<PowRealSpecialTest> = [
     // PowReal(NaN+xϵ, ±0) = 1+NaNϵ for any x
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(0.0, 0.0)), 0.0, Number(Complex128(1.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(0.0, 0.0)), negZero, Number(Complex128(1.0, 0.0),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(0.0, 0.0)), 0.0, NdcNumber(Complex128(1.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(0.0, 0.0)), negZero, NdcNumber(Complex128(1.0, 0.0),
         Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(1.0, 0.0)), 0.0, Number(Complex128(1.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(2.0, 0.0)), negZero, Number(Complex128(1.0, 0.0),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(1.0, 0.0)), 0.0, NdcNumber(Complex128(1.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(2.0, 0.0)), negZero, NdcNumber(Complex128(1.0, 0.0),
         Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(3.0, 0.0)), 0.0, Number(Complex128(1.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(1.0, 0.0)), negZero, Number(Complex128(1.0, 0.0),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(3.0, 0.0)), 0.0, NdcNumber(Complex128(1.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(1.0, 0.0)), negZero, NdcNumber(Complex128(1.0, 0.0),
         Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(2.0, 0.0)), 0.0, Number(Complex128(1.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(3.0, 0.0)), negZero, Number(Complex128(1.0, 0.0),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(2.0, 0.0)), 0.0, NdcNumber(Complex128(1.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(3.0, 0.0)), negZero, NdcNumber(Complex128(1.0, 0.0),
         Complex128.NaN)),
 
     // Pow(0+xϵ, y) = 0+Infϵ for all y < 1.
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 0.1,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), -1.0,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 0.1,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), -1.0,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), 0.1,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), -1.0,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), 0.1,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), -1.0,
-        Number(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 0.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), -1.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 0.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), -1.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), 0.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), -1.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), 0.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), -1.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.Inf)),
     // Pow(0+xϵ, y) = 0 for all y > 1.
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 1.1,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 2.0,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 1.1,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 2.0,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), 1.1,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), 2.0,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), 1.1,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), 2.0,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 1.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 2.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 1.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 2.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), 1.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 1.0)), 2.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), 1.1,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 1.0)), 2.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
 
     // PowReal(x, ±0) = 1 for any x
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 0.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(negZeroCmplx, Complex128(0.0, 0.0)), negZero,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(Float64.Inf, 0.0), Complex128(0.0, 0.0)), 0.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(Float64.Inf, 0.0), Complex128(0.0, 0.0)), negZero,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 0.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(negZeroCmplx, Complex128(1.0, 0.0)), negZero,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(Float64.Inf, 0.0), Complex128(1.0, 0.0)), 0.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(Float64.Inf, 0.0), Complex128(1.0, 0.0)), negZero,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 0.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(negZeroCmplx, Complex128(0.0, 0.0)), negZero,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(Float64.Inf, 0.0), Complex128(0.0, 0.0)), 0.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(Float64.Inf, 0.0), Complex128(0.0, 0.0)), negZero,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 0.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(negZeroCmplx, Complex128(1.0, 0.0)), negZero,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(Float64.Inf, 0.0), Complex128(1.0, 0.0)), 0.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(Float64.Inf, 0.0), Complex128(1.0, 0.0)), negZero,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
 
     // PowReal(1+xϵ, y) = (1+xyϵ) for any y
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 0.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 1.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 2.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 3.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 0.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 1.0,
-        Number(Complex128(1.0, 0.0), Complex128(1.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 2.0,
-        Number(Complex128(1.0, 0.0), Complex128(2.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 3.0,
-        Number(Complex128(1.0, 0.0), Complex128(3.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 0.0,
-        Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 1.0,
-        Number(Complex128(1.0, 0.0), Complex128(2.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 2.0,
-        Number(Complex128(1.0, 0.0), Complex128(4.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 3.0,
-        Number(Complex128(1.0, 0.0), Complex128(6.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 0.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 1.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 2.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0)), 3.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 0.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 1.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(1.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 2.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(1.0, 0.0)), 3.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(3.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 0.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 1.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 2.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(4.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(1.0, 0.0), Complex128(2.0, 0.0)), 3.0,
+        NdcNumber(Complex128(1.0, 0.0), Complex128(6.0, 0.0))),
 
     // Pow(Inf, y) = +Inf+NaNϵ for y > 0
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), 0.5, Number(Complex128.Inf, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), 1.0, Number(Complex128.Inf, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), 1.1, Number(Complex128.Inf, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), 2.0, Number(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), 0.5, NdcNumber(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), 1.0, NdcNumber(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), 1.1, NdcNumber(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), 2.0, NdcNumber(Complex128.Inf, Complex128.NaN)),
     // Pow(Inf, y) = +0+NaNϵ for y < 0
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), -0.5, Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), -1.0, Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), -1.1, Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.Inf, Complex128(0.0, 0.0)), -2.0, Number(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), -0.5, NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), -1.0, NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), -1.1, NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.Inf, Complex128(0.0, 0.0)), -2.0, NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
 
     // PowReal(x, 1) = x for any x
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 1.0,
-        Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(negZeroCmplx, Complex128(0.0, 0.0)), 1.0, Number(negZeroCmplx, Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 1.0,
-        Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0))),
-    PowRealSpecialTest(Number(negZeroCmplx, Complex128(1.0, 0.0)), 1.0, Number(negZeroCmplx, Complex128(1.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(0.0, 0.0)), 1.0, Number(Complex128.NaN, Complex128(0.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(1.0, 0.0)), 1.0, Number(Complex128.NaN, Complex128(1.0, 0.0))),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(2.0, 0.0)), 1.0, Number(Complex128.NaN, Complex128(2.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), 1.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(negZeroCmplx, Complex128(0.0, 0.0)), 1.0, NdcNumber(negZeroCmplx, Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), 1.0,
+        NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(negZeroCmplx, Complex128(1.0, 0.0)), 1.0, NdcNumber(negZeroCmplx, Complex128(1.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(0.0, 0.0)), 1.0, NdcNumber(Complex128.NaN, Complex128(0.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(1.0, 0.0)), 1.0, NdcNumber(Complex128.NaN, Complex128(1.0, 0.0))),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(2.0, 0.0)), 1.0, NdcNumber(Complex128.NaN, Complex128(2.0, 0.0))),
 
     // PowReal(NaN+xϵ, y) = NaN+NaNϵ
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(0.0, 0.0)), 2.0, Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(0.0, 0.0)), 3.0, Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(1.0, 0.0)), 2.0, Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(1.0, 0.0)), 3.0, Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(2.0, 0.0)), 2.0, Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128.NaN, Complex128(2.0, 0.0)), 3.0, Number(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(0.0, 0.0)), 2.0, NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(0.0, 0.0)), 3.0, NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(1.0, 0.0)), 2.0, NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(1.0, 0.0)), 3.0, NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(2.0, 0.0)), 2.0, NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128.NaN, Complex128(2.0, 0.0)), 3.0, NdcNumber(Complex128.NaN, Complex128.NaN)),
 
     // PowReal(x, NaN) = NaN+NaNϵ
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(0.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(1.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(1.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(0.0, 0.0), Complex128(2.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(2.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(2.0, 0.0)), Float64.NaN,
-        Number(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(0.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(0.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(1.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(1.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(1.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.0, 0.0), Complex128(2.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(2.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(2.0, 0.0)), Float64.NaN,
+        NdcNumber(Complex128.NaN, Complex128.NaN)),
 
     // Pow(-1, ±Inf) = 1
-    PowRealSpecialTest(Number(Complex128(-1.0, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
-        Number(Complex128(1.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(-1.0, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
-        Number(Complex128(1.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(-1.0, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128(1.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(-1.0, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128(1.0, 0.0), Complex128.NaN)),
 
     // The following tests described for cmplx.Pow ar enot valid for this type and
     // are handled by the special cases Pow(0+xϵ, y) above.
@@ -379,68 +379,68 @@ private let powRealSpecialTests: Array<PowRealSpecialTest> = [
     // Pow(±0, y) = +0 for finite y > 0 and not an odd integer
 
     // PowReal(x+0ϵ, +Inf) = +Inf+NaNϵ for |x| > 1
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
-        Number(Complex128.Inf, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
-        Number(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.NaN)),
 
     // PowReal(x+yϵ, +Inf) = +Inf for |x| > 1
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(1.0, 0.0)), Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(1.0, 0.0)), Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(2.0, 0.0)), Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(2.0, 0.0)), Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(1.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(1.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(2.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(2.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
 
     // PowReal(x, -Inf) = +0+NaNϵ for |x| > 1
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(2.0, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(3.0, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(2.0, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(3.0, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
 
     // PowReal(x+yϵ, +Inf) = +0+NaNϵ for |x| < 1
-    PowRealSpecialTest(Number(Complex128(0.1, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(0.1, 0.0), Complex128(0.1, 0.0)), Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(0.2, 0.0), Complex128(0.2, 0.0)), Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(0.5, 0.0), Complex128(0.5, 0.0)), Float64.Inf,
-        Number(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.1, 0.0), Complex128(0.0, 0.0)), Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.1, 0.0), Complex128(0.1, 0.0)), Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.2, 0.0), Complex128(0.2, 0.0)), Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.5, 0.0), Complex128(0.5, 0.0)), Float64.Inf,
+        NdcNumber(Complex128(0.0, 0.0), Complex128.NaN)),
 
     // PowReal(x+0ϵ, -Inf) = +Inf+NaNϵ for |x| < 1
-    PowRealSpecialTest(Number(Complex128(0.1, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.NaN)),
-    PowRealSpecialTest(Number(Complex128(0.2, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.1, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.NaN)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.2, 0.0), Complex128(0.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.NaN)),
 
     // PowReal(x, -Inf) = +Inf-Infϵ for |x| < 1
-    PowRealSpecialTest(Number(Complex128(0.1, 0.0), Complex128(0.1, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.2, 0.0), Complex128(0.1, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.1, 0.0), Complex128(0.2, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.2, 0.0), Complex128(0.2, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.1, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.2, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.1, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf)),
-    PowRealSpecialTest(Number(Complex128(0.2, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
-        Number(Complex128.Inf, Complex128.Inf))
+    PowRealSpecialTest(NdcNumber(Complex128(0.1, 0.0), Complex128(0.1, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.2, 0.0), Complex128(0.1, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.1, 0.0), Complex128(0.2, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.2, 0.0), Complex128(0.2, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.1, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.2, 0.0), Complex128(1.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.1, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf)),
+    PowRealSpecialTest(NdcNumber(Complex128(0.2, 0.0), Complex128(2.0, 0.0)), -Float64.Inf,
+        NdcNumber(Complex128.Inf, Complex128.Inf))
 ]
 
 @Test
@@ -453,29 +453,29 @@ public func testPowRealSpecial(): Unit {
 }
 
 private class PowRealTest {
-    let d: Number
+    let d: NdcNumber
     let p: Float64
-    public init(d: Number, p: Float64) {
+    public init(d: NdcNumber, p: Float64) {
         this.d = d
         this.p = p
     }
 }
 
 private let powRealTests: Array<PowRealTest> = [
-    PowRealTest(Number(Complex128(0.1, 0.0), Complex128(2.0, 2.0)), 0.2),
-    PowRealTest(Number(Complex128(0.1, 0.0), Complex128(2.0, 2.0)), 5.0),
-    PowRealTest(Number(Complex128(0.01, 0.0), Complex128(2.0, 2.0)), 0.2),
-    PowRealTest(Number(Complex128(0.01, 0.0), Complex128(2.0, 2.0)), 5.0),
-    PowRealTest(Number(Complex128(0.001, 0.0), Complex128(2.0, 2.0)), 0.2),
-    PowRealTest(Number(Complex128(0.001, 0.0), Complex128(2.0, 2.0)), 5.0),
-    PowRealTest(Number(Complex128(0.0001, 0.0), Complex128(2.0, 2.0)), 0.2),
-    PowRealTest(Number(Complex128(0.0001, 0.0), Complex128(2.0, 2.0)), 5.0),
-    PowRealTest(Number(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), 0.5),
-    PowRealTest(Number(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), 2.0),
-    PowRealTest(Number(Complex128(4.0, 0.0), Complex128(0.0, 0.0)), 0.5),
-    PowRealTest(Number(Complex128(4.0, 0.0), Complex128(0.0, 0.0)), 2.0),
-    PowRealTest(Number(Complex128(8.0, 0.0), Complex128(0.0, 0.0)), 1.0 / 3.0),
-    PowRealTest(Number(Complex128(8.0, 0.0), Complex128(0.0, 0.0)), 3.0)
+    PowRealTest(NdcNumber(Complex128(0.1, 0.0), Complex128(2.0, 2.0)), 0.2),
+    PowRealTest(NdcNumber(Complex128(0.1, 0.0), Complex128(2.0, 2.0)), 5.0),
+    PowRealTest(NdcNumber(Complex128(0.01, 0.0), Complex128(2.0, 2.0)), 0.2),
+    PowRealTest(NdcNumber(Complex128(0.01, 0.0), Complex128(2.0, 2.0)), 5.0),
+    PowRealTest(NdcNumber(Complex128(0.001, 0.0), Complex128(2.0, 2.0)), 0.2),
+    PowRealTest(NdcNumber(Complex128(0.001, 0.0), Complex128(2.0, 2.0)), 5.0),
+    PowRealTest(NdcNumber(Complex128(0.0001, 0.0), Complex128(2.0, 2.0)), 0.2),
+    PowRealTest(NdcNumber(Complex128(0.0001, 0.0), Complex128(2.0, 2.0)), 5.0),
+    PowRealTest(NdcNumber(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), 0.5),
+    PowRealTest(NdcNumber(Complex128(2.0, 0.0), Complex128(0.0, 0.0)), 2.0),
+    PowRealTest(NdcNumber(Complex128(4.0, 0.0), Complex128(0.0, 0.0)), 0.5),
+    PowRealTest(NdcNumber(Complex128(4.0, 0.0), Complex128(0.0, 0.0)), 2.0),
+    PowRealTest(NdcNumber(Complex128(8.0, 0.0), Complex128(0.0, 0.0)), 1.0 / 3.0),
+    PowRealTest(NdcNumber(Complex128(8.0, 0.0), Complex128(0.0, 0.0)), 3.0)
 ]
 
 @Test
@@ -488,7 +488,7 @@ public func testPowReal(): Unit {
             continue
         }
         let root = ndcPowReal(test.d, 1.0 / test.p)
-        got = Number(Complex128(1.0, 0.0), Complex128(0.0, 0.0))
+        got = NdcNumber(Complex128(1.0, 0.0), Complex128(0.0, 0.0))
         for (_ in 0..Int64(test.p)) {
             got = ndcMul(got, root)
         }
@@ -496,7 +496,7 @@ public func testPowReal(): Unit {
     }
 }
 
-private func sameDual(a: Number, b: Number, tol: Float64): Bool {
+private func sameDual(a: NdcNumber, b: NdcNumber, tol: Float64): Bool {
     return same(a.real, b.real, tol) && same(a.dual, b.dual, tol)
 }
 

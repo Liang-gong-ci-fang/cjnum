@@ -10,22 +10,22 @@ import std.math.*
 //	Sinh(±0) = (±0+Nϵ)
 //	Sinh(±Inf) = ±Inf
 //	Sinh(NaN) = NaN
-public func ndSinh(d: Number): Number {
+public func ndSinh(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag,
         )
     }
     if (d.real.isInf()) {
-        return Number(
+        return NdNumber(
             d.real,
             Float64.Inf,
         )
     }
     let fn = sinh(d.real)
     let deriv = cosh(d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -38,16 +38,16 @@ public func ndSinh(d: Number): Number {
 //	Cosh(±0) = 1
 //	Cosh(±Inf) = +Inf
 //	Cosh(NaN) = NaN
-public func ndCosh(d: Number): Number {
+public func ndCosh(d: NdNumber): NdNumber {
     if (d.real.isInf()) {
-        return Number(
+        return NdNumber(
             Float64.Inf,
             d.real,
         )
     }
     let fn = cosh(d.real)
     let deriv = sinh(d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -60,26 +60,26 @@ public func ndCosh(d: Number): Number {
 //	Tanh(±0) = (±0+Nϵ)
 //	Tanh(±Inf) = (±1+0ϵ)
 //	Tanh(NaN) = NaN
-public func ndTanh(d: Number): Number {
+public func ndTanh(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag
         )
     } else if (d.real == Float64.Inf) {
-        return Number(
+        return NdNumber(
             1.0,
             0.0
         )
     } else if (d.real == -Float64.Inf) {
-        return Number(
+        return NdNumber(
             -1.0,
             0.0
         )
     }
     let fn = tanh(d.real)
     let deriv = 1.0 - fn * fn
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -92,16 +92,16 @@ public func ndTanh(d: Number): Number {
 //	Asinh(±0) = (±0+Nϵ)
 //	Asinh(±Inf) = ±Inf
 //	Asinh(NaN) = NaN
-public func ndAsinh(d: Number): Number {
+public func ndAsinh(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag
         )
     }
     let fn = asinh(d.real)
     let deriv = 1.0 / sqrt(d.real * d.real + 1.0)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -115,22 +115,22 @@ public func ndAsinh(d: Number): Number {
 //	Acosh(1) = (0+Infϵ)
 //	Acosh(x) = NaN if x < 1
 //	Acosh(NaN) = NaN
-public func ndAcosh(d: Number): Number {
+public func ndAcosh(d: NdNumber): NdNumber {
     if (d.real <= 1.0) {
         if (d.real == 1.0) {
-            return Number(
+            return NdNumber(
                 0.0,
                 Float64.Inf,
             )
         }
-        return Number(
+        return NdNumber(
             Float64.NaN,
             Float64.NaN,
         )
     }
     let fn = acosh(d.real)
     let deriv = 1.0 / sqrt(d.real * d.real - 1.0)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )
@@ -149,21 +149,21 @@ public func ndAcosh(d: Number): Number {
 //	Atanh(-1) = -Inf
 //	Atanh(x) = NaN if x < -1 or x > 1
 //	Atanh(NaN) = NaN
-public func ndAtanh(d: Number): Number {
+public func ndAtanh(d: NdNumber): NdNumber {
     if (d.real == 0.0) {
-        return Number(
+        return NdNumber(
             d.real,
             d.emag,
         )
     }
     if (abs(d.real) == 1.0) {
         if (d.real > 0.0) {
-            return Number(
+            return NdNumber(
                 Float64.Inf,
                 Float64.NaN,
             )
         } else {
-            return Number(
+            return NdNumber(
                 -Float64.Inf,
                 Float64.NaN,
             )
@@ -171,7 +171,7 @@ public func ndAtanh(d: Number): Number {
     }
     let fn = nanAtanh(d.real)
     let deriv = 1.0 / (1.0 - d.real * d.real)
-    return Number(
+    return NdNumber(
         fn,
         deriv * d.emag,
     )

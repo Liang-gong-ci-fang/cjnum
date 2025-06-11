@@ -3,7 +3,7 @@ package cjnum.num.quat
 import std.math.*
 
 // Abs returns the absolute value (also called the modulus) of q.
-public func nqAbs(q: Number): Float64 {
+public func nqAbs(q: NqNumber): Float64 {
     // Special cases.
     if (nqIsInf(q)) {
         return Float64.Inf

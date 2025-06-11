@@ -135,10 +135,10 @@ private func sech(x: Float64): Float64 {
 private class DualTest {
     let name: String
     let x: Array<Float64>
-    let fnDual: (x: Number) -> Number
+    let fnDual: (x: NdNumber) -> NdNumber
     let fn: (x: Float64) -> Float64
     let dFn: (x: Float64) -> Float64
-    public init(name: String, x: Array<Float64>, fnDual: (x: Number) -> Number, fn: (x: Float64) -> Float64,
+    public init(name: String, x: Array<Float64>, fnDual: (x: NdNumber) -> NdNumber, fn: (x: Float64) -> Float64,
         dFn: (x: Float64) -> Float64) {
         this.name = name
         this.x = x
@@ -290,7 +290,7 @@ public func testDual(): Unit {
     let tol = 1e-15
     for (dualTest in dualTests) {
         for (x in dualTest.x) {
-            let fxDual = dualTest.fnDual(Number(x, 1.0))
+            let fxDual = dualTest.fnDual(NdNumber(x, 1.0))
             let fx = dualTest.fn(x)
             let dFx = dualTest.dFn(x)
             @Expect(same(fxDual.real, fx, tol))
@@ -300,10 +300,10 @@ public func testDual(): Unit {
 }
 
 private class PowRealTest {
-    let d: Number
+    let d: NdNumber
     let p: Float64
-    let want: Number
-    public init(d: Number, p: Float64, want: Number) {
+    let want: NdNumber
+    public init(d: NdNumber, p: Float64, want: NdNumber) {
         this.d = d
         this.p = p
         this.want = want
@@ -313,264 +313,264 @@ private class PowRealTest {
 private let powRealTests: Array<PowRealTest> = [
     // PowReal(NaN+xϵ, ±0) = 1+NaNϵ for any x
     PowRealTest(
-        Number(Float64.NaN, 0.0),
+        NdNumber(Float64.NaN, 0.0),
         0.0,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 0.0),
+        NdNumber(Float64.NaN, 0.0),
         negZero,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 1.0),
+        NdNumber(Float64.NaN, 1.0),
         0.0,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 2.0),
+        NdNumber(Float64.NaN, 2.0),
         negZero,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 3.0),
+        NdNumber(Float64.NaN, 3.0),
         0.0,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 1.0),
+        NdNumber(Float64.NaN, 1.0),
         negZero,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 2.0),
+        NdNumber(Float64.NaN, 2.0),
         0.0,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 3.0),
+        NdNumber(Float64.NaN, 3.0),
         negZero,
-        Number(1.0, Float64.NaN)
+        NdNumber(1.0, Float64.NaN)
     ),
 
     // PowReal(x, ±0) = 1 for any x
     PowRealTest(
-        Number(0.0, 0.0),
+        NdNumber(0.0, 0.0),
         0.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(negZero, 0.0),
+        NdNumber(negZero, 0.0),
         negZero,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(Float64.Inf, 0.0),
+        NdNumber(Float64.Inf, 0.0),
         0.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(-Float64.Inf, 0.0),
+        NdNumber(-Float64.Inf, 0.0),
         negZero,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(0.0, 1.0),
+        NdNumber(0.0, 1.0),
         0.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(negZero, 1.0),
+        NdNumber(negZero, 1.0),
         negZero,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(Float64.Inf, 1.0),
+        NdNumber(Float64.Inf, 1.0),
         0.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(-Float64.Inf, 1.0),
+        NdNumber(-Float64.Inf, 1.0),
         negZero,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
 
     // PowReal(1+xϵ, y) = (1+xyϵ) for any y
     PowRealTest(
-        Number(1.0, 0.0),
+        NdNumber(1.0, 0.0),
         0.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(1.0, 0.0),
+        NdNumber(1.0, 0.0),
         1.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(1.0, 0.0),
+        NdNumber(1.0, 0.0),
         2.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(1.0, 0.0),
+        NdNumber(1.0, 0.0),
         3.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(1.0, 1.0),
+        NdNumber(1.0, 1.0),
         0.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(1.0, 1.0),
+        NdNumber(1.0, 1.0),
         1.0,
-        Number(1.0, 1.0)
+        NdNumber(1.0, 1.0)
     ),
     PowRealTest(
-        Number(1.0, 1.0),
+        NdNumber(1.0, 1.0),
         2.0,
-        Number(1.0, 2.0)
+        NdNumber(1.0, 2.0)
     ),
     PowRealTest(
-        Number(1.0, 1.0),
+        NdNumber(1.0, 1.0),
         3.0,
-        Number(1.0, 3.0)
+        NdNumber(1.0, 3.0)
     ),
     PowRealTest(
-        Number(1.0, 2.0),
+        NdNumber(1.0, 2.0),
         0.0,
-        Number(1.0, 0.0)
+        NdNumber(1.0, 0.0)
     ),
     PowRealTest(
-        Number(1.0, 2.0),
+        NdNumber(1.0, 2.0),
         1.0,
-        Number(1.0, 2.0)
+        NdNumber(1.0, 2.0)
     ),
     PowRealTest(
-        Number(1.0, 2.0),
+        NdNumber(1.0, 2.0),
         2.0,
-        Number(1.0, 4.0)
+        NdNumber(1.0, 4.0)
     ),
     PowRealTest(
-        Number(1.0, 2.0),
+        NdNumber(1.0, 2.0),
         3.0,
-        Number(1.0, 6.0)
+        NdNumber(1.0, 6.0)
     ),
 
     // PowReal(x, 1) = x for any x
     PowRealTest(
-        Number(0.0, 0.0),
+        NdNumber(0.0, 0.0),
         1.0,
-        Number(0.0, 0.0)
+        NdNumber(0.0, 0.0)
     ),
     PowRealTest(
-        Number(negZero, 0.0),
+        NdNumber(negZero, 0.0),
         1.0,
-        Number(negZero, 0.0)
+        NdNumber(negZero, 0.0)
     ),
     PowRealTest(
-        Number(0.0, 1.0),
+        NdNumber(0.0, 1.0),
         1.0,
-        Number(0.0, 1.0)
+        NdNumber(0.0, 1.0)
     ),
     PowRealTest(
-        Number(negZero, 1.0),
+        NdNumber(negZero, 1.0),
         1.0,
-        Number(negZero, 1.0)
+        NdNumber(negZero, 1.0)
     ),
     PowRealTest(
-        Number(Float64.NaN, 0.0),
+        NdNumber(Float64.NaN, 0.0),
         1.0,
-        Number(Float64.NaN, 0.0)
+        NdNumber(Float64.NaN, 0.0)
     ),
     PowRealTest(
-        Number(Float64.NaN, 1.0),
+        NdNumber(Float64.NaN, 1.0),
         1.0,
-        Number(Float64.NaN, 1.0)
+        NdNumber(Float64.NaN, 1.0)
     ),
     PowRealTest(
-        Number(Float64.NaN, 2.0),
+        NdNumber(Float64.NaN, 2.0),
         1.0,
-        Number(Float64.NaN, 2.0)
+        NdNumber(Float64.NaN, 2.0)
     ),
 
     // PowReal(NaN+xϵ, y) = NaN+NaNϵ
     PowRealTest(
-        Number(Float64.NaN, 0.0),
+        NdNumber(Float64.NaN, 0.0),
         2.0,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 0.0),
+        NdNumber(Float64.NaN, 0.0),
         3.0,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 1.0),
+        NdNumber(Float64.NaN, 1.0),
         2.0,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 1.0),
+        NdNumber(Float64.NaN, 1.0),
         3.0,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 2.0),
+        NdNumber(Float64.NaN, 2.0),
         2.0,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(Float64.NaN, 2.0),
+        NdNumber(Float64.NaN, 2.0),
         3.0,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
 
     // PowReal(x, NaN) = NaN+NaNϵ
     PowRealTest(
-        Number(0.0, 0.0),
+        NdNumber(0.0, 0.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(2.0, 0.0),
+        NdNumber(2.0, 0.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(3.0, 0.0),
+        NdNumber(3.0, 0.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(0.0, 1.0),
+        NdNumber(0.0, 1.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(2.0, 1.0),
+        NdNumber(2.0, 1.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(3.0, 1.0),
+        NdNumber(3.0, 1.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(0.0, 2.0),
+        NdNumber(0.0, 2.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(2.0, 2.0),
+        NdNumber(2.0, 2.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
     PowRealTest(
-        Number(3.0, 2.0),
+        NdNumber(3.0, 2.0),
         Float64.NaN,
-        Number(Float64.NaN, Float64.NaN)
+        NdNumber(Float64.NaN, Float64.NaN)
     ),
 
     // Handled by math.Pow tests:
@@ -584,42 +584,42 @@ private let powRealTests: Array<PowRealTest> = [
     // Pow(-1, ±Inf) = 1 
 
     // PowReal(x+0ϵ, +Inf) = +Inf+NaNϵ for |x| > 1
-    PowRealTest(Number(2.0, 0.0), Float64.Inf, Number(Float64.Inf, Float64.NaN)),
-    PowRealTest(Number(3.0, 0.0), Float64.Inf, Number(Float64.Inf, Float64.NaN)),
+    PowRealTest(NdNumber(2.0, 0.0), Float64.Inf, NdNumber(Float64.Inf, Float64.NaN)),
+    PowRealTest(NdNumber(3.0, 0.0), Float64.Inf, NdNumber(Float64.Inf, Float64.NaN)),
 
     // PowReal(x+yϵ, +Inf) = +Inf for |x| > 1
-    PowRealTest(Number(2.0, 1.0), Float64.Inf, Number(Float64.Inf, Float64.Inf)),
-    PowRealTest(Number(3.0, 1.0), Float64.Inf, Number(Float64.Inf, Float64.Inf)),
-    PowRealTest(Number(2.0, 2.0), Float64.Inf, Number(Float64.Inf, Float64.Inf)),
-    PowRealTest(Number(3.0, 2.0), Float64.Inf, Number(Float64.Inf, Float64.Inf)),
+    PowRealTest(NdNumber(2.0, 1.0), Float64.Inf, NdNumber(Float64.Inf, Float64.Inf)),
+    PowRealTest(NdNumber(3.0, 1.0), Float64.Inf, NdNumber(Float64.Inf, Float64.Inf)),
+    PowRealTest(NdNumber(2.0, 2.0), Float64.Inf, NdNumber(Float64.Inf, Float64.Inf)),
+    PowRealTest(NdNumber(3.0, 2.0), Float64.Inf, NdNumber(Float64.Inf, Float64.Inf)),
 
     // PowReal(x, -Inf) = +0+NaNϵ for |x| > 1
-    PowRealTest(Number(2.0, 0.0), -Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(3.0, 0.0), -Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(2.0, 1.0), -Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(3.0, 1.0), -Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(2.0, 2.0), -Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(3.0, 2.0), -Float64.Inf, Number(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(2.0, 0.0), -Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(3.0, 0.0), -Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(2.0, 1.0), -Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(3.0, 1.0), -Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(2.0, 2.0), -Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(3.0, 2.0), -Float64.Inf, NdNumber(0.0, Float64.NaN)),
 
     // PowReal(x+yϵ, +Inf) = +0+NaNϵ for |x| < 1
-    PowRealTest(Number(0.1, 0.0), Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(0.1, 0.1), Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(0.2, 0.2), Float64.Inf, Number(0.0, Float64.NaN)),
-    PowRealTest(Number(0.5, 0.5), Float64.Inf, Number(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(0.1, 0.0), Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(0.1, 0.1), Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(0.2, 0.2), Float64.Inf, NdNumber(0.0, Float64.NaN)),
+    PowRealTest(NdNumber(0.5, 0.5), Float64.Inf, NdNumber(0.0, Float64.NaN)),
 
     // PowReal(x+0ϵ, -Inf) = +Inf+NaNϵ for |x| < 1
-    PowRealTest(Number(0.1, 0.0), -Float64.Inf, Number(Float64.Inf, Float64.NaN)),
-    PowRealTest(Number(0.2, 0.0), -Float64.Inf, Number(Float64.Inf, Float64.NaN)),
+    PowRealTest(NdNumber(0.1, 0.0), -Float64.Inf, NdNumber(Float64.Inf, Float64.NaN)),
+    PowRealTest(NdNumber(0.2, 0.0), -Float64.Inf, NdNumber(Float64.Inf, Float64.NaN)),
 
     // PowReal(x, -Inf) = +Inf-Infϵ for |x| < 1
-    PowRealTest(Number(0.1, 0.1), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
-    PowRealTest(Number(0.2, 0.1), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
-    PowRealTest(Number(0.1, 0.2), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
-    PowRealTest(Number(0.2, 0.2), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
-    PowRealTest(Number(0.1, 1.0), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
-    PowRealTest(Number(0.2, 1.0), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
-    PowRealTest(Number(0.1, 2.0), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
-    PowRealTest(Number(0.2, 2.0), -Float64.Inf, Number(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.1, 0.1), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.2, 0.1), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.1, 0.2), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.2, 0.2), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.1, 1.0), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.2, 1.0), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.1, 2.0), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
+    PowRealTest(NdNumber(0.2, 2.0), -Float64.Inf, NdNumber(Float64.Inf, -Float64.Inf)),
 
     // Handled by math.Pow tests:
     //
@@ -628,8 +628,8 @@ private let powRealTests: Array<PowRealTest> = [
     // Pow(-Inf, y) = Pow(-0, -y)
 
     // PowReal(x, y) = NaN+NaNϵ for finite x < 0 and finite non-integer y
-    PowRealTest(Number(-1.0, -1.0), 0.5, Number(Float64.NaN, Float64.NaN)),
-    PowRealTest(Number(-1.0, 2.0), 0.5, Number(Float64.NaN, Float64.NaN))
+    PowRealTest(NdNumber(-1.0, -1.0), 0.5, NdNumber(Float64.NaN, Float64.NaN)),
+    PowRealTest(NdNumber(-1.0, 2.0), 0.5, NdNumber(Float64.NaN, Float64.NaN))
 ]
 
 @Test
@@ -641,7 +641,7 @@ public func testPowReal(): Unit {
     }
 }
 
-private func sameDual(a: Number, b: Number, tol: Float64): Bool {
+private func sameDual(a: NdNumber, b: NdNumber, tol: Float64): Bool {
     return same(a.real, b.real, tol) && same(a.emag, b.emag, tol)
 }
 

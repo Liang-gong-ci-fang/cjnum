@@ -7,40 +7,40 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 private class SinTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let sinTests: Array<SinTest> = [
-    SinTest(Number(0.0, 0.0, 0.0, 0.0), Number(0.0, 0.0, 0.0, 0.0)),
-    SinTest(Number(Float64.PI / 2.0, 0.0, 0.0, 0.0), Number(1.0, 0.0, 0.0, 0.0)),
+    SinTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
+    SinTest(NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     SinTest(
-        Number(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        Number(0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
     ),
     SinTest(
-        Number(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        Number(0.0, 0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
+        NqNumber(0.0, 0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
     ),
     SinTest(
-        Number(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        Number(0.0, 0.0, 0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
+        NqNumber(0.0, 0.0, 0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag)
     ),
 
     // Exercises from Real Quaternionic Calculus Handbook doi:10.1007/978-3-0348-0622-0
     // Ex 6.159 (a) and (b).
     SinTest(
-        Number(1.0, 1.0, 1.0, 1.0),
-        Number(sin(1.0) * cosh(sqrt(3.0)), cos(1.0) * sinh(sqrt(3.0)) / sqrt(3.0), cos(1.0) * sinh(sqrt(3.0)) / sqrt(
+        NqNumber(1.0, 1.0, 1.0, 1.0),
+        NqNumber(sin(1.0) * cosh(sqrt(3.0)), cos(1.0) * sinh(sqrt(3.0)) / sqrt(3.0), cos(1.0) * sinh(sqrt(3.0)) / sqrt(
             3.0), cos(1.0) * sinh(sqrt(3.0)) / sqrt(3.0))
     ),
     SinTest(
-        Number(0.0, -2.0, 1.0, 0.0),
-        Number(0.0, -2.0 * sinh(sqrt(5.0)) / sqrt(5.0), sinh(sqrt(5.0)) / sqrt(5.0), 0.0)
+        NqNumber(0.0, -2.0, 1.0, 0.0),
+        NqNumber(0.0, -2.0 * sinh(sqrt(5.0)) / sqrt(5.0), sinh(sqrt(5.0)) / sqrt(5.0), 0.0)
     )
 ]
 
@@ -54,82 +54,82 @@ public func testSin(): Unit {
 }
 
 private class SinhTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let sinhTests: Array<SinhTest> = [
-    SinhTest(Number(0.0, 0.0, 0.0, 0.0), Number(0.0, 0.0, 0.0, 0.0)),
-    SinhTest(Number(Float64.PI / 2.0, 0.0, 0.0, 0.0), Number(sinh(Float64.PI / 2.0), 0.0, 0.0, 0.0)),
+    SinhTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
+    SinhTest(NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0), NqNumber(sinh(Float64.PI / 2.0), 0.0, 0.0, 0.0)),
     SinhTest(
-        Number(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        Number(0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
     ),
     SinhTest(
-        Number(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        Number(0.0, 0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
+        NqNumber(0.0, 0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
     ),
     SinhTest(
-        Number(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        Number(0.0, 0.0, 0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
+        NqNumber(0.0, 0.0, 0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag)
     ),
     SinhTest(
-        Number(1.0, -1.0, -1.0, 0.0),
+        NqNumber(1.0, -1.0, -1.0, 0.0),
         nqScale(
             0.5,
             nqSub(
-                nqExp(Number(1.0, -1.0, -1.0, 0.0)),
-                nqExp(nqScale(-1.0, Number(1.0, -1.0, -1.0, 0.0)))
+                nqExp(NqNumber(1.0, -1.0, -1.0, 0.0)),
+                nqExp(nqScale(-1.0, NqNumber(1.0, -1.0, -1.0, 0.0)))
             )
         )
     ),
     SinhTest(
-        Number(1.0, 1.0, 1.0, 1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
         nqScale(
             0.5,
             nqSub(
-                nqExp(Number(1.0, 1.0, 1.0, 1.0)),
-                nqExp(nqScale(-1.0, Number(1.0, 1.0, 1.0, 1.0)))
+                nqExp(NqNumber(1.0, 1.0, 1.0, 1.0)),
+                nqExp(nqScale(-1.0, NqNumber(1.0, 1.0, 1.0, 1.0)))
             )
         )
     ),
     SinhTest(
-        nqAsinh(Number(1.0, 1.0, 1.0, 1.0)),
-        Number(1.0, 1.0, 1.0, 1.0)
+        nqAsinh(NqNumber(1.0, 1.0, 1.0, 1.0)),
+        NqNumber(1.0, 1.0, 1.0, 1.0)
     ),
     SinhTest(
-        nqAsinh(Number(1.0, 1.0, 1.0, 1.0)),
+        nqAsinh(NqNumber(1.0, 1.0, 1.0, 1.0)),
         nqScale(
             0.5,
             nqSub(
-                nqExp(nqAsinh(Number(1.0, 1.0, 1.0, 1.0))),
-                nqExp(nqScale(-1.0, nqAsinh(Number(1.0, 1.0, 1.0, 1.0))))
+                nqExp(nqAsinh(NqNumber(1.0, 1.0, 1.0, 1.0))),
+                nqExp(nqScale(-1.0, nqAsinh(NqNumber(1.0, 1.0, 1.0, 1.0))))
             )
         )
     ),
     SinhTest(
-        Number(Float64.Inf, 0.0, 0.0, 0.0),
-        Number(Float64.Inf, 0.0, 0.0, 0.0)
+        NqNumber(Float64.Inf, 0.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, 0.0, 0.0, 0.0)
     ),
     SinhTest(
-        Number(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
-        Number(Float64.Inf, Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     SinhTest(
-        Number(Float64.Inf, Float64.PI, 0.0, 0.0),
-        Number(-Float64.Inf, Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.PI, 0.0, 0.0),
+        NqNumber(-Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     SinhTest(
-        Number(Float64.Inf, 3.0 * Float64.PI / 2.0, 0.0, 0.0),
-        Number(-Float64.Inf, -Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, 3.0 * Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(-Float64.Inf, -Float64.Inf, 0.0, 0.0)
     ),
     SinhTest(
-        Number(Float64.Inf, 2.0 * Float64.PI, 0.0, 0.0),
-        Number(Float64.Inf, -Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, 2.0 * Float64.PI, 0.0, 0.0),
+        NqNumber(Float64.Inf, -Float64.Inf, 0.0, 0.0)
     )
 ]
 
@@ -143,35 +143,35 @@ public func testSinh(): Unit {
 }
 
 private class CosTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let cosTests: Array<CosTest> = [
-    CosTest(Number(0.0, 0.0, 0.0, 0.0), Number(1.0, 0.0, 0.0, 0.0)),
+    CosTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     CosTest(
-        Number(Float64.PI / 2.0, 0.0, 0.0, 0.0),
-        Number(0.0, 0.0, 0.0, 0.0)
+        NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0),
+        NqNumber(0.0, 0.0, 0.0, 0.0)
     ),
     CosTest(
-        Number(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        Number(c128Cos(Complex128(0.0, Float64.PI / 2.0)).real, 0.0, 0.0, 0.0)
+        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(c128Cos(Complex128(0.0, Float64.PI / 2.0)).real, 0.0, 0.0, 0.0)
     ),
     CosTest(
-        Number(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        Number((c128Cos(Complex128(0.0, Float64.PI / 2.0))).real, 0.0, 0.0, 0.0)
+        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
+        NqNumber((c128Cos(Complex128(0.0, Float64.PI / 2.0))).real, 0.0, 0.0, 0.0)
     ),
     CosTest(
-        Number(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        Number((c128Cos(Complex128(0.0, Float64.PI / 2.0))).real, 0.0, 0.0, 0.0)
+        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
+        NqNumber((c128Cos(Complex128(0.0, Float64.PI / 2.0))).real, 0.0, 0.0, 0.0)
     ),
     CosTest(
-        Number(1.0, 1.0, 1.0, 1.0),
-        Number(
+        NqNumber(1.0, 1.0, 1.0, 1.0),
+        NqNumber(
             cos(1.0) * cosh(sqrt(3.0)),
             -sin(1.0) * sinh(sqrt(3.0)) / sqrt(3.0),
             -sin(1.0) * sinh(sqrt(3.0)) / sqrt(3.0),
@@ -190,59 +190,59 @@ public func testCos(): Unit {
 }
 
 private class CoshTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let coshTests: Array<CoshTest> = [
-    CoshTest(Number(0.0, 0.0, 0.0, 0.0), Number(1.0, 0.0, 0.0, 0.0)),
+    CoshTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     CoshTest(
-        Number(Float64.PI / 2.0, 0.0, 0.0, 0.0),
-        Number(cosh(Float64.PI / 2.0), 0.0, 0.0, 0.0)
+        NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0),
+        NqNumber(cosh(Float64.PI / 2.0), 0.0, 0.0, 0.0)
     ),
     CoshTest(
-        Number(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        Number(0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
     ),
     CoshTest(
-        Number(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        Number(0.0, 0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
+        NqNumber(0.0, 0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
     ),
     CoshTest(
-        Number(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        Number(0.0, 0.0, 0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
+        NqNumber(0.0, 0.0, 0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag)
     ),
     CoshTest(
-        Number(1.0, -1.0, -1.0, 0.0),
-        nqScale(0.5, nqAdd(nqExp(Number(1.0, -1.0, -1.0, 0.0)), nqExp(nqScale(-1.0, Number(1.0, -1.0, -1.0, 0.0)))))
+        NqNumber(1.0, -1.0, -1.0, 0.0),
+        nqScale(0.5, nqAdd(nqExp(NqNumber(1.0, -1.0, -1.0, 0.0)), nqExp(nqScale(-1.0, NqNumber(1.0, -1.0, -1.0, 0.0)))))
     ),
     CoshTest(
-        Number(1.0, 1.0, 1.0, 1.0),
-        nqScale(0.5, nqAdd(nqExp(Number(1.0, 1.0, 1.0, 1.0)), nqExp(nqScale(-1.0, Number(1.0, 1.0, 1.0, 1.0)))))
+        NqNumber(1.0, 1.0, 1.0, 1.0),
+        nqScale(0.5, nqAdd(nqExp(NqNumber(1.0, 1.0, 1.0, 1.0)), nqExp(nqScale(-1.0, NqNumber(1.0, 1.0, 1.0, 1.0)))))
     ),
     CoshTest(
-        Number(Float64.Inf, 0.0, 0.0, 0.0),
-        Number(Float64.Inf, 0.0, 0.0, 0.0)
+        NqNumber(Float64.Inf, 0.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, 0.0, 0.0, 0.0)
     ),
     CoshTest(
-        Number(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
-        Number(Float64.Inf, Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     CoshTest(
-        Number(Float64.Inf, Float64.PI, 0.0, 0.0),
-        Number(-Float64.Inf, Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.PI, 0.0, 0.0),
+        NqNumber(-Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     CoshTest(
-        Number(Float64.Inf, 3.0 * Float64.PI / 2.0, 0.0, 0.0),
-        Number(-Float64.Inf, -Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, 3.0 * Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(-Float64.Inf, -Float64.Inf, 0.0, 0.0)
     ),
     CoshTest(
-        Number(Float64.Inf, 2.0 * Float64.PI, 0.0, 0.0),
-        Number(Float64.Inf, -Float64.Inf, 0.0, 0.0)
+        NqNumber(Float64.Inf, 2.0 * Float64.PI, 0.0, 0.0),
+        NqNumber(Float64.Inf, -Float64.Inf, 0.0, 0.0)
     )
 ]
 
@@ -256,44 +256,44 @@ public func testCosh(): Unit {
 }
 
 private class TanTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let tanTests: Array<TanTest> = [
-    TanTest(Number(0.0, 0.0, 0.0, 0.0), Number(1.0, 0.0, 0.0, 0.0)),
+    TanTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     TanTest(
-        Number(Float64.PI / 4.0, 0.0, 0.0, 0.0),
-        Number(tan(Float64.PI / 4.0), 0.0, 0.0, 0.0)
+        NqNumber(Float64.PI / 4.0, 0.0, 0.0, 0.0),
+        NqNumber(tan(Float64.PI / 4.0), 0.0, 0.0, 0.0)
     ),
     TanTest(
-        Number(0.0, Float64.PI / 4.0, 0.0, 0.0),
-        Number(0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.PI / 4.0, 0.0, 0.0),
+        NqNumber(0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0, 0.0)
     ),
     TanTest(
-        Number(0.0, 0.0, Float64.PI / 4.0, 0.0),
-        Number(0.0, 0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.PI / 4.0, 0.0),
+        NqNumber(0.0, 0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0)
     ),
     TanTest(
-        Number(0.0, 0.0, 0.0, Float64.PI / 4.0),
-        Number(0.0, 0.0, 0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.PI / 4.0),
+        NqNumber(0.0, 0.0, 0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag)
     ),
     TanTest(
-        Number(0.0, 1.0, 0.0, 0.0),
+        NqNumber(0.0, 1.0, 0.0, 0.0),
         nqMul(
-            nqSin(Number(0.0, 1.0, 0.0, 0.0)),
-            nqInv(nqCos(Number(0.0, 1.0, 0.0, 0.0)))
+            nqSin(NqNumber(0.0, 1.0, 0.0, 0.0)),
+            nqInv(nqCos(NqNumber(0.0, 1.0, 0.0, 0.0)))
         )
     ),
     TanTest(
-        Number(1.0, 1.0, 1.0, 1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
         nqMul(
-            nqSin(Number(1.0, 1.0, 1.0, 1.0)),
-            nqInv(nqCos(Number(1.0, 1.0, 1.0, 1.0)))
+            nqSin(NqNumber(1.0, 1.0, 1.0, 1.0)),
+            nqInv(nqCos(NqNumber(1.0, 1.0, 1.0, 1.0)))
         )
     )
 ]
@@ -307,59 +307,59 @@ public func testTan(): Unit {
 }
 
 private class TanhTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let tanhTests: Array<TanhTest> = [
-    TanhTest(Number(0.0, 0.0, 0.0, 0.0), Number(0.0, 0.0, 0.0, 0.0)),
+    TanhTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     TanhTest(
-        Number(Float64.PI / 4.0, 0.0, 0.0, 0.0),
-        Number(tanh(Float64.PI / 4.0), 0.0, 0.0, 0.0)
+        NqNumber(Float64.PI / 4.0, 0.0, 0.0, 0.0),
+        NqNumber(tanh(Float64.PI / 4.0), 0.0, 0.0, 0.0)
     ),
     TanhTest(
-        Number(0.0, Float64.PI / 4.0, 0.0, 0.0),
-        Number(0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.PI / 4.0, 0.0, 0.0),
+        NqNumber(0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0, 0.0)
     ),
     TanhTest(
-        Number(0.0, 0.0, Float64.PI / 4.0, 0.0),
-        Number(0.0, 0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.PI / 4.0, 0.0),
+        NqNumber(0.0, 0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0)
     ),
     TanhTest(
-        Number(0.0, 0.0, 0.0, Float64.PI / 4.0),
-        Number(0.0, 0.0, 0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.PI / 4.0),
+        NqNumber(0.0, 0.0, 0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag)
     ),
     TanhTest(
-        Number(0.0, 1.0, 0.0, 0.0),
-        nqMul(nqSinh(Number(0.0, 1.0, 0.0, 0.0)), nqInv(nqCosh(Number(0.0, 1.0, 0.0, 0.0))))
+        NqNumber(0.0, 1.0, 0.0, 0.0),
+        nqMul(nqSinh(NqNumber(0.0, 1.0, 0.0, 0.0)), nqInv(nqCosh(NqNumber(0.0, 1.0, 0.0, 0.0))))
     ),
     TanhTest(
-        Number(1.0, 1.0, 1.0, 1.0),
-        nqMul(nqSinh(Number(1.0, 1.0, 1.0, 1.0)), nqInv(nqCosh(Number(1.0, 1.0, 1.0, 1.0))))
+        NqNumber(1.0, 1.0, 1.0, 1.0),
+        nqMul(nqSinh(NqNumber(1.0, 1.0, 1.0, 1.0)), nqInv(nqCosh(NqNumber(1.0, 1.0, 1.0, 1.0))))
     ),
     TanhTest(
-        Number(Float64.Inf, 0.0, 0.0, 0.0),
-        Number(1.0, 0.0, 0.0, 0.0)
+        NqNumber(Float64.Inf, 0.0, 0.0, 0.0),
+        NqNumber(1.0, 0.0, 0.0, 0.0)
     ),
     TanhTest(
-        Number(Float64.Inf, Float64.PI / 4.0, 0.0, 0.0),
-        Number(1.0, 0.0 * sin(Float64.PI / 2.0), 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.PI / 4.0, 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(Float64.PI / 2.0), 0.0, 0.0)
     ),
     TanhTest(
-        Number(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
-        Number(1.0, 0.0 * sin(Float64.PI), 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(Float64.PI), 0.0, 0.0)
     ),
     TanhTest(
-        Number(Float64.Inf, 3.0 * Float64.PI / 4.0, 0.0, 0.0),
-        Number(1.0, 0.0 * sin(3.0 * Float64.PI / 2.0), 0.0, 0.0)
+        NqNumber(Float64.Inf, 3.0 * Float64.PI / 4.0, 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(3.0 * Float64.PI / 2.0), 0.0, 0.0)
     ),
     TanhTest(
-        Number(Float64.Inf, Float64.PI, 0.0, 0.0),
-        Number(1.0, 0.0 * sin(2.0 * Float64.PI), 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.PI, 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(2.0 * Float64.PI), 0.0, 0.0)
     )
 ]
 
@@ -373,35 +373,35 @@ public func testTanh(): Unit {
 }
 
 private class AsinTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let asinTests: Array<AsinTest> = [
-    AsinTest(Number(0.0, 0.0, 0.0, 0.0), Number(0.0, 0.0, 0.0, 0.0)),
+    AsinTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     AsinTest(
-        Number(1.0, 0.0, 0.0, 0.0),
-        Number(Float64.PI / 2.0, 0.0, 0.0, 0.0)
+        NqNumber(1.0, 0.0, 0.0, 0.0),
+        NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0)
     ),
     AsinTest(
-        Number(0.0, 1.0, 0.0, 0.0),
-        Number(0.0, c128Asinh(Complex128(1.0, 0.0)).real, 0.0, 0.0)
+        NqNumber(0.0, 1.0, 0.0, 0.0),
+        NqNumber(0.0, c128Asinh(Complex128(1.0, 0.0)).real, 0.0, 0.0)
     ),
     AsinTest(
-        Number(0.0, 0.0, 1.0, 0.0),
-        Number(0.0, 0.0, c128Asinh(Complex128(1.0, 0.0)).real, 0.0)
+        NqNumber(0.0, 0.0, 1.0, 0.0),
+        NqNumber(0.0, 0.0, c128Asinh(Complex128(1.0, 0.0)).real, 0.0)
     ),
     AsinTest(
-        Number(0.0, 0.0, 0.0, 1.0),
-        Number(0.0, 0.0, 0.0, c128Asinh(Complex128(1.0, 0.0)).real)
+        NqNumber(0.0, 0.0, 0.0, 1.0),
+        NqNumber(0.0, 0.0, 0.0, c128Asinh(Complex128(1.0, 0.0)).real)
     ),
     AsinTest(
-        nqSin(Number(1.0, 1.0, 1.0, 1.0)),
-        Number(1.0, 1.0, 1.0, 1.0)
+        nqSin(NqNumber(1.0, 1.0, 1.0, 1.0)),
+        NqNumber(1.0, 1.0, 1.0, 1.0)
     )
 ]
 
@@ -415,74 +415,74 @@ public func testAsin(): Unit {
 }
 
 private class AsinhTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let asinhTests: Array<AsinhTest> = [
-    AsinhTest(Number(0.0, 0.0, 0.0, 0.0), Number(0.0, 0.0, 0.0, 0.0)),
+    AsinhTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     AsinhTest(
-        Number(1.0, 0.0, 0.0, 0.0),
-        Number(asinh(1.0), 0.0, 0.0, 0.0)
+        NqNumber(1.0, 0.0, 0.0, 0.0),
+        NqNumber(asinh(1.0), 0.0, 0.0, 0.0)
     ),
     AsinhTest(
-        Number(0.0, 1.0, 0.0, 0.0),
-        Number(0.0, Float64.PI / 2.0, 0.0, 0.0)
+        NqNumber(0.0, 1.0, 0.0, 0.0),
+        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0)
     ),
     AsinhTest(
-        Number(0.0, 0.0, 1.0, 0.0),
-        Number(0.0, 0.0, Float64.PI / 2.0, 0.0)
+        NqNumber(0.0, 0.0, 1.0, 0.0),
+        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0)
     ),
     AsinhTest(
-        Number(0.0, 0.0, 0.0, 1.0),
-        Number(0.0, 0.0, 0.0, Float64.PI / 2.0)
+        NqNumber(0.0, 0.0, 0.0, 1.0),
+        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0)
     ),
     AsinhTest(
-        Number(1.0, 1.0, 1.0, 1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
         nqLog(
             nqAdd(
-                Number(1.0, 1.0, 1.0, 1.0),
+                NqNumber(1.0, 1.0, 1.0, 1.0),
                 nqSqrt(
                     nqAdd(
-                        nqMul(Number(1.0, 1.0, 1.0, 1.0), Number(1.0, 1.0, 1.0, 1.0)),
-                        Number(1.0, 0.0, 0.0, 0.0)
+                        nqMul(NqNumber(1.0, 1.0, 1.0, 1.0), NqNumber(1.0, 1.0, 1.0, 1.0)),
+                        NqNumber(1.0, 0.0, 0.0, 0.0)
                     )
                 )
             )
         )
     ),
     AsinhTest(
-        nqSinh(Number(1.0, 0.0, 0.0, 0.0)),
-        Number(1.0, 0.0, 0.0, 0.0)
+        nqSinh(NqNumber(1.0, 0.0, 0.0, 0.0)),
+        NqNumber(1.0, 0.0, 0.0, 0.0)
     ),
     AsinhTest(
-        nqSinh(Number(0.0, 1.0, 0.0, 0.0)),
-        Number(0.0, 1.0, 0.0, 0.0)
+        nqSinh(NqNumber(0.0, 1.0, 0.0, 0.0)),
+        NqNumber(0.0, 1.0, 0.0, 0.0)
     ),
     AsinhTest(
-        nqSinh(Number(0.0, 1.0, 1.0, 0.0)),
-        Number(0.0, 1.0, 1.0, 0.0)
+        nqSinh(NqNumber(0.0, 1.0, 1.0, 0.0)),
+        NqNumber(0.0, 1.0, 1.0, 0.0)
     ),
     AsinhTest(
-        nqSinh(Number(1.0, 1.0, 1.0, 0.0)),
-        Number(1.0, 1.0, 1.0, 0.0)
+        nqSinh(NqNumber(1.0, 1.0, 1.0, 0.0)),
+        NqNumber(1.0, 1.0, 1.0, 0.0)
     ),
     // The following fails:
-    // {q: Sinh(Number{1, 1, 1, 1}), want: Number{1, 1, 1, 1}},
+    // {q: Sinh(NqNumber{1, 1, 1, 1}), want: NqNumber{1, 1, 1, 1}},
     // but this passes...
     AsinhTest(
-        nqSinh(Number(1.0, 1.0, 1.0, 1.0)),
+        nqSinh(NqNumber(1.0, 1.0, 1.0, 1.0)),
         nqLog(
             nqAdd(
-                nqSinh(Number(1.0, 1.0, 1.0, 1.0)),
+                nqSinh(NqNumber(1.0, 1.0, 1.0, 1.0)),
                 nqSqrt(
                     nqAdd(
-                        nqMul(nqSinh(Number(1.0, 1.0, 1.0, 1.0)), nqSinh(Number(1.0, 1.0, 1.0, 1.0))),
-                        Number(1.0, 0.0, 0.0, 0.0)
+                        nqMul(nqSinh(NqNumber(1.0, 1.0, 1.0, 1.0)), nqSinh(NqNumber(1.0, 1.0, 1.0, 1.0))),
+                        NqNumber(1.0, 0.0, 0.0, 0.0)
                     )
                 )
             )
@@ -501,23 +501,23 @@ public func testAsinh() {
 }
 
 private class AcosTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let acosTests: Array<AcosTest> = [
-    AcosTest(Number(0.0, 0.0, 0.0, 0.0), Number(Float64.PI / 2.0, 0.0, 0.0, 0.0)),
+    AcosTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0)),
     AcosTest(
-        Number(1.0, 0.0, 0.0, 0.0),
-        Number(0.0, 0.0, 0.0, 0.0)
+        NqNumber(1.0, 0.0, 0.0, 0.0),
+        NqNumber(0.0, 0.0, 0.0, 0.0)
     ),
     AcosTest(
-        Number(0.0, 1.0, 0.0, 0.0),
-        Number(
+        NqNumber(0.0, 1.0, 0.0, 0.0),
+        NqNumber(
             c128Acos(Complex128(0.0, 1.0)).real,
             c128Acos(Complex128(0.0, 1.0)).imag,
             0.0,
@@ -525,8 +525,8 @@ private let acosTests: Array<AcosTest> = [
         )
     ),
     AcosTest(
-        Number(0.0, 0.0, 1.0, 0.0),
-        Number(
+        NqNumber(0.0, 0.0, 1.0, 0.0),
+        NqNumber(
             c128Acos(Complex128(0.0, 1.0)).real,
             0.0,
             c128Acos(Complex128(0.0, 1.0)).imag,
@@ -534,8 +534,8 @@ private let acosTests: Array<AcosTest> = [
         )
     ),
     AcosTest(
-        Number(0.0, 0.0, 0.0, 1.0),
-        Number(
+        NqNumber(0.0, 0.0, 0.0, 1.0),
+        NqNumber(
             c128Acos(Complex128(0.0, 1.0)).real,
             0.0,
             0.0,
@@ -543,8 +543,8 @@ private let acosTests: Array<AcosTest> = [
         )
     ),
     AcosTest(
-        nqCos(Number(1.0, 1.0, 1.0, 1.0)),
-        Number(1.0, 1.0, 1.0, 1.0)
+        nqCos(NqNumber(1.0, 1.0, 1.0, 1.0)),
+        NqNumber(1.0, 1.0, 1.0, 1.0)
     )
 ]
 
@@ -558,23 +558,23 @@ public func testAcos(): Unit {
 }
 
 private class AcoshTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let acoshTests: Array<AcoshTest> = [
-    AcoshTest(Number(0.0, 0.0, 0.0, 0.0), Number(Float64.PI / 2.0, 0.0, 0.0, 0.0)),
+    AcoshTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0)),
     AcoshTest(
-        Number(1.0, 0.0, 0.0, 0.0),
-        Number(acosh(1.0), 0.0, 0.0, 0.0)
+        NqNumber(1.0, 0.0, 0.0, 0.0),
+        NqNumber(acosh(1.0), 0.0, 0.0, 0.0)
     ),
     AcoshTest(
-        Number(0.0, 1.0, 0.0, 0.0),
-        Number(
+        NqNumber(0.0, 1.0, 0.0, 0.0),
+        NqNumber(
             c128Acosh(Complex128(0.0, 1.0)).real,
             c128Acosh(Complex128(0.0, 1.0)).imag,
             0.0,
@@ -582,8 +582,8 @@ private let acoshTests: Array<AcoshTest> = [
         )
     ),
     AcoshTest(
-        Number(0.0, 0.0, 1.0, 0.0),
-        Number(
+        NqNumber(0.0, 0.0, 1.0, 0.0),
+        NqNumber(
             c128Acosh(Complex128(0.0, 1.0)).real,
             0.0,
             c128Acosh(Complex128(0.0, 1.0)).imag,
@@ -591,8 +591,8 @@ private let acoshTests: Array<AcoshTest> = [
         )
     ),
     AcoshTest(
-        Number(0.0, 0.0, 0.0, 1.0),
-        Number(
+        NqNumber(0.0, 0.0, 0.0, 1.0),
+        NqNumber(
             c128Acosh(Complex128(0.0, 1.0)).real,
             0.0,
             0.0,
@@ -600,19 +600,19 @@ private let acoshTests: Array<AcoshTest> = [
         )
     ),
     AcoshTest(
-        nqCosh(Number(1.0, 1.0, 1.0, 1.0)),
-        Number(1.0, 1.0, 1.0, 1.0)
+        nqCosh(NqNumber(1.0, 1.0, 1.0, 1.0)),
+        NqNumber(1.0, 1.0, 1.0, 1.0)
     ),
     AcoshTest(
-        Number(1.0, 1.0, 1.0, 1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
         nqLog(
-            nqAdd(Number(1.0, 1.0, 1.0, 1.0),
-            nqSqrt(nqSub(nqMul(Number(1.0, 1.0, 1.0, 1.0), Number(1.0, 1.0, 1.0, 1.0)), Number(1.0, 0.0, 0.0, 0.0)))))
+            nqAdd(NqNumber(1.0, 1.0, 1.0, 1.0),
+            nqSqrt(nqSub(nqMul(NqNumber(1.0, 1.0, 1.0, 1.0), NqNumber(1.0, 1.0, 1.0, 1.0)), NqNumber(1.0, 0.0, 0.0, 0.0)))))
     )
     // The following fails by a factor of -1.
-    // {q: Cosh(Number{1, 1, 1, 1}), want: func() Number {
-    // 	q := Cosh(Number{1, 1, 1, 1})
-    // 	return Log(Add(q, Sqrt(Sub(Mul(q, q), Number{Real: 1}))))
+    // {q: Cosh(NqNumber{1, 1, 1, 1}), want: func() NqNumber {
+    // 	q := Cosh(NqNumber{1, 1, 1, 1})
+    // 	return Log(Add(q, Sqrt(Sub(Mul(q, q), NqNumber{Real: 1}))))
     // }()},
 ]
 
@@ -626,23 +626,23 @@ public func testAcosh(): Unit {
 }
 
 private class AtanTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let atanTests: Array<AtanTest> = [
-    AtanTest(Number(0.0, 0.0, 0.0, 0.0), Number(0.0, 0.0, 0.0, 0.0)),
+    AtanTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     AtanTest(
-        Number(1.0, 0.0, 0.0, 0.0),
-        Number(Float64.PI / 4.0, 0.0, 0.0, 0.0)
+        NqNumber(1.0, 0.0, 0.0, 0.0),
+        NqNumber(Float64.PI / 4.0, 0.0, 0.0, 0.0)
     ),
     AtanTest(
-        Number(0.0, 0.5, 0.0, 0.0),
-        Number(
+        NqNumber(0.0, 0.5, 0.0, 0.0),
+        NqNumber(
             c128Atan(Complex128(0.0, 0.5)).real,
             c128Atan(Complex128(0.0, 0.5)).imag,
             0.0,
@@ -650,8 +650,8 @@ private let atanTests: Array<AtanTest> = [
         )
     ),
     AtanTest(
-        Number(0.0, 0.0, 0.5, 0.0),
-        Number(
+        NqNumber(0.0, 0.0, 0.5, 0.0),
+        NqNumber(
             c128Atan(Complex128(0.0, 0.5)).real,
             0.0,
             c128Atan(Complex128(0.0, 0.5)).imag,
@@ -659,8 +659,8 @@ private let atanTests: Array<AtanTest> = [
         )
     ),
     AtanTest(
-        Number(0.0, 0.0, 0.0, 0.5),
-        Number(
+        NqNumber(0.0, 0.0, 0.0, 0.5),
+        NqNumber(
             c128Atan(Complex128(0.0, 0.5)).real,
             0.0,
             0.0,
@@ -668,8 +668,8 @@ private let atanTests: Array<AtanTest> = [
         )
     ),
     AtanTest(
-        nqTan(Number(1.0, 1.0, 1.0, 1.0)),
-        Number(1.0, 1.0, 1.0, 1.0)
+        nqTan(NqNumber(1.0, 1.0, 1.0, 1.0)),
+        NqNumber(1.0, 1.0, 1.0, 1.0)
     )
 ]
 
@@ -683,23 +683,23 @@ public func testAtan(): Unit {
 }
 
 private class AtanhTest {
-    let q: Number
-    let want: Number
-    public init(q: Number, want: Number) {
+    let q: NqNumber
+    let want: NqNumber
+    public init(q: NqNumber, want: NqNumber) {
         this.q = q
         this.want = want
     }
 }
 
 private let atanhTests: Array<AtanhTest> = [
-    AtanhTest(Number(0.0, 0.0, 0.0, 0.0), Number(0.0, 0.0, 0.0, 0.0)),
+    AtanhTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     AtanhTest(
-        Number(1.0, 0.0, 0.0, 0.0),
-        Number(nanAtanh(1.0), 0.0, 0.0, 0.0)
+        NqNumber(1.0, 0.0, 0.0, 0.0),
+        NqNumber(nanAtanh(1.0), 0.0, 0.0, 0.0)
     ),
     AtanhTest(
-        Number(0.0, 0.5, 0.0, 0.0),
-        Number(
+        NqNumber(0.0, 0.5, 0.0, 0.0),
+        NqNumber(
             c128Atanh(Complex128(0.0, 0.5)).real,
             c128Atanh(Complex128(0.0, 0.5)).imag,
             0.0,
@@ -707,8 +707,8 @@ private let atanhTests: Array<AtanhTest> = [
         )
     ),
     AtanhTest(
-        Number(0.0, 0.0, 0.5, 0.0),
-        Number(
+        NqNumber(0.0, 0.0, 0.5, 0.0),
+        NqNumber(
             c128Atanh(Complex128(0.0, 0.5)).real,
             0.0,
             c128Atanh(Complex128(0.0, 0.5)).imag,
@@ -716,8 +716,8 @@ private let atanhTests: Array<AtanhTest> = [
         )
     ),
     AtanhTest(
-        Number(0.0, 0.0, 0.0, 0.5),
-        Number(
+        NqNumber(0.0, 0.0, 0.0, 0.5),
+        NqNumber(
             c128Atanh(Complex128(0.0, 0.5)).real,
             0.0,
             0.0,
@@ -725,38 +725,38 @@ private let atanhTests: Array<AtanhTest> = [
         )
     ),
     AtanhTest(
-        Number(1.0, 1.0, 1.0, 1.0),
+        NqNumber(1.0, 1.0, 1.0, 1.0),
         nqScale(
             0.5,
-            nqSub(nqLog(nqAdd(Number(1.0, 0.0, 0.0, 0.0), Number(1.0, 1.0, 1.0, 1.0))),
-                nqLog(nqSub(Number(1.0, 0.0, 0.0, 0.0), Number(1.0, 1.0, 1.0, 1.0))))
+            nqSub(nqLog(nqAdd(NqNumber(1.0, 0.0, 0.0, 0.0), NqNumber(1.0, 1.0, 1.0, 1.0))),
+                nqLog(nqSub(NqNumber(1.0, 0.0, 0.0, 0.0), NqNumber(1.0, 1.0, 1.0, 1.0))))
         )
     ),
     AtanhTest(
-        nqTanh(Number(1.0, 0.0, 0.0, 0.0)),
-        Number(1.0, 0.0, 0.0, 0.0)
+        nqTanh(NqNumber(1.0, 0.0, 0.0, 0.0)),
+        NqNumber(1.0, 0.0, 0.0, 0.0)
     ),
     AtanhTest(
-        nqTanh(Number(0.0, 1.0, 0.0, 0.0)),
-        Number(0.0, 1.0, 0.0, 0.0)
+        nqTanh(NqNumber(0.0, 1.0, 0.0, 0.0)),
+        NqNumber(0.0, 1.0, 0.0, 0.0)
     ),
     AtanhTest(
-        nqTanh(Number(0.0, 1.0, 1.0, 0.0)),
-        Number(0.0, 1.0, 1.0, 0.0)
+        nqTanh(NqNumber(0.0, 1.0, 1.0, 0.0)),
+        NqNumber(0.0, 1.0, 1.0, 0.0)
     ),
     AtanhTest(
-        nqTanh(Number(1.0, 1.0, 1.0, 0.0)),
-        Number(1.0, 1.0, 1.0, 0.0)
+        nqTanh(NqNumber(1.0, 1.0, 1.0, 0.0)),
+        NqNumber(1.0, 1.0, 1.0, 0.0)
     ),
     // The following fails
-    // {q: Tanh(Number{1, 1, 1, 1}), want: Number{1, 1, 1, 1}},
+    // {q: Tanh(NqNumber{1, 1, 1, 1}), want: NqNumber{1, 1, 1, 1}},
     // but...
     AtanhTest(
-        nqTanh(Number(1.0, 1.0, 1.0, 0.0)),
+        nqTanh(NqNumber(1.0, 1.0, 1.0, 0.0)),
         nqScale(
             0.5,
-            nqSub(nqLog(nqAdd(Number(1.0, 0.0, 0.0, 0.0), nqTanh(Number(1.0, 1.0, 1.0, 0.0)))),
-                nqLog(nqSub(Number(1.0, 0.0, 0.0, 0.0), nqTanh(Number(1.0, 1.0, 1.0, 0.0)))))
+            nqSub(nqLog(nqAdd(NqNumber(1.0, 0.0, 0.0, 0.0), nqTanh(NqNumber(1.0, 1.0, 1.0, 0.0)))),
+                nqLog(nqSub(NqNumber(1.0, 0.0, 0.0, 0.0), nqTanh(NqNumber(1.0, 1.0, 1.0, 0.0)))))
         )
     )
 ]

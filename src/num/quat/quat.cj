@@ -3,17 +3,17 @@ package cjnum.num.quat
 import std.math.*
 import std.convert.*
 
-public var zero = Number(0.0, 0.0, 0.0, 0.0)
+public var zero = NqNumber(0.0, 0.0, 0.0, 0.0)
 
-// Number is a float64 precision quaternion.
-public class Number {
+// NqNumber is a float64 precision quaternion.
+public class NqNumber {
     /*
     因为Number类的对象属性需要修改，所以这里把对象属性改为了可变的var类型
      */
-    var real: Float64
-    var imag: Float64
-    var jmag: Float64
-    var kmag: Float64
+    public var real: Float64
+    public var imag: Float64
+    public var jmag: Float64
+    public var kmag: Float64
     public init(real: Float64, imag: Float64, jmag: Float64, kmag: Float64) {
         this.real = real
         this.imag = imag
@@ -24,7 +24,7 @@ public class Number {
     因为仓颉语言不能像go语言一样可以直接比较类的值相等，所以这里
     提供了equal函数用于仓颉比较类的值相等
      */
-    public func nqEqual(right: Number): Bool {
+    public func nqEqual(right: NqNumber): Bool {
         if (this.real == right.real && this.imag == right.imag && this.jmag == right.jmag && this.kmag == right.kmag) {
             return true
         }
@@ -33,8 +33,8 @@ public class Number {
 }
 
 // Add returns the sum of x and y.
-public func nqAdd(x: Number, y: Number): Number {
-    return Number(
+public func nqAdd(x: NqNumber, y: NqNumber): NqNumber {
+    return NqNumber(
         x.real + y.real,
         x.imag + y.imag,
         x.jmag + y.jmag,
@@ -43,8 +43,8 @@ public func nqAdd(x: Number, y: Number): Number {
 }
 
 // Sub returns the difference of x and y, x-y.
-public func nqSub(x: Number, y: Number): Number {
-    return Number(
+public func nqSub(x: NqNumber, y: NqNumber): NqNumber {
+    return NqNumber(
         x.real - y.real,
         x.imag - y.imag,
         x.jmag - y.jmag,
@@ -53,8 +53,8 @@ public func nqSub(x: Number, y: Number): Number {
 }
 
 // Mul returns the Hamiltonian product of x and y.
-public func nqMul(x: Number, y: Number): Number {
-    return Number(
+public func nqMul(x: NqNumber, y: NqNumber): NqNumber {
+    return NqNumber(
         x.real * y.real - x.imag * y.imag - x.jmag * y.jmag - x.kmag * y.kmag,
         x.real * y.imag + x.imag * y.real + x.jmag * y.kmag - x.kmag * y.jmag,
         x.real * y.jmag - x.imag * y.kmag + x.jmag * y.real + x.kmag * y.imag,
@@ -63,16 +63,16 @@ public func nqMul(x: Number, y: Number): Number {
 }
 
 // Scale returns q scaled by f.
-public func nqScale(f: Float64, q: Number): Number {
-    return Number(f * q.real, f * q.imag, f * q.jmag, f * q.kmag)
+public func nqScale(f: Float64, q: NqNumber): NqNumber {
+    return NqNumber(f * q.real, f * q.imag, f * q.jmag, f * q.kmag)
 }
 
-// Parse converts the string s to a Number. The string may be parenthesized and
+// Parse converts the string s to a NqNumber. The string may be parenthesized and
 // has the format [±]N±Ni±Nj±Nk. The order of the components is not strict.
-public func nqParse(s_: String): Number {
+public func nqParse(s_: String): NqNumber {
     if (s_.size == 0) {
         throw Exception("使用nqParse方法时输入字符串为空")
-        // return Number(0.0,0.0,0.0,0.0)
+        // return NqNumber(0.0,0.0,0.0,0.0)
     }
     let orig = s_
     var s: Array<Rune> = s_.toRuneArray()
@@ -80,13 +80,13 @@ public func nqParse(s_: String): Number {
     if (wantClose) {
         if (s[s.size - 1] != r')') {
             throw Exception("输入字符串没有被表达式完整包围")
-            // return Number(0.0,0.0,0.0,0.0)
+            // return NqNumber(0.0,0.0,0.0,0.0)
         }
         s = s.slice(1, s.size - 2)
     }
     if (s.size == 0) {
         throw Exception("输入字符串为空")
-        // return Number(0.0,0.0,0.0,0.0)
+        // return NqNumber(0.0,0.0,0.0,0.0)
     }
     var judge = String(s)
     if (s[0] == r'n' || s[0] == r'N') {
@@ -99,7 +99,7 @@ public func nqParse(s_: String): Number {
         }
     }
 
-    var q: Number = Number(0.0, 0.0, 0.0, 0.0)
+    var q: NqNumber = NqNumber(0.0, 0.0, 0.0, 0.0)
     var parts: Byte = 0
     for (_ in 0..4) {
         var (beg, end, p) = floatPart(judge)
