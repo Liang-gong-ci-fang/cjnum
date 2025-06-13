@@ -14,6 +14,40 @@ public class NdcNumber {
     }
 }
 
+// TODO func (d Number) Format(fs fmt.State, c rune) {
+
+// TODO func fmtString(fs fmt.State, c rune, prec, width int, wantPlus bool) string {
+
+/*
+以下的TODO部分因为缺乏相关的测试代码支持所以没有实现
+*/
+// TODO func Add(x, y Number) Number {
+
+// TODO func Sub(x, y Number) Number {
+
+// Mul returns the dual product of x and y, x×y.
+public func ndcMul(x: NdcNumber, y: NdcNumber): NdcNumber {
+    return NdcNumber(
+        x.real * y.real,
+        x.real * y.dual + x.dual * y.real.conj(),
+    )
+}
+
+// Inv returns the dual inverse of d.
+public func ndcInv(d: NdcNumber): NdcNumber {
+    return NdcNumber(
+        Complex128(1.0, 0.0) / d.real,
+        Complex128(-1.0, 0.0) * d.dual / (d.real * d.real.conj()),
+    )
+}
+
+/*
+以下的TODO部分因为缺乏相关的测试代码支持所以没有实现
+*/
+// TODO func Conj(d Number) Number {
+
+// TODO func Scale(f float64, d Number) Number {
+
 // Abs returns the absolute value of d.
 public func ndcAbs(d: NdcNumber): Float64 {
     return c128Abs(d.real)
@@ -99,23 +133,10 @@ public func ndcPow(d: NdcNumber, p: NdcNumber): NdcNumber {
     return ndcExp(ndcMul(p, ndcLog(d)))
 }
 
+/*
+以下的TODO部分因为缺乏相关的测试代码支持所以没有实现
+*/
 // TODO func Sqrt(d NdcNumber) NdcNumber
-
-// Mul returns the dual product of x and y, x×y.
-public func ndcMul(x: NdcNumber, y: NdcNumber): NdcNumber {
-    return NdcNumber(
-        x.real * y.real,
-        x.real * y.dual + x.dual * y.real.conj(),
-    )
-}
-
-// Inv returns the dual inverse of d.
-public func ndcInv(d: NdcNumber): NdcNumber {
-    return NdcNumber(
-        Complex128(1.0, 0.0) / d.real,
-        Complex128(-1.0, 0.0) * d.dual / (d.real * d.real.conj()),
-    )
-}
 
 // Exp returns e**q, the base-e exponential of d.
 //
