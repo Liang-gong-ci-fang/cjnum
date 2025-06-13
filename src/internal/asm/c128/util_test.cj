@@ -1,7 +1,9 @@
 package cjnum.internal.asm.c128
 
 import cjnum.cmplxs.*
+import cjnum.cmplxs.cscalar as cscalar
 import cjnum.complex.*
+import cjnum.floats.scalar as scalar
 import std.math.*
 import std.unittest.*
 import std.unittest.testmacro.*
@@ -118,6 +120,14 @@ func newIncToSet(inc: Array<Int64>): Array<IncToSet> {
         }
     }
     return is_
+}
+
+func sameCmplxApprox(a: Complex128, b: Complex128, tol: Float64): Bool {
+    return cscalar.same(a, b) || cscalar.equalWithinAbsOrRel(a, b, tol, tol)
+}
+
+func sameApprox(a: Float64, b: Float64, tol: Float64): Bool {
+    return scalar.same(a, b) || scalar.equalWithinAbsOrRel(a, b, tol, tol)
 }
 
 let _ = {=> inf}()
