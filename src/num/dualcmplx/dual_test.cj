@@ -11,6 +11,11 @@ import std.unittest.testmacro.*
 
 // TODO func TestFormat(t *testing.T) {
 
+/*
+以下的TODO部分因为缺乏相关的测试代码支持所以没有实现
+*/
+// TODO func sqrt(x complex128) complex128 {
+
 // First derivatives:
 
 private func dExp(x: Complex128): Complex128 {

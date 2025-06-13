@@ -47,3 +47,10 @@ public func ndInv(d: NdNumber): NdNumber {
         -d.emag / d2,
     )
 }
+
+/*
+以下的TODO部分因为缺乏相关的测试代码支持所以没有实现
+*/
+// TODO func Scale(f float64, d Number) Number {
+
+// TODO func Abs(d Number) Number {
