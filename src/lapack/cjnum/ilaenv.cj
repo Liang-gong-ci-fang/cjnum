@@ -288,4 +288,5 @@ func ilaenv(ispec: Int64, name: String, opts: String, n1: Int64, n2: Int64, n3: 
         case 12 | 13 | 14 | 15 | 16 => iparmq(ispec, name, opts, n1, n2, n3, n4)
         case _ => throw Exception(badIspec)
     }
+    // throw Exception("Mismatched exception")
 }

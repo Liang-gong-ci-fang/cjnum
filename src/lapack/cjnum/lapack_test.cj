@@ -264,8 +264,8 @@ public func testDlatrd(): Unit {
 
 @Test
 @Parallel
-public func testDorg2l(): Unit {
-    @Expect(dorg2lTest(lFloat64Implementation))
+public func testDlahqr(): Unit {
+    @Expect(dlahqrTest(lFloat64Implementation))
 }
 
 @Test
@@ -278,6 +278,12 @@ public func testDgeqr2(): Unit {
 @Parallel
 public func testDlarft(): Unit {
     @Expect(dlarftTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDorg2l(): Unit {
+    @Expect(dorg2lTest(lFloat64Implementation))
 }
 
 @Test
@@ -314,6 +320,17 @@ public func testDpbtrf(): Unit {
 @Parallel
 public func testDpstf2(): Unit {
     @Expect(dpstf2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDsytd2(): Unit {
+    @Expect(dsytd2Test(lFloat64Implementation))
+}
+
+@Test
+public func testDlahr2(): Unit {
+    @Expect(dlahr2Test(lFloat64Implementation))
 }
 
 @Test

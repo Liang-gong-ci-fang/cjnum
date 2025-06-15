@@ -12,7 +12,7 @@ public func equalWithinRel(a: Float64, b: Float64, tol: Float64): Bool {
         return true
     }
     let delta = abs(a - b)
-    if (delta < Float64.MinNormal) {
+    if (delta <= Float64.MinNormal) {
         return delta <= tol * Float64.MinNormal
     }
     return delta / max(abs(a), abs(b)) <= tol
