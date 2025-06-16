@@ -3,7 +3,7 @@ package cjnum.complex
 import cjnum.util.*
 import std.math.*
 
-public class Complex128 {
+public class Complex128 <: ToString {
     public static let NaN: Complex128 = Complex128(Float64.NaN, Float64.NaN)
     public static let Inf: Complex128 = Complex128(Float64.Inf, Float64.Inf)
 
@@ -81,6 +81,46 @@ public class Complex128 {
             (this.imag / right)
         )
     }
+
+    public func toString(): String {
+        if (this.isNaN()) {
+            return Float64.NaN.toString()
+        }
+        if (this.isInf()) {
+            return Float64.Inf.toString()
+        }
+
+        let r = this.real
+        let i = this.imag
+
+        if (i == 0.0) {
+            return r.toString()
+        }
+
+        if (r == 0.0) {
+            return if (i == 1.0) {
+                "i"
+            } else if (i == -1.0) {
+                "-i"
+            } else {
+                i.toString() + "i"
+            }
+        }
+
+        let sign = if (i > 0.0) {
+            "+"
+        } else {
+            "-"
+        }
+        let absI = abs(i)
+
+        if (absI == 1.0) {
+            return r.toString() + sign + "i"
+        }
+
+        return r.toString() + sign + absI.toString() + "i"
+    }
+
     // TODO: add more operators and functions
 }
 

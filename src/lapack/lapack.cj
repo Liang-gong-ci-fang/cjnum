@@ -122,19 +122,25 @@ public interface LFloat64 {
         work: Array<Float64>): Unit
     func dlatrd(uplo: Uplo, n: Int64, nb: Int64, a: Array<Float64>, lda: Int64, e: Array<Float64>, tau: Array<Float64>,
         w: Array<Float64>, ldw: Int64): Unit
-    func dorg2l(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
+    func dlahqr(wantt: Bool, wantz: Bool, n: Int64, ilo: Int64, ihi: Int64, h: Array<Float64>, ldh: Int64,
+        wr: Array<Float64>, wi: Array<Float64>, iloz: Int64, ihiz: Int64, z: Array<Float64>, ldz: Int64): Int64
     func dgeqr2(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
     func dlarft(direct: Direct, store: StoreV, n: Int64, k: Int64, v: Array<Float64>, ldv: Int64, tau: Array<Float64>,
         t: Array<Float64>, ldt: Int64): Unit
+    func dorg2l(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
+    func dlarfb(side: Side, trans: Transpose, direct: Direct, store: StoreV, m: Int64, n: Int64, k: Int64,
+        v: Array<Float64>, ldv: Int64, t: Array<Float64>, ldt: Int64, c: Array<Float64>, ldc: Int64,
+        work: Array<Float64>, ldwork: Int64): Unit
     func dtrexc(compq: UpdateSchurComp, n: Int64, t: Array<Float64>, ldt: Int64, q: Array<Float64>, ldq: Int64,
         ifst: Int64, ilst: Int64, work: Array<Float64>): (Int64, Int64, Bool)
     func dlasrt(s: Sort, n: Int64, d: Array<Float64>): Unit
     func dlaev2(a: Float64, b: Float64, c: Float64): (Float64, Float64, Float64, Float64)
-    func dlarfb(side: Side, trans: Transpose, direct: Direct, store: StoreV, m: Int64, n: Int64, k: Int64,
-        v: Array<Float64>, ldv: Int64, t: Array<Float64>, ldt: Int64, c: Array<Float64>, ldc: Int64,
-        work: Array<Float64>, ldwork: Int64): Unit
     func dpstf2(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64, piv: Array<Int64>, tol: Float64,
         work: Array<Float64>): (Int64, Bool)
+    func dsytd2(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64, d: Array<Float64>, e: Array<Float64>,
+        tau: Array<Float64>): Unit
+    func dlahr2(n: Int64, k: Int64, nb: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, t: Array<Float64>,
+        ldt: Int64, y: Array<Float64>, ldy: Int64): Unit
 }
 
 type Direct = UInt8

@@ -128,18 +128,18 @@ func randomGeneral(r: Int64, c: Int64, stride: Int64, rnd: Random): General64 {
     return ans
 }
 
-// func randomHessenberg(n: Int64, stride: Int64, rnd: Random): General64 {
-//     let ans = nanGeneral(n, n, stride)
-//     for (i in 0..n) {
-//         for (j in 0..i - 1) {
-//             ans.data[i * ans.stride + j] = 0.0
-//         }
-//         for (j in max(0, i - 1)..n) {
-//             ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
-//         }
-//     }
-//     return ans
-// }
+func randomHessenberg(n: Int64, stride: Int64, rnd: Random): General64 {
+    let ans = nanGeneral(n, n, stride)
+    for (i in 0..n) {
+        for (j in 0..i - 1) {
+            ans.data[i * ans.stride + j] = 0.0
+        }
+        for (j in max(0, i - 1)..n) {
+            ans.data[i * ans.stride + j] = rnd.nextGaussianFloat64()
+        }
+    }
+    return ans
+}
 
 func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (General64, Array<Float64>, Array<Float64>) {
     let t = randomGeneral(n, n, stride, rnd)
@@ -214,28 +214,28 @@ func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (Gen
 //     return ans
 // }
 
-// func nanTriangular(uplo: Uplo, n: Int64, stride: Int64): Triangular {
-//     if (n < 0) {
-//         throw Exception("bad matrix size")
-//     }
-//     if (n == 0) {
-//         return Triangular(
-//             stride: max(1, stride),
-//             uplo: uplo,
-//             diag: NonUnitDiag
-//         )
-//     }
-//     if (stride < 0) {
-//         throw Exception("bad stride")
-//     }
-//     return Triangular(
-//         n: n,
-//         stride: stride,
-//         data: nanSlice((n - 1) * stride + n),
-//         uplo: uplo,
-//         diag: NonUnitDiag
-//     )
-// }
+func nanTriangular(uplo: Uplo, n: Int64, stride: Int64): Triangular {
+    if (n < 0) {
+        throw Exception("bad matrix size")
+    }
+    if (n == 0) {
+        return Triangular(
+            stride: max(1, stride),
+            uplo: uplo,
+            diag: NonUnitDiag
+        )
+    }
+    if (stride < n) {
+        throw Exception("bad stride")
+    }
+    return Triangular(
+        n: n,
+        stride: stride,
+        data: nanSlice((n - 1) * stride + n),
+        uplo: uplo,
+        diag: NonUnitDiag
+    )
+}
 
 func generalOutsideAllNaN(a: General64): Bool {
     for (i in 0..a.rows - 1) {
@@ -258,40 +258,40 @@ func generalOutsideAllNaN(a: General64): Bool {
     return true
 }
 
-// func triangularOutsideAllNaN(a: Triangular): Bool {
-//     if (a.uplo == Upper) {
-//         for (i in 0..a.n) {
-//             for (v in a.data[i * a.stride..i * a.stride + i]) {
-//                 if (!v.isNaN()) {
-//                     return false
-//                 }
-//             }
-//         }
+func triangularOutsideAllNaN(a: Triangular): Bool {
+    if (a.uplo == Upper) {
+        for (i in 0..a.n) {
+            for (v in a.data[i * a.stride..i * a.stride + i]) {
+                if (!v.isNaN()) {
+                    return false
+                }
+            }
+        }
 
-//         for (i in 0..a.n - 1) {
-//             for (v in a.data[i * a.stride + a.n..i * a.stride + a.stride]) {
-//                 if (!v.isNaN()) {
-//                     return false
-//                 }
-//             }
-//         }
-//     } else {
-//         for (i in 0..a.n - 1) {
-//             for (v in a.data[i * a.stride + a.n..i * a.stride + a.stride]) {
-//                 if (!v.isNaN()) {
-//                     return false
-//                 }
-//             }
-//         }
-//     }
+        for (i in 0..a.n - 1) {
+            for (v in a.data[i * a.stride + a.n..i * a.stride + a.stride]) {
+                if (!v.isNaN()) {
+                    return false
+                }
+            }
+        }
+    } else {
+        for (i in 0..a.n - 1) {
+            for (v in a.data[i * a.stride + a.n..i * a.stride + a.stride]) {
+                if (!v.isNaN()) {
+                    return false
+                }
+            }
+        }
+    }
 
-//     for (v in a.data[max(0, a.n - 1) * a.stride + a.n..]) {
-//         if (!v.isNaN()) {
-//             return false
-//         }
-//     }
-//     return true
-// }
+    for (v in a.data[max(0, a.n - 1) * a.stride + a.n..]) {
+        if (!v.isNaN()) {
+            return false
+        }
+    }
+    return true
+}
 
 // func transposeGeneral(a: General64): General64 {
 //     let ans = General64(
@@ -979,23 +979,23 @@ func schurBlockSize(t: General64, i: Int64): (Int64, Bool) {
     return (size, first)
 }
 
-// func containsComplex(v: Array<Complex128>, z: Complex128, tol: Float64): (Bool, Int64) {
-//     for (i in 0..v.size) {
-//         if (c128Abs(v[i] - z) < tol) {
-//             return (true, i)
-//         }
-//     }
-//     return (false, -1)
-// }
+func containsComplex(v: Array<Complex128>, z: Complex128, tol: Float64): (Bool, Int64) {
+    for (i in 0..v.size) {
+        if (c128Abs(v[i] - z) < tol) {
+            return (true, i)
+        }
+    }
+    return (false, -1)
+}
 
-// func isAllNaN(x: Array<Float64>): Bool {
-//     for (v in x) {
-//         if (!v.isNaN()) {
-//             return false
-//         }
-//     }
-//     return true
-// }
+func isAllNaN(x: Array<Float64>): Bool {
+    for (v in x) {
+        if (!v.isNaN()) {
+            return false
+        }
+    }
+    return true
+}
 
 func isUpperHessenberg(h: General64): Bool {
     if (h.rows != h.cols) {

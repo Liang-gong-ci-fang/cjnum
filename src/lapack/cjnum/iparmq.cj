@@ -60,4 +60,5 @@ func iparmq(ispec: Int64, name: String, _: String, _: Int64, ilo: Int64, ihi: In
             return acc22
         case _ => throw Exception(badIspec)
     }
+    // throw Exception("Mismatched exception")
 }
