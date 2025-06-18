@@ -334,6 +334,18 @@ public func testDlahr2(): Unit {
 }
 
 @Test
+@Parallel
+public func testDlag2(): Unit {
+    @Expect(dlag2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlags2(): Unit {
+    @Expect(dlags2Test(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))

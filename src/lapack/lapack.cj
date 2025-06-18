@@ -61,7 +61,6 @@ public interface LFloat64 {
     func dtrtri(uplo: Uplo, diag: Diag, n: Int64, a: Array<Float64>, lda: Int64): Bool
     func dtrtrs(uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, nrhs: Int64, a: Array<Float64>, lda: Int64,
         b: Array<Float64>, ldb: Int64): Bool
-
     func drscl(n: Int64, a: Float64, x: Array<Float64>, incX: Int64): Unit
     func dlassq(n: Int64, x: Array<Float64>, incX: Int64, scale: Float64, sumsq: Float64): (Float64, Float64)
     func dlatrs(uplo: Uplo, trans: Transpose, diag: Diag, normin: Bool, n: Int64, a: Array<Float64>, lda: Int64,
@@ -141,6 +140,10 @@ public interface LFloat64 {
         tau: Array<Float64>): Unit
     func dlahr2(n: Int64, k: Int64, nb: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, t: Array<Float64>,
         ldt: Int64, y: Array<Float64>, ldy: Int64): Unit
+    func dlag2(a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64): (Float64, Float64, Float64, Float64, 
+        Float64)
+    func dlags2(upper: Bool, a1: Float64, a2: Float64, a3: Float64, b1: Float64, b2: Float64, b3: Float64): (Float64, 
+        Float64, Float64, Float64, Float64, Float64)
 }
 
 type Direct = UInt8

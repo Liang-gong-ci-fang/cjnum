@@ -7,7 +7,7 @@ public abstract class GeneralCore {
         public let rows: Int64,
         public let cols: Int64,
         public let stride: Int64,
-        public let data: Array<Float64>
+        public var data: Array<Float64>
     ) {}
 }
 
