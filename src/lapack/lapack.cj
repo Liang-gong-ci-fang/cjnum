@@ -144,6 +144,12 @@ public interface LFloat64 {
         Float64)
     func dlags2(upper: Bool, a1: Float64, a2: Float64, a3: Float64, b1: Float64, b2: Float64, b3: Float64): (Float64, 
         Float64, Float64, Float64, Float64, Float64)
+    func dlagtm(trans: Transpose, m: Int64, n: Int64, alpha: Float64, dl: Array<Float64>, d: Array<Float64>,
+        du: Array<Float64>, b: Array<Float64>, ldb: Int64, beta: Float64, c: Array<Float64>, ldc: Int64): Unit
+    func dlangt(norm: MatrixNorm, n: Int64, dl: Array<Float64>, d: Array<Float64>, du: Array<Float64>): Float64
+    func dlaln2(trans: Bool, na: Int64, nw: Int64, smin: Float64, ca: Float64, a: Array<Float64>, lda: Int64,
+        d1: Float64, d2: Float64, b: Array<Float64>, ldb: Int64, wr: Float64, wi: Float64, x: Array<Float64>, ldx: Int64): (Float64, 
+        Float64, Bool)
 }
 
 type Direct = UInt8
