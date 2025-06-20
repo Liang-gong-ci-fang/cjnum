@@ -138,6 +138,35 @@ public func nanAtanh(x: Float64): Float64 {
     return atanh(x)
 }
 
+public func nanTanh(x: Float64): Float64 {
+    if (x == Float64.NaN) {
+        return Float64.NaN
+    }
+    return tanh(x)
+}
+
+/*
+为了处理仓颉库函数不能处理自变量为Float64.NaN类型，所以这里新建了nanSinh函数能够处理
+自变量为Float64.NaN类型的情况
+*/
+public func nanSinh(x: Float64): Float64 {
+    if (x == Float64.NaN) {
+        return Float64.NaN
+    }
+    return sinh(x)
+}
+
+/*
+为了处理仓颉库函数不能处理自变量为Float64.NaN类型，所以这里新建了nanSinh函数能够处理
+自变量为Float64.NaN类型的情况
+*/
+public func nanCosh(x: Float64): Float64 {
+    if (x == Float64.NaN) {
+        return Float64.NaN
+    }
+    return cosh(x)
+}
+
 /**
 因为仓颉math库函数sqrt处理小于0的数的方式是直接抛出异常终止程序，
 不利于程序运行，所以这里新建的nanAsin函数能对输入值进行判断，
