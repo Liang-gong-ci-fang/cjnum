@@ -364,6 +364,30 @@ public func testDlaln2(): Unit {
 }
 
 @Test
+@Parallel
+public func testDgebak(): Unit {
+    @Expect(dgebakTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDgelq2(): Unit {
+    @Expect(dgelq2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDgerq2(): Unit {
+    @Expect(dgerq2Test(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlatbs(): Unit {
+    @Expect(dlatbsTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))

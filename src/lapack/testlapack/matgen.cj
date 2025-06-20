@@ -422,3 +422,368 @@ func newRandomSymTridiag(n: Int64, rnd: Random): (Array<Float64>, Array<Float64>
 }
 
 // TODO
+
+func dlattb(kind: Int64, uplo: Uplo, trans: Transpose, n: Int64, kd: Int64, ab: Array<Float64>, ldab: Int64, rnd: Random): (Diag, 
+    Array<Float64>) {
+    var diag: Diag = 0
+    var b: Array<Float64> = []
+    if (kind < 1 || 18 < kind) {
+        throw Exception("bad matrix kind")
+    } else if ((6 <= kind && kind <= 9) || kind == 17) {
+        diag = UnitDiag
+    } else {
+        diag = NonUnitDiag
+    }
+
+    if (n == 0) {
+        return (diag, b)
+    }
+
+    const tiny = safmin
+    const huge = (1.0 - ulp) / tiny
+
+    const small = 0.25 * (safmin / ulp)
+    const large = 1.0 / small
+    const badc2 = 0.1 / ulp
+
+    let badc1 = sqrt(badc2)
+
+    var cndnum: Float64
+    if (kind == 2 || kind == 8) {
+        cndnum = badc1
+    } else if (kind == 3 || kind == 9) {
+        cndnum = badc2
+    } else {
+        cndnum = 2.0
+    }
+
+    let uniformM11 = {=> 2.0 * rnd.nextFloat64() - 1.0}
+
+    b = Array<Float64>(n, item: 0.0)
+    for (i in 0..b.size) {
+        b[i] = uniformM11()
+    }
+
+    let nFloat64 = nFloat64Implementation()
+    if (kind == 1 || kind == 2 || kind == 3 || kind == 4 || kind == 5) {
+        var kl: Int64 = 0
+        var ku: Int64 = 0
+        if (uplo == Upper) {
+            ku = kd
+            kl = 0
+        } else if (uplo == Lower) {
+            ku = 0
+            kl = kd
+        }
+        var anorm = 1.0
+        if (kind == 4) {
+            anorm = small
+        } else if (kind == 5) {
+            anorm = large
+        }
+        (_, _, _) = (kl, ku, anorm)
+        throw Exception("test matrix type not implemented")
+    } else if (kind == 6) {
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                ab[i * ldab] = Float64(i + 2)
+                for (j in 1..min(n - i, kd + 1)) {
+                    ab[i * ldab + j] = 0.0
+                }
+            }
+        } else {
+            for (i in 0..n) {
+                for (j in max(0, kd - i)..kd) {
+                    ab[i * ldab + j] = 0.0
+                }
+                ab[i * ldab + kd] = Float64(i + 2)
+            }
+        }
+    } else if (kind == 7 || kind == 8 || kind == 9) {
+        let tnorm = sqrt(cndnum)
+
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                ab[i * ldab] = Float64(i + 2)
+                for (j in 1..min(n - i, kd + 1)) {
+                    ab[i * ldab + j] = 0.0
+                }
+            }
+        } else {
+            for (i in 0..n) {
+                for (j in max(0, kd - i)..kd) {
+                    ab[i * ldab + j] = 0.0
+                }
+                ab[i * ldab + kd] = Float64(i + 2)
+            }
+        }
+
+        if (kd == 0) {
+        // Do nothing
+        } else if (kd == 1) {
+            if (n > 1) {
+                if (uplo == Upper) {
+                    ab[1] = copysign(tnorm, uniformM11())
+                    for (i in 2..n - 1 : 2) {
+                        ab[i * ldab + 1] = tnorm * uniformM11()
+                    }
+                } else {
+                    ab[ldab] = copysign(tnorm, uniformM11())
+                    for (i in 3..n : 2) {
+                        ab[i * ldab] = tnorm * uniformM11()
+                    }
+                }
+            }
+        } else {
+            let work1 = Array<Float64>(n, item: 0.0)
+            let work2 = Array<Float64>(n, item: 0.0)
+            var star1 = copysign(tnorm, uniformM11())
+            let sfac = sqrt(tnorm)
+            var plus1 = copysign(sfac, uniformM11())
+            for (i in 0..n : 2) {
+                work1[i] = plus1
+                work2[i] = star1
+                if (i + 1 == n) {
+                    continue
+                }
+                let plus2 = star1 / plus1
+                work1[i + 1] = plus2
+                plus1 = star1 / plus2
+                let rexp = uniformM11()
+                if (rexp < 0.0) {
+                    star1 = -pow(sfac, 1.0 - rexp)
+                } else {
+                    star1 = pow(sfac, 1.0 + rexp)
+                }
+            }
+            if (uplo == Upper) {
+                nFloat64.dcopy(n - 1, work1, 1, ab[1..], ldab)
+                if (n > 2) {
+                    nFloat64.dcopy(n - 2, work2, 1, ab[2..], ldab)
+                }
+            } else {
+                nFloat64.dcopy(n - 1, work1, 1, ab[ldab + kd - 1..], ldab)
+                if (n > 2) {
+                    nFloat64.dcopy(n - 2, work2, 1, ab[2 * ldab + kd - 2..], ldab)
+                }
+            }
+        }
+    } else if (kind == 10) {
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                var j = 0
+                while (j < min(n - j, kd + 1)) {
+                    ab[i * ldab + j] = uniformM11()
+                    j++
+                }
+                ab[i * ldab] = copysign(2.0, ab[i * ldab])
+            }
+        } else {
+            for (i in 0..n) {
+                for (j in max(0, kd - i)..kd + 1) {
+                    ab[i * ldab + j] = uniformM11()
+                }
+                ab[i * ldab + kd] = copysign(2.0, ab[i * ldab + kd])
+            }
+        }
+        let bnorm = abs(b[nFloat64.idamax(n, b, 1)])
+        let bscal = huge / max(1.0, bnorm)
+        nFloat64.dscal(n, bscal, b, 1)
+    } else if (kind == 11) {
+        let tscal = 1.0 / Float64(kd + 1)
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                let jlen = min(n - i, kd + 1)
+                let arow = ab[i * ldab..i * ldab + jlen]
+                dlarnv(arow, 2, rnd)
+                if (jlen > 1) {
+                    nFloat64.dscal(jlen - 1, tscal, arow[1..], 1)
+                }
+                ab[i * ldab] = copysign(1.0, ab[i * ldab])
+            }
+            ab[(n - 1) * ldab] *= tiny
+        } else {
+            for (i in 0..n) {
+                let jlen = min(i + 1, kd + 1)
+                let arow = ab[i * ldab + kd + 1 - jlen..i * ldab + kd + 1]
+                dlarnv(arow, 2, rnd)
+                if (jlen > 1) {
+                    nFloat64.dscal(jlen - 1, tscal, arow[..jlen - 1], 1)
+                }
+                ab[i * ldab + kd] = copysign(1.0, ab[i * ldab + kd])
+            }
+            ab[kd] *= tiny
+        }
+    } else if (kind == 12) {
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                let jlen = min(n - i, kd + 1)
+                let arow = ab[i * ldab..i * ldab + jlen]
+                dlarnv(arow, 2, rnd)
+                ab[i * ldab] = copysign(1.0, ab[i * ldab])
+            }
+            ab[(n - 1) * ldab] *= tiny
+        } else {
+            for (i in 0..n) {
+                let jlen = min(i + 1, kd + 1)
+                let arow = ab[i * ldab + kd + 1 - jlen..i * ldab + kd + 1]
+                dlarnv(arow, 2, rnd)
+                ab[i * ldab + kd] = copysign(1.0, ab[i * ldab + kd])
+            }
+            ab[kd] *= tiny
+        }
+    } else if (kind == 13) {
+        if (uplo == Upper) {
+            var icount = 1
+            for (i in n - 1..=0) {
+                if (icount <= 2) {
+                    ab[i * ldab] = tiny
+                } else {
+                    ab[i * ldab] = 1.0
+                }
+                for (j in 1..min(n - i, kd + 1)) {
+                    ab[i * ldab + j] = 0.0
+                }
+                icount++
+                if (icount > 4) {
+                    icount = 1
+                }
+            }
+        } else {
+            var icount = 1
+            for (i in 0..n) {
+                for (j in max(0, kd - i)..kd) {
+                    ab[i * ldab + j] = 0.0
+                }
+                if (icount <= 2) {
+                    ab[i * ldab + kd] = tiny
+                } else {
+                    ab[i * ldab + kd] = 1.0
+                }
+                icount++
+                if (icount > 4) {
+                    icount = 1
+                }
+            }
+        }
+        if (uplo == Upper) {
+            b[0] = 0.0
+            for (i in n - 1..1 : -2) {
+                b[i] = 0.0
+                b[i - 1] = tiny
+            }
+        } else {
+            b[n - 1] = 0.0
+            for (i in 0..n - 1 : 2) {
+                b[i] = 0.0
+                b[i + 1] = tiny
+            }
+        }
+    } else if (kind == 14) {
+        let tscal = pow(tiny, 1.0 / Float64(kd + 1))
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                ab[i * ldab] = tscal
+                if (i < n - 1 && kd > 0) {
+                    ab[i * ldab + 1] = -1.0
+                }
+                for (j in 2..min(n - i, kd + 1)) {
+                    ab[i * ldab + j] = 0.0
+                }
+            }
+            b[n - 1] = 1.0
+        } else {
+            for (i in 0..n) {
+                for (j in max(0, kd - i)..kd - 1) {
+                    ab[i * ldab + j] = 0.0
+                }
+                if (i > 0 && kd > 0) {
+                    ab[i * ldab + kd - 1] = -1.0
+                }
+                ab[i * ldab + kd] = tscal
+            }
+            b[0] = 1.0
+        }
+    } else if (kind == 15) {
+        let iy = n / 2
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                let jlen = min(n - i, kd + 1)
+                dlarnv(ab[i * ldab..i * ldab + jlen], 2, rnd)
+                if (i != iy) {
+                    ab[i * ldab] = copysign(2.0, ab[i * ldab])
+                } else {
+                    ab[i * ldab] = 0.0
+                }
+            }
+        } else {
+            for (i in 0..n) {
+                let jlen = min(i + 1, kd + 1)
+                dlarnv(ab[i * ldab + kd + 1 - jlen..i * ldab + kd + 1], 2, rnd)
+                if (i != iy) {
+                    ab[i * ldab + kd] = copysign(2.0, ab[i * ldab + kd])
+                } else {
+                    ab[i * ldab + kd] = 0.0
+                }
+            }
+        }
+        nFloat64.dscal(n, 2.0, b, 1)
+    } else if (kind == 17) {
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                ab[i * ldab] = Float64(i + 2)
+                let jlen = min(n - i - 1, kd)
+                if (jlen > 0) {
+                    dlarnv(ab[i * ldab + 1..i * ldab + 1 + jlen], 2, rnd)
+                }
+            }
+        } else {
+            for (i in 0..n) {
+                let jlen = min(i, kd)
+                if (jlen > 0) {
+                    dlarnv(ab[i * ldab + kd - jlen..i * ldab + kd], 2, rnd)
+                }
+                ab[i * ldab + kd] = Float64(i + 2)
+            }
+        }
+        let bnorm = abs(b[nFloat64.idamax(n, b, 1)])
+        let bscal = huge / max(1.0, bnorm)
+        nFloat64.dscal(n, bscal, b, 1)
+    } else if (kind == 18) {
+        let tleft = huge / max(1.0, Float64(kd))
+        let tscal = huge / max(1.0, Float64(kd))
+        if (uplo == Upper) {
+            for (i in 0..n) {
+                for (j in 0..min(n - i, kd + 1)) {
+                    let r = uniformM11()
+                    ab[i * ldab + j] = copysign(tleft, r) + tscal * r
+                }
+            }
+        } else {
+            for (i in 0..n) {
+                for (j in max(0, kd - i)..kd + 1) {
+                    let r = uniformM11()
+                    ab[i * ldab + j] = copysign(tleft, r) + tscal * r
+                }
+            }
+        }
+        nFloat64.dscal(n, 2.0, b, 1)
+    }
+
+    if (trans != NoTrans) {
+        if (uplo == Upper) {
+            for (j in 0..n / 2) {
+                let jlen = min(n - 2 * j - 1, kd + 1)
+                nFloat64.dswap(jlen, ab[j * ldab..], 1, ab[(n - j - jlen) * ldab + jlen - 1..], min(-ldab + 1, -1))
+            }
+        } else {
+            for (j in 0..n / 2) {
+                let jlen = min(n - 2 * j - 1, kd + 1)
+                nFloat64.dswap(jlen, ab[j * ldab + kd..], max(ldab - 1, 1), ab[(n - j - 1) * ldab + kd + 1 - jlen..], -1
+                )
+            }
+        }
+    }
+
+    return (diag, b)
+}
