@@ -388,6 +388,18 @@ public func testDlatbs(): Unit {
 }
 
 @Test
+@Parallel
+public func testDlapmr(): Unit {
+    @Expect(dlapmrTest(lFloat64Implementation))
+}
+
+@Test
+@Parallel
+public func testDlapmt(): Unit {
+    @Expect(dlapmtTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
 public func testDpttrs(): Unit {
     @Expect(dpttrsTest(lFloat64Implementation))
