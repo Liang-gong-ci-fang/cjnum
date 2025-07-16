@@ -10,6 +10,73 @@ import cjnum.util.*
 
 // TODO
 
+// func dlagge(m: Int64, n: Int64, kl: Int64, ku: Int64, d: Array<Float64>, a: Array<Float64>, lda: Int64, rnd: Random,
+//     work: Array<Float64>): Unit {
+//     checkMatrix(m, n, a, lda)
+//     if (kl < 0 || max(0, m - 1) < kl) {
+//         throw Exception("testlapack: invalid value of kl")
+//     }
+//     if (ku < 0 || max(0, n - 1) < ku) {
+//         throw Exception("testlapack: invalid value of ku")
+//     }
+//     if (d.size != min(m, n)) {
+//         throw Exception("testlapack: bad length of d")
+//     }
+//     if (work.size < m + n) {
+//         throw Exception("testlapack: insufficient work length")
+//     }
+
+//     for (i in 0..m) {
+//         for (j in 0..n) {
+//             a[i * lda + j] = 0.0
+//         }
+//     }
+//     for (i in 0..min(m, n)) {
+//         a[i * lda + i] = d[i]
+//     }
+
+//     let nFloat64 = nFloat64Implementation()
+
+//     for (i in min(m, n) - 1..=0 : -1) {
+//         if (i < m - 1) {
+//             for (j in 0..m - i) {
+//                 work[j] = rnd.nextGaussianFloat64()
+//             }
+//             let wn = nFloat64.dnrm2(m - i, work[0..m - i], 1)
+//             let wa = copysign(wn, work[0])
+//             var tau: Float64 = 0.0
+//             if (wn != 0.0) {
+//                 let wb = work[0] + wa
+//                 nFloat64.dscal(m - i - 1, 1.0 / wb, work[1..m - i], 1)
+//                 work[0] = 1.0
+//                 tau = wb / wa
+//             }
+
+//             nFloat64.dgemv(Trans, m - i, n - i, 1.0, a[i * lda + i..], lda, work[0..m - i], 1, 0.0, work[m..m + n - i],
+//                 1)
+//             nFloat64.dger(m - i, n - i, -tau, work[0..m - i], 1, work[m..m + n - i], 1, a[i * lda + i..], lda)
+//         }
+//         if (i < n - 1) {
+//             for (j in 0..n - i) {
+//                 work[j] = rnd.nextGaussianFloat64()
+//             }
+//             let wn = nFloat64.dnrm2(n - i, work[0..n - i], 1)
+//             let wa = copysign(wn, work[0])
+//             var tau: Float64 = 0.0
+//             if (wn != 0.0) {
+//                 let wb = work[0] + wa
+//                 nFloat64.dscal(n - i - 1, 1.0 / wb, work[1..n - i], 1)
+//                 work[0] = 1.0
+//                 tau = wb / wa
+//             }
+
+//             nFloat64.dgemv(NoTrans, m - i, n - i, 1.0, a[i * lda + i..], lda, work[0..n - i], 1, 0.0, work[n..n + m - i],
+//                 1)
+//             nFloat64.dger(m - i, n - i, -tau, work[n..n + m - i], 1, work[0..n - i], 1, a[i * lda + i..], lda)
+//         }
+//     }
+// }
+
 func dlarnv(dst: Array<Float64>, dist: Int64, rnd: Random): Unit {
     match (dist) {
         case 1 => for (i in 0..dst.size) {

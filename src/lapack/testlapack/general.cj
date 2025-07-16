@@ -800,7 +800,13 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
 
 //TODO func printRowise(a []float64, m, n, lda int, beyond bool) {
 
-//TODO func copyGeneral(dst: General64, src: General64): Unit {  //TODO
+func copyGeneral(dst: General64, src: General64): Unit {
+    let r = min(dst.rows, src.rows)
+    let c = min(dst.cols, src.cols)
+    for (i in 0..r) {
+        copy(dst.data[i * dst.stride..i * dst.stride + c], src.data[i * src.stride..i * src.stride + c])
+    }
+}
 
 func cloneGeneral(a: General64): General64 {
     let c = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, item: 0.0))
