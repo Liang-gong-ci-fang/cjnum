@@ -157,18 +157,16 @@ public class BandDense <: Matrix & DiagDenseViewer {
     }
 }
 
-let bendDense = BandDense(
-    Band(
-        rows: 6,
-        cols: 6,
-        kl: 1,
-        ku: 2,
-        stride: 4,
-        data: [-1.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0,
-            -1.0, 19.0, 20.0, -1.0, -1.0]
-    )
-)
-let judge = bendDense is Matrix
+// Banded is a band matrix representation.
+public interface Banded<:Matrix {
+	// Bandwidth returns the lower and upper bandwidth values for
+	// the matrix. The total bandwidth of the matrix is kl+ku+1.
+	func bandwidth(): (Int64, Int64)
+
+	// TBand is the equivalent of the T() method in the Matrix
+	// interface but guarantees the transpose is of banded type.
+	func tBand(): Banded
+}
 
 // A RawBander can return a blas64.Band representation of the receiver.
 // Changes to the blas64.Band.Data slice will be reflected in the original
@@ -176,6 +174,68 @@ let judge = bendDense is Matrix
 public interface RawBander {
     func rawBand(): Band
 }
+
+/*
+因为以下注释代码本质上是为了在编译过程中检查是TransposeBand类否实现了以下接口，
+仓颉编译过程中会对未实现的接口方法进行提示，
+所以这里没有实现接口判断
+ */
+// TODO var (
+// 	_ Matrix            = TransposeBand{}
+// 	_ Banded            = TransposeBand{}
+// 	_ UntransposeBander = TransposeBand{}
+// )
+
+// TransposeBand is a type for performing an implicit transpose of a band
+// matrix. It implements the Banded interface, returning values from the
+// transpose of the matrix within.
+public class TransposeBand<:Matrix&Banded {
+	public let banded: Banded
+    public init(banded: Banded){
+        this.banded=banded
+    }
+
+    // At returns the value of the element at row i and column j of the transposed
+    // matrix, that is, row j and column i of the Banded field.
+    public func at(i:Int64, j: Int64): Float64 {
+        return this.banded.at(j, i)
+    }
+
+    // Dims returns the dimensions of the transposed matrix.
+    public func dims(): (Int64, Int64) {
+        let(c, r) = this.banded.dims()
+        return (r, c)
+    }
+
+    // T performs an implicit transpose by returning the Banded field.
+    public func t(): Matrix {
+        return this.banded
+    }
+
+    // Bandwidth returns the lower and upper bandwidth values for
+    // the transposed matrix.
+    public func bandwidth(): (Int64, Int64) {
+        let(kl, ku) = this.banded.bandwidth()
+        return (ku, kl)
+    }
+
+    // TBand performs an implicit transpose by returning the Banded field.
+    public func tBand(): Banded {
+        return this.banded
+    }
+
+    // Untranspose returns the Banded field.
+    public func mUntranspose(): Matrix {
+        return this.banded
+    }
+
+    // UntransposeBand returns the Banded field.
+    public func untransposeBand(): Banded {
+        return this.banded
+    }
+}
+
+
 
 // NewBandDense creates a new Band matrix with r rows and c columns. If data == nil,
 // a new slice is allocated for the backing slice. If len(data) == min(r, c+kl)*(kl+ku+1),
