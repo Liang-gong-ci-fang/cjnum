@@ -24,7 +24,7 @@ public interface Matrix {
 因为以下注释代码本质上是为了在编译过程中检查是Transpose类否实现了以下接口，
 仓颉编译过程中会对未实现的接口方法进行提示，
 所以这里没有实现接口判断
-*/
+ */
 // TODO var (
 // 	_ Matrix       = Transpose{}
 // 	_ Untransposer = Transpose{}
@@ -32,7 +32,7 @@ public interface Matrix {
 
 // Transpose is a type for performing an implicit matrix transpose. It implements
 // the Matrix interface, returning values from the transpose of the matrix within.
-public class Transpose <: Matrix {
+public class Transpose <: Matrix & Untransposer {
     let matrix: Matrix
     public init(matrix: Matrix) {
         this.matrix = matrix
@@ -56,6 +56,11 @@ public class Transpose <: Matrix {
     public func t(): Matrix {
         return this.matrix
     }
+
+    // Untranspose returns the Matrix field.
+    public func mUntranspose(): Matrix {
+        return this.matrix
+    }
 }
 
 // Untransposer is a type that can undo an implicit transpose.
@@ -67,7 +72,7 @@ public interface Untransposer {
     // triangular matrix.
 
     // Untranspose returns the underlying Matrix stored for the implicit transpose.
-    func untranspose(): Matrix
+    func mUntranspose(): Matrix
 }
 
 // untranspose untransposes a matrix if applicable. If a is an Untransposer, then
@@ -77,8 +82,9 @@ private func untranspose(a: Matrix): (Matrix, Bool) {
     let ut = a as Untransposer
     if (!ut.isNone()) {
         let mx = ut.getOrThrow()
-        return (mx.untranspose(), true)
+        return (mx.mUntranspose(), true)
     }
+    println("ut isNone")
     return (a, false)
 }
 
@@ -92,6 +98,54 @@ public interface RawMatrixer {
 // slice will be reflected in the original matrix, changes to the Inc field will not.
 public interface RawVectorer {
     func rawVector(): Vector
+}
+
+// Col copies the elements in the jth column of the matrix into the slice dst.
+// The length of the provided slice must equal the number of rows, unless the
+// slice is nil in which case a new slice is first allocated.
+public func mCol(dst_: Array<Float64>, j: Int64, a: Matrix): Array<Float64> {
+    var dst = dst_
+    let (r, c) = a.dims()
+    println("r= ${r}")
+    if (j < 0 || j >= c) {
+        throw Exception(errColAccess)
+    }
+    if (dst.size == 0) {
+        dst = Array<Float64>(r, item: 0.0)
+        println("1. dst size= ${dst.size}")
+    } else {
+        if (dst.size != r) {
+            throw Exception(errColLength)
+        }
+    }
+    println("success judge")
+    let (aU, aTrans) = untranspose(a)
+    let rm = aU as RawMatrixer
+    if (rm.isSome()) {
+        println("isSome begin")
+        let m = rm.getOrThrow().rawMatrix()
+        //
+        if (aTrans) {
+            println("copyTo begin")
+            m.data.copyTo(dst, j * m.stride, 0, m.cols)
+            return dst
+        }
+        //
+        println("copy begin")
+        println("m.stride = ${m.stride} m.data[j..].size = ${m.data[j..].size}")
+        println("inc = 1 dst.size = ${dst.size}")
+        copy(
+            Vector(n: r, inc: m.stride, data: m.data[j..]),
+            Vector(n: r, inc: 1, data: dst)
+        )
+        println("success isSome")
+        return dst
+    }
+    for (i in 0..r) {
+        dst[i] = a.at(i, j)
+    }
+    println("success isNone")
+    return dst
 }
 
 // Equal returns whether the matrices a and b have the same size

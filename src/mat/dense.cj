@@ -28,7 +28,7 @@ import cjnum.blas.blas64.*
 // )
 
 // Dense is a dense matrix representation.
-public class Dense <: Matrix {
+public class Dense <: Matrix & RawMatrixer {
     let mat: General
     let capRows: Int64
     let capCols: Int64
@@ -83,8 +83,14 @@ public class Dense <: Matrix {
     public func t(): Matrix {
         return Transpose(this)
     }
-}
 
+    // RawMatrix returns the underlying blas64.General used by the receiver.
+    // Changes to elements in the receiver following the call will be reflected
+    // in returned blas64.General.
+    public func rawMatrix(): General {
+        return this.mat
+    }
+}
 
 // NewDense creates a new Dense matrix with r rows and c columns. If data == nil,
 // a new slice is allocated for the backing slice. If len(data) == r*c, data is
