@@ -33,7 +33,7 @@ extend NFloat64Implementation <: NFloat64 {
             ix = (-n + 1) * incX
         }
         if (incY < 0) {
-            iy = (-n + 1) *incY
+            iy = (-n + 1) * incY
         }
         if (ix > x.size || ix + (n - 1) * incX >= x.size) {
             throw Exception(shortX)
@@ -43,7 +43,7 @@ extend NFloat64Implementation <: NFloat64 {
         }
         return dotInc(x, y, n, incX, incY, ix, iy)
     }
-    
+
     public func dnrm2(n: Int64, x: Array<Float64>, incX: Int64): Float64 {
         if (incX < 1) {
             if (incX == 0) {
@@ -104,11 +104,13 @@ extend NFloat64Implementation <: NFloat64 {
             throw Exception(shortX)
         }
         if (n < 2) {
-            match (n) {
-                case 1 => return 0
-                case 0 => return -1
-                case _ => throw Exception(nLT0)
+            if (n == 1) {
+                return 0
             }
+            if (n == 0) {
+                return -1
+            }
+            throw Exception(nLT0)
         }
         var idx = 0
         var max_ = abs(x[0])
@@ -143,7 +145,7 @@ extend NFloat64Implementation <: NFloat64 {
         }
         if (n < 1) {
             if (n == 0) {
-                return 
+                return
             }
             throw Exception(nLT0)
         }
@@ -160,7 +162,7 @@ extend NFloat64Implementation <: NFloat64 {
                 x_[i] = y[i]
                 y[i] = tmp
             }
-            return 
+            return
         }
         var ix: Int64 = 0
         var iy: Int64 = 0
@@ -200,7 +202,7 @@ extend NFloat64Implementation <: NFloat64 {
         }
         if (incX == 1 && incY == 1) {
             copy(y[..n], x[..n])
-            return 
+            return
         }
         var ix: Int64 = 0
         var iy: Int64 = 0
@@ -237,11 +239,11 @@ extend NFloat64Implementation <: NFloat64 {
             throw Exception(shortY)
         }
         if (alpha == 0.0) {
-            return 
+            return
         }
         if (incX == 1 && incY == 0) {
             axpyUnitary(alpha, x[..n], y[..n])
-            return 
+            return
         }
         var ix: Int64 = 0
         var iy: Int64 = 0
@@ -295,13 +297,13 @@ extend NFloat64Implementation <: NFloat64 {
                 z = 1.0
             }
         }
-        return (c, s ,r ,z)
+        return (c, s, r, z)
     }
-    
+
     public func drotmg(d1: Float64, d2: Float64, x1: Float64, y1: Float64): (DrotmParams, Float64, Float64, Float64) {
-		const gam    = 4096.0
-		const gamsq  = gam * gam
-		const rgamsq = 1.0 / gamsq
+        const gam = 4096.0
+        const gamsq = gam * gam
+        const rgamsq = 1.0 / gamsq
         let p = DrotmParams()
         if (d1 < 0.0) {
             p.flag = Rescaling
@@ -419,7 +421,7 @@ extend NFloat64Implementation <: NFloat64 {
         }
         if (n < 1) {
             if (n == 0) {
-                return 
+                return
             }
             throw Exception(nLT0)
         }
@@ -431,7 +433,7 @@ extend NFloat64Implementation <: NFloat64 {
         }
         if (incX == 1 && incY == 1) {
             let x_ = x[..n]
-            for (i in 0..n) { 
+            for (i in 0..n) {
                 let vy = y[i]
                 let new_vx = c * x_[i] + s * vy
                 let new_vy = c * vy - s * x_[i]
@@ -469,7 +471,7 @@ extend NFloat64Implementation <: NFloat64 {
         }
         if (n <= 0) {
             if (n == 0) {
-                return 
+                return
             }
             throw Exception(nLT0)
         }
@@ -481,7 +483,7 @@ extend NFloat64Implementation <: NFloat64 {
         }
 
         if (p.flag == Identity) {
-            return 
+            return
         }
 
         if (p.flag == Rescaling) {
@@ -497,7 +499,7 @@ extend NFloat64Implementation <: NFloat64 {
                     x[i] = new_vx
                     y[i] = new_vy
                 }
-                return 
+                return
             }
             var ix = 0
             var iy = 0
@@ -517,8 +519,7 @@ extend NFloat64Implementation <: NFloat64 {
                 ix += incX
                 iy += incY
             }
-        }
-        else if (p.flag == OffDiagonal) {
+        } else if (p.flag == OffDiagonal) {
             let h12 = p.h[2]
             let h21 = p.h[1]
             if (incX == 1 && incY == 1) {
@@ -530,7 +531,7 @@ extend NFloat64Implementation <: NFloat64 {
                     x_[i] = new_vx
                     y[i] = new_vy
                 }
-                return 
+                return
             }
             var ix = 0
             var iy = 0
@@ -550,8 +551,7 @@ extend NFloat64Implementation <: NFloat64 {
                 ix += incX
                 iy += incY
             }
-        }
-        else if (p.flag == Diagonal) {
+        } else if (p.flag == Diagonal) {
             let h11 = p.h[0]
             let h22 = p.h[3]
             if (incX == 1 && incY == 1) {
@@ -562,7 +562,7 @@ extend NFloat64Implementation <: NFloat64 {
                     x[i] = new_vx
                     y[i] = new_vy
                 }
-                return 
+                return
             }
             var ix = 0
             var iy = 0
@@ -584,7 +584,7 @@ extend NFloat64Implementation <: NFloat64 {
             }
         }
 
-        return 
+        return
     }
 
     public func dscal(n: Int64, alpha: Float64, x: Array<Float64>, incX: Int64): Unit {
@@ -592,11 +592,11 @@ extend NFloat64Implementation <: NFloat64 {
             if (incX == 0) {
                 throw Exception(zeroIncX)
             }
-            return 
+            return
         }
         if (n < 1) {
             if (n == 0) {
-                return 
+                return
             }
             throw Exception(nLT0)
         }
@@ -606,21 +606,21 @@ extend NFloat64Implementation <: NFloat64 {
                 for (i in 0..x_.size) {
                     x_[i] = 0.0
                 }
-                return 
+                return
             }
             var ix = 0
             while (ix < n * incX) {
                 x[ix] = 0.0
                 ix += incX
             }
-            return 
+            return
         }
         if (incX == 1) {
             scalUnitary(alpha, x[..n])
-            return 
+            return
         }
         scalInc(alpha, x, n, incX)
-        return 
+        return
     }
 }
 

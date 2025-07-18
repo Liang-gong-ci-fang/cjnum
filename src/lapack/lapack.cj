@@ -124,6 +124,10 @@ public interface LFloat64 {
     func dlahqr(wantt: Bool, wantz: Bool, n: Int64, ilo: Int64, ihi: Int64, h: Array<Float64>, ldh: Int64,
         wr: Array<Float64>, wi: Array<Float64>, iloz: Int64, ihiz: Int64, z: Array<Float64>, ldz: Int64): Int64
     func dgeqr2(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
+    func dlaqr5(wantt: Bool, wantz: Bool, kacc22: Int64, n: Int64, ktop: Int64, kbot: Int64, nshfts: Int64,
+        sr: Array<Float64>, si: Array<Float64>, h: Array<Float64>, ldh: Int64, iloz: Int64, ihiz: Int64,
+        z: Array<Float64>, ldz: Int64, v: Array<Float64>, ldv: Int64, u: Array<Float64>, ldu: Int64, nv: Int64,
+        wv: Array<Float64>, ldwv: Int64, nh: Int64, wh: Array<Float64>, ldwh: Int64): Unit
     func dlarft(direct: Direct, store: StoreV, n: Int64, k: Int64, v: Array<Float64>, ldv: Int64, tau: Array<Float64>,
         t: Array<Float64>, ldt: Int64): Unit
     func dorg2l(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
@@ -157,6 +161,10 @@ public interface LFloat64 {
     func dlangb(norm: MatrixNorm, m: Int64, n: Int64, kl: Int64, ku: Int64, ab: Array<Float64>, ldab: Int64): Float64
     func dlatbs(uplo: Uplo, trans: Transpose, diag: Diag, normin: Bool, n: Int64, kd: Int64, ab: Array<Float64>,
         ldab: Int64, x: Array<Float64>, cnorm: Array<Float64>): Float64
+    func dormr2(side: Side, trans: Transpose, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
+        tau: Array<Float64>, c: Array<Float64>, ldc: Int64, work: Array<Float64>): Unit
+    func dgerqf(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>,
+        lwork: Int64): Unit
 }
 
 type Direct = UInt8
