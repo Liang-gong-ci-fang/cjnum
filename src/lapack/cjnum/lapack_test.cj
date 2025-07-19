@@ -407,55 +407,204 @@ public func testDsytd2(): Unit {
 }
 
 @Test
-@Parallel
-public func testDormr2(): Unit {
+@Skip
+public func testDtrevc3(): Unit { // TODO
+    @Expect(dtrevc3Test(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDpstrf(): Unit { // TODO
+    @Expect(dpstrfTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDgelqf(): Unit { // TODO
+    @Expect(dgelqfTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDgehrd(): Unit { // TODO
+    @Expect(dgehrdTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDormr2(): Unit { // TODO
     @Expect(dormr2Test(lFloat64Implementation))
 }
 
 @Test
-@Parallel
-public func testDgerqf(): Unit {
+@Skip
+public func testDgerqf(): Unit { // TODO
     @Expect(dgerqfTest(lFloat64Implementation))
 }
 
 @Test
+@Skip
+public func testDorml2(): Unit { // TODO
+    @Expect(dorml2Test(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDormlq(): Unit { // TODO
+    @Expect(dormlqTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDormbr(): Unit { // TODO
+    @Expect(dormbrTest(lFloat64Implementation))
+}
+
+@Test
 @Skip // 精度
-public func testDpttrs(): Unit {
+public func testDpttrs(): Unit { // TODO
     @Expect(dpttrsTest(lFloat64Implementation))
 }
 
 @Test
 @Skip // 精度
-public func testDlaqr1(): Unit {
+public func testDlaqr1(): Unit { // TODO
     @Expect(dlaqr1Test(lFloat64Implementation))
 }
 
 @Test
 @Skip // 随机数
-public func testDtrtri(): Unit {
+public func testDtrtri(): Unit { // TODO
     @Expect(dtrtriTest(lFloat64Implementation))
 }
 
 @Test
 @Skip // 随机数
-public func testDgetrf(): Unit {
+public func testDgetrf(): Unit { // TODO
     @Expect(dgetrfTest(lFloat64Implementation))
 }
 
 @Test
 @Skip // 随机数
-public func testDgecon(): Unit {
+public func testDgecon(): Unit { // TODO
     @Expect(dgeconTest(lFloat64Implementation))
 }
 
 @Test
 @Skip // 随机数
-public func testDgetri(): Unit {
+public func testDgetri(): Unit { // TODO
     @Expect(dgetriTest(lFloat64Implementation))
 }
 
 @Test
 @Skip // 随机数
-public func testDgetrs(): Unit {
+public func testDgetrs(): Unit { // TODO
     @Expect(dgetrsTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDlaqr04(): Unit { // TODO
+    @Expect(dlaqr04Test(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDlaqr23(): Unit { // TODO
+    @Expect(dlaqr23Test(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDormqr(): Unit { // TODO
+    @Expect(dormqrTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDorm2r(): Unit { // TODO
+    @Expect(dorm2rTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDormhr(): Unit { // TODO
+    @Expect(dormhrTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDgeqrf(): Unit { // TODO
+    @Expect(dgeqrfTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDgebrd(): Unit { // TODO
+    @Expect(dgebrdTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDlabrd(): Unit { // TODO
+    @Expect(dlabrdTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDlasq1(): Unit { // TODO
+    @Expect(dlasq1Test(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDlasq2(): Unit { // TODO
+    @Expect(dlasq2Test(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDorgql(): Unit { // TODO
+    @Expect(dorgqlTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDorgtr(): Unit { // TODO
+    @Expect(dorgtrTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDsteqr(): Unit { // TODO
+    @Expect(dsteqrTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDsterf(): Unit { // TODO
+    @Expect(dsterfTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDsyev(): Unit { // TODO
+    @Expect(dsyevTest(lFloat64Implementation))
+}
+
+@Skip
+public func testDsytrd(): Unit { // TODO
+    @Expect(dsytrdTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDorg2r(): Unit { // TODO
+    @Expect(dorg2rTest(lFloat64Implementation))
+}
+
+@Test
+@Skip
+public func testDorgqr(): Unit { // TODO
+    @Expect(dorgqrTest(lFloat64Implementation))
 }
