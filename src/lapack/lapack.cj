@@ -134,6 +134,15 @@ public interface LFloat64 {
     func dlarfb(side: Side, trans: Transpose, direct: Direct, store: StoreV, m: Int64, n: Int64, k: Int64,
         v: Array<Float64>, ldv: Int64, t: Array<Float64>, ldt: Int64, c: Array<Float64>, ldc: Int64,
         work: Array<Float64>, ldwork: Int64): Unit
+    func dorgql(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>,
+        lwork: Int64): Unit
+    func dlaqr04(wantt: Bool, wantz: Bool, n: Int64, ilo: Int64, ihi: Int64, h: Array<Float64>, ldh: Int64,
+        wr: Array<Float64>, wi: Array<Float64>, iloz: Int64, ihiz: Int64, z: Array<Float64>, ldz: Int64,
+        work: Array<Float64>, lwork: Int64, recur: Int64): Int64
+    func dlaqr23(wantt: Bool, wantz: Bool, n: Int64, ktop: Int64, kbot: Int64, nw: Int64, h: Array<Float64>, ldh: Int64,
+        iloz: Int64, ihiz: Int64, z: Array<Float64>, ldz: Int64, sr: Array<Float64>, si: Array<Float64>,
+        v: Array<Float64>, ldv: Int64, nh: Int64, t: Array<Float64>, ldt: Int64, nv: Int64, wv: Array<Float64>,
+        ldwv: Int64, work: Array<Float64>, lwork: Int64, recur: Int64): (Int64, Int64)
     func dtrexc(compq: UpdateSchurComp, n: Int64, t: Array<Float64>, ldt: Int64, q: Array<Float64>, ldq: Int64,
         ifst: Int64, ilst: Int64, work: Array<Float64>): (Int64, Int64, Bool)
     func dlasrt(s: Sort, n: Int64, d: Array<Float64>): Unit
@@ -161,10 +170,36 @@ public interface LFloat64 {
     func dlangb(norm: MatrixNorm, m: Int64, n: Int64, kl: Int64, ku: Int64, ab: Array<Float64>, ldab: Int64): Float64
     func dlatbs(uplo: Uplo, trans: Transpose, diag: Diag, normin: Bool, n: Int64, kd: Int64, ab: Array<Float64>,
         ldab: Int64, x: Array<Float64>, cnorm: Array<Float64>): Float64
+    func dgebrd(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, d: Array<Float64>, e: Array<Float64>,
+        tauQ: Array<Float64>, tauP: Array<Float64>, work: Array<Float64>, lwork: Int64): Unit
+    func dlabrd(m: Int64, n: Int64, nb: Int64, a: Array<Float64>, lda: Int64, d: Array<Float64>, e: Array<Float64>,
+        tauQ: Array<Float64>, tauP: Array<Float64>, x: Array<Float64>, ldx: Int64, y: Array<Float64>, ldy: Int64): Unit
+    func dlasq1(n: Int64, d: Array<Float64>, e: Array<Float64>, work: Array<Float64>): Int64
+    func dlasq2(n: Int64, z: Array<Float64>): Int64
+    func dorgtr(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>,
+        lwork: Int64): Unit
+    func dsteqr(compz: EVComp, n: Int64, d: Array<Float64>, e: Array<Float64>, z: Array<Float64>, ldz: Int64,
+        work: Array<Float64>): Bool
+    func dsterf(n: Int64, d: Array<Float64>, e: Array<Float64>): Bool
+    func dsytrd(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64, d: Array<Float64>, e: Array<Float64>,
+        tau: Array<Float64>, work: Array<Float64>, lwork: Int64): Unit
+    func dormhr(side: Side, trans: Transpose, m: Int64, n: Int64, ilo: Int64, ihi: Int64, a: Array<Float64>, lda: Int64,
+        tau: Array<Float64>, c: Array<Float64>, ldc: Int64, work: Array<Float64>, lwork: Int64): Unit
+    func dgehrd(n: Int64, ilo: Int64, ihi: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>,
+        work: Array<Float64>, lwork: Int64): Unit
+    func dorg2r(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>): Unit
+    func dorm2r(side: Side, trans: Transpose, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
+        tau: Array<Float64>, c: Array<Float64>, ldc: Int64, work: Array<Float64>): Unit
+    func dtrevc3(side: EVSide, howmny: EVHowMany, selected: Array<Bool>, n: Int64, t: Array<Float64>, ldt: Int64,
+        vl: Array<Float64>, ldvl: Int64, vr: Array<Float64>, ldvr: Int64, mm: Int64, work: Array<Float64>, lwork: Int64): Int64
     func dormr2(side: Side, trans: Transpose, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
         tau: Array<Float64>, c: Array<Float64>, ldc: Int64, work: Array<Float64>): Unit
     func dgerqf(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>,
         lwork: Int64): Unit
+    func dorml2(side: Side, trans: Transpose, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
+        tau: Array<Float64>, c: Array<Float64>, ldc: Int64, work: Array<Float64>): Unit
+    func dormbr(vect: ApplyOrtho, side: Side, trans: Transpose, m: Int64, n: Int64, k: Int64, a: Array<Float64>,
+        lda: Int64, tau: Array<Float64>, c: Array<Float64>, ldc: Int64, work: Array<Float64>, lwork: Int64): Unit
 }
 
 type Direct = UInt8

@@ -1,11 +1,12 @@
 package cjnum.lapack.cjnum
 
+import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
 import std.math.*
 
 extend LFloat64Implementation {
-    public func dorgqr(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>,
+    public func dorgql(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>,
         work: Array<Float64>, lwork: Int64): Unit {
         if (m < 0) {
             throw Exception(mLT0)
@@ -17,7 +18,7 @@ extend LFloat64Implementation {
             throw Exception(kLT0)
         } else if (k > n) {
             throw Exception(kGTN)
-        } else if (lda < max(1, n) && lwork != -1) {
+        } else if (lda < max(1, n)) {
             throw Exception(badLdA)
         } else if (lwork < max(1, n) && lwork != -1) {
             throw Exception(badLWork)
@@ -30,8 +31,7 @@ extend LFloat64Implementation {
             return
         }
 
-        var nb = ilaenv(1, "DORGQR", " ", m, n, k, -1)
-
+        var nb = ilaenv(1, "DORGQL", " ", m, n, k, -1)
         if (lwork == -1) {
             work[0] = Float64(n * nb)
             return
@@ -39,52 +39,51 @@ extend LFloat64Implementation {
 
         if (a.size < (m - 1) * lda + n) {
             throw Exception(shortA)
-        } else if (tau.size != k) {
-            throw Exception(badLenTau)
+        } else if (tau.size < k) {
+            throw Exception(shortTau)
         }
 
         var nbmin = 2
-        var nx: Int64 = 0
-        let iws = n
-        var ldwork: Int64 = 0
+        var nx = 0
+        var ldwork = 0
+        var iws = n
         if (1 < nb && nb < k) {
-            nx = max(0, ilaenv(3, "DORGQR", " ", m, n, k, -1))
+            nx = max(0, ilaenv(3, "DORGQL", " ", m, n, k, -1))
             if (nx < k) {
-                ldwork = nb
-                let iws = n * ldwork
+                iws = n * nb
                 if (lwork < iws) {
                     nb = lwork / n
-                    ldwork = nb
-                    nbmin = max(2, ilaenv(2, "DORGQR", " ", m, n, k, -1))
+                    nbmin = max(2, ilaenv(2, "DORGQL", " ", m, n, k, -1))
                 }
+                ldwork = nb
             }
         }
-        var ki: Int64 = 0
-        var kk: Int64 = 0
+
+        var kk = 0
         if (nbmin <= nb && nb < k && nx < k) {
-            ki = ((k - nx - 1) / nb) * nb
-            kk = min(k, ki + nb)
-            for (i in 0..kk) {
-                for (j in kk..n) {
+            kk = min(k, ((k - nx + nb - 1) / nb) * nb)
+            for (i in m - kk..m) {
+                for (j in 0..n - kk) {
                     a[i * lda + j] = 0.0
                 }
             }
         }
-        if (kk < n) {
-            dorg2r(m - kk, n - kk, k - kk, a[kk * lda + kk..], lda, tau[kk..], work)
-        }
-        if (kk > 0) {
-            for (i in ki..=0 : -nb) {
-                let ib = min(nb, k - i)
-                if (i + ib < n) {
-                    dlarft(Forward, ColumnWise, m - i, ib, a[i * lda + i..], lda, tau[i..], work, ldwork)
 
-                    dlarfb(Left, NoTrans, Forward, ColumnWise, m - i, n - i - ib, ib, a[i * lda + i..], lda, work,
-                        ldwork, a[i * lda + i + ib..], lda, work[ib * ldwork..], ldwork)
+        dorg2l(m - kk, n - kk, k - kk, a, lda, tau, work)
+        if (kk > 0) {
+            for (i in k - kk..k : nb) {
+                let ib = min(nb, k - i)
+                if (n - k + i > 0) {
+                    dlarft(Backward, ColumnWise, m - k + i + ib, ib, a[n - k + i..], lda, tau[i..], work, ldwork)
+
+                    dlarfb(Left, NoTrans, Backward, ColumnWise, m - k + i + ib, n - k + i, ib, a[n - k + i..], lda, work,
+                        ldwork, a, lda, work[ib * ldwork..], ldwork)
                 }
-                dorg2r(m - i, ib, ib, a[i * lda + i..], lda, tau[i..i + ib], work)
-                for (j in i..i + ib) {
-                    for (l in 0..i) {
+
+                dorg2l(m - k + i + ib, ib, ib, a[n - k + i..], lda, tau[i..], work)
+
+                for (j in n - k + i..n - k + i + ib) {
+                    for (l in m - k + i + ib..m) {
                         a[l * lda + j] = 0.0
                     }
                 }
