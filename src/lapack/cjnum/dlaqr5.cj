@@ -236,7 +236,7 @@ extend LFloat64Implementation {
                             h[(k + 2) * ldh + k] = 0.0
                             h[(k + 3) * ldh + k] = 0.0
                         } else {
-                            var vt = Array<Float64>(3, item: 0.0)
+                            var vt = Array<Float64>(3, repeat: 0.0)
                             dlaqr1(3, h[(k + 1) * ldh + k + 1..], ldh, sr[2 * m], si[2 * m], sr[2 * m + 1], si[2 * m + 1],
                                 vt[..])
                             (_, vt[0]) = dlarfg(3, vt[0], vt[1..3], 1)

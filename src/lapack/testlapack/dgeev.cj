@@ -16,8 +16,8 @@ func residualRightEV(a: General64, e: General64, wr: Array<Float64>, wi: Array<F
 
     let nFloat64 = nFloat64Implementation()
     let ldr = n
-    let r = Array<Float64>(n * ldr, item: 0.0)
-    let wmat = Array<Float64>(4, item: 0.0)
+    let r = Array<Float64>(n * ldr, repeat: 0.0)
+    let wmat = Array<Float64>(4, repeat: 0.0)
     var ipair = 0
     for (j in 0..n) {
         if (ipair == 0 && wi[j] != 0.0) {
@@ -59,8 +59,8 @@ func residualLeftEV(a: General64, e: General64, wr: Array<Float64>, wi: Array<Fl
 
     let nFloat64 = nFloat64Implementation()
     let ldr = n
-    let r = Array<Float64>(n * ldr, item: 0.0)
-    let wmat = Array<Float64>(4, item: 0.0)
+    let r = Array<Float64>(n * ldr, repeat: 0.0)
+    let wmat = Array<Float64>(4, repeat: 0.0)
     var ipair = 0
     for (j in 0..n) {
         if (ipair == 0 && wi[j] != 0.0) {

@@ -30,18 +30,18 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
         )
     ]) {
         let n = test.n
-        let got = Array<Float64>(test.d.size, item: 0.0)
+        let got = Array<Float64>(test.d.size, repeat: 0.0)
         copy(got, test.d)
-        let e = Array<Float64>(test.e.size, item: 0.0)
+        let e = Array<Float64>(test.e.size, repeat: 0.0)
         copy(e, test.e)
         let ok = lFloat64.dsterf(n, got, e)
         if (!ok) {
             throw Exception("Case ${cas}, n=${n}: Dsterf failed")
             // continue
         }
-        let want = Array<Float64>(test.want.size, item: 0.0)
+        let want = Array<Float64>(test.want.size, repeat: 0.0)
         copy(want, test.want)
-        stableSort(want)
+        sort(want, stable: true)
         let diff = fDistance(Float64.Inf, s: got, t: want)
         if (diff > tol) {
             throw Exception("Case ${cas}, n=${n}: unexpected result, |dGot-dWant|=${diff}")
@@ -52,9 +52,9 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
     for (n in [0, 1, 2, 3, 4, 5, 6, 10, 50]) {
         for (typ in 0..=8) {
-            let d = Array<Float64>(n, item: 0.0)
+            let d = Array<Float64>(n, repeat: 0.0)
             let e = if (n > 1) {
-                Array<Float64>(Array<Float64>(n - 1, item: 0.0))
+                Array<Float64>(n - 1, repeat: 0.0)
             } else {
                 Array<Float64>()
             }
@@ -115,12 +115,12 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
                     e[i] = rnd.nextGaussianFloat64()
                 }
             }
-            let eCopy = Array<Float64>(e.size, item: 0.0)
+            let eCopy = Array<Float64>(e.size, repeat: 0.0)
             copy(eCopy, e)
 
             let name = "n=${n},type=${typ}"
 
-            let dGot = Array<Float64>(d.size, item: 0.0)
+            let dGot = Array<Float64>(d.size, repeat: 0.0)
             copy(dGot, d)
             var ok = lFloat64.dsterf(n, dGot, e)
             if (!ok) {
@@ -143,11 +143,11 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
                 // continue
             }
 
-            let dWant = Array<Float64>(d.size, item: 0.0)
+            let dWant = Array<Float64>(d.size, repeat: 0.0)
             copy(dWant, d)
             copy(e, eCopy)
             let z = nanGeneral(n, n, n)
-            ok = lFloat64.dsteqr(EVTridiag, n, dWant, e, z.data, z.stride, Array<Float64>(2 * n, item: 0.0))
+            ok = lFloat64.dsteqr(EVTridiag, n, dWant, e, z.data, z.stride, Array<Float64>(2 * n, repeat: 0.0))
             if (!ok) {
                 throw Exception("${name}: computing reference solution using Dsteqr failed")
                 // continue
@@ -172,7 +172,7 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
 
             copy(e, eCopy)
             let lda = n
-            let a = Array<Float64>(n * lda, item: 0.0)
+            let a = Array<Float64>(n * lda, repeat: 0.0)
             var anorm = 0.0
             var tmp = 0.0
             for (i in 0..n - 1) {
@@ -190,7 +190,7 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
                 nFloat64.dsyr(Upper, n, -dGot[i], z.data[i..], z.stride, a, lda)
             }
 
-            let wnorm = lFloat64.dlansy(MaxColumnSum, Upper, n, a, lda, Array<Float64>(n, item: 0.0))
+            let wnorm = lFloat64.dlansy(MaxColumnSum, Upper, n, a, lda, Array<Float64>(n, repeat: 0.0))
 
             if (anorm > wnorm) {
                 diff = wnorm / anorm / Float64(n)

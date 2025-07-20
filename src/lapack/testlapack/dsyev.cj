@@ -35,27 +35,27 @@ public func dsyevTest(lFloat64: LFloat64) {
                 if (lda == 0) {
                     lda = n
                 }
-                let a = Array<Float64>(n * lda, item: 0.0)
+                let a = Array<Float64>(n * lda, repeat: 0.0)
                 for (i in 0..a.size) {
                     a[i] = rnd.nextGaussianFloat64()
                 }
-                let aCopy = Array<Float64>(a.size, item: 0.0)
+                let aCopy = Array<Float64>(a.size, repeat: 0.0)
                 copy(aCopy, a)
-                var w = Array<Float64>(n, item: 0.0)
+                var w = Array<Float64>(n, repeat: 0.0)
                 for (i in 0..w.size) {
                     w[i] = rnd.nextGaussianFloat64()
                 }
 
-                var work = Array<Float64>(1, item: 0.0)
+                var work = Array<Float64>(1, repeat: 0.0)
                 lFloat64.dsyev(EVCompute, uplo, n, a, lda, w, work, -1)
-                work = Array<Float64>(Int64(work[0]), item: 0.0)
+                work = Array<Float64>(Int64(work[0]), repeat: 0.0)
                 lFloat64.dsyev(EVCompute, uplo, n, a, lda, w, work, work.size)
 
                 let orig = General64(
                     rows: n,
                     cols: n,
                     stride: n,
-                    data: Array<Float64>(n * n, item: 0.0)
+                    data: Array<Float64>(n * n, repeat: 0.0)
                 )
                 if (uplo == Upper) {
                     for (i in 0..n) {
@@ -86,7 +86,7 @@ public func dsyevTest(lFloat64: LFloat64) {
                     throw Exception("Decomposition mismatch")
                 }
 
-                let wAns = Array<Float64>(w.size, item: 0.0)
+                let wAns = Array<Float64>(w.size, repeat: 0.0)
                 copy(wAns, w)
                 copy(a, aCopy)
                 for (i in 0..w.size) {

@@ -104,7 +104,7 @@ public func newVecDense(n: Int64, data: Array<Float64>): VecDense {
         throw Exception(errShape)
     }
     if (data.size == 0) {
-        let data_ = Array<Float64>(n, item: 0.0)
+        let data_ = Array<Float64>(n, repeat: 0.0)
         return VecDense(
             Vector(
                 n: n,

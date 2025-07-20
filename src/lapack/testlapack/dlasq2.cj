@@ -16,8 +16,8 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
             for (typ in 0..=2) {
                 let name = "n=${n},typ=${typ}"
 
-                let want = Array<Float64>(n, item: 0.0)
-                let z = Array<Float64>(4 * n, item: 0.0)
+                let want = Array<Float64>(n, repeat: 0.0)
+                let z = Array<Float64>(4 * n, repeat: 0.0)
 
                 if (typ == 0) {
                 } else if (typ == 1) {
@@ -32,7 +32,7 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
                     }
                 }
 
-                let zCopy = Array<Float64>(z.size, item: 0.0)
+                let zCopy = Array<Float64>(z.size, repeat: 0.0)
                 copy(zCopy, z)
 
                 let info = lFloat64.dlasq2(n, z)
@@ -47,7 +47,7 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
 
                 if (typ == 2) {
                     let ldt = n
-                    let T = Array<Float64>(n * ldt, item: 0.0)
+                    let T = Array<Float64>(n * ldt, repeat: 0.0)
 
                     for (i in 0..n) {
                         if (i == 0) {
@@ -61,7 +61,7 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
                         }
                     }
 
-                    let d = Array<Float64>(n, item: 0.0)
+                    let d = Array<Float64>(n, repeat: 0.0)
                     d[0] = 1.0
                     for (i in 1..n) {
                         d[i] = d[i - 1] * T[i * ldt + i - 1] / T[(i - 1) * ldt + i]
@@ -75,7 +75,7 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
                         }
                     }
 
-                    let work = Array<Float64>(3 * n, item: 0.0)
+                    let work = Array<Float64>(3 * n, repeat: 0.0)
                     let ok = lFloat64.dsyev(EVNone, Upper, n, T, ldt, want, work, work.size)
                     if (!ok) {
                         throw Exception("${name}: Dsyev failed")

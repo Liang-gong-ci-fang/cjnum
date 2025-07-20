@@ -61,16 +61,16 @@ public func dsytrdTest(lFloat64: LFloat64): Bool {
                 if (wl == minimumWork) {
                     lwork = 1
                 } else if (wl == mediumWork) {
-                    let work = Array<Float64>(1, item: 0.0)
+                    let work = Array<Float64>(1, repeat: 0.0)
                     lFloat64.dsytrd(uplo, n, a.data, a.stride, d, e, tau, work, -1)
                     lwork = (Int64(work[0]) + 1) / 2
                     lwork = max(1, lwork)
                 } else if (wl == optimumWork) {
-                    let work = Array<Float64>(1, item: 0.0)
+                    let work = Array<Float64>(1, repeat: 0.0)
                     lFloat64.dsytrd(uplo, n, a.data, a.stride, d, e, tau, work, -1)
                     lwork = Int64(work[0])
                 }
-                var work = Array<Float64>(lwork, item: 0.0)
+                var work = Array<Float64>(lwork, repeat: 0.0)
 
                 lFloat64.dsytrd(uplo, n, a.data, a.stride, d, e, tau, work, lwork)
 
@@ -93,7 +93,7 @@ public func dsytrdTest(lFloat64: LFloat64): Bool {
                     }
                     q.data[(n - 1) * q.stride + n - 1] = 1.0
                     if (n > 1) {
-                        work = Array<Float64>(n - 1, item: 0.0)
+                        work = Array<Float64>(n - 1, repeat: 0.0)
                         lFloat64.dorgql(n - 1, n - 1, n - 1, q.data, q.stride, tau, work, work.size)
                     }
                 } else {
@@ -108,7 +108,7 @@ public func dsytrdTest(lFloat64: LFloat64): Bool {
                         q.data[i * q.stride] = 0.0
                     }
                     if (n > 1) {
-                        work = Array<Float64>(n - 1, item: 0.0)
+                        work = Array<Float64>(n - 1, repeat: 0.0)
                         lFloat64.dorgqr(n - 1, n - 1, n - 1, q.data[q.stride + 1..], q.stride, tau, work, work.size)
                     }
                 }

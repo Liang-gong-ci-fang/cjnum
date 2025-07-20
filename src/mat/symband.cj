@@ -148,7 +148,7 @@ public func newSymBandDense(n: Int64, k: Int64, data: Array<Float64>): SymBandDe
         throw Exception(errShape)
     }
     if (data.size == 0) {
-        let data_ = Array<Float64>(n * bc, item: 0.0)
+        let data_ = Array<Float64>(n * bc, repeat: 0.0)
         return SymBandDense(
             SymmetricBand(
                 n: n,

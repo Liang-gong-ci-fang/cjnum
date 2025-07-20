@@ -36,39 +36,39 @@ public func dgebrdTest(lFloat64: LFloat64): Bool {
             lda = n
         }
         let minmn = min(m, n)
-        let a = Array<Float64>(m * lda, item: 0.0)
+        let a = Array<Float64>(m * lda, repeat: 0.0)
         for (i in 0..a.size - 1) {
             a[i] = rnd.nextGaussianFloat64()
         }
 
-        let d = Array<Float64>(minmn, item: 0.0)
-        let e = Array<Float64>(minmn - 1, item: 0.0)
-        let tauP = Array<Float64>(minmn, item: 0.0)
-        let tauQ = Array<Float64>(minmn, item: 0.0)
-        var work = Array<Float64>(max(m, n), item: 0.0)
+        let d = Array<Float64>(minmn, repeat: 0.0)
+        let e = Array<Float64>(minmn - 1, repeat: 0.0)
+        let tauP = Array<Float64>(minmn, repeat: 0.0)
+        let tauQ = Array<Float64>(minmn, repeat: 0.0)
+        var work = Array<Float64>(max(m, n), repeat: 0.0)
         for (i in 0..work.size - 1) {
             work[i] = Float64.NaN
         }
 
-        let aCopy = Array<Float64>(a.size, item: 0.0)
+        let aCopy = Array<Float64>(a.size, repeat: 0.0)
         copy(aCopy, a)
 
         lFloat64.dgebd2(m, n, a, lda, d, e, tauQ, tauP, work)
-        let aAns = Array<Float64>(a.size, item: 0.0)
+        let aAns = Array<Float64>(a.size, repeat: 0.0)
         copy(aAns, a)
-        let dAns = Array<Float64>(d.size, item: 0.0)
+        let dAns = Array<Float64>(d.size, repeat: 0.0)
         copy(dAns, d)
-        let eAns = Array<Float64>(e.size, item: 0.0)
+        let eAns = Array<Float64>(e.size, repeat: 0.0)
         copy(eAns, e)
-        let tauQAns = Array<Float64>(tauQ.size, item: 0.0)
+        let tauQAns = Array<Float64>(tauQ.size, repeat: 0.0)
         copy(tauQAns, tauQ)
-        let tauPAns = Array<Float64>(tauP.size, item: 0.0)
+        let tauPAns = Array<Float64>(tauP.size, repeat: 0.0)
         copy(tauPAns, tauP)
 
         var lwork = -1
         copy(a, aCopy)
         lFloat64.dgebrd(m, n, a, lda, d, e, tauQ, tauP, work, lwork)
-        work = Array<Float64>(Int64(work[0]), item: 0.0)
+        work = Array<Float64>(Int64(work[0]), repeat: 0.0)
         lwork = work.size
         for (i in 0..work.size) {
             work[i] = Float64.NaN

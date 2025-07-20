@@ -65,12 +65,12 @@ func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwo
 
     var work: Array<Float64>
     if (optwork) {
-        work = Array<Float64>([0.0])
+        work = [0.0]
         lFloat64.dtrevc3(side, howmny, [], n, tmat.data, tmat.stride, vl.data, max(1, vl.stride), vr.data,
             max(1, vr.stride), n, work, -1)
-        work = Array<Float64>(Int64(work[0]), item: 0.0)
+        work = Array<Float64>(Int64(work[0]), repeat: 0.0)
     } else {
-        work = Array<Float64>(max(1, 3 * n), item: 0.0)
+        work = Array<Float64>(max(1, 3 * n), repeat: 0.0)
     }
 
     var mGot = lFloat64.dtrevc3(side, howmny, [], n, tmat.data, tmat.stride, vl.data, max(1, vl.stride), vr.data,
@@ -117,8 +117,8 @@ func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwo
 
     howmny = EVSelected
 
-    let selected = Array<Bool>(n, item: false)
-    let selectedWant = Array<Bool>(n, item: false)
+    let selected = Array<Bool>(n, repeat: true)
+    let selectedWant = Array<Bool>(n, repeat: true)
     var nselr: Int64 = 0
     var nselc: Int64 = 0
     var j = n - 1
@@ -153,10 +153,10 @@ func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwo
     }
 
     if (optwork) {
-        work = Array<Float64>([0.0])
+        work = [0.0]
         lFloat64.dtrevc3(side, howmny, selected, n, tmat.data, tmat.stride, vlSel.data, max(1, vlSel.stride), vrSel.data,
             max(1, vrSel.stride), mWant, work, -1)
-        work = Array<Float64>(Int64(work[0]), item: 0.0)
+        work = Array<Float64>(Int64(work[0]), repeat: 0.0)
     }
 
     mGot = lFloat64.dtrevc3(side, howmny, selected, n, tmat.data, tmat.stride, vlSel.data, max(1, vlSel.stride),
@@ -246,10 +246,10 @@ func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwo
     }
 
     if (optwork) {
-        work = Array<Float64>([0.0])
+        work = [0.0]
         lFloat64.dtrevc3(side, howmny, [], n, tmat.data, tmat.stride, vlMul.data, max(1, vlMul.stride), vrMul.data,
             max(1, vrMul.stride), n, work, -1)
-        work = Array<Float64>(Int64(work[0]), item: 0.0)
+        work = Array<Float64>(Int64(work[0]), repeat: 0.0)
     }
 
     mGot = lFloat64.dtrevc3(side, howmny, selected, n, tmat.data, tmat.stride, vlMul.data, max(1, vlMul.stride),

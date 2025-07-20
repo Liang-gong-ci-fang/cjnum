@@ -181,7 +181,7 @@ public func dlaqr04Test(lFloat64: LFloat64): Bool {
 				rows:   1,
 				cols:   1,
 				stride: 1,
-				data:   Array<Float64>([7.09965484086874e-1])
+				data:   [7.09965484086874e-1]
 			),
 			ilo:    0,
 			ihi:    0,
@@ -194,7 +194,7 @@ public func dlaqr04Test(lFloat64: LFloat64): Bool {
 				rows:   2,
 				cols:   2,
 				stride: 2,
-				data: Array<Float64>([0.0, -1.0, 1.0, 0.0])
+				data: [0.0, -1.0, 1.0, 0.0]
 			),
 			ilo:    0,
 			ihi:    1,
@@ -207,9 +207,9 @@ public func dlaqr04Test(lFloat64: LFloat64): Bool {
 				rows:   2,
 				cols:   2,
 				stride: 2,
-				data: Array<Float64>([
+				data: [
 					6.25219991450918e-1, 8.17510791994361e-1,
-					3.31218891622294e-1, 1.24103744878131e-1])
+					3.31218891622294e-1, 1.24103744878131e-1]
 			),
 			ilo:    0,
 			ihi:    1,
@@ -222,11 +222,11 @@ public func dlaqr04Test(lFloat64: LFloat64): Bool {
 				rows:   4,
 				cols:   4,
 				stride: 4,
-				data: Array<Float64>([
+				data: [
 					1.0, 0.0, 0.0, 0.0,
 					0.0, 6.25219991450918e-1, 8.17510791994361e-1, 0.0,
 					0.0, 3.31218891622294e-1, 1.24103744878131e-1, 0.0,
-					0.0, 0.0, 0.0, 1.0])
+					0.0, 0.0, 0.0, 1.0]
 			),
 			ilo:    1,
 			ihi:    2,
@@ -239,9 +239,9 @@ public func dlaqr04Test(lFloat64: LFloat64): Bool {
 				rows:   2,
 				cols:   2,
 				stride: 2,
-				data: Array<Float64>([
+				data: [
 					-1.1219562276608, 6.85473513349362e-1,
-					-8.19951061145131e-1, 1.93728523178888e-1])
+					-8.19951061145131e-1, 1.93728523178888e-1]
 			),
 			ilo:  0,
 			ihi:  1,
@@ -256,12 +256,12 @@ public func dlaqr04Test(lFloat64: LFloat64): Bool {
 				rows:   5,
 				cols:   5,
 				stride: 5,
-				data: Array<Float64>([
+				data: [
 					9.57590178533658e-1, -5.10651295522708e-1, 9.24974510015869e-1, -1.30016306879522e-1, 2.92601986926954e-2,
 					-1.08084756637964, 1.77529701001213, -1.36480197632509, 2.23196371219601e-1, 1.12912853063308e-1,
 					0.0, -8.44075612174676e-1, 1.067867614486, -2.55782915176399e-1, -2.00598563137468e-1,
 					0.0, 0.0, -5.67097237165410e-1, 2.07205057427341e-1, 6.54998340743380e-1,
-					0.0, 0.0, 0.0, -1.89441413886041e-1, -4.18125416021786e-1])
+					0.0, 0.0, 0.0, -1.89441413886041e-1, -4.18125416021786e-1]
             ),
 			ilo:  0,
 			ihi:  4,
@@ -310,7 +310,7 @@ func testDlaqr04(lFloat64: LFloat64, test: dlaqr04TestStruct, optwork: Bool, rec
     let wr = nanSlice(ihi + 1)
     let wi = nanSlice(ihi + 1)
 
-    var work = Array<Float64>([])
+    var work: Array<Float64> = []
     if (optwork) {
         work = nanSlice(1)
         lFloat64.dlaqr04(wantt, wantz, n, ilo, ihi, h.data, h.stride, wr, wi, iloz, ihiz, z.data, max(1, z.stride), work, -1, recur)

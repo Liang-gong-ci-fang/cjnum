@@ -40,20 +40,20 @@ public func dorgtrTest(lFloat64: LFloat64): Bool {
                 if (lda == 0) {
                     lda = n
                 }
-                let a = Array<Float64>(n * lda, item: 0.0)
+                let a = Array<Float64>(n * lda, repeat: 0.0)
                 for (i in 0..a.size) {
                     a[i] = rnd.nextGaussianFloat64()
                 }
-                let aCopy = Array<Float64>(a.size, item: 0.0)
+                let aCopy = Array<Float64>(a.size, repeat: 0.0)
                 copy(aCopy, a)
 
-                let d = Array<Float64>(n, item: 0.0)
-                let e = Array<Float64>(n - 1, item: 0.0)
-                let tau = Array<Float64>(n - 1, item: 0.0)
+                let d = Array<Float64>(n, repeat: 0.0)
+                let e = Array<Float64>(n - 1, repeat: 0.0)
+                let tau = Array<Float64>(n - 1, repeat: 0.0)
 
-                var work = Array<Float64>(1, item: 0.0)
+                var work = Array<Float64>(1, repeat: 0.0)
                 lFloat64.dsytrd(uplo, n, a, lda, d, e, tau, work, -1)
-                work = Array<Float64>(Int64(work[0]), item: 0.0)
+                work = Array<Float64>(Int64(work[0]), repeat: 0.0)
 
                 lFloat64.dsytrd(uplo, n, a, lda, d, e, tau, work, work.size)
 
@@ -61,12 +61,12 @@ public func dorgtrTest(lFloat64: LFloat64): Bool {
                 if (wl == minimumWork) {
                     lwork = max(1, n - 1)
                 } else if (wl == mediumWork) {
-                    work = Array<Float64>(1, item: 0.0)
+                    work = Array<Float64>(1, repeat: 0.0)
                     lFloat64.dorgtr(uplo, n, a, lda, tau, work, -1)
                     lwork = (Int64(work[0]) + n - 1) / 2
                     lwork = max(1, lwork)
                 } else if (wl == optimumWork) {
-                    work = Array<Float64>(1, item: 0.0)
+                    work = Array<Float64>(1, repeat: 0.0)
                     lFloat64.dorgtr(uplo, n, a, lda, tau, work, -1)
                     lwork = Int64(work[0])
                 }
@@ -91,7 +91,7 @@ public func dorgtrTest(lFloat64: LFloat64): Bool {
                     rows: n,
                     cols: n,
                     stride: n,
-                    data: Array<Float64>(n * n, item: 0.0)
+                    data: Array<Float64>(n * n, repeat: 0.0)
                 )
                 for (i in 0..n - 1) {
                     tri.data[i * tri.stride + i] = d[i]
@@ -105,7 +105,7 @@ public func dorgtrTest(lFloat64: LFloat64): Bool {
                     rows: n,
                     cols: n,
                     stride: n,
-                    data: Array<Float64>(n * n, item: 0.0)
+                    data: Array<Float64>(n * n, repeat: 0.0)
                 )
                 if (uplo == Upper) {
                     for (i in 0..n) {
@@ -125,9 +125,9 @@ public func dorgtrTest(lFloat64: LFloat64): Bool {
                     }
                 }
 
-                let tmp = General64(rows: n, cols: n, stride: n, data: Array<Float64>(n * n, item: 0.0))
+                let tmp = General64(rows: n, cols: n, stride: n, data: Array<Float64>(n * n, repeat: 0.0))
                 gemm(NoTrans, NoTrans, 1.0, aMat, q, 0.0, tmp)
-                let ans = General64(rows: n, cols: n, stride: n, data: Array<Float64>(n * n, item: 0.0))
+                let ans = General64(rows: n, cols: n, stride: n, data: Array<Float64>(n * n, repeat: 0.0))
                 gemm(Trans, NoTrans, 1.0, q, tmp, 0.0, ans)
 
                 if (!fEqualApprox(ans.data, tri.data, tol)) {

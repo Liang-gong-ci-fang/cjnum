@@ -64,7 +64,7 @@ func testDormhr(lFloat64: LFloat64, side: Side, trans: Transpose, m: Int64, n: I
     }
 
     let a = randomGeneral(nq, nq, nq + extra, rnd)
-    var tau: Array<Float64> = Array<Float64>(0, item: 0.0)
+    var tau: Array<Float64> = Array<Float64>(0, repeat: 0.0)
     if (nq > 1) {
         tau = nanSlice(nq - 1)
     }
@@ -77,7 +77,7 @@ func testDormhr(lFloat64: LFloat64, side: Side, trans: Transpose, m: Int64, n: I
         let h = eye(nq, nq)
         let v = Vector(
             inc: 1,
-            data: Array<Float64>(nq, item: 0.0)
+            data: Array<Float64>(nq, repeat: 0.0)
         )
         v.data[j + 1] = 1.0
         for (i in j + 2..ihi + 1) {

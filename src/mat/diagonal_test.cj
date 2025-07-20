@@ -58,7 +58,7 @@ public func testDiagDenseZero(): Unit {
     // Elements that equal 1 should be set to zero, elements that equal -1
     // should remain unchanged.
     for (test in diagDenseZeroTests) {
-        var dataCopy = Array<Float64>(test.mat.data.size, item: 0.0)
+        var dataCopy = Array<Float64>(test.mat.data.size, repeat: 0.0)
         dataCopy = test.mat.data[0..]
         test.zero()
         for (i in 0..test.mat.data.size) {
@@ -283,9 +283,9 @@ public func testDiagonalAtSet(): Unit {
         for (nilstart in [true, false]) {
             var diag = DiagDense(Vector())
             if (nilstart) {
-                diag = newDiagDense(n, Array<Float64>(0, item: 0.0))
+                diag = newDiagDense(n, Array<Float64>(0, repeat: 0.0))
             } else {
-                var data = Array<Float64>(n, item: 0.0)
+                var data = Array<Float64>(n, repeat: 0.0)
                 diag = newDiagDense(n, data)
                 for (i in 0..data.size) {
                     data[i] = -Float64(i) - 1.0
@@ -317,7 +317,7 @@ public func testDiagonalAtSet(): Unit {
 因为缺乏类对象的比较函数，所以在这里让DiagDense类实现了Equatable<DiagDense>接口，
 完成比较运算符的实现
  */
-extend DiagDense <: Equatable<DiagDense> {
+extend DiagDense {
     public operator func ==(rhs: DiagDense): Bool {
         var judge = true
         for (i in 0..max(this.mat.data.size, rhs.mat.data.size)) {

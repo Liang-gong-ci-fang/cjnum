@@ -71,19 +71,19 @@ public func dormbrTest(lFloat64: LFloat64): Bool {
                         a = Array<Float64>(ma * lda, {_ => rnd.nextGaussianFloat64()})
 
                         let nTau = min(nq, k)
-                        let tauP = Array<Float64>(nTau, item: 0.0)
-                        let tauQ = Array<Float64>(nTau, item: 0.0)
-                        let d = Array<Float64>(nTau, item: 0.0)
-                        let e = Array<Float64>(nTau, item: 0.0)
+                        let tauP = Array<Float64>(nTau, repeat: 0.0)
+                        let tauQ = Array<Float64>(nTau, repeat: 0.0)
+                        let d = Array<Float64>(nTau, repeat: 0.0)
+                        let e = Array<Float64>(nTau, repeat: 0.0)
 
-                        var work = Array<Float64>(1, item: 0.0)
+                        var work = Array<Float64>(1, repeat: 0.0)
                         lFloat64.dgebrd(ma, na, a, lda, d, e, tauQ, tauP, work, -1)
-                        work = Array<Float64>(Int64(work[0]), item: 0.0)
+                        work = Array<Float64>(Int64(work[0]), repeat: 0.0)
                         lFloat64.dgebrd(ma, na, a, lda, d, e, tauQ, tauP, work, work.size)
 
                         let c = Array<Float64>(m * ldc, {_ => rnd.nextGaussianFloat64()})
 
-                        let cCopy = Array<Float64>(c.size, item: 0.0)
+                        let cCopy = Array<Float64>(c.size, repeat: 0.0)
                         copy(cCopy, c)
 
                         var lwork: Int64 = 0
@@ -93,12 +93,12 @@ public func dormbrTest(lFloat64: LFloat64): Bool {
                             lFloat64.dormbr(vect, side, trans, m, n, k, a, lda, tauQ, c, ldc, work, -1)
                             lwork = Int64(work[0])
                         } else if (wl == mediumWork) {
-                            work = Array<Float64>(1, item: 0.0)
+                            work = Array<Float64>(1, repeat: 0.0)
                             lFloat64.dormbr(vect, side, trans, m, n, k, a, lda, tauQ, c, ldc, work, -1)
                             lwork = (Int64(work[0]) + nw) / 2
                         }
                         lwork = max(1, lwork)
-                        work = Array<Float64>(lwork, item: 0.0)
+                        work = Array<Float64>(lwork, repeat: 0.0)
 
                         if (vect == ApplyQ) {
                             lFloat64.dormbr(vect, side, trans, m, n, k, a, lda, tauQ, c, ldc, work, lwork)
@@ -110,14 +110,14 @@ public func dormbrTest(lFloat64: LFloat64): Bool {
                             rows: m,
                             cols: n,
                             stride: ldc,
-                            data: Array<Float64>(cCopy.size, item: 0.0)
+                            data: Array<Float64>(cCopy.size, repeat: 0.0)
                         )
                         copy(cOrig.data, cCopy)
                         let cAns = General64(
                             rows: m,
                             cols: n,
                             stride: ldc,
-                            data: Array<Float64>(cCopy.size, item: 0.0)
+                            data: Array<Float64>(cCopy.size, repeat: 0.0)
                         )
                         copy(cAns.data, cCopy)
                         let nb = min(ma, na)

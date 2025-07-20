@@ -25,10 +25,10 @@ public func flatten(f: Array<Array<Float64>>): (Int64, Int64, Array<Float64>) {
         if (row.size != c) {
             throw Exception("bad test: ragged input")
         }
-        d.appendAll(row)
+        d.add(all: row)
     }
     // println("d.size = ${d.size}")
-    return (r, c, Array<Float64>(d))
+    return (r, c, d.toArray())
 }
 
 //TODO @Test
@@ -55,16 +55,16 @@ public func flatten(f: Array<Array<Float64>>): (Int64, Int64, Array<Float64>) {
 //         let af = colTests[id]
 //         let (af_1, af_2, af_3) = flatten(af)
 //         let a = newDense(af_1, af_2, af_3)
-//         var col = Array<Float64>(a.mat.rows, item: 0.0)
+//         var col = Array<Float64>(a.mat.rows, repeat: 0.0)
 //         for (j in 0..af[0].size) {
 //             for (i in 0..col.size) {
 //                 col[i] = Float64(i * a.mat.cols + j + 1)
 //             }
 
-//             var got = mCol(Array<Float64>(0, item: 0.0), j, a)
+//             var got = mCol(Array<Float64>(0, repeat: 0.0), j, a)
 //             @Expect(got==col)
 
-//             got = Array<Float64>(a.mat.rows, item: 0.0)
+//             got = Array<Float64>(a.mat.rows, repeat: 0.0)
 //             mCol(got, j, a)
 //             @Expect(got==col)
 //         }
@@ -74,7 +74,7 @@ public func flatten(f: Array<Array<Float64>>): (Int64, Int64, Array<Float64>) {
 //         let (r, c) = a.dims()
 //         var ans = ArrayList<Array<Float64>>(c)
 //         for (j in 0..ans.size) {
-//             ans[j] = Array<Float64>(r, item: 0.0)
+//             ans[j] = Array<Float64>(r, repeat: 0.0)
 //             for (i in 0..ans[j].size) {
 //                 ans[j][i] = a.at(i, j)
 //             }
@@ -86,7 +86,7 @@ public func flatten(f: Array<Array<Float64>>): (Int64, Int64, Array<Float64>) {
 //         let (_, c) = a.dims()
 //         var ans = ArrayList<Array<Float64>>(c)
 //         for (j in 0..ans.size) {
-//             ans[j] = mCol(Array<Float64>(0, item: 0.0), j, a)
+//             ans[j] = mCol(Array<Float64>(0, repeat: 0.0), j, a)
 //         }
 //         return ans
 //     }

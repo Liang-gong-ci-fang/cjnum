@@ -29,7 +29,7 @@ public func dorgqlTest(lFloat64: LFloat64): Bool {
                 }
 
                 let a = nanGeneral(m_, n, n + extra)
-                let tau = Array<Float64>(k, item: 0.0)
+                let tau = Array<Float64>(k, repeat: 0.0)
                 for (l in 0..k) {
                     let jj = m_ - k + l
                     let v = randomSlice(jj, rnd)
@@ -47,7 +47,7 @@ public func dorgqlTest(lFloat64: LFloat64): Bool {
                     let h = eye(m_, m_)
                     let jj = m_ - k + l
                     let j = n - k + l
-                    let v = Vector(data: Array<Float64>(m_, item: 0.0), inc: 1)
+                    let v = Vector(data: Array<Float64>(m_, repeat: 0.0), inc: 1)
                     for (i in 0..jj) {
                         v.data[i] = a.data[i * a.stride + j]
                     }
@@ -68,16 +68,16 @@ public func dorgqlTest(lFloat64: LFloat64): Bool {
                 if (wl == minimumWork) {
                     lwork = max(1, n)
                 } else if (wl == mediumWork) {
-                    let work = Array<Float64>(1, item: 0.0)
+                    let work = Array<Float64>(1, repeat: 0.0)
                     lFloat64.dorgql(m_, n, k, a.data, a.stride, tau, work, -1)
                     lwork = (Int64(work[0]) + n) / 2
                     lwork = max(1, lwork)
                 } else if (wl == optimumWork) {
-                    let work = Array<Float64>(1, item: 0.0)
+                    let work = Array<Float64>(1, repeat: 0.0)
                     lFloat64.dorgql(m_, n, k, a.data, a.stride, tau, work, -1)
                     lwork = Int64(work[0])
                 }
-                let work = Array<Float64>(lwork, item: 0.0)
+                let work = Array<Float64>(lwork, repeat: 0.0)
 
                 lFloat64.dorgql(m_, n, k, a.data, a.stride, tau, work, work.size)
 

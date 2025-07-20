@@ -592,6 +592,7 @@ public func testDsyev(): Unit { // TODO
     @Expect(dsyevTest(lFloat64Implementation))
 }
 
+@Test
 @Skip
 public func testDsytrd(): Unit { // TODO
     @Expect(dsytrdTest(lFloat64Implementation))

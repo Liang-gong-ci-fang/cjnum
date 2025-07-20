@@ -117,11 +117,11 @@ extend LFloat64Implementation {
 
         let nFloat64 = nFloat64Implementation()
 
-        let x: Array<Float64> = Array<Float64>(4, item: 0.0)
+        let x: Array<Float64> = Array<Float64>(4, repeat: 0.0)
         var iv: Int64
         var is_: Int64
         var ip: Int64
-        let iscomplex: Array<Int64> = Array<Int64>(nbmax, item: 0)
+        let iscomplex: Array<Int64> = Array<Int64>(nbmax, repeat: 0)
 
         var leftev = true
         if (side == EVLeft) {

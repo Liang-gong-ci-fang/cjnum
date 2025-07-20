@@ -109,7 +109,7 @@ public func newSymDense(n: Int64, data: Array<Float64>): SymDense {
         throw Exception(errShape)
     }
     if (data.size == 0) {
-        let data_ = Array<Float64>(n * n, item: 0.0)
+        let data_ = Array<Float64>(n * n, repeat: 0.0)
         return SymDense(
             Symmetric(
                 n: n,

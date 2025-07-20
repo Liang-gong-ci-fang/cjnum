@@ -29,8 +29,8 @@ func testDlaqr5(lFloat64: LFloat64, n: Int64, extra: Int64, kacc22: Int64, rnd: 
     let wantt = true
     let wantz = true
     let nshfts = 2 * n
-    let sr = Array<Float64>(nshfts, item: 0.0)
-    let si = Array<Float64>(nshfts, item: 0.0)
+    let sr = Array<Float64>(nshfts, repeat: 0.0)
+    let si = Array<Float64>(nshfts, repeat: 0.0)
     var i = 0
     while (i < nshfts) {
         if (i == nshfts - 1 || rnd.nextFloat64() < 0.5) {
@@ -65,7 +65,7 @@ func testDlaqr5(lFloat64: LFloat64, n: Int64, extra: Int64, kacc22: Int64, rnd: 
     if (kbot < n - 1) {
         h.data[(kbot + 1) * h.stride + kbot] = 0.0
     }
-    let hCopy = General64(rows: h.rows, cols: h.cols, stride: h.stride, data: Array<Float64>(h.data.size, item: 0.0))
+    let hCopy = General64(rows: h.rows, cols: h.cols, stride: h.stride, data: Array<Float64>(h.data.size, repeat: 0.0))
     copy(hCopy.data, h.data)
 
     let z = eye(n, n + extra)

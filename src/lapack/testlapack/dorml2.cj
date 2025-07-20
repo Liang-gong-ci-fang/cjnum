@@ -71,10 +71,10 @@ public func dorml2Test(lFloat64: LFloat64): Bool {
                 let c = Array<Float64>(mc * ldc, {_ => rnd.nextFloat64()})
 
                 let k = min(ma, na)
-                let tau = Array<Float64>(k, item: 0.0)
-                var work = Array<Float64>(1, item: 0.0)
+                let tau = Array<Float64>(k, repeat: 0.0)
+                var work = Array<Float64>(1, repeat: 0.0)
                 lFloat64.dgelqf(ma, na, a, lda, tau, work, -1)
-                work = Array<Float64>(Int64(work[0]), item: 0.0)
+                work = Array<Float64>(Int64(work[0]), repeat: 0.0)
                 lFloat64.dgelqf(ma, na, a, lda, tau, work, work.size)
 
                 let q = constructQ("LQ", ma, na, a, lda, tau)
@@ -83,14 +83,14 @@ public func dorml2Test(lFloat64: LFloat64): Bool {
                     rows: mc,
                     cols: nc,
                     stride: ldc,
-                    data: Array<Float64>(c.size, item: 0.0)
+                    data: Array<Float64>(c.size, repeat: 0.0)
                 )
                 copy(cMat.data, c)
                 let cMatCopy = General64(
                     rows: cMat.rows,
                     cols: cMat.cols,
                     stride: cMat.stride,
-                    data: Array<Float64>(cMat.data.size, item: 0.0)
+                    data: Array<Float64>(cMat.data.size, repeat: 0.0)
                 )
                 copy(cMatCopy.data, cMat.data)
 
@@ -107,13 +107,13 @@ public func dorml2Test(lFloat64: LFloat64): Bool {
                 }
 
                 if (side == Left) {
-                    work = Array<Float64>(nc, item: 0.0)
+                    work = Array<Float64>(nc, repeat: 0.0)
                 } else {
-                    work = Array<Float64>(mc, item: 0.0)
+                    work = Array<Float64>(mc, repeat: 0.0)
                 }
-                let aCopy = Array<Float64>(a.size, item: 0.0)
+                let aCopy = Array<Float64>(a.size, repeat: 0.0)
                 copy(aCopy, a)
-                let tauCopy = Array<Float64>(tau.size, item: 0.0)
+                let tauCopy = Array<Float64>(tau.size, repeat: 0.0)
                 copy(tauCopy, tau)
                 lFloat64.dorml2(side, trans, mc, nc, k, a, lda, tau, c, ldc, work)
 

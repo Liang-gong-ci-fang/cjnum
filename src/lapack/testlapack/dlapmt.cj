@@ -25,7 +25,7 @@ public func dlapmtTest(lFloat64: LFloat64): Bool {
                     rows: 4,
                     cols: 3,
                     stride: 3,
-                    data: Array<Float64>([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0])
+                    data: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
                 )
             ),
             dlapmtTestStruct(
@@ -35,7 +35,7 @@ public func dlapmtTest(lFloat64: LFloat64): Bool {
                     rows: 4,
                     cols: 3,
                     stride: 3,
-                    data: Array<Float64>([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0])
+                    data: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
                 )
             ),
             dlapmtTestStruct(
@@ -45,7 +45,7 @@ public func dlapmtTest(lFloat64: LFloat64): Bool {
                     rows: 4,
                     cols: 3,
                     stride: 3,
-                    data: Array<Float64>([2.0, 3.0, 1.0, 5.0, 6.0, 4.0, 8.0, 9.0, 7.0, 11.0, 12.0, 10.0])
+                    data: [2.0, 3.0, 1.0, 5.0, 6.0, 4.0, 8.0, 9.0, 7.0, 11.0, 12.0, 10.0]
                 )
             ),
             dlapmtTestStruct(
@@ -55,7 +55,7 @@ public func dlapmtTest(lFloat64: LFloat64): Bool {
                     rows: 4,
                     cols: 3,
                     stride: 3,
-                    data: Array<Float64>([3.0, 1.0, 2.0, 6.0, 4.0, 5.0, 9.0, 7.0, 8.0, 12.0, 10.0, 11.0])
+                    data: [3.0, 1.0, 2.0, 6.0, 4.0, 5.0, 9.0, 7.0, 8.0, 12.0, 10.0, 11.0]
                 )
             )
         ]) {
@@ -75,7 +75,7 @@ public func dlapmtTest(lFloat64: LFloat64): Bool {
                 }
             }
 
-            let k = Array<Int64>(test.k.size, item: 0)
+            let k = Array<Int64>(test.k.size, repeat: 0)
             copy(k, test.k)
 
             lFloat64.dlapmt(test.forward, m, n, x.data, x.stride, k)

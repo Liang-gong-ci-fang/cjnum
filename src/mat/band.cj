@@ -281,7 +281,7 @@ public func newBandDense(r: Int64, c: Int64, kl: Int64, ku: Int64, data_: Array<
         throw Exception(errShape)
     }
     if (data.size == 0) {
-        data = Array<Float64>(min(r, c + kl) * bc, item: 0.0)
+        data = Array<Float64>(min(r, c + kl) * bc, repeat: 0.0)
     }
     return BandDense(
         Band(

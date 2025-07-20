@@ -76,15 +76,15 @@ public func dormlqTest(lFloat64: LFloat64): Bool {
                     let c = Array<Float64>(mc * ldc, {_ => rnd.nextFloat64()})
 
                     let k = min(ma, na)
-                    let tau = Array<Float64>(k, item: 0.0)
-                    var work = Array<Float64>(1, item: 0.0)
+                    let tau = Array<Float64>(k, repeat: 0.0)
+                    var work = Array<Float64>(1, repeat: 0.0)
                     lFloat64.dgelqf(ma, na, a, lda, tau, work, -1)
-                    work = Array<Float64>(Int64(work[0]), item: 0.0)
+                    work = Array<Float64>(Int64(work[0]), repeat: 0.0)
                     lFloat64.dgelqf(ma, na, a, lda, tau, work, work.size)
 
-                    let cCopy = Array<Float64>(c.size, item: 0.0)
+                    let cCopy = Array<Float64>(c.size, repeat: 0.0)
                     copy(cCopy, c)
-                    let ans = Array<Float64>(c.size, item: 0.0)
+                    let ans = Array<Float64>(c.size, repeat: 0.0)
                     copy(ans, cCopy)
 
                     var nw: Int64
@@ -93,7 +93,7 @@ public func dormlqTest(lFloat64: LFloat64): Bool {
                     } else {
                         nw = mc
                     }
-                    work = Array<Float64>(max(1, nw), item: 0.0)
+                    work = Array<Float64>(max(1, nw), repeat: 0.0)
                     lFloat64.dorml2(side, trans, mc, nc, k, a, lda, tau, ans, ldc, work)
 
                     var lwork: Int64 = 0
@@ -103,12 +103,12 @@ public func dormlqTest(lFloat64: LFloat64): Bool {
                         lFloat64.dormlq(side, trans, mc, nc, k, a, lda, tau, c, ldc, work, -1)
                         lwork = Int64(work[0])
                     } else if (wl == mediumWork) {
-                        work = Array<Float64>(1, item: 0.0)
+                        work = Array<Float64>(1, repeat: 0.0)
                         lFloat64.dormlq(side, trans, mc, nc, k, a, lda, tau, c, ldc, work, -1)
                         lwork = (Int64(work[0]) + nw) / 2
                     }
                     lwork = max(1, lwork)
-                    work = Array<Float64>(lwork, item: 0.0)
+                    work = Array<Float64>(lwork, repeat: 0.0)
 
                     lFloat64.dormlq(side, trans, mc, nc, k, a, lda, tau, c, ldc, work, lwork)
                     if (!fEqualApprox(c, ans, 1e-13)) {

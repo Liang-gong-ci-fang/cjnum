@@ -72,7 +72,7 @@ public func dlabrdTest(lFloat64: LFloat64): Bool {
 
         let y = Array<Float64>(n * ldy, {_ => rnd.nextGaussianFloat64()})
 
-        let aCopy = Array<Float64>(a.size, item: 0.0)
+        let aCopy = Array<Float64>(a.size, repeat: 0.0)
         copy(aCopy, a)
 
         lFloat64.dlabrd(m, n, nb, a, lda, d, e, tauQ, tauP, x, ldx, y, ldy)

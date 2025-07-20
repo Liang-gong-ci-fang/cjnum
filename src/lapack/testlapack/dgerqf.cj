@@ -36,7 +36,7 @@ func dgerqfTest(lFloat64: LFloat64, rnd: Random, m: Int64, n: Int64, lda: Int64)
     let k = min(m, n)
     let tau = Array<Float64>(k, {_ => rnd.nextFloat64()})
 
-    var work = Array<Float64>([0.0])
+    var work = [0.0]
     lFloat64.dgerqf(m, n, a.data, a.stride, tau, work, -1)
     let lwkopt = Int64(work[0])
     for (wk in [

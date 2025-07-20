@@ -111,7 +111,7 @@ public func mCol(dst_: Array<Float64>, j: Int64, a: Matrix): Array<Float64> {
         throw Exception(errColAccess)
     }
     if (dst.size == 0) {
-        dst = Array<Float64>(r, item: 0.0)
+        dst = Array<Float64>(r, repeat: 0.0)
         println("1. dst size= ${dst.size}")
     } else {
         if (dst.size != r) {
@@ -239,8 +239,8 @@ public func _zero(f_: Array<Float64>): Unit {
 // has the necessary capacity, otherwise creating a new slice.
 public func use(f_: Array<Float64>, l: Int64): Array<Float64> {
     let f: ArrayList<Float64> = ArrayList<Float64>(f_)
-    if (l <= f.capacity()) {
+    if (l <= f.capacity) {
         return f.slice(0..l).toArray()
     }
-    return Array<Float64>(l, item: 0.0)
+    return Array<Float64>(l, repeat: 0.0)
 }

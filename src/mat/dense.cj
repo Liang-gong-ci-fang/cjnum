@@ -112,7 +112,7 @@ public func newDense(r: Int64, c: Int64, data_: Array<Float64>): Dense {
         throw Exception(errShape)
     }
     if (data.isEmpty()) {
-        data = Array<Float64>(r * c, item: 0.0)
+        data = Array<Float64>(r * c, repeat: 0.0)
     }
     return Dense(
         General(

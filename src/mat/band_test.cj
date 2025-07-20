@@ -221,7 +221,7 @@ private let bandDenseZeroTests: Array<BandDense> = [
 
 public func testBandDenseZero(): Unit {
     for (test in bandDenseZeroTests) {
-        let dataCopy = Array<Float64>(test.mat.data.size, item: 0.0)
+        let dataCopy = Array<Float64>(test.mat.data.size, repeat: 0.0)
         test.mat.data.copyTo(dataCopy, 0, 0, test.mat.data.size)
         test.zero()
         for (i in 0..test.mat.data.size) {
@@ -372,7 +372,7 @@ public func testBandAtSet(): Unit {
     }
 }
 
-extend BandDense <: Equatable<BandDense> {
+extend BandDense {
     public operator func ==(rhs: BandDense): Bool {
         var judge = true
         for (i in 0..max(this.mat.data.size, rhs.mat.data.size)) {

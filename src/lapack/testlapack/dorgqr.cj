@@ -52,7 +52,7 @@ public func dorgqrTest(lFloat64: LFloat64): Bool {
                 _ => rnd.nextFloat64()
             }
         )
-        var work = Array<Float64>(1, item: 0.0)
+        var work = Array<Float64>(1, repeat: 0.0)
         let tau = Array<Float64>(
             min(m, n),
             {
@@ -61,10 +61,10 @@ public func dorgqrTest(lFloat64: LFloat64): Bool {
         )
 
         lFloat64.dgeqrf(m, n, a, lda, tau, work, -1)
-        work = Array<Float64>(Int64(work[0]), item: 0.0)
+        work = Array<Float64>(Int64(work[0]), repeat: 0.0)
         lFloat64.dgeqrf(m, n, a, lda, tau, work, work.size)
 
-        let aUnblocked = Array<Float64>(a.size, item: 0.0)
+        let aUnblocked = Array<Float64>(a.size, repeat: 0.0)
         copy(aUnblocked, a)
         for (i in 0..work.size) {
             work[i] = Float64.NaN

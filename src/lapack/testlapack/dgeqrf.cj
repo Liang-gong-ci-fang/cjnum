@@ -48,15 +48,15 @@ public func dgeqrfTest(lFloat64: LFloat64): Bool {
 
         let a = Array<Float64>(m * lda,  { _ => rnd.nextGaussianFloat64()})
 
-        let aCopy = Array<Float64>(a.size, item: 0.0)
+        let aCopy = Array<Float64>(a.size, repeat: 0.0)
         copy(aCopy, a)
 
         let k = min(m, n)
         let tau = Array<Float64>(k, { _ => rnd.nextFloat64()})
 
-        let want = Array<Float64>(a.size, item: 0.0)
+        let want = Array<Float64>(a.size, repeat: 0.0)
         copy(want, a)
-        lFloat64.dgeqr2(m, n, want, lda, tau, Array<Float64>(n, item: 0.0))
+        lFloat64.dgeqr2(m, n, want, lda, tau, Array<Float64>(n, repeat: 0.0))
 
         for (wl in [minimumWork, mediumWork, optimumWork]) {
             copy(a, aCopy)
@@ -65,15 +65,15 @@ public func dgeqrfTest(lFloat64: LFloat64): Bool {
             if (wl == minimumWork) {
                 lwork = n
             } else if (wl == mediumWork) {
-                let work = Array<Float64>([0.0])
+                let work = [0.0]
                 lFloat64.dgeqrf(m, n, a, lda, tau, work, -1)
                 lwork = Int64(work[0]) - 2 * n
             } else if (wl == optimumWork) {
-                let work = Array<Float64>([0.0])
+                let work = [0.0]
                 lFloat64.dgeqrf(m, n, a, lda, tau, work, -1)
                 lwork = Int64(work[0])
             }
-            let work = Array<Float64>(lwork, item: 0.0)
+            let work = Array<Float64>(lwork, repeat: 0.0)
 
             lFloat64.dgeqrf(m, n, a, lda, tau, work, work.size)
 

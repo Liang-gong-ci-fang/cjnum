@@ -73,10 +73,10 @@ func testDgehrd(lFloat64: LFloat64, n: Int64, ilo: Int64, ihi: Int64, extra: Int
 	const tol = 1e-13
 
 	let a = randomGeneral(n, n, n+extra, rnd)
-	let aCopy = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, item: 0.0))
+	let aCopy = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, repeat: 0.0))
 	copy(aCopy.data, a.data)
 
-	var tau: Array<Float64> = Array<Float64>(0, item: 0.0)
+	var tau: Array<Float64> = Array<Float64>(0, repeat: 0.0)
 	if (n > 1) {
 		tau = nanSlice(n - 1)
 	}
@@ -161,14 +161,14 @@ func testDgehrd(lFloat64: LFloat64, n: Int64, ilo: Int64, ihi: Int64, extra: Int
 		rows:   n,
 		cols:   n,
 		stride: n,
-		data:   Array<Float64>(n*n, item: 0.0)
+		data:   Array<Float64>(n*n, repeat: 0.0)
     )
 	gemm(NoTrans, NoTrans, 1.0, aCopy, q, 0.0, aq)
 	let qaq = General64(
 		rows:   n,
 		cols:   n,
 		stride: n,
-		data:   Array<Float64>(n*n, item: 0.0)
+		data:   Array<Float64>(n*n, repeat: 0.0)
     )
 	gemm(Trans, NoTrans, 1.0, q, aq, 0.0, qaq)
 	for (i in 0..=ilo) {

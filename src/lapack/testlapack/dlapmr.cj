@@ -27,7 +27,7 @@ func dlapmrTest(lFloat64: LFloat64, rnd: Random, fwd: Bool, m: Int64, n: Int64, 
 
     let nFloat64 = nFloat64Implementation()
 
-    let k = Array<Int64>(m, item: 0)
+    let k = Array<Int64>(m, repeat: 0)
     for (i in 0..k.size) {
         k[i] = i
     }
@@ -37,7 +37,7 @@ func dlapmrTest(lFloat64: LFloat64, rnd: Random, fwd: Bool, m: Int64, n: Int64, 
         (k[i], k[j]) = (k[j], k[i])
         nFloat64.dswap(m, p.data[i * p.stride..], 1, p.data[j * p.stride..], 1)
     }
-    let kCopy = Array<Int64>(k.size, item: 0)
+    let kCopy = Array<Int64>(k.size, repeat: 0)
     copy(kCopy, k)
 
     let x = randomGeneral(m, n, ldx, rnd)

@@ -277,7 +277,7 @@ public func newDiagDense(n: Int64, data_: Array<Float64>): DiagDense {
         throw Exception("mat: negative dimension")
     }
     if (data_.size == 0) {
-        var data = Array<Float64>(n, item: 0.0)
+        var data = Array<Float64>(n, repeat: 0.0)
         return DiagDense(Vector(n: n, data: data, inc: 1),)
     }
     if (data_.size != n) {

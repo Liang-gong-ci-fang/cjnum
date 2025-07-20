@@ -134,7 +134,7 @@ public func newTriDense(n: Int64, kind: TriKind, data: Array<Float64>): TriDense
         throw Exception(errShape)
     }
     if (data.size == 0) {
-        let data_ = Array<Float64>(n * n, item: 0.0)
+        let data_ = Array<Float64>(n * n, repeat: 0.0)
         var uplo = Lower
         if (kind == mUpper) {
             uplo = Upper

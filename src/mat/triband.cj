@@ -168,7 +168,7 @@ public func newTriBandDense(n: Int64, k: Int64, kind: TriKind, data: Array<Float
         throw Exception(errShape)
     }
     if (data.size == 0) {
-        let data_ = Array<Float64>(n * bc, item: 0.0)
+        let data_ = Array<Float64>(n * bc, repeat: 0.0)
         var uplo = Lower
         if (kind) {
             uplo = Upper

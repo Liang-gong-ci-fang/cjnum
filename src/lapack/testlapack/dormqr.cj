@@ -66,7 +66,7 @@ public func dormqrTest(lFloat64: LFloat64): Bool {
                 if (lda == 0) {
                     lda = na
                 }
-                let a = Array<Float64>(ma * lda, item: 0.0)
+                let a = Array<Float64>(ma * lda, repeat: 0.0)
                 for (i in 0..a.size) {
                     a[i] = rnd.nextFloat64()
                 }
@@ -75,27 +75,27 @@ public func dormqrTest(lFloat64: LFloat64): Bool {
                 if (ldc == 0) {
                     ldc = nc
                 }
-                let c = Array<Float64>(mc * ldc, item: 0.0)
+                let c = Array<Float64>(mc * ldc, repeat: 0.0)
                 for (i in 0..c.size) {
                     c[i] = rnd.nextFloat64()
                 }
 
                 let k = min(ma, na)
-                let tau = Array<Float64>(k, item: 0.0)
-                var work = Array<Float64>(1, item: 0.0)
+                let tau = Array<Float64>(k, repeat: 0.0)
+                var work = Array<Float64>(1, repeat: 0.0)
                 lFloat64.dgeqrf(ma, na, a, lda, tau, work, -1)
-                work = Array<Float64>(Int64(work[0]), item: 0.0)
+                work = Array<Float64>(Int64(work[0]), repeat: 0.0)
                 lFloat64.dgeqrf(ma, na, a, lda, tau, work, work.size)
 
-                let cCopy = Array<Float64>(c.size, item: 0.0)
+                let cCopy = Array<Float64>(c.size, repeat: 0.0)
                 copy(cCopy, c)
-                let ans = Array<Float64>(c.size, item: 0.0)
+                let ans = Array<Float64>(c.size, repeat: 0.0)
                 copy(ans, cCopy)
 
                 if (side == Left) {
-                    work = Array<Float64>(nc, item: 0.0)
+                    work = Array<Float64>(nc, repeat: 0.0)
                 } else {
-                    work = Array<Float64>(mc, item: 0.0)
+                    work = Array<Float64>(mc, repeat: 0.0)
                 }
                 lFloat64.dorm2r(side, trans, mc, nc, k, a, lda, tau, ans, ldc, work)
 
@@ -110,7 +110,7 @@ public func dormqrTest(lFloat64: LFloat64): Bool {
 
                 copy(c, cCopy)
                 lFloat64.dormqr(side, trans, mc, nc, k, a, lda, tau, c, ldc, work, -1)
-                work = Array<Float64>(Int64(work[0]), item: 0.0)
+                work = Array<Float64>(Int64(work[0]), repeat: 0.0)
                 for (i in 0..work.size) {
                     work[i] = rnd.nextFloat64()
                 }
@@ -133,9 +133,9 @@ public func dormqrTest(lFloat64: LFloat64): Bool {
 
                 copy(c, cCopy)
                 if (side == Left) {
-                    work = Array<Float64>(3 * nc, item: 0.0)
+                    work = Array<Float64>(3 * nc, repeat: 0.0)
                 } else {
-                    work = Array<Float64>(3 * mc, item: 0.0)
+                    work = Array<Float64>(3 * mc, repeat: 0.0)
                 }
                 lFloat64.dormqr(side, trans, mc, nc, k, a, lda, tau, c, ldc, work, work.size)
                 if (!fEqualApprox(c, ans, 1e-12)) {

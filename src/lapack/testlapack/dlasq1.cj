@@ -14,7 +14,7 @@ public func dlasq1Test(lFloat64: LFloat64): Bool {
         for (typ in 0..=7) {
             let name = "n=${n},typ=${typ}"
 
-            let d = Array<Float64>(n, item: 0.0)
+            let d = Array<Float64>(n, repeat: 0.0)
             if (typ == 0) {
             } else if (typ == 1) {
                 for (i in 0..d.size) {
@@ -55,21 +55,21 @@ public func dlasq1Test(lFloat64: LFloat64): Bool {
                 }
             }
 
-            let dWant = Array<Float64>(n, item: 0.0)
+            let dWant = Array<Float64>(n, repeat: 0.0)
             copy(dWant, d)
             // sort.Sort(sort.Reverse(sort.Float64Slice(dWant)))
             stableSort(dWant)
             dWant.reverse()
 
-            let work = Array<Float64>(max(1, 4 * n), item: 0.0)
+            let work = Array<Float64>(max(1, 4 * n), repeat: 0.0)
 
             let lda = max(1, n)
-            let a = Array<Float64>(n * lda, item: 0.0)
+            let a = Array<Float64>(n * lda, repeat: 0.0)
             dlagge(n, n, 0, 0, d, a, lda, rnd, work)
 
-            let tauQ = Array<Float64>(n, item: 0.0)
-            let tauP = Array<Float64>(n, item: 0.0)
-            let e = Array<Float64>(max(0, n - 1), item: 0.0)
+            let tauQ = Array<Float64>(n, repeat: 0.0)
+            let tauP = Array<Float64>(n, repeat: 0.0)
+            let e = Array<Float64>(max(0, n - 1), repeat: 0.0)
             lFloat64.dgebrd(n, n, a, lda, d, e, tauQ, tauP, work, work.size)
 
             for (i in 0..work.size) {
