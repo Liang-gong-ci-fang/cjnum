@@ -53,7 +53,7 @@ public func dlahr2Test(lFloat64: LFloat64): Bool {
 
                 let a = randomGeneral(n, n - k + 1, n - k + 1 + extraStride, rnd)
                 let aCopy = General64(rows: a.rows, cols: a.cols, stride: a.stride,
-                    data: Array<Float64>(a.data.size, item: 0.0))
+                    data: Array<Float64>(a.data.size, repeat: 0.0))
                 copy(aCopy.data, a.data)
                 let tmat = nanTriangular(Upper, nb, nb + extraStride)
                 let y = nanGeneral(n, nb, nb + extraStride)
@@ -95,7 +95,7 @@ public func dlahr2Test(lFloat64: LFloat64): Bool {
                     rows: n - k + 1,
                     cols: nb,
                     stride: nb,
-                    data: Array<Float64>((n - k + 1) * nb, item: 0.0)
+                    data: Array<Float64>((n - k + 1) * nb, repeat: 0.0)
                 )
                 for (j in 0..v.cols) {
                     v.data[(j + 1) * v.stride + j] = 1.0
@@ -105,14 +105,14 @@ public func dlahr2Test(lFloat64: LFloat64): Bool {
                 }
 
                 let vt = General64(rows: v.rows, cols: v.cols, stride: v.stride,
-                    data: Array<Float64>(v.data.size, item: 0.0))
+                    data: Array<Float64>(v.data.size, repeat: 0.0))
                 copy(vt.data, v.data)
                 trmm(Right, NoTrans, 1.0, tmat, vt)
                 let ywant = General64(
                     rows: n,
                     cols: nb,
                     stride: nb,
-                    data: Array<Float64>(n * nb, item: 0.0)
+                    data: Array<Float64>(n * nb, repeat: 0.0)
                 )
                 gemm(NoTrans, NoTrans, 1.0, aCopy, vt, 0.0, ywant)
 
@@ -134,7 +134,7 @@ public func dlahr2Test(lFloat64: LFloat64): Bool {
                     rows: n - k + 1,
                     cols: n - k + 1,
                     stride: n - k + 1,
-                    data: Array<Float64>((n - k + 1) * (n - k + 1), item: 0.0)
+                    data: Array<Float64>((n - k + 1) * (n - k + 1), repeat: 0.0)
                 )
                 for (i in 0..qwant.rows) {
                     qwant.data[i * qwant.stride + i] = 1.0

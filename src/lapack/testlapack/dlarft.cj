@@ -40,7 +40,7 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 					lda = n
 				}
 
-				let a = Array<Float64>(m * lda, item: 0.0)
+				let a = Array<Float64>(m * lda, repeat: 0.0)
 				for (i in 0..m) {
 					for (j in 0..lda) {
 						a[i*lda+j] = rnd.nextFloat64()
@@ -48,8 +48,8 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 				}
 
 				let k = min(m, n)
-				let tau = Array<Float64>(k, item: 0.0)
-				let work = Array<Float64>(n, item: 0.0)
+				let tau = Array<Float64>(k, repeat: 0.0)
+				let work = Array<Float64>(n, repeat: 0.0)
 				lFloat64.dgeqr2(m, n, a, lda, tau, work)
 
 				let vMatTmp = extractVMat(m, n, a, lda, Forward, ColumnWise)
@@ -64,14 +64,14 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 					ldt = k
 				}
 
-				let tm = Array<Float64>(k*ldt, item: 0.0)
+				let tm = Array<Float64>(k*ldt, repeat: 0.0)
 				for (i in 0..tm.size) {
 					tm[i] = 100.0 + rnd.nextFloat64()
 				}
 
 				lFloat64.dlarft(direct, store, m, k, v, ldv, tau, tm, ldt)
 
-				let tData = Array<Float64>(tm.size, item: 0.0)
+				let tData = Array<Float64>(tm.size, repeat: 0.0)
 				copy(tData, tm)
 				if (direct == Forward) {
 
@@ -100,7 +100,7 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 					rows:   vMat.cols,
 					cols:   vMat.rows,
 					stride: vMat.rows,
-					data:   Array<Float64>(vMat.cols*vMat.rows, item: 0.0)
+					data:   Array<Float64>(vMat.cols*vMat.rows, repeat: 0.0)
                 )
 				for (i in 0..vMat.rows) {
 					for (j in 0..vMat.cols) {
@@ -114,7 +114,7 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 						rows:   T.rows,
 						cols:   vMatT.cols,
 						stride: vMatT.cols,
-						data:   Array<Float64>(T.rows*vMatT.cols, item: 0.0)
+						data:   Array<Float64>(T.rows*vMatT.cols, repeat: 0.0)
                     )
 
 					gemm(NoTrans, NoTrans, 1.0, T, vMatT, 0.0, tmp)
@@ -122,7 +122,7 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 						rows:   vMat.rows,
 						cols:   tmp.cols,
 						stride: tmp.cols,
-						data:   Array<Float64>(vMat.rows*tmp.cols, item: 0.0)
+						data:   Array<Float64>(vMat.rows*tmp.cols, repeat: 0.0)
                     )
 
 					gemm(NoTrans, NoTrans, 1.0, vMat, tmp, 0.0, comp)
@@ -132,7 +132,7 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 						rows:   T.rows,
 						cols:   vMat.cols,
 						stride: vMat.cols,
-						data:   Array<Float64>(T.rows*vMat.cols, item: 0.0),
+						data:   Array<Float64>(T.rows*vMat.cols, repeat: 0.0),
                     )
 
 					gemm(NoTrans, NoTrans, 1.0, T, vMat, 0.0, tmp)
@@ -140,7 +140,7 @@ public func dlarftTest(lFloat64: LFloat64): Bool {
 						rows:   vMatT.rows,
 						cols:   tmp.cols,
 						stride: tmp.cols,
-						data:   Array<Float64>(vMatT.rows*tmp.cols, item: 0.0)
+						data:   Array<Float64>(vMatT.rows*tmp.cols, repeat: 0.0)
                     )
 
 					gemm(NoTrans, NoTrans, 1.0, vMatT, tmp, 0.0, comp)

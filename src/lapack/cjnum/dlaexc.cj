@@ -67,7 +67,7 @@ extend LFloat64Implementation {
         }
 
         let nd = n1 + n2
-        var d = Array<Float64>(16, item: 0.0)
+        var d = Array<Float64>(16, repeat: 0.0)
         const ldd = 4
         dlacpy(All, nd, nd, t[j1 * ldt + j1..], ldt, d[..], ldd)
         let dnorm = dlange(MaxAbs, nd, nd, d[..], ldd, work)
@@ -75,14 +75,14 @@ extend LFloat64Implementation {
         let eps = dlamchP
         let thresh = max(10.0 * eps * dnorm, dlamchS / eps)
 
-        var x = Array<Float64>(4, item: 0.0)
+        var x = Array<Float64>(4, repeat: 0.0)
         const ldx = 2
         let (scale, _, _) = dlasy2(false, false, -1, n1, n2, d[..], ldd, d[n1 * ldd + n1..], ldd, d[n1..], ldd, x[..],
             ldx)
 
         match {
             case n1 == 1 && n2 == 2 =>
-                let u = Array<Float64>([scale, x[0], 1.0])
+                let u = [scale, x[0], 1.0]
                 let (_, tau) = dlarfg(3, x[1], u[..2], 1)
                 let t11 = t[j1 * ldt + j1]
 
@@ -105,7 +105,7 @@ extend LFloat64Implementation {
                 }
 
             case n1 == 2 && n2 == 1 =>
-                let u = Array<Float64>([1.0, -x[ldx], scale])
+                let u = [1.0, -x[ldx], scale]
                 let (_, tau) = dlarfg(3, -x[0], u[1..], 1)
                 let t33 = t[j3 * ldt + j3]
 
@@ -128,11 +128,11 @@ extend LFloat64Implementation {
                 }
 
             case _ =>
-                let u1 = Array<Float64>([1.0, -x[ldx], scale])
+                let u1 = [1.0, -x[ldx], scale]
                 let (_, tau1) = dlarfg(3, -x[0], u1[1..], 1)
 
                 let temp = -tau1 * (x[1] + Float64(u1[1]) * x[ldx + 1])
-                let u2 = Array<Float64>([1.0, -temp * u1[2], scale])
+                let u2 = [1.0, -temp * u1[2], scale]
                 let (_, tau2) = dlarfg(3, -temp * u1[1] - x[ldx + 1], u2[1..], 1)
 
                 dlarfx(Left, 3, 4, u1[..], tau1, d[..], ldd, work)

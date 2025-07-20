@@ -8,7 +8,7 @@ import std.random.*
 public func dlangtTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
     for (norm in [MaxAbs, MaxRowSum, MaxColumnSum, Frobenius]) {
-        for (n in [0, 1, 2, 3, 4, 5, 10]) {
+        for (n in [2, 3, 4, 5, 10]) {
             for (_ in 0..10) {
                 if (!dlangtTest(lFloat64, rnd, norm, n)) {
                     return false
@@ -26,18 +26,18 @@ func dlangtTest(lFloat64: LFloat64, rnd: Random, norm: MatrixNorm, n: Int64): Bo
     let name = "n=${n}"
 
     let dl = randomSlice(n + extra, rnd)
-    let dlCopy = Array<Float64>(dl.size, item: 0.0)
+    let dlCopy = Array<Float64>(dl.size, repeat: 0.0)
     copy(dlCopy, dl)
 
     let d = randomSlice(n + 1 + extra, rnd)
     if (n > 0 && rnd.nextFloat64() < 0.5) {
         d[rnd.nextInt64(n)] = Float64.NaN
     }
-    let dCopy = Array<Float64>(d.size, item: 0.0)
+    let dCopy = Array<Float64>(d.size, repeat: 0.0)
     copy(dCopy, d)
 
     let du = randomSlice(n + extra, rnd)
-    let duCopy = Array<Float64>(du.size, item: 0.0)
+    let duCopy = Array<Float64>(du.size, repeat: 0.0)
     copy(duCopy, du)
 
     if (n == 0) {

@@ -31,9 +31,9 @@ func dlatbsTest(lFloat64: LFloat64, rnd: Random, kind: Int64, uplo: Uplo, trans:
     ldab: Int64): Bool {
     const eps = 1e-15
 
-    var ab = Array<Float64>([])
+    var ab = Array<Float64>()
     if (n > 0) {
-        ab = Array<Float64>((n - 1) * ldab + kd + 1, item: 0.0)
+        ab = Array<Float64>((n - 1) * ldab + kd + 1, repeat: 0.0)
     }
     for (i in 0..ab.size) {
         ab[i] = rnd.nextGaussianFloat64()
@@ -41,15 +41,15 @@ func dlatbsTest(lFloat64: LFloat64, rnd: Random, kind: Int64, uplo: Uplo, trans:
 
     let (diag, b) = dlattb(kind, uplo, trans, n, kd, ab, ldab, rnd)
 
-    let abCopy = Array<Float64>(ab.size, item: 0.0)
+    let abCopy = Array<Float64>(ab.size, repeat: 0.0)
     copy(abCopy, ab)
 
-    let cnorm = Array<Float64>(n, item: 0.0)
+    let cnorm = Array<Float64>(n, repeat: 0.0)
     for (i in 0..cnorm.size) {
         cnorm[i] = -1.0
     }
 
-    let x = Array<Float64>(n, item: 0.0)
+    let x = Array<Float64>(n, repeat: 0.0)
     copy(x, b)
     var scale = lFloat64.dlatbs(uplo, trans, diag, false, n, kd, ab, ldab, x, cnorm)
 
@@ -67,7 +67,7 @@ func dlatbsTest(lFloat64: LFloat64, rnd: Random, kind: Int64, uplo: Uplo, trans:
         throw Exception("${name}: unexpected result when normin=false. residual=${resid}")
     }
 
-    let cnormCopy = Array<Float64>(cnorm.size, item: 0.0)
+    let cnormCopy = Array<Float64>(cnorm.size, repeat: 0.0)
     copy(cnormCopy, cnorm)
     copy(x, b)
     scale = lFloat64.dlatbs(uplo, trans, diag, true, n, kd, ab, ldab, x, cnorm)
@@ -115,7 +115,7 @@ func dlatbsResidual(uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, kd: Int6
     let xNorm = max(1.0, abs(x[ix]))
     let xScal = (1.0 / xNorm) / Float64(kd + 1)
 
-    let resid = Array<Float64>(x.size, item: 0.0)
+    let resid = Array<Float64>(x.size, repeat: 0.0)
     copy(resid, x)
     nFloat64.dscal(n, xScal, resid, 1)
     nFloat64.dtbmv(uplo, trans, diag, n, kd, ab, ldab, resid, 1)

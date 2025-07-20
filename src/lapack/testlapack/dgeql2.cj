@@ -36,7 +36,7 @@ public func dgeql2Test(lFloat64: LFloat64): Bool {
             rows: m,
             cols: m,
             stride: m,
-            data: Array<Float64>(m * m, item: 0.0)
+            data: Array<Float64>(m * m, repeat: 0.0)
         )
         for (i in 0..m) {
             q.data[i * q.stride + i] = 1.0
@@ -46,14 +46,14 @@ public func dgeql2Test(lFloat64: LFloat64): Bool {
                 rows: m,
                 cols: m,
                 stride: m,
-                data: Array<Float64>(m * m, item: 0.0)
+                data: Array<Float64>(m * m, repeat: 0.0)
             )
             for (j in 0..m) {
                 h.data[j * h.stride + j] = 1.0
             }
             let v = Vector(
                 inc: 1,
-                data: Array<Float64>(m, item: 0.0)
+                data: Array<Float64>(m, repeat: 0.0)
             )
             v.data[m - k + i] = 1.0
             for (j in 0..m - k + i) {
@@ -64,7 +64,7 @@ public func dgeql2Test(lFloat64: LFloat64): Bool {
                 rows: q.rows,
                 cols: q.cols,
                 stride: q.stride,
-                data: Array<Float64>(q.data.size, item: 0.0)
+                data: Array<Float64>(q.data.size, repeat: 0.0)
             )
             copy(qTmp.data, q.data)
             gemm(NoTrans, NoTrans, 1.0, h, qTmp, 0.0, q)
@@ -79,7 +79,7 @@ public func dgeql2Test(lFloat64: LFloat64): Bool {
             rows: m,
             cols: n,
             stride: n,
-            data: Array<Float64>(m * n, item: 0.0)
+            data: Array<Float64>(m * n, repeat: 0.0)
         )
         if (m >= n) {
             for (i in m - n..m) {
@@ -95,7 +95,7 @@ public func dgeql2Test(lFloat64: LFloat64): Bool {
             rows: m,
             cols: n,
             stride: lda,
-            data: Array<Float64>(a.size, item: 0.0)
+            data: Array<Float64>(a.size, repeat: 0.0)
         )
         gemm(NoTrans, NoTrans, 1.0, q, l, 0.0, ans)
         if (!fEqualApprox(ans.data, aCopy, tol)) {

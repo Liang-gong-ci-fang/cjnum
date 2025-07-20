@@ -15,13 +15,13 @@ class l1NormTestStruct {
 public func testL1Norm() {
     var src_gd: Float64 = 1.0
     let l1NormTests = [
-        l1NormTestStruct(0.0, Array<Float64>([])),
-        l1NormTestStruct(2.0, Array<Float64>([2.0])),
-        l1NormTestStruct(6.0, Array<Float64>([1.0, 2.0, 3.0])),
-        l1NormTestStruct(6.0, Array<Float64>([-1.0, -2.0, -3.0])),
-        l1NormTestStruct(nan, Array<Float64>([nan])),
-        l1NormTestStruct(40.0, Array<Float64>([8.0, -8.0, 8.0, -8.0, 8.0])),
-        l1NormTestStruct(5.0, Array<Float64>([0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0]))
+        l1NormTestStruct(0.0, Array<Float64>()),
+        l1NormTestStruct(2.0, [2.0]),
+        l1NormTestStruct(6.0, [1.0, 2.0, 3.0]),
+        l1NormTestStruct(6.0, [-1.0, -2.0, -3.0]),
+        l1NormTestStruct(nan, [nan]),
+        l1NormTestStruct(40.0, [8.0, -8.0, 8.0, -8.0, 8.0]),
+        l1NormTestStruct(5.0, [0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0])
     ]
 
     for (j in 0..l1NormTests.size) {
@@ -47,13 +47,13 @@ class l1NormIncTestStruct {
 public func testL1NormInc() {
     var src_gd: Float64 = 1.0
     let l1NormIncTests = [
-        l1NormIncTestStruct(2, 0.0, Array<Float64>([])),
-        l1NormIncTestStruct(3, 2.0, Array<Float64>([2.0])),
-        l1NormIncTestStruct(10, 6.0, Array<Float64>([1.0, 2.0, 3.0])),
-        l1NormIncTestStruct(5, 6.0, Array<Float64>([-1.0, -2.0, -3.0])),
-        l1NormIncTestStruct(3, nan, Array<Float64>([nan])),
-        l1NormIncTestStruct(15, 40.0, Array<Float64>([8.0, -8.0, 8.0, -8.0, 8.0])),
-        l1NormIncTestStruct(1, 5.0, Array<Float64>([0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0]))
+        l1NormIncTestStruct(2, 0.0, Array<Float64>()),
+        l1NormIncTestStruct(3, 2.0, [2.0]),
+        l1NormIncTestStruct(10, 6.0, [1.0, 2.0, 3.0]),
+        l1NormIncTestStruct(5, 6.0, [-1.0, -2.0, -3.0]),
+        l1NormIncTestStruct(3, nan, [nan]),
+        l1NormIncTestStruct(15, 40.0, [8.0, -8.0, 8.0, -8.0, 8.0]),
+        l1NormIncTestStruct(1, 5.0, [0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0])
     ]
 
     for (j in 0..l1NormIncTests.size) {
@@ -81,15 +81,15 @@ public func testAdd() {
     let src_gd: Float64 = 1.0
     let dst_gd: Float64 = 0.0
     let addTests = [
-        addTestStruct(Array<Float64>([1.0]), Array<Float64>([0.0]), Array<Float64>([1.0])),
-        addTestStruct(Array<Float64>([1.0, 2.0, 3.0]), Array<Float64>([1.0]), Array<Float64>([2.0, 2.0, 3.0])),
-        addTestStruct(Array<Float64>([]), Array<Float64>([]), Array<Float64>([])),
-        addTestStruct(Array<Float64>([1.0]), Array<Float64>([nan]), Array<Float64>([nan])),
-        addTestStruct(Array<Float64>([8.0, 8.0, 8.0, 8.0, 8.0]), Array<Float64>([2.0, 4.0, nan, 8.0, 9.0]),
-            Array<Float64>([10.0, 12.0, nan, 16.0, 17.0])),
-        addTestStruct(Array<Float64>([0.0, 1.0, 2.0, 3.0, 4.0]), Array<Float64>([-inf, 4.0, nan, 8.0, 9.0]),
-            Array<Float64>([-inf, 5.0, nan, 11.0, 13.0])),
-        addTestStruct(Array<Float64>(48, item: 0.0), Array<Float64>(48, item: 0.0), Array<Float64>(48, item: 0.0))
+        addTestStruct([1.0], [0.0], [1.0]),
+        addTestStruct([1.0, 2.0, 3.0], [1.0], [2.0, 2.0, 3.0]),
+        addTestStruct(Array<Float64>(), Array<Float64>(), Array<Float64>()),
+        addTestStruct([1.0], [nan], [nan]),
+        addTestStruct([8.0, 8.0, 8.0, 8.0, 8.0], [2.0, 4.0, nan, 8.0, 9.0],
+            [10.0, 12.0, nan, 16.0, 17.0]),
+        addTestStruct([0.0, 1.0, 2.0, 3.0, 4.0], [-inf, 4.0, nan, 8.0, 9.0],
+            [-inf, 5.0, nan, 11.0, 13.0]),
+        addTestStruct(Array<Float64>(48, repeat: 0.0), Array<Float64>(48, repeat: 0.0), Array<Float64>(48, repeat: 0.0))
     ]
 
     for (j in 0..addTests.size) {
@@ -121,11 +121,11 @@ class addConstTestStruct {
 public func testAddConst() {
     let src_gd: Float64 = 0.0
     let addConstTests = [
-        addConstTestStruct(1.0, Array<Float64>([0.0]), Array<Float64>([1.0])),
-        addConstTestStruct(5.0, Array<Float64>([]), Array<Float64>([])),
-        addConstTestStruct(1.0, Array<Float64>([nan]), Array<Float64>([nan])),
+        addConstTestStruct(1.0, [0.0], [1.0]),
+        addConstTestStruct(5.0, Array<Float64>(), Array<Float64>()),
+        addConstTestStruct(1.0, [nan], [nan]),
         addConstTestStruct(8.0, Array<Float64>()),
-        addConstTestStruct(inf, Array<Float64>([-inf, 4.0, nan, 8.0, 9.0]), Array<Float64>([nan, inf, nan, inf, inf]))
+        addConstTestStruct(inf, [-inf, 4.0, nan, 8.0, 9.0], [nan, inf, nan, inf, inf])
     ]
 
     for (j in 0..addConstTests.size) {
@@ -154,22 +154,21 @@ public func testCumSum() {
     let src_gd: Float64 = -1.0
     let dst_gd: Float64 = 0.0
     let cumSumTests = [
-        cumSumTestStruct(Array<Float64>([]), Array<Float64>([]), Array<Float64>([])),
-        cumSumTestStruct(Array<Float64>([0.0]), Array<Float64>([1.0]), Array<Float64>([1.0])),
-        cumSumTestStruct(Array<Float64>([nan]), Array<Float64>([nan]), Array<Float64>([nan])),
-        cumSumTestStruct(Array<Float64>([0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0]), Array<Float64>([1.0, 3.0, 6.0]
-        )),
-        cumSumTestStruct(Array<Float64>([0.0, 0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0]),
-            Array<Float64>([1.0, 3.0, 6.0])),
-        cumSumTestStruct(Array<Float64>([0.0, 0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0, 4.0]),
-            Array<Float64>([1.0, 3.0, 6.0, 10.0])),
-        cumSumTestStruct(Array<Float64>([1.0, nan, nan, 1.0, 1.0]), Array<Float64>([1.0, 1.0, nan, 1.0, 1.0]),
-            Array<Float64>([1.0, 2.0, nan, nan, nan])),
-        cumSumTestStruct(Array<Float64>([nan, 4.0, inf, -inf, 9.0]), Array<Float64>([inf, 4.0, nan, -inf, 9.0]),
-            Array<Float64>([inf, inf, nan, nan, nan])),
-        cumSumTestStruct(Array<Float64>(16, item: 0.0),
-            Array<Float64>([1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]),
-            Array<Float64>([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]))
+        cumSumTestStruct(Array<Float64>(), Array<Float64>(), Array<Float64>()),
+        cumSumTestStruct([0.0], [1.0], [1.0]),
+        cumSumTestStruct([nan], [nan], [nan]),
+        cumSumTestStruct([0.0, 0.0, 0.0], [1.0, 2.0, 3.0], [1.0, 3.0, 6.0]),
+        cumSumTestStruct([0.0, 0.0, 0.0, 0.0], [1.0, 2.0, 3.0],
+            [1.0, 3.0, 6.0]),
+        cumSumTestStruct([0.0, 0.0, 0.0, 0.0], [1.0, 2.0, 3.0, 4.0],
+            [1.0, 3.0, 6.0, 10.0]),
+        cumSumTestStruct([1.0, nan, nan, 1.0, 1.0], [1.0, 1.0, nan, 1.0, 1.0],
+            [1.0, 2.0, nan, nan, nan]),
+        cumSumTestStruct([nan, 4.0, inf, -inf, 9.0], [inf, 4.0, nan, -inf, 9.0],
+            [inf, inf, nan, nan, nan]),
+        cumSumTestStruct(Array<Float64>(16, repeat: 0.0),
+            [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0])
     ]
 
     for (j in 0..cumSumTests.size) {
@@ -201,24 +200,23 @@ public func testCumProd() {
     let src_gd: Float64 = -1.0
     let dst_gd: Float64 = 1.0
     let cumProdTests = [
-        cumProdTestStruct(Array<Float64>([]), Array<Float64>([]), Array<Float64>([])),
-        cumProdTestStruct(Array<Float64>([1.0]), Array<Float64>([1.0]), Array<Float64>([1.0])),
-        cumProdTestStruct(Array<Float64>([nan]), Array<Float64>([nan]), Array<Float64>([nan])),
-        cumProdTestStruct(Array<Float64>([0.0, 0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0, 4.0]),
-            Array<Float64>([1.0, 2.0, 6.0, 24.0])),
-        cumProdTestStruct(Array<Float64>([0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0]),
-            Array<Float64>([1.0, 2.0, 6.0])),
-        cumProdTestStruct(Array<Float64>([0.0, 0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0]),
-            Array<Float64>([1.0, 2.0, 6.0])),
-        cumProdTestStruct(Array<Float64>([nan, 1.0, nan, 1.0, 0.0]), Array<Float64>([1.0, 1.0, nan, 1.0, 1.0]),
-            Array<Float64>([1.0, 1.0, nan, nan, nan])),
-        cumProdTestStruct(Array<Float64>([nan, 4.0, nan, -inf, 9.0]), Array<Float64>([inf, 4.0, nan, -inf, 9.0]),
-            Array<Float64>([inf, inf, nan, nan, nan])),
-        cumProdTestStruct(Array<Float64>(18, item: 0.0),
-            Array<Float64>([2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0]),
-            Array<Float64>(
+        cumProdTestStruct(Array<Float64>(), Array<Float64>(), Array<Float64>()),
+        cumProdTestStruct([1.0], [1.0], [1.0]),
+        cumProdTestStruct([nan], [nan], [nan]),
+        cumProdTestStruct([0.0, 0.0, 0.0, 0.0], [1.0, 2.0, 3.0, 4.0],
+            [1.0, 2.0, 6.0, 24.0]),
+        cumProdTestStruct([0.0, 0.0, 0.0], [1.0, 2.0, 3.0],
+            [1.0, 2.0, 6.0]),
+        cumProdTestStruct([0.0, 0.0, 0.0, 0.0], [1.0, 2.0, 3.0],
+            [1.0, 2.0, 6.0]),
+        cumProdTestStruct([nan, 1.0, nan, 1.0, 0.0], [1.0, 1.0, nan, 1.0, 1.0],
+            [1.0, 1.0, nan, nan, nan]),
+        cumProdTestStruct([nan, 4.0, nan, -inf, 9.0], [inf, 4.0, nan, -inf, 9.0],
+            [inf, inf, nan, nan, nan]),
+        cumProdTestStruct(Array<Float64>(18, repeat: 0.0),
+            [2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0],
             [2.0, 4.0, 8.0, 16.0, 32.0, 64.0, 128.0, 256.0, 512.0, 1024.0, 2048.0, 4096.0, 8192.0, 16384.0, 32768.0,
-            65536.0]))
+            65536.0])
     ]
 
     for (j in 0..cumProdTests.size) {
@@ -251,22 +249,22 @@ public func testDiv() {
     let src_gd: Float64 = -1.0
     let dst_gd: Float64 = 0.5
     let divTests = [
-        divTestStruct(Array<Float64>([1.0]), Array<Float64>([1.0]), Array<Float64>([1.0])),
-        divTestStruct(Array<Float64>([nan]), Array<Float64>([nan]), Array<Float64>([nan])),
-        divTestStruct(Array<Float64>([1.0, 2.0, 3.0, 4.0]), Array<Float64>([1.0, 2.0, 3.0, 4.0]),
-            Array<Float64>([1.0, 1.0, 1.0, 1.0])),
-        divTestStruct(Array<Float64>([1.0, 2.0, 3.0, 4.0, 2.0, 4.0, 6.0, 8.0]),
-            Array<Float64>([1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0]), Array<Float64>([1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0,
-            2.0])),
-        divTestStruct(Array<Float64>([2.0, 4.0, 6.0]), Array<Float64>([1.0, 2.0, 3.0]), Array<Float64>([2.0, 2.0, 2.0])),
-        divTestStruct(Array<Float64>([0.0, 0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0]),
-            Array<Float64>([0.0, 0.0, 0.0])),
-        divTestStruct(Array<Float64>([nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0]),
-            Array<Float64>([1.0, 1.0, nan, 1.0, 1.0, 1.0, 1.0, nan, 1.0, 1.0]),
-            Array<Float64>([nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0])),
-        divTestStruct(Array<Float64>([inf, 4.0, nan, -inf, 9.0, inf, 4.0, nan, -inf, 9.0]),
-            Array<Float64>([inf, 4.0, nan, -inf, 3.0, inf, 4.0, nan, -inf, 3.0]),
-            Array<Float64>([nan, 1.0, nan, nan, 3.0, nan, 1.0, nan, nan, 3.0]))
+        divTestStruct([1.0], [1.0], [1.0]),
+        divTestStruct([nan], [nan], [nan]),
+        divTestStruct([1.0, 2.0, 3.0, 4.0], [1.0, 2.0, 3.0, 4.0],
+            [1.0, 1.0, 1.0, 1.0]),
+        divTestStruct([1.0, 2.0, 3.0, 4.0, 2.0, 4.0, 6.0, 8.0],
+            [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0], [1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0,
+            2.0]),
+        divTestStruct([2.0, 4.0, 6.0], [1.0, 2.0, 3.0], [2.0, 2.0, 2.0]),
+        divTestStruct([0.0, 0.0, 0.0, 0.0], [1.0, 2.0, 3.0],
+            [0.0, 0.0, 0.0]),
+        divTestStruct([nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0],
+            [1.0, 1.0, nan, 1.0, 1.0, 1.0, 1.0, nan, 1.0, 1.0],
+            [nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0]),
+        divTestStruct([inf, 4.0, nan, -inf, 9.0, inf, 4.0, nan, -inf, 9.0],
+            [inf, 4.0, nan, -inf, 3.0, inf, 4.0, nan, -inf, 3.0],
+            [nan, 1.0, nan, nan, 3.0, nan, 1.0, nan, nan, 3.0])
     ]
 
     for (j in 0..divTests.size) {
@@ -301,22 +299,22 @@ public func testDivTo() {
     let x_gd: Float64 = 0.5
     let y_gd: Float64 = 0.25
     let divToTests = [
-        divToTestStruct(Array<Float64>([1.0]), Array<Float64>([1.0]), Array<Float64>([1.0]), Array<Float64>([1.0])),
-        divToTestStruct(Array<Float64>([1.0]), Array<Float64>([nan]), Array<Float64>([nan]), Array<Float64>([nan])),
-        divToTestStruct(Array<Float64>([-2.0, -2.0, -2.0]), Array<Float64>([1.0, 2.0, 3.0]),
-            Array<Float64>([1.0, 2.0, 3.0]), Array<Float64>([1.0, 1.0, 1.0])),
-        divToTestStruct(Array<Float64>([0.0, 0.0, 0.0]), Array<Float64>([2.0, 4.0, 6.0]),
-            Array<Float64>([1.0, 2.0, 3.0, 4.0]), Array<Float64>([2.0, 2.0, 2.0])),
-        divToTestStruct(Array<Float64>([-1.0, -1.0, -1.0]), Array<Float64>([0.0, 0.0, 0.0]),
-            Array<Float64>([1.0, 2.0, 3.0]), Array<Float64>([0.0, 0.0, 0.0])),
-        divToTestStruct(Array<Float64>([inf, inf, inf, inf, inf, inf, inf, inf, inf, inf]),
-            Array<Float64>([nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0]),
-            Array<Float64>([1.0, 1.0, nan, 1.0, 1.0, 1.0, 1.0, nan, 1.0, 1.0]),
-            Array<Float64>([nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0])),
-        divToTestStruct(Array<Float64>([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]),
-            Array<Float64>([inf, 4.0, nan, -inf, 9.0, inf, 4.0, nan, -inf, 9.0]),
-            Array<Float64>([inf, 4.0, nan, -inf, 3.0, inf, 4.0, nan, -inf, 3.0]),
-            Array<Float64>([nan, 1.0, nan, nan, 3.0, nan, 1.0, nan, nan, 3.0]))
+        divToTestStruct([1.0], [1.0], [1.0], [1.0]),
+        divToTestStruct([1.0], [nan], [nan], [nan]),
+        divToTestStruct([-2.0, -2.0, -2.0], [1.0, 2.0, 3.0],
+            [1.0, 2.0, 3.0], [1.0, 1.0, 1.0]),
+        divToTestStruct([0.0, 0.0, 0.0], [2.0, 4.0, 6.0],
+            [1.0, 2.0, 3.0, 4.0], [2.0, 2.0, 2.0]),
+        divToTestStruct([-1.0, -1.0, -1.0], [0.0, 0.0, 0.0],
+            [1.0, 2.0, 3.0], [0.0, 0.0, 0.0]),
+        divToTestStruct([inf, inf, inf, inf, inf, inf, inf, inf, inf, inf],
+            [nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0],
+            [1.0, 1.0, nan, 1.0, 1.0, 1.0, 1.0, nan, 1.0, 1.0],
+            [nan, 1.0, nan, 1.0, 0.0, nan, 1.0, nan, 1.0, 0.0]),
+        divToTestStruct([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [inf, 4.0, nan, -inf, 9.0, inf, 4.0, nan, -inf, 9.0],
+            [inf, 4.0, nan, -inf, 3.0, inf, 4.0, nan, -inf, 3.0],
+            [nan, 1.0, nan, nan, 3.0, nan, 1.0, nan, nan, 3.0])
     ]
 
     for (j in 0..divToTests.size) {
@@ -353,14 +351,14 @@ public func testL1Dist() {
     let s_gd: Float64 = -1.0
     let t_gd: Float64 = 0.5
     let l1DistTests = [
-        L1DistTestStruct(Array<Float64>([1.0]), Array<Float64>([1.0]), 0.0),
-        L1DistTestStruct(Array<Float64>([nan]), Array<Float64>([nan]), nan),
-        L1DistTestStruct(Array<Float64>([1.0, 2.0, 3.0, 4.0]), Array<Float64>([1.0, 2.0, 3.0, 4.0]), 0.0),
-        L1DistTestStruct(Array<Float64>([2.0, 4.0, 6.0]), Array<Float64>([1.0, 2.0, 3.0, 4.0]), 6.0),
-        L1DistTestStruct(Array<Float64>([0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0]), 6.0),
-        L1DistTestStruct(Array<Float64>([0.0, -4.0, -10.0]), Array<Float64>([1.0, 2.0, 3.0]), 20.0),
-        L1DistTestStruct(Array<Float64>([0.0, 1.0, 0.0, 1.0, 0.0]), Array<Float64>([1.0, 1.0, inf, 1.0, 1.0]), inf),
-        L1DistTestStruct(Array<Float64>([inf, 4.0, nan, -inf, 9.0]), Array<Float64>([inf, 4.0, nan, -inf, 3.0]), nan)
+        L1DistTestStruct([1.0], [1.0], 0.0),
+        L1DistTestStruct([nan], [nan], nan),
+        L1DistTestStruct([1.0, 2.0, 3.0, 4.0], [1.0, 2.0, 3.0, 4.0], 0.0),
+        L1DistTestStruct([2.0, 4.0, 6.0], [1.0, 2.0, 3.0, 4.0], 6.0),
+        L1DistTestStruct([0.0, 0.0, 0.0], [1.0, 2.0, 3.0], 6.0),
+        L1DistTestStruct([0.0, -4.0, -10.0], [1.0, 2.0, 3.0], 20.0),
+        L1DistTestStruct([0.0, 1.0, 0.0, 1.0, 0.0], [1.0, 1.0, inf, 1.0, 1.0], inf),
+        L1DistTestStruct([inf, 4.0, nan, -inf, 9.0], [inf, 4.0, nan, -inf, 3.0], nan)
     ]
 
     for (j in 0..l1DistTests.size) {
@@ -391,14 +389,14 @@ public func testLinfDist() {
     let t_gd: Float64 = 0.0
     let s_gd: Float64 = inf
     let linfDistTests = [
-        linfDistTestStruct(Array<Float64>([]), Array<Float64>([]), 0.0),
-        linfDistTestStruct(Array<Float64>([1.0]), Array<Float64>([1.0]), 0.0),
-        linfDistTestStruct(Array<Float64>([nan]), Array<Float64>([nan]), nan),
-        linfDistTestStruct(Array<Float64>([1.0, 2.0, 3.0, 4.0]), Array<Float64>([1.0, 2.0, 3.0, 4.0]), 0.0),
-        linfDistTestStruct(Array<Float64>([2.0, 4.0, 6.0]), Array<Float64>([1.0, 2.0, 3.0, 4.0]), 3.0),
-        linfDistTestStruct(Array<Float64>([0.0, 0.0, 0.0]), Array<Float64>([1.0, 2.0, 3.0]), 3.0),
-        linfDistTestStruct(Array<Float64>([0.0, 1.0, 0.0, 1.0, 0.0]), Array<Float64>([1.0, 1.0, inf, 1.0, 1.0]), inf),
-        linfDistTestStruct(Array<Float64>([inf, 4.0, nan, -inf, 9.0]), Array<Float64>([inf, 4.0, nan, -inf, 3.0]), 6.0)
+        linfDistTestStruct(Array<Float64>(), Array<Float64>(), 0.0),
+        linfDistTestStruct([1.0], [1.0], 0.0),
+        linfDistTestStruct([nan], [nan], nan),
+        linfDistTestStruct([1.0, 2.0, 3.0, 4.0], [1.0, 2.0, 3.0, 4.0], 0.0),
+        linfDistTestStruct([2.0, 4.0, 6.0], [1.0, 2.0, 3.0, 4.0], 3.0),
+        linfDistTestStruct([0.0, 0.0, 0.0], [1.0, 2.0, 3.0], 3.0),
+        linfDistTestStruct([0.0, 1.0, 0.0, 1.0, 0.0], [1.0, 1.0, inf, 1.0, 1.0], inf),
+        linfDistTestStruct([inf, 4.0, nan, -inf, 9.0], [inf, 4.0, nan, -inf, 3.0], 6.0)
     ]
 
     for (j in 0..linfDistTests.size) {
@@ -427,20 +425,19 @@ class SumTestStruct {
 public func testSum() {
     let src_gd: Float64 = -1.0
     let sumTests = [
-        SumTestStruct(Array<Float64>([]), 0.0),
-        SumTestStruct(Array<Float64>([1.0]), 1.0),
-        SumTestStruct(Array<Float64>([nan]), nan),
-        SumTestStruct(Array<Float64>([1.0, 2.0, 3.0]), 6.0),
-        SumTestStruct(Array<Float64>([1.0, -4.0, 3.0]), 0.0),
-        SumTestStruct(Array<Float64>([1.0, 2.0, 3.0, 4.0]), 10.0),
-        SumTestStruct(Array<Float64>([1.0, 1.0, nan, 1.0, 1.0]), nan),
-        SumTestStruct(Array<Float64>([inf, 4.0, nan, -inf, 9.0]), nan),
-        SumTestStruct(Array<Float64>([1.0, 1.0, 1.0, 1.0, 9.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 5.0, 1.0]),
+        SumTestStruct(Array<Float64>(), 0.0),
+        SumTestStruct([1.0], 1.0),
+        SumTestStruct([nan], nan),
+        SumTestStruct([1.0, 2.0, 3.0], 6.0),
+        SumTestStruct([1.0, -4.0, 3.0], 0.0),
+        SumTestStruct([1.0, 2.0, 3.0, 4.0], 10.0),
+        SumTestStruct([1.0, 1.0, nan, 1.0, 1.0], nan),
+        SumTestStruct([inf, 4.0, nan, -inf, 9.0], nan),
+        SumTestStruct([1.0, 1.0, 1.0, 1.0, 9.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 5.0, 1.0],
             29.0),
         SumTestStruct(
-            Array<Float64>(
             [1.0, 1.0, 1.0, 1.0, 9.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 5.0, 11.0, 1.0, 1.0, 1.0, 9.0, 1.0,
-            1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 5.0, 1.0]), 67.0)
+            1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 5.0, 1.0], 67.0)
     ]
 
     for (j in 0..sumTests.size) {

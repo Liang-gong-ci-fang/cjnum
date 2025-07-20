@@ -79,7 +79,7 @@ func testDlaln2(lFloat64: LFloat64, trans: Bool, na: Int64, nw: Int64, extra: In
         return true
     }
 
-    let m = Array<Complex128>(na * na, item: Complex128(0.0))
+    let m = Array<Complex128>(na * na, repeat: Complex128(0.0))
     if (trans) {
         for (i in 0..na) {
             for (j in 0..na) {
@@ -98,8 +98,8 @@ func testDlaln2(lFloat64: LFloat64, trans: Bool, na: Int64, nw: Int64, extra: In
         m[3] -= w * Complex128(d2, 0.0)
     }
 
-    let cx = Array<Complex128>(na, item: Complex128(0.0))
-    let cb = Array<Complex128>(na, item: Complex128(0.0))
+    let cx = Array<Complex128>(na, repeat: Complex128(0.0))
+    let cb = Array<Complex128>(na, repeat: Complex128(0.0))
 
     if (nw == 1) {
         for (i in 0..na) {
@@ -113,7 +113,7 @@ func testDlaln2(lFloat64: LFloat64, trans: Bool, na: Int64, nw: Int64, extra: In
         }
     }
 
-    let mx = Array<Complex128>(na, item: Complex128(0.0))
+    let mx = Array<Complex128>(na, repeat: Complex128(0.0))
     for (i in 0..na) {
         for (j in 0..na) {
             mx[i] += m[i * na + j] * cx[j]

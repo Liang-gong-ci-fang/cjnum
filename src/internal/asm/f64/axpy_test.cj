@@ -17,31 +17,31 @@ class axpyTestStruct {
 
 let axpyTests = [
     axpyTestStruct(0.0, Array<Float64>(), Array<Float64>(), Array<Float64>(), Array<Float64>()),
-    axpyTestStruct(0.0, Array<Float64>([2.0]), Array<Float64>([-3.0]), Array<Float64>([-3.0]), Array<Float64>([-3.0])),
-    axpyTestStruct(1.0, Array<Float64>([2.0]), Array<Float64>([-3.0]), Array<Float64>([-1.0]), Array<Float64>([-1.0])),
-    axpyTestStruct(3.0, Array<Float64>([2.0]), Array<Float64>([-3.0]), Array<Float64>([3.0]), Array<Float64>([3.0])),
-    axpyTestStruct(-3.0, Array<Float64>([2.0]), Array<Float64>([-3.0]), Array<Float64>([-9.0]), Array<Float64>([-9.0])),
-    axpyTestStruct(1.0, Array<Float64>([1.0, 5.0]), Array<Float64>([2.0, -3.0]), Array<Float64>([3.0, 2.0]),
-        Array<Float64>([7.0, -2.0])),
-    axpyTestStruct(1.0, Array<Float64>([2.0, 3.0, 4.0]), Array<Float64>([-3.0, -2.0, -1.0]),
-        Array<Float64>([-1.0, 1.0, 3.0]), Array<Float64>([1.0, 1.0, 1.0])),
-    axpyTestStruct(0.0, Array<Float64>([0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0]),
-        Array<Float64>([0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0]), Array<Float64>([0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0]),
-        Array<Float64>([0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0])),
-    axpyTestStruct(1.0, Array<Float64>([0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0]),
-        Array<Float64>([0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0]), Array<Float64>([0.0, 1.0, 1.0, 4.0, -2.0, 2.0, -10.0]),
-        Array<Float64>([-4.0, -2.0, 2.0, 4.0, -3.0, 5.0, -6.0])),
-    axpyTestStruct(3.0, Array<Float64>([0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0]),
-        Array<Float64>([0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0]), Array<Float64>([0.0, 1.0, 3.0, 6.0, 2.0, -4.0, -18.0]),
-        Array<Float64>([-12.0, -8.0, 6.0, 6.0, -1.0, 5.0, -6.0])),
-    axpyTestStruct(-3.0, Array<Float64>([0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0, 0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0]),
-        Array<Float64>([0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0, 0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0]),
-        Array<Float64>([0.0, 1.0, -3.0, 0.0, -10.0, 14.0, 6.0, 0.0, 1.0, -3.0, 0.0, -10.0, 14.0, 6.0]),
-        Array<Float64>([12.0, 10.0, -6.0, 0.0, -7.0, 5.0, -6.0, 12.0, 10.0, -6.0, 0.0, -7.0, 5.0, -6.0])),
-    axpyTestStruct(-5.0, Array<Float64>([0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0, 5.0, 1.0, 2.0, -3.0, -4.0, 5.0]),
-        Array<Float64>([0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0, 7.0, 3.0, -4.0, 5.0, -6.0, 7.0]),
-        Array<Float64>([0.0, 1.0, -5.0, -2.0, -14.0, 20.0, 14.0, -18.0, -2.0, -14.0, 20.0, 14.0, -18.0]),
-        Array<Float64>([-25.0, 21.0, 15.0, -7.0, -9.0, -20.0, 14.0, 22.0, -7.0, -9.0, 0.0, -6.0, 7.0]))
+    axpyTestStruct(0.0, [2.0], [-3.0], [-3.0], [-3.0]),
+    axpyTestStruct(1.0, [2.0], [-3.0], [-1.0], [-1.0]),
+    axpyTestStruct(3.0, [2.0], [-3.0], [3.0], [3.0]),
+    axpyTestStruct(-3.0, [2.0], [-3.0], [-9.0], [-9.0]),
+    axpyTestStruct(1.0, [1.0, 5.0], [2.0, -3.0], [3.0, 2.0],
+        [7.0, -2.0]),
+    axpyTestStruct(1.0, [2.0, 3.0, 4.0], [-3.0, -2.0, -1.0],
+        [-1.0, 1.0, 3.0], [1.0, 1.0, 1.0]),
+    axpyTestStruct(0.0, [0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0],
+        [0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0], [0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0],
+        [0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0]),
+    axpyTestStruct(1.0, [0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0],
+        [0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0], [0.0, 1.0, 1.0, 4.0, -2.0, 2.0, -10.0],
+        [-4.0, -2.0, 2.0, 4.0, -3.0, 5.0, -6.0]),
+    axpyTestStruct(3.0, [0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0],
+        [0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0], [0.0, 1.0, 3.0, 6.0, 2.0, -4.0, -18.0],
+        [-12.0, -8.0, 6.0, 6.0, -1.0, 5.0, -6.0]),
+    axpyTestStruct(-3.0, [0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0, 0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0],
+        [0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0, 0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0],
+        [0.0, 1.0, -3.0, 0.0, -10.0, 14.0, 6.0, 0.0, 1.0, -3.0, 0.0, -10.0, 14.0, 6.0],
+        [12.0, 10.0, -6.0, 0.0, -7.0, 5.0, -6.0, 12.0, 10.0, -6.0, 0.0, -7.0, 5.0, -6.0]),
+    axpyTestStruct(-5.0, [0.0, 0.0, 1.0, 1.0, 2.0, -3.0, -4.0, 5.0, 1.0, 2.0, -3.0, -4.0, 5.0],
+        [0.0, 1.0, 0.0, 3.0, -4.0, 5.0, -6.0, 7.0, 3.0, -4.0, 5.0, -6.0, 7.0],
+        [0.0, 1.0, -5.0, -2.0, -14.0, 20.0, 14.0, -18.0, -2.0, -14.0, 20.0, 14.0, -18.0],
+        [-25.0, 21.0, 15.0, -7.0, -9.0, -20.0, 14.0, 22.0, -7.0, -9.0, 0.0, -6.0, 7.0])
 ]
 
 @Test
@@ -78,7 +78,7 @@ public func testAxpyUnitaryTo() {
             let dgLn = 4 + align.dst
             let xgLn = 4 + align.x
             let ygLn = 4 + align.y
-            let dstOrig = Array<Float64>(axpyTests[i].x.size, item: 0.0)
+            let dstOrig = Array<Float64>(axpyTests[i].x.size, repeat: 0.0)
             let xg = guardVector(axpyTests[i].x, xGdVal, xgLn)
             let yg = guardVector(axpyTests[i].y, yGdVal, ygLn)
             let dstg = guardVector(dstOrig, dstGdVal, dgLn)
@@ -160,7 +160,7 @@ public func testAxpyIncTo() {
                 idst = (-n + 1) * inc.dst
             }
 
-            let dstOrig = Array<Float64>(axpyTests[i].want.size, item: 0.0)
+            let dstOrig = Array<Float64>(axpyTests[i].want.size, repeat: 0.0)
             let xg = guardIncVector(axpyTests[i].x, xGdVal, inc.x, gdLn)
             let yg = guardIncVector(axpyTests[i].y, yGdVal, inc.y, gdLn)
             let dstg = guardIncVector(dstOrig, dstGdVal, inc.dst, gdLn)

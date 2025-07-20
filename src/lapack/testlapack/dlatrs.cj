@@ -17,7 +17,7 @@ public func dlatrsTest(lFloat64: LFloat64): Bool {
                     let lda_ = max(1, lda)
                     let imats = ArrayList<Int64>([7, 11, 12, 13, 14, 15, 16, 17, 18, 19])
                     if (n < 6) {
-                        imats.append(19) 
+                        imats.add(19) 
                     }
                     for (imat in imats) {
                         _testDlatrs(lFloat64, imat, uplo, trans, n, lda_, rnd)
@@ -34,7 +34,7 @@ func _testDlatrs(lFloat64: LFloat64, imat: Int64, uplo: Uplo, trans: Transpose, 
 
     let a = nanSlice(n * lda)
     let b = nanSlice(n)
-    let work = Array<Float64>(3 * n, item: 0.0)
+    let work = Array<Float64>(3 * n, repeat: 0.0)
 
     let diag = dlattr(imat, uplo, trans, n, a, lda, b, work, rnd)
     if (imat <= 10) {

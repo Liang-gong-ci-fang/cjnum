@@ -175,7 +175,7 @@ extend LFloat64Implementation {
                 }
 
                 var m: Int64 = i - 2
-                let v = Array<Float64>(3, item: 0.0)
+                let v = Array<Float64>(3, repeat: 0.0)
                 while (m >= l) {
                     var h21s = h[(m + 1) * ldh + m]
                     var s = abs(h[m * ldh + m] - rt2r) + abs(rt2i) + abs(h21s)

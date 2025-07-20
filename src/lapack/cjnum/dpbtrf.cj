@@ -39,7 +39,7 @@ extend LFloat64Implementation {
         }
 
         let ldwork = nb
-        let work = Array<Float64>(nb * ldwork, item: 0.0)
+        let work = Array<Float64>(nb * ldwork, repeat: 0.0)
         let nFloat64 = nFloat64Implementation()
 
         if (uplo == Upper) {

@@ -7,7 +7,7 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 public func newSymmetricFrom(a: SymmetricCols): Symmetric {
-    let t = Symmetric(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, item: Complex128(0.0)), uplo: a.uplo)
+    let t = Symmetric(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, repeat: Complex128(0.0)), uplo: a.uplo)
     t.from(a)
     return t
 }
@@ -38,7 +38,7 @@ extend Symmetric <: symmetric {
 }
 
 public func newSymmetricColsFrom(a: Symmetric): SymmetricCols {
-    let t = SymmetricCols(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, item: Complex128(0.0)), uplo: a.uplo)
+    let t = SymmetricCols(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, repeat: Complex128(0.0)), uplo: a.uplo)
     t.from(a)
     return t
 }

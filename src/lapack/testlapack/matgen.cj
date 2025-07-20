@@ -326,8 +326,8 @@ func checkMatrix(m: Int64, n: Int64, a: Array<Float64>, lda: Int64) {
 
 func randomOrthogonal(n: Int64, rnd: Random): General64 {
     let q = eye(n, n)
-    let x = Array<Float64>(n, item: 0.0)
-    let v = Array<Float64>(n, item: 0.0)
+    let x = Array<Float64>(n, repeat: 0.0)
+    let v = Array<Float64>(n, repeat: 0.0)
     for (j in 0..n - 1) {
         for (i in 0..j) {
             x[i] = 0.0
@@ -374,7 +374,7 @@ func applyReflector(qh: General64, q: General64, v: Array<Float64>): Unit {
     if (q.rows != n || q.cols != n) {
         throw Exception("bad size of q")
     }
-    let qv = Array<Float64>(n, item: 0.0)
+    let qv = Array<Float64>(n, repeat: 0.0)
     gemv(NoTrans, 1.0, q, Vector(data: v, inc: 1), 0.0, Vector(data: qv, inc: 1))
     for (i in 0..n) {
         for (j in 0..n) {
@@ -407,9 +407,9 @@ func newRandomSymTridiag(n: Int64, rnd: Random): (Array<Float64>, Array<Float64>
         return (d, [])
     }
 
-    let d = Array<Float64>(n, item: 0.0)
+    let d = Array<Float64>(n, repeat: 0.0)
     dlarnv(d, 1, rnd)
-    let e = Array<Float64>(n - 1, item: 0.0)
+    let e = Array<Float64>(n - 1, repeat: 0.0)
     dlarnv(e, 2, rnd)
 
     d[0] += abs(e[0])
@@ -459,7 +459,7 @@ func dlattb(kind: Int64, uplo: Uplo, trans: Transpose, n: Int64, kd: Int64, ab: 
 
     let uniformM11 = {=> 2.0 * rnd.nextFloat64() - 1.0}
 
-    b = Array<Float64>(n, item: 0.0)
+    b = Array<Float64>(n, repeat: 0.0)
     for (i in 0..b.size) {
         b[i] = uniformM11()
     }
@@ -535,8 +535,8 @@ func dlattb(kind: Int64, uplo: Uplo, trans: Transpose, n: Int64, kd: Int64, ab: 
                 }
             }
         } else {
-            let work1 = Array<Float64>(n, item: 0.0)
-            let work2 = Array<Float64>(n, item: 0.0)
+            let work1 = Array<Float64>(n, repeat: 0.0)
+            let work2 = Array<Float64>(n, repeat: 0.0)
             var star1 = copysign(tnorm, uniformM11())
             let sfac = sqrt(tnorm)
             var plus1 = copysign(sfac, uniformM11())

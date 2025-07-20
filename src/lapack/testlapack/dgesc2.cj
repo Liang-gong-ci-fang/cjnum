@@ -37,14 +37,14 @@ func testDgesc2(lFloat64: LFloat64, rnd: Random, n: Int64, lda: Int64, big: Bool
     }
 
     let lu = cloneGeneral(a)
-    let ipiv = Array<Int64>(n, item: 0)
-    let jpiv = Array<Int64>(n, item: 0)
+    let ipiv = Array<Int64>(n, repeat: 0)
+    let jpiv = Array<Int64>(n, repeat: 0)
     lFloat64.dgetc2(n, lu.data, lu.stride, ipiv, jpiv)
 
     let luCopy = cloneGeneral(lu)
-    let ipivCopy = Array<Int64>(ipiv.size, item: 0)
+    let ipivCopy = Array<Int64>(ipiv.size, repeat: 0)
     copy(ipivCopy, ipiv)
-    let jpivCopy = Array<Int64>(jpiv.size, item: 0)
+    let jpivCopy = Array<Int64>(jpiv.size, repeat: 0)
     copy(jpivCopy, jpiv)
 
     let x = cloneGeneral(b)

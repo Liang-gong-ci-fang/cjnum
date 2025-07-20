@@ -37,15 +37,15 @@ func dlagtmTest(lFloat64: LFloat64, rnd: Random, trans: Transpose, m: Int64, n: 
     let name = "Case m=${m},n=${n},ldb=${ldb},ldc=${ldc},alpha=${alpha},beta=${beta}"
 
     let dl = randomSlice(n + extra, rnd)
-    let dlCopy = Array<Float64>(dl.size, item: 0.0)
+    let dlCopy = Array<Float64>(dl.size, repeat: 0.0)
     copy(dlCopy, dl)
 
     let d = randomSlice(n + 1 + extra, rnd)
-    let dCopy = Array<Float64>(d.size, item: 0.0)
+    let dCopy = Array<Float64>(d.size, repeat: 0.0)
     copy(dCopy, d)
 
     let du = randomSlice(n + extra, rnd)
-    let duCopy = Array<Float64>(du.size, item: 0.0)
+    let duCopy = Array<Float64>(du.size, repeat: 0.0)
     copy(duCopy, du)
 
     let b = randomGeneral(m, n, ldb, rnd)

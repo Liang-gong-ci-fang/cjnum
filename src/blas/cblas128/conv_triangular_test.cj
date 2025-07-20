@@ -8,7 +8,7 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 public func newTriangularFrom(a: TriangularCols): Triangular {
-    let t = Triangular(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, item: Complex128(0.0)), diag: a.diag, uplo: a.uplo)
+    let t = Triangular(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, repeat: Complex128(0.0)), diag: a.diag, uplo: a.uplo)
     t.from(a)
     return t
 }
@@ -44,7 +44,7 @@ extend Triangular <: triangular {
 }
 
 public func newTriangularColsFrom(a: Triangular): TriangularCols {
-    let t = TriangularCols(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, item: Complex128(0.0)), diag: a.diag, uplo: a.uplo)
+    let t = TriangularCols(n: a.n, stride: a.n, data: Array<Complex128>(a.n * a.n, repeat: Complex128(0.0)), diag: a.diag, uplo: a.uplo)
     t.from(a)
     return t
 }

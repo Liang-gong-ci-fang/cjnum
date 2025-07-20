@@ -149,12 +149,12 @@ public func c128Asin(x: Complex128): Complex128 {
         if (re.isNaN()) {
             return x
         } else if (re.isInf()) {
-            return Complex128(copysign(Float64.PI / 4.0, re), im)
+            return Complex128(copysign(Float64.getPI() / 4.0, re), im)
         } else {
             return Complex128(copysign(0.0, re), im)
         }
     } else if (re.isInf()) {
-        return Complex128(copysign(Float64.PI / 2.0, re), copysign(re, im))
+        return Complex128(copysign(Float64.getPI() / 2.0, re), copysign(re, im))
     }
     let ct = Complex128(-x.imag, x.real) // i * x
     let xx = x * x
@@ -174,7 +174,7 @@ public func c128Asinh(x: Complex128): Complex128 {
         return Complex128(re, asin(im))
     } else if (re.isInf()) {
         if (im.isInf()) {
-            return Complex128(re, copysign(Float64.PI / 4.0, im))
+            return Complex128(re, copysign(Float64.getPI() / 4.0, im))
         } else if (im.isNaN()) {
             return x
         } else {
@@ -189,7 +189,7 @@ public func c128Asinh(x: Complex128): Complex128 {
             return Complex128.NaN
         }
     } else if (im.isInf()) {
-        return Complex128(copysign(im, re), copysign(Float64.PI / 2.0, im))
+        return Complex128(copysign(im, re), copysign(Float64.getPI() / 2.0, im))
     }
     let xx = x * x
     let x1 = Complex128(1.0 + xx.real, xx.imag) // 1 + x*x
@@ -212,13 +212,13 @@ public func c128Asinh(x: Complex128): Complex128 {
 // Acos returns the inverse cosine of x.
 public func c128Acos(x: Complex128): Complex128 {
     let w = c128Asin(x)
-    return Complex128(Float64.PI / 2.0 - w.real, -w.imag)
+    return Complex128(Float64.getPI() / 2.0 - w.real, -w.imag)
 }
 
 // Acosh returns the inverse hyperbolic cosine of x.
 public func c128Acosh(x: Complex128): Complex128 {
     if (x == Complex128(0.0, 0.0)) {
-        return Complex128(0.0, copysign(Float64.PI / 2.0, x.imag))
+        return Complex128(0.0, copysign(Float64.getPI() / 2.0, x.imag))
     }
     let w = c128Acos(x)
     if (w.imag <= 0.0) {
@@ -272,7 +272,7 @@ public func c128Atan(x: Complex128): Complex128 {
         if (re.isNaN()) {
             return Complex128(Float64.NaN, copysign(0.0, im))
         }
-        return Complex128(copysign(Float64.PI / 2.0, re), copysign(0.0, im))
+        return Complex128(copysign(Float64.getPI() / 2.0, re), copysign(0.0, im))
     } else if (re.isNaN() || im.isInf()) {
         return Complex128.NaN
     }
@@ -590,7 +590,7 @@ private func reducePi(x_: Float64): Float64 {
         let PI2 = 1.5099578831723193e-07 // 0x3e84442d00000000
         let PI3 = 1.0780605716316238e-14 // 0x3d08469898cc5170
 
-        var t = x / Float64.PI
+        var t = x / Float64.getPI()
         t += 0.5
         t = Float64(Int64(t)) // int64(t) = the multiple
         return ((x - t * PI1) - t * PI2) - t * PI3
@@ -661,7 +661,7 @@ private func reducePi(x_: Float64): Float64 {
     if (x > 0.5) {
         x -= 1.0
     }
-    return Float64.PI * x
+    return Float64.getPI() * x
 }
 
 // Taylor series expansion for cosh(2y) - cos(2x)

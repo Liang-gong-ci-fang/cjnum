@@ -55,9 +55,9 @@ func testDlarfx(lFloat64: LFloat64, side: Side, m: Int64, n: Int64, extra: Int64
     var work: Array<Float64> = Array<Float64>()
     if (h.rows > 10) {
         if (side == Left) {
-            work = Array<Float64>(n, item: 0.0)
+            work = Array<Float64>(n, repeat: 0.0)
         } else {
-            work = Array<Float64>(m, item: 0.0)
+            work = Array<Float64>(m, repeat: 0.0)
         }
     }
 

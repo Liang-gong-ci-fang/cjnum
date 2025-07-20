@@ -28,21 +28,21 @@ import std.random.*
 //     let name = "n=${n},lda=${lda}"
 //     let nFloat64 = nFloat64Implementation()
 
-//     let a = Array<Float64>(n * lda, item: 0.0)
+//     let a = Array<Float64>(n * lda, repeat: 0.0)
 //     for (_ in 0..rankWant) {
 //         let x = randomSlice(n, rnd)
 //         nFloat64.dsyr(uplo, n, 1.0, x, 1, a, lda)
 //     }
 
-//     let aFac = Array<Float64>(a.size, item: 0.0)
+//     let aFac = Array<Float64>(a.size, repeat: 0.0)
 //     copy(aFac, a)
 
-//     var piv = Array<Int64>(n, item: 0)
+//     var piv = Array<Int64>(n, repeat: 0)
 //     for (i in 0..piv.size) {
 //         piv[i] = -1
 //     }
 
-//     let work = Array<Float64>(2 * n, item: 0.0)
+//     let work = Array<Float64>(2 * n, repeat: 0.0)
 
 //     let (rank, ok) = lFloat64.dpstrf(uplo, n, aFac, lda, piv, -1.0, work)
 

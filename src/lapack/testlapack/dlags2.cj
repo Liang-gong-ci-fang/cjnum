@@ -63,7 +63,7 @@ public func dlags2Test(lFloat64: LFloat64): Bool {
                 b.data = [b1, 0.0, b2, b3]
             }
 
-            let tmp = General64(rows: 2, cols: 2, stride: 2, data: Array<Float64>(4, item: 0.0))
+            let tmp = General64(rows: 2, cols: 2, stride: 2, data: Array<Float64>(4, repeat: 0.0))
             gemm(Trans, NoTrans, 1.0, u, a, 0.0, tmp)
             gemm(NoTrans, NoTrans, 1.0, tmp, q, 0.0, a)
             gemm(Trans, NoTrans, 1.0, v, b, 0.0, tmp)

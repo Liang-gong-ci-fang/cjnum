@@ -128,7 +128,7 @@ func flatten(a: Array<Array<Float64>>): Array<Float64> {
     }
     let m = a.size
     let n = a[0].size
-    let s = Array<Float64>(m * n, item: 0.0)
+    let s = Array<Float64>(m * n, repeat: 0.0)
     for (i in 0..m) {
         for (j in 0..n) {
             s[i * n + j] = a[i][j]
@@ -153,7 +153,7 @@ func unflatten(a: Array<Float64>, m: Int64, n: Int64): Array<Array<Float64>> {
 
 func flattenTriangular(a: Array<Array<Float64>>, ul: Uplo): Array<Float64> {
     let m = a.size
-    let aFlat = Array<Float64>(m * (m + 1) / 2, item: 0.0)
+    let aFlat = Array<Float64>(m * (m + 1) / 2, repeat: 0.0)
     var k: Int64 = 0
     if (ul == Upper) {
         for (i in 0..m) {
@@ -175,7 +175,7 @@ func flattenBanded(a: Array<Array<Float64>>, ku: Int64, kl: Int64): Array<Float6
     }
     let nRows = m
     let nCols = (ku + kl + 1)
-    let aflat = Array<Float64>(nRows * nCols, item: Float64.NaN)
+    let aflat = Array<Float64>(nRows * nCols, repeat: Float64.NaN)
 
     for (i in 0..nRows) {
         var min_ = -kl
@@ -199,7 +199,7 @@ func makeIncremented(x: Array<Float64>, inc: Int64, extra: Int64): Array<Float64
         throw Exception("zero inc")
     }
     let absinc = abs(inc)
-    let xcopy = Array<Float64>(x.size, item: 0.0)
+    let xcopy = Array<Float64>(x.size, repeat: 0.0)
     if (inc > 0) {
         copy(xcopy, x)
     } else {
@@ -211,16 +211,16 @@ func makeIncremented(x: Array<Float64>, inc: Int64, extra: Int64): Array<Float64
     var counter: Float64 = 100.0
     let xnew = ArrayList<Float64>()
     for (i in 0..xcopy.size) {
-        xnew.append(xcopy[i])
+        xnew.add(xcopy[i])
         if (i != x.size - 1) {
             for (_ in 0..absinc - 1) {
-                xnew.append(counter)
+                xnew.add(counter)
                 counter += 1.0
             }
         }
     }
     for (_ in 0..extra) {
-        xnew.append(counter)
+        xnew.add(counter)
         counter += 1.0
     }
     return xnew.toArray()
@@ -231,7 +231,7 @@ func makeIncremented(x: Array<Float64>, inc: Int64, extra: Int64): Array<Float64
 //         throw Exception("zero inc")
 //     }
 //     let absinc = abs(inc)
-//     let xcopy = Array<Float32>(x.size, item: 0.0)
+//     let xcopy = Array<Float32>(x.size, repeat: 0.0)
 //     if (inc > 0) {
 //         copy(xcopy, x)
 //     } else {
@@ -243,16 +243,16 @@ func makeIncremented(x: Array<Float64>, inc: Int64, extra: Int64): Array<Float64
 //     var counter: Float32 = 100.0
 //     let xnew = ArrayList<Float32>()
 //     for (i in 0..xcopy.size) {
-//         xnew.append(xcopy[i])
+//         xnew.add(xcopy[i])
 //         if (i != x.size - 1) {
 //             for (_ in 0..absinc - 1) {
-//                 xnew.append(counter)
+//                 xnew.add(counter)
 //                 counter += 1.0
 //             }
 //         }
 //     }
 //     for (_ in 0..extra) {
-//         xnew.append(counter)
+//         xnew.add(counter)
 //         counter += 1.0
 //     }
 //     return xnew.toArray()
@@ -262,7 +262,7 @@ func makeIncremented(x: Array<Float64>, inc: Int64, extra: Int64): Array<Float64
 //     let p = ArrayList<Array<Int64>>()
 //     for (v0 in x) {
 //         for (v1 in y) {
-//             p.append([v0, v1])
+//             p.add([v0, v1])
 //         }
 //     }
 //     return p.toArray()

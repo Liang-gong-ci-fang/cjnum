@@ -88,28 +88,25 @@ extend LFloat64Implementation {
             return (scale, xnorm, ok)
         }
 
-        let crv = Array<Float64>(
-            [
+        let crv = [
                 ca * a[0] - wr * d1,
                 ca * a[1],
                 ca * a[lda],
                 ca * a[lda + 1] - wr * d2
             ]
-        )
+        
         if (trans) {
             crv[1] = ca * a[lda]
             crv[2] = ca * a[1]
         }
 
-        let pivot = Array<Array<Int64>>(
-            [
-                Array<Int64>([0, 1, 2, 3]),
-                Array<Int64>([1, 0, 3, 2]),
-                Array<Int64>([2, 3, 0, 1]),
-                Array<Int64>([3, 2, 1, 0])
+        let pivot = [
+                [0, 1, 2, 3],
+                [1, 0, 3, 2],
+                [2, 3, 0, 1],
+                [3, 2, 1, 0]
             ]
-        )
-
+        
         if (nw == 1) {
             var cmax = 0.0
             var icmax = 0
@@ -186,14 +183,12 @@ extend LFloat64Implementation {
             return (scale, xnorm, ok)
         }
 
-        let civ = Array<Float64>(
-            [
+        let civ = [
                 -wi * d1,
                 0.0,
                 0.0,
                 -wi * d2
             ]
-        )
         var cmax = 0.0
         var icmax = 0
         for (j in 0..crv.size) {

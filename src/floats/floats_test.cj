@@ -46,7 +46,7 @@ public func testAdd() {
     let b = [4.0, 5.0, 6.0]
     let c = [7.0, 8.0, 9.0]
     let truth = [12.0, 15.0, 18.0]
-    let n = Array<Float64>(a.size, item: 0.0)
+    let n = Array<Float64>(a.size, repeat: 0.0)
 
     fAdd(n, a)
     fAdd(n, b)
@@ -55,7 +55,7 @@ public func testAdd() {
     fAdd(a, b)
     fAdd(a, c)
     @Expect(areSlicesEqual(truth, n))
-    @Expect(exception({ => fAdd(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fAdd(Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
 }
 
 @Test
@@ -64,14 +64,14 @@ public func testAddTo() {
     let a = [1.0, 2.0, 3.0]
     let b = [4.0, 5.0, 6.0]
     let truth = [5.0, 7.0, 9.0]
-    let n1 = Array<Float64>(a.size, item: 0.0)
+    let n1 = Array<Float64>(a.size, repeat: 0.0)
 
     let n2 = fAddTo(n1, a, b)
     @Expect(areSlicesEqual(truth, n1))
     @Expect(areSlicesEqual(truth, n2))
 
-    @Expect(exception( { => fAddTo(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
-    @Expect(exception( { => fAddTo(Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception( { => fAddTo(Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
+    @Expect(exception( { => fAddTo(Array<Float64>(3, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
 }
 
 @Test
@@ -104,7 +104,7 @@ public func testAddScaledTo() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let alpha = 6.0
     let y = [1.0, 2.0, 3.0, 4.0, 5.0]
-    let dst1 = Array<Float64>(5, item: 0.0)
+    let dst1 = Array<Float64>(5, repeat: 0.0)
     let ans = [19.0, 26.0, 9.0, 46.0, 35.0]
     let dst2 = fAddScaledTo(dst1, y, alpha, s)
     @Expect(fEqualApprox(dst1, ans, EqTolerance))
@@ -121,7 +121,7 @@ public func testAddScaledTo() {
 @Parallel
 public func testArgsort() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
-    let inds = Array<Int64>(s.size, item: 0)
+    let inds = Array<Int64>(s.size, repeat: 0)
 
     fArgsort(s, inds)
 
@@ -141,13 +141,13 @@ public func testArgsort() {
 @Parallel
 public func testArgsortStable() {
     for (i in 0..=100) {
-        let data = Array<Float64>(i + 2, item: 0.0)
+        let data = Array<Float64>(i + 2, repeat: 0.0)
         data[0] = 2.0
         data[data.size - 1] = 2.0
         for (j in 1..=i) {
             data[j] = 1.0
         }
-        let idx = Array<Int64>(data.size, item: 0)
+        let idx = Array<Int64>(data.size, repeat: 0)
         fArgsortStable(data, idx)
         @Expect(isSort(data))
         @Expect(isSort(idx[..i]))
@@ -168,7 +168,7 @@ public func testCount() {
 @Parallel
 public func testCumProd() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
-    let receiver = Array<Float64>(s.size, item: 0.0)
+    let receiver = Array<Float64>(s.size, repeat: 0.0)
     let result = fCumProd(receiver, s)
     var truth = [3.0, 12.0, 12.0, 84.0, 420.0]
     @Expect(areSlicesEqual(truth, receiver))
@@ -176,7 +176,7 @@ public func testCumProd() {
     fCumProd(receiver, s)
     @Expect(areSlicesEqual(truth, receiver))
 
-    @Expect(exception({ => fCumProd(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fCumProd(Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
 
     let emptyReceiver = Array<Float64>()
     truth = []
@@ -188,14 +188,14 @@ public func testCumProd() {
 @Parallel
 public func testCumSum() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
-    let receiver = Array<Float64>(s.size, item: 0.0)
+    let receiver = Array<Float64>(s.size, repeat: 0.0)
     let result = fCumSum(receiver, s)
     var truth = [3.0, 7.0, 8.0, 15.0, 20.0]
     @Expect(areSlicesEqual(truth, receiver))
     @Expect(areSlicesEqual(truth, result))
     fCumSum(receiver, s)
     @Expect(areSlicesEqual(truth, receiver))
-    @Expect(exception({ => fCumSum(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fCumSum(Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
     let emptyReceiver = Array<Float64>()
     truth = []
     fCumSum(emptyReceiver, emptyReceiver)
@@ -219,7 +219,7 @@ public func testDistance() {
         DistanceTestStruct(s: [1.0, 2.0, 3.0, -4.0, -5.0, 8.0], t: [-9.2, -6.8, 9.0, -3.0, -2.0, 1.0])
     ]
     for (test in tests) {
-        let tmp = Array<Float64>(test.s.size, item: 0.0)
+        let tmp = Array<Float64>(test.s.size, repeat: 0.0)
         for (L in fNorms) {
             let dist = fDistance(L, s: test.s, t: test.t)
             copy(tmp, test.s)
@@ -256,7 +256,7 @@ public func testDivTo() {
     let s1orig = [5.0, 12.0, 27.0]
     let s2 = [1.0, 2.0, 3.0]
     let s2orig = [1.0, 2.0, 3.0]
-    let dst1 = Array<Float64>(3, item: 0.0)
+    let dst1 = Array<Float64>(3, repeat: 0.0)
     let ans = [5.0, 6.0, 9.0]
     let dst2 = fDivTo(dst1, s1, s2)
     @Expect(fEqualApprox(dst1, ans, EqTolerance))
@@ -281,7 +281,7 @@ public func testDot() {
     let truth = -4.0
     let ans = fDot(s1, s2)
     @Expect(ans, truth)
-    @Expect(exception({ => fDot(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fDot(Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
 }
 
 @Test
@@ -502,21 +502,21 @@ public func testHasNaN() {
 @Test
 @Parallel
 public func testLogSpan() {
-    let receiver1 = Array<Float64>(6, item: 0.0)
+    let receiver1 = Array<Float64>(6, repeat: 0.0)
     let truth = [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
     let receiver2 = fLogSpan(0.001, 100.0, dst: receiver1)
-    let tst = Array<Float64>(6, item: 0.0)
+    let tst = Array<Float64>(6, repeat: 0.0)
     for (i in 0..truth.size) {
         tst[i] = receiver1[i] / truth[i]
     }
-    let comp = Array<Float64>(6, item: 1.0)
+    let comp = Array<Float64>(6, repeat: 1.0)
     @Expect(areSlicesEqual(comp, tst))
     for (i in 0..truth.size) {
         tst[i] = receiver2[i] / truth[i]
     }
     @Expect(areSlicesEqual(comp, tst))
     @Expect(exception({ => fLogSpan(1.0, 5.0)}))
-    @Expect(exception({ => fLogSpan(1.0, 5.0, dst: Array<Float64>(1, item: 0.0)) }))
+    @Expect(exception({ => fLogSpan(1.0, 5.0, dst: Array<Float64>(1, repeat: 0.0)) }))
 }
 
 @Test
@@ -613,7 +613,7 @@ public func testMulTo() {
     let s1orig = [1.0, 2.0, 3.0]
     let s2 = [1.0, 2.0, 3.0]
     let s2orig = [1.0, 2.0, 3.0]
-    let dst1 = Array<Float64>(3, item: 0.0)
+    let dst1 = Array<Float64>(3, repeat: 0.0)
     let ans = [1.0, 4.0, 9.0]
     let dst2 = fMulTo(dst1, s1, s2)
     @Expect(fEqualApprox(dst1, ans, EqTolerance))
@@ -784,7 +784,7 @@ public func testScaleTo() {
     let sCopy = s.clone()
     let c = 5.0
     let truth = [15.0, 20.0, 5.0, 35.0, 25.0]
-    let dst = Array<Float64>(s.size, item: 0.0)
+    let dst = Array<Float64>(s.size, repeat: 0.0)
     fScaleTo(dst, c, s)
     @Expect(fSame(dst, truth))
     @Expect(fSame(s, sCopy))
@@ -820,16 +820,16 @@ class fSpanTestStruct {
 @Test
 @Parallel
 public func testSpan() {
-    var receiver1 = Array<Float64>(5, item: 0.0)
+    var receiver1 = Array<Float64>(5, repeat: 0.0)
     var truth = [1.0, 2.0, 3.0, 4.0, 5.0]
     let receiver2 = fSpan(receiver1, 1.0, 5.0)
     @Expect(areSlicesEqual(truth, receiver1))
     @Expect(areSlicesEqual(truth, receiver2))
-    receiver1 = Array<Float64>(6, item: 0.0)
+    receiver1 = Array<Float64>(6, repeat: 0.0)
     truth = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
     fSpan(receiver1, 0.0, 1.0)
     @Expect(areSlicesEqual(truth, receiver1))
-    @Expect(exception({ => fSpan(Array<Float64>(1, item: 0.0), 1.0, 5.0) }))
+    @Expect(exception({ => fSpan(Array<Float64>(1, repeat: 0.0), 1.0, 5.0) }))
 
     let tests = [
         fSpanTestStruct(n: 4, l: -Float64.Inf, u: Float64.Inf, want: [-Float64.Inf, -Float64.Inf, Float64.Inf,
@@ -862,7 +862,7 @@ public func testSpan() {
         fSpanTestStruct(n: 5, l: Float64.NaN, u: 42.0, want: [Float64.NaN, Float64.NaN, Float64.NaN, Float64.NaN, 42.0])
     ]
     for (test in tests) {
-        let got = fSpan(Array<Float64>(test.n, item: 0.0), test.l, test.u)
+        let got = fSpan(Array<Float64>(test.n, repeat: 0.0), test.l, test.u)
         @Expect(areSlicesSame(test.want, got))
     }
 }
@@ -875,7 +875,7 @@ public func testSub() {
     var truth = [2.0, 2.0, -2.0, 3.0, 0.0]
     fSub(s, v)
     @Expect(areSlicesEqual(truth, s))
-    @Expect(exception({ => fSub(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
+    @Expect(exception({ => fSub(Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
 }
 
 @Test
@@ -884,13 +884,13 @@ public func testSubTo() {
     let s = [3.0, 4.0, 1.0, 7.0, 5.0]
     let v = [1.0, 2.0, 3.0, 4.0, 5.0]
     var truth = [2.0, 2.0, -2.0, 3.0, 0.0]
-    var dst1 = Array<Float64>(s.size, item: 0.0)
+    var dst1 = Array<Float64>(s.size, repeat: 0.0)
     var dst2 = fSubTo(dst1, s, v)
     @Expect(areSlicesEqual(truth, dst1))
     @Expect(areSlicesEqual(truth, dst2))
-    @Expect(exception({ => fSubTo(Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0)) }))
-    @Expect(exception({ => fSubTo(Array<Float64>(3, item: 0.0), Array<Float64>(2, item: 0.0), Array<Float64>(3, item: 0.0)) }))
-    @Expect(exception({ => fSubTo(Array<Float64>(3, item: 0.0), Array<Float64>(3, item: 0.0), Array<Float64>(2, item: 0.0)) }))
+    @Expect(exception({ => fSubTo(Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
+    @Expect(exception({ => fSubTo(Array<Float64>(3, repeat: 0.0), Array<Float64>(2, repeat: 0.0), Array<Float64>(3, repeat: 0.0)) }))
+    @Expect(exception({ => fSubTo(Array<Float64>(3, repeat: 0.0), Array<Float64>(3, repeat: 0.0), Array<Float64>(2, repeat: 0.0)) }))
 }
 
 @Test
@@ -955,11 +955,11 @@ class SumCompensatedTestStruct {
 @Parallel
 public func testSumCompensated() {
     let k = 100000
-    let s1 = Array<Float64>(2 * k + 1, item: 0.0)
+    let s1 = Array<Float64>(2 * k + 1, repeat: 0.0)
     for (i in -k..=k) {
         s1[i + k] = 0.2 * Float64(i)
     }
-    let s2 = Array<Float64>(k + 1, item: 0.0)
+    let s2 = Array<Float64>(k + 1, repeat: 0.0)
     for (i in 0..k) {
         s2[i] = 10.0 / Float64(k)
     }

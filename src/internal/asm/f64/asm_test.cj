@@ -14,7 +14,7 @@ func newGuardedVector(data: Array<Float64>, inc: Int64): (Array<Float64>, Array<
     let inc_ = abs(inc)
     let guard = 2 * inc_
     let size = (data.size - 1) * inc_ + 1
-    let whole = Array<Float64>(size + 2 * guard, item: 0.0)
+    let whole = Array<Float64>(size + 2 * guard, repeat: 0.0)
     let v = whole[guard..(whole.size - guard)]
     for (i in 0..whole.size) {
         whole[i] = Float64.NaN
@@ -84,7 +84,7 @@ func isValidGuard(vec: Array<Float64>, gdVal: Float64, gdLn: Int64): Bool {
 func guardIncVector(vec: Array<Float64>, gdVal: Float64, inc: Int64, gdLen: Int64): Array<Float64> {
     let inc_ = abs(inc)
     let inrLen = vec.size * inc_
-    let guarded = Array<Float64>(inrLen + gdLen * 2, item: gdVal)
+    let guarded = Array<Float64>(inrLen + gdLen * 2, repeat: gdVal)
     for (i in 0..vec.size) {
         guarded[gdLen + i * inc_] = vec[i]
     }

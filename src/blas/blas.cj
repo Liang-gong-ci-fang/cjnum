@@ -14,7 +14,7 @@ public class SrotmParams {
 }
 
 public class DrotmParams {
-    public DrotmParams(public var flag!: Flag = 0, public var h!: Array<Float64> = Array<Float64>(4, item: 0.0)) {}
+    public DrotmParams(public var flag!: Flag = 0, public var h!: Array<Float64> = Array<Float64>(4, repeat: 0.0)) {}
 }
 
 public type Transpose = UInt8

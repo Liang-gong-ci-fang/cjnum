@@ -1098,7 +1098,7 @@ func dgemmParallel(aTrans: Bool, bTrans: Bool, m: Int64, n: Int64, k: Int64, a: 
                 }
             }
             
-            wg.append(fut)
+            wg.add(fut)
             j += blockSize
         }
         i += blockSize

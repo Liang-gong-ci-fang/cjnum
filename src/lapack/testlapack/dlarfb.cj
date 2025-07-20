@@ -55,7 +55,7 @@ public func dlarfbTest(lFloat64: LFloat64): Bool {
                         if (lda == 0) {
                             lda = na
                         }
-                        let a = Array<Float64>(ma * lda, item: 0.0)
+                        let a = Array<Float64>(ma * lda, repeat: 0.0)
                         for (i in 0..ma) {
                             for (j in 0..lda) {
                                 a[i * lda + j] = rnd.nextFloat64()
@@ -78,8 +78,8 @@ public func dlarfbTest(lFloat64: LFloat64): Bool {
                             throw Exception("not implemented")
                         }
 
-                        let tau = Array<Float64>(k, item: 0.0)
-                        var work = Array<Float64>(na, item: 0.0)
+                        let tau = Array<Float64>(k, repeat: 0.0)
+                        var work = Array<Float64>(na, repeat: 0.0)
                         lFloat64.dgeqr2(ma, k, a, lda, tau, work)
 
                         let vMatTmp = extractVMat(ma, na, a, lda, Forward, ColumnWise)
@@ -91,7 +91,7 @@ public func dlarfbTest(lFloat64: LFloat64): Bool {
                         if (ldt == 0) {
                             ldt = k
                         }
-                        let tm = Array<Float64>(k * ldt, item: 0.0)
+                        let tm = Array<Float64>(k * ldt, repeat: 0.0)
 
                         lFloat64.dlarft(direct, store, ma, k, v, ldv, tau, tm, ldt)
 
@@ -99,17 +99,17 @@ public func dlarfbTest(lFloat64: LFloat64): Bool {
                         if (ldc == 0) {
                             ldc = n
                         }
-                        let c = Array<Float64>(m * ldc, item: 0.0)
+                        let c = Array<Float64>(m * ldc, repeat: 0.0)
                         for (i in 0..m) {
                             for (j in 0..ldc) {
                                 c[i * ldc + j] = rnd.nextFloat64()
                             }
                         }
-                        let cCopy = Array<Float64>(c.size, item: 0.0)
+                        let cCopy = Array<Float64>(c.size, repeat: 0.0)
                         copy(cCopy, c)
 
                         let ldwork = k
-                        work = Array<Float64>(rowsWork * k, item: 0.0)
+                        work = Array<Float64>(rowsWork * k, repeat: 0.0)
 
                         lFloat64.dlarfb(side, trans, direct, store, m, n, k, v, ldv, tm, ldt, c, ldc, work, ldwork)
 
@@ -119,14 +119,14 @@ public func dlarfbTest(lFloat64: LFloat64): Bool {
                             rows: m,
                             cols: n,
                             stride: ldc,
-                            data: Array<Float64>(m * ldc, item: 0.0)
+                            data: Array<Float64>(m * ldc, repeat: 0.0)
                         )
                         copy(cMat.data, cCopy)
                         let ans = General64(
                             rows: m,
                             cols: n,
                             stride: ldc,
-                            data: Array<Float64>(m * ldc, item: 0.0)
+                            data: Array<Float64>(m * ldc, repeat: 0.0)
                         )
                         copy(ans.data, cMat.data)
                         if (side == Left && trans == NoTrans) {

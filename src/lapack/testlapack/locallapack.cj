@@ -176,7 +176,7 @@ func dlansy(norm: MatrixNorm, uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int6
     if (n == 0) {
         return 0.0
     }
-    let work = Array<Float64>(n, item: 0.0)
+    let work = Array<Float64>(n, repeat: 0.0)
     match {
         case norm == MaxAbs =>
             if (uplo == Upper) {
@@ -254,11 +254,14 @@ func dlange(norm: MatrixNorm, m: Int64, n: Int64, a: Array<Float64>, lda: Int64)
     if (norm == MaxAbs) {
         for (i in 0..m) {
             for (j in 0..n) {
+                if (value.isNaN()) {  // TODO cj1.0.0
+                    continue
+                }
                 value = max(value, abs(a[i * lda + j]))
             }
         }
     } else if (norm == MaxColumnSum) {
-        let work = Array<Float64>(n, item: 0.0)
+        let work = Array<Float64>(n, repeat: 0.0)
         for (i in 0..m) {
             for (j in 0..n) {
                 work[j] += abs(a[i * lda + j])

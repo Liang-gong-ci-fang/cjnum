@@ -75,7 +75,7 @@ func flattenTri(a: Array<Array<Float64>>, stride: Int64, ul: Uplo): Array<Float6
         throw Exception("bad stride")
     }
     let upper = ul == Upper
-    let v = Array<Float64>(m * stride, item: 0.0)
+    let v = Array<Float64>(m * stride, repeat: 0.0)
     var count = 1000.0
     for (i in 0..m) {
         for (j in 0..stride) {
@@ -96,9 +96,9 @@ func transpose(a: Array<Array<Float64>>): Array<Array<Float64>> {
     if (m != n) {
         throw Exception("not square")
     }
-    let aNew = Array<Array<Float64>>(m, item: Array<Float64>(n, item: 0.0))
+    let aNew = Array<Array<Float64>>(m, repeat: Array<Float64>(n, repeat: 0.0))
     for (i in 0..m) {
-        aNew[i] = Array<Float64>(n, item: 0.0)
+        aNew[i] = Array<Float64>(n, repeat: 0.0)
     }
     for (i in 0..m) {
         if (a[i].size != n) {

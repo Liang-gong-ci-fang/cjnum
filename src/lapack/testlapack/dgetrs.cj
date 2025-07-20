@@ -82,7 +82,7 @@ public func dgetrsTest(lFloat64: LFloat64): Bool {
                 rows: n,
                 cols: nrhs,
                 stride: ldb,
-                data: Array<Float64>(n * ldb, item: 0.0)
+                data: Array<Float64>(n * ldb, repeat: 0.0)
             )
             copy(tmp.data, bCopy)
             gemm(trans, NoTrans, 1.0, A, X, 0.0, B)

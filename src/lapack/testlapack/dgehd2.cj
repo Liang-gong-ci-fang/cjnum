@@ -41,7 +41,7 @@ func testDgehd2(lFloat64: LFloat64, n: Int64, extra: Int64, rnd: Random): Bool {
             a.data[i * a.stride + j] = Float64.NaN
         }
     }
-    let aCopy = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, item: 0.0))
+    let aCopy = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, repeat: 0.0))
     copy(aCopy.data, a.data)
     lFloat64.dgehd2(n, ilo, ihi, a.data, a.stride, tau, work)
     let prefix = "Case n=${n}, ilo=${ilo}, ihi=${ihi}, extra=${extra}"
@@ -98,25 +98,25 @@ func testDgehd2(lFloat64: LFloat64, n: Int64, extra: Int64, rnd: Random): Bool {
         rows: n,
         cols: n,
         stride: n,
-        data: Array<Float64>(n * n, item: 0.0)
+        data: Array<Float64>(n * n, repeat: 0.0)
     )
     for (i in 0..q.rows) {
         q.data[i * q.stride + i] = 1.0
     }
-    let qCopy = General64(rows: q.rows, cols: q.cols, stride: q.stride, data: Array<Float64>(a.data.size, item: 0.0))
+    let qCopy = General64(rows: q.rows, cols: q.cols, stride: q.stride, data: Array<Float64>(a.data.size, repeat: 0.0))
     for (j in ilo..ihi) {
         let h = General64(
             rows: n,
             cols: n,
             stride: n,
-            data: Array<Float64>(n * n, item: 0.0)
+            data: Array<Float64>(n * n, repeat: 0.0)
         )
         for (i in 0..h.rows) {
             h.data[i * h.stride + i] = 1.0
         }
         let v = Vector(
             inc: 1,
-            data: Array<Float64>(n, item: 0.0)
+            data: Array<Float64>(n, repeat: 0.0)
         )
         v.data[j + 1] = 1.0
         for (i in j + 2..=ihi) {
@@ -147,7 +147,7 @@ func testDgehd2(lFloat64: LFloat64, n: Int64, extra: Int64, rnd: Random): Bool {
         rows: n,
         cols: n,
         stride: n,
-        data: Array<Float64>(n * n, item: 0.0)
+        data: Array<Float64>(n * n, repeat: 0.0)
     )
     gemm(NoTrans, NoTrans, 1.0, aCopy, q, 0.0, aq)
 
@@ -155,7 +155,7 @@ func testDgehd2(lFloat64: LFloat64, n: Int64, extra: Int64, rnd: Random): Bool {
         rows: n,
         cols: n,
         stride: n,
-        data: Array<Float64>(n * n, item: 0.0)
+        data: Array<Float64>(n * n, repeat: 0.0)
     )
     gemm(Trans, NoTrans, 1.0, q, aq, 0.0, qaq)
 

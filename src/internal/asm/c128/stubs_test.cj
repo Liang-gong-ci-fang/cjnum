@@ -51,9 +51,9 @@ public func testAdd() {
             )]
         ),
         addTestStruct(
-            dst: Array<Complex128>(48, item: Complex128(0.0, 0.0)),
-            src: Array<Complex128>(48, item: Complex128(0.0, 0.0)),
-            expect: Array<Complex128>(48, item: Complex128(0.0, 0.0))
+            dst: Array<Complex128>(48, repeat: Complex128(0.0, 0.0)),
+            src: Array<Complex128>(48, repeat: Complex128(0.0, 0.0)),
+            expect: Array<Complex128>(48, repeat: Complex128(0.0, 0.0))
         )
     ]
     for (j in 0..tests.size) {
@@ -217,7 +217,7 @@ public func testCumProd() {
             expect: [Complex128(1.0), Complex128(1.0), Complex128.NaN, Complex128.NaN, Complex128.NaN]
         ),
         cumProdTestStruct(
-            dst: Array<Complex128>(18, item: Complex128(0.0, 0.0)),
+            dst: Array<Complex128>(18, repeat: Complex128(0.0, 0.0)),
             src: [Complex128(0.0, 2.0), Complex128(0.0, 2.0), Complex128(0.0, 2.0), Complex128(0.0, 2.0),
                 Complex128(0.0, 2.0), Complex128(0.0, 2.0), Complex128(0.0, 2.0), Complex128(0.0, 2.0),
                 Complex128(0.0, 2.0), Complex128(0.0, 2.0), Complex128(0.0, 2.0), Complex128(0.0, 2.0),

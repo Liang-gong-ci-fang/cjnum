@@ -58,7 +58,7 @@ class Argsort{
         if (s.size != inds.size) {
             throw Exception(badDstLength)
         }
-        this.s_inds = Array<(Float64, Int64)>(s.size, item: (0.0, 0))
+        this.s_inds = Array<(Float64, Int64)>(s.size, repeat: (0.0, 0))
         for (i in 0..s.size) {
             this.s_inds[i] = (s[i], inds[i])
         }
@@ -69,7 +69,7 @@ class Argsort{
     }
 
     public func sort(stable!: Bool = false): Unit {
-        this.s_inds.sortBy(stable: stable, comparator: { ts, ta => 
+        sort(s_inds, stable: stable, by: { ts, ta => 
             if (ts[0] == ta[0]) {
                 Ordering.EQ
             } else if (ts[0] > ta[0]) {
@@ -262,7 +262,7 @@ public func fFind(f: (Float64) -> Bool, s: Array<Float64>, k: Int64, inds!: Arra
     if (k < 0) {
         for (i in 0..s.size) {
             if (f(s[i])) {
-                inds.append(i)
+                inds.add(i)
             }
         }
         return inds
@@ -271,7 +271,7 @@ public func fFind(f: (Float64) -> Bool, s: Array<Float64>, k: Int64, inds!: Arra
     var nFound = 0
     for (i in 0..s.size) {
         if (f(s[i])) {
-            inds.append(i)
+            inds.add(i)
             nFound++
             if (nFound == k) {
                 return inds

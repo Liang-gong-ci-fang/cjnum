@@ -41,25 +41,25 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
                 test.ldw
             }
 
-            let a = Array<Float64>(n * lda, item: 0.0)
+            let a = Array<Float64>(n * lda, repeat: 0.0)
             for (i in 0..a.size) {
                 a[i] = rnd.nextGaussianFloat64()
             }
 
-            let e = Array<Float64>(n - 1, item: 0.0)
+            let e = Array<Float64>(n - 1, repeat: 0.0)
             for (i in 0..e.size) {
                 e[i] = Float64.NaN
             }
-            let tau = Array<Float64>(n - 1, item: 0.0)
+            let tau = Array<Float64>(n - 1, repeat: 0.0)
             for (i in 0..tau.size) {
                 tau[i] = Float64.NaN
             }
-            let w = Array<Float64>(n * ldw, item: 0.0)
+            let w = Array<Float64>(n * ldw, repeat: 0.0)
             for (i in 0..w.size) {
                 w[i] = Float64.NaN
             }
 
-            let aCopy = Array<Float64>(a.size, item: 0.0)
+            let aCopy = Array<Float64>(a.size, repeat: 0.0)
             copy(aCopy, a)
 
             lFloat64.dlatrd(uplo, n, nb, a, lda, e, tau, w, ldw)
@@ -68,7 +68,7 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
                 rows: n, 
                 cols: n, 
                 stride: n,
-                data: Array<Float64>(n * n, item: 0.0)
+                data: Array<Float64>(n * n, repeat: 0.0)
             )
 
             for (i in 0..n) {
@@ -81,7 +81,7 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
                     }
                     let v = Vector(
                         inc: 1, 
-                        data: Array<Float64>(n, item: 0.0)
+                        data: Array<Float64>(n, repeat: 0.0)
                     )
                     for (j in 0..i - 1) {
                         v.data[j] = a[j * lda + i]
@@ -89,7 +89,7 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
                     v.data[i - 1] = 1.0
 
                     let h = General64(
-                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, item: 0.0)
+                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, repeat: 0.0)
                     )
                     for (j in 0..n) {
                         h.data[j * n + j] = 1.0
@@ -97,7 +97,7 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
                     ger(-tau[i - 1], v, v, h)
 
                     let qTmp = General64(
-                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, item: 0.0)
+                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, repeat: 0.0)
                     )
                     copy(qTmp.data, q.data)
                     gemm(NoTrans, NoTrans, 1.0, qTmp, h, 0.0, q)
@@ -110,7 +110,7 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
 
                     let v = Vector(
                         inc: 1, 
-                        data: Array<Float64>(n, item: 0.0)
+                        data: Array<Float64>(n, repeat: 0.0)
                     )
                     v.data[i + 1] = 1.0
                     for (j in i + 2..n) {
@@ -118,7 +118,7 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
                     }
 
                     let h = General64(
-                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, item: 0.0)
+                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, repeat: 0.0)
                     )
                     for (j in 0..n) {
                         h.data[j * n + j] = 1.0
@@ -126,7 +126,7 @@ public func dlatrdTest(lFloat64: LFloat64): Bool {
                     ger(-tau[i], v, v, h)
 
                     let qTmp = General64(
-                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, item: 0.0)
+                        rows: n, cols: n, stride: n, data: Array<Float64>(n * n, repeat: 0.0)
                     )
                     for (k in 0..q.data.size) {
                         qTmp.data[k] = q.data[k]
@@ -155,13 +155,13 @@ func dlatrdCheckDecomposition(uplo: Uplo, n: Int64, nb: Int64, e: Array<Float64>
         rows: n,
         cols: n,
         stride: n,
-        data: Array<Float64>(n * n, item: 0.0)
+        data: Array<Float64>(n * n, repeat: 0.0)
     )
     let ans = General64(
         rows: n,
         cols: n,
         stride: n,
-        data: Array<Float64>(n * n, item: 0.0)
+        data: Array<Float64>(n * n, repeat: 0.0)
     )
     gemm(Trans, NoTrans, 1.0, q, aGen, 0.0, tmp)
     gemm(NoTrans, NoTrans, 1.0, tmp, q, 0.0, ans)
@@ -224,7 +224,7 @@ func genFromSym(a: Symmetric): General64 {
         rows: n,
         cols: n,
         stride: n,
-        data: Array<Float64>(n * n, item: 0.0)
+        data: Array<Float64>(n * n, repeat: 0.0)
     )
 
     for (i in 0..n) {

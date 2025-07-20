@@ -14,7 +14,7 @@ public func dlanstTest(lFloat64: LFloat64): Bool {
 
 				let m = n
 				let lda = n
-				let a = Array<Float64>(m * lda, item: 0.0)
+				let a = Array<Float64>(m * lda, repeat: 0.0)
 				for (i in 0..n) {
 					a[i * lda + i] = d[i]
 				}
@@ -23,7 +23,7 @@ public func dlanstTest(lFloat64: LFloat64): Bool {
 					a[(i + 1) * lda + i] = e[i]
 				}
 
-				let work = Array<Float64>(n, item: 0.0)
+				let work = Array<Float64>(n, repeat: 0.0)
 				let syNorm = lFloat64.dlanst(norm, n, d, e)
 				let geNorm = lFloat64.dlange(norm, m, n, a, lda, work)
 				if (abs(syNorm - geNorm) > 1e-12) {

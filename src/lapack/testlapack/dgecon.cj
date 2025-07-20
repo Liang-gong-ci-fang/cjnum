@@ -20,11 +20,11 @@ func _dgeconTest(lFloat64: LFloat64, rnd: Random, n: Int64, lda: Int64): Unit {
     const ratioThresh = 10.0
 
     let a = Array<Float64>(max(0, (n - 1) * lda + n), { _ => 2.0 * rnd.nextFloat64() - 1.0 })
-    let iwork = Array<Int64>(n, item: 0)
-    let work = Array<Float64>(max(1, 4 * n), item: 0.0)
+    let iwork = Array<Int64>(n, repeat: 0)
+    let work = Array<Float64>(max(1, 4 * n), repeat: 0.0)
 
     let aFac = a.clone()
-    let ipiv = Array<Int64>(n, item: 0)
+    let ipiv = Array<Int64>(n, repeat: 0)
     var ok = lFloat64.dgetrf(n, n, aFac, lda, ipiv)
     if (!ok) {
         throw Exception("n=${n},lda=${lda}: bad matrix, Dgetrf failed")

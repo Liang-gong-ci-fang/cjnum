@@ -36,22 +36,24 @@ private func _atan(x: Float64): Float64 {
 //	Atan2(NaN, x) = NaN
 //	Atan2(+0, x>=0) = +0
 //	Atan2(-0, x>=0) = -0
-//	Atan2(+0, x<=-0) = +Float64.PI
-//	Atan2(-0, x<=-0) = -Float64.PI
-//	Atan2(y>0, 0) = +Float64.PI/2
-//	Atan2(y<0, 0) = -Float64.PI/2
-//	Atan2(+Inf, +Inf) = +Float64.PI/4
-//	Atan2(-Inf, +Inf) = -Float64.PI/4
+//	Atan2(+0, x<=-0) = +Float64.getPI()
+//	Atan2(-0, x<=-0) = -Float64.getPI()
+//	Atan2(y>0, 0) = +Float64.getPI()/2
+//	Atan2(y<0, 0) = -Float64.getPI()/2
+//	Atan2(+Inf, +Inf) = +Float64.getPI()/4
+//	Atan2(-Inf, +Inf) = -Float64.getPI()/4
 //	Atan2(+Inf, -Inf) = 3Pi/4
 //	Atan2(-Inf, -Inf) = -3Pi/4
 //	Atan2(y, +Inf) = 0
-//	Atan2(y>0, -Inf) = +Float64.PI
-//	Atan2(y<0, -Inf) = -Float64.PI
-//	Atan2(+Inf, x) = +Float64.PI/2
-//	Atan2(-Inf, x) = -Float64.PI/2
-public func atan2(y: Float64, x: Float64): Float64 {
-    return _atan2(y, x)
-}
+//	Atan2(y>0, -Inf) = +Float64.getPI()
+//	Atan2(y<0, -Inf) = -Float64.getPI()
+//	Atan2(+Inf, x) = +Float64.getPI()/2
+//	Atan2(-Inf, x) = -Float64.getPI()/2
+
+// TODO 100-dev
+// public func atan2(y: Float64, x: Float64): Float64 {
+//     return _atan2(y, x)
+// }
 
 private func _atan2(y: Float64, x: Float64): Float64 {
     // special cases
@@ -61,24 +63,24 @@ private func _atan2(y: Float64, x: Float64): Float64 {
         if (x >= 0.0 && (!signbit(x))) {
             return copysign(0.0, y)
         }
-        return copysign(Float64.PI, y)
+        return copysign(Float64.getPI(), y)
     } else if (x == 0.0) {
-        return copysign(Float64.PI / 2.0, y)
+        return copysign(Float64.getPI() / 2.0, y)
     } else if (x.isInf()) {
         if (x > 0.0) {
             if (y.isInf()) {
-                return copysign(Float64.PI / 4.0, y)
+                return copysign(Float64.getPI() / 4.0, y)
             } else {
                 return copysign(0.0, y)
             }
         }
         if (y.isInf()) {
-            return copysign(Float64.PI * 3.0 / 4.0, y)
+            return copysign(Float64.getPI() * 3.0 / 4.0, y)
         } else {
-            return copysign(Float64.PI, y)
+            return copysign(Float64.getPI(), y)
         }
     } else if (y.isInf()) {
-        return copysign(Float64.PI / 2.0, y)
+        return copysign(Float64.getPI() / 2.0, y)
     }
 
     // Call atan and determine the quadrant.
@@ -86,9 +88,9 @@ private func _atan2(y: Float64, x: Float64): Float64 {
     let q = uAtan(y / x)
     if (x < 0.0) {
         if (q <= 0.0) {
-            return q + Float64.PI
+            return q + Float64.getPI()
         }
-        return q - Float64.PI
+        return q - Float64.getPI()
     }
     return q
 }
@@ -188,9 +190,9 @@ private func satan(x: Float64): Float64 {
         return xatan(x)
     }
     if (x > tan3pio8) {
-        return Float64.PI / 2.0 - xatan(1.0 / x) + morebits
+        return Float64.getPI() / 2.0 - xatan(1.0 / x) + morebits
     }
-    return Float64.PI / 4.0 + xatan((x - 1.0) / (x + 1.0)) + 0.5 * morebits
+    return Float64.getPI() / 4.0 + xatan((x - 1.0) / (x + 1.0)) + 0.5 * morebits
 }
 
 public func signbit(x: Float64): Bool {
@@ -213,7 +215,7 @@ public func sincos(x_: Float64): (sinX: Float64, cosX: Float64) {
     因为仓颉语言为x_不可修改类型，所以这里创建可修改变量x
      */
     var x = x_
-    let PI4A = 7.85398125648498535156e-1 // 0x3fe921fb40000000, Float64.PI/4 split into three parts
+    let PI4A = 7.85398125648498535156e-1 // 0x3fe921fb40000000, Float64.getPI()/4 split into three parts
     let PI4B = 3.77489470793079817668e-8 // 0x3e64442d00000000,
     let PI4C = 2.69515142907905952645e-15 // 0x3ce8469898cc5170,
 
@@ -238,8 +240,8 @@ public func sincos(x_: Float64): (sinX: Float64, cosX: Float64) {
     if (x >= Float64(reduceThreshold)) {
         (j, z) = trigReduce(x)
     } else {
-        j = UInt64(x * (4.0 / Float64.PI)) // integer part of x/(Float64.PI/4), as integer for tests on the phase angle
-        y = Float64(j) // integer part of x/(Float64.PI/4), as float
+        j = UInt64(x * (4.0 / Float64.getPI())) // integer part of x/(Float64.getPI()/4), as integer for tests on the phase angle
+        y = Float64(j) // integer part of x/(Float64.getPI()/4), as float
 
         if ((j & 1) == 1) { // map zeros to origin
             j++
@@ -313,15 +315,15 @@ let mPi4: Array<UInt64> = [
     0xac06608df8f6d757
 ]
 
-// trigReduce implements Payne-Hanek range reduction by Float64.PI/4
+// trigReduce implements Payne-Hanek range reduction by Float64.getPI()/4
 // for x > 0. It returns the integer part mod 8 (j) and
-// the fractional part (z) of x / (Float64.PI/4).
+// the fractional part (z) of x / (Float64.getPI()/4).
 // The implementation is based on:
 // "ARGUMENT REDUCTION FOR HUGE ARGUMENTS: Good to the Last Bit"
 // K. C. Ng et al, March 24, 1992
 // The simulated multi-precision calculation of x*B uses 64-bit integer arithmetic.
 public func trigReduce(x: Float64): (j: UInt64, z: Float64) {
-    let PI4 = Float64.PI / 4.0
+    let PI4 = Float64.getPI() / 4.0
     if (x < PI4) {
         return (0, x)
     }

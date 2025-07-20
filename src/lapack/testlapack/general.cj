@@ -164,8 +164,8 @@ func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (Gen
 
         if (rnd.nextFloat64() < 0.5 || i == t.rows - 1) {
             t.data[i * t.stride + i] = a
-            wr.append(a)
-            wi.append(0.0)
+            wr.add(a)
+            wi.add(0.0)
             i++
             continue
         }
@@ -185,9 +185,9 @@ func randomSchurCanonical(n: Int64, stride: Int64, bad: Bool, rnd: Random): (Gen
         (t.data[i * t.stride + i], t.data[i * t.stride + i + 1]) = (a, b)
         (t.data[(i + 1) * t.stride + i], t.data[(i + 1) * t.stride + i + 1]) = (c, d)
 
-        wr.appendAll([a, a])
+        wr.add(all: [a, a])
         let im = sqrt(abs(b)) * sqrt(abs(c))
-        wi.appendAll([im, -im])
+        wi.add(all: [im, -im])
         i += 2
     }
     return (t, wr.toArray(), wi.toArray())
@@ -298,7 +298,7 @@ func triangularOutsideAllNaN(a: Triangular): Bool {
 //         rows: a.cols,
 //         cols: a.rows,
 //         stride: a.rows,
-//         data: Array<Float64>(a.cols * a.rows, item: 0.0)
+//         data: Array<Float64>(a.cols * a.rows, repeat: 0.0)
 //     )
 //     for (i in 0..a.rows) {
 //         for (j in 0..a.cols) {
@@ -320,7 +320,7 @@ func extractVMat(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, direct: Dire
             rows: m,
             cols: k,
             stride: k,
-            data: Array<Float64>(m * k, item: 0.0)
+            data: Array<Float64>(m * k, repeat: 0.0)
         )
         for (i in 0..k) {
             for (j in 0..i) {
@@ -337,7 +337,7 @@ func extractVMat(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, direct: Dire
             rows: k,
             cols: n,
             stride: n,
-            data: Array<Float64>(k * n, item: 0.0)
+            data: Array<Float64>(k * n, repeat: 0.0)
         )
         for (i in 0..k) {
             for (j in 0..i) {
@@ -360,7 +360,7 @@ func extractVMat(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, direct: Dire
 //         rows: n,
 //         cols: n,
 //         stride: n,
-//         data: Array<Float64>(n * n, item: 0.0)
+//         data: Array<Float64>(n * n, repeat: 0.0)
 //     )
 
 //     for (i in 0..n - 1) {
@@ -380,7 +380,7 @@ func constructVMat(vMat: General64, store: StoreV, direct: Direct): General64 {
     let k = vMat.cols
     if (store == ColumnWise && direct == Forward) {
         let ldv = k
-        let v = Array<Float64>(m * k, item: 0.0)
+        let v = Array<Float64>(m * k, repeat: 0.0)
         for (i in 0..m) {
             for (j in 0..k) {
                 if (j > i) {
@@ -400,7 +400,7 @@ func constructVMat(vMat: General64, store: StoreV, direct: Direct): General64 {
         )
     } else if (store == RowWise && direct == Forward) {
         let ldv = m
-        let v = Array<Float64>(m * k, item: 0.0)
+        let v = Array<Float64>(m * k, repeat: 0.0)
         for (i in 0..m) {
             for (j in 0..k) {
                 if (j > i) {
@@ -421,7 +421,7 @@ func constructVMat(vMat: General64, store: StoreV, direct: Direct): General64 {
     } else if (store == ColumnWise && direct == Backward) {
         let rowsv = m
         let ldv = k
-        let v = Array<Float64>(m * k, item: 0.0)
+        let v = Array<Float64>(m * k, repeat: 0.0)
         for (i in 0..m) {
             for (j in 0..k) {
                 let vrow = rowsv - i - 1
@@ -444,7 +444,7 @@ func constructVMat(vMat: General64, store: StoreV, direct: Direct): General64 {
     } else if (store == RowWise && direct == Backward) {
         let rowsv = k
         let ldv = m
-        let v = Array<Float64>(m * k, item: 0.0)
+        let v = Array<Float64>(m * k, repeat: 0.0)
         for (i in 0..m) {
             for (j in 0..k) {
                 let vcol = ldv - i - 1
@@ -480,13 +480,13 @@ func constructH(tau: Array<Float64>, v: General64, store: StoreV, direct: Direct
         rows: m,
         cols: m,
         stride: m,
-        data: Array<Float64>(m * m, item: 0.0)
+        data: Array<Float64>(m * m, repeat: 0.0)
     )
     for (i in 0..m) {
         h.data[i * m + i] = 1.0
     }
     for (i in 0..k) {
-        let vecData = Array<Float64>(m, item: 0.0)
+        let vecData = Array<Float64>(m, repeat: 0.0)
         if (store == ColumnWise) {
             for (j in 0..m) {
                 vecData[j] = v.data[j * v.cols + i]
@@ -505,7 +505,7 @@ func constructH(tau: Array<Float64>, v: General64, store: StoreV, direct: Direct
             rows: m,
             cols: m,
             stride: m,
-            data: Array<Float64>(m * m, item: 0.0)
+            data: Array<Float64>(m * m, repeat: 0.0)
         )
         for (i in 0..m) {
             hi.data[i * m + i] = 1.0
@@ -516,7 +516,7 @@ func constructH(tau: Array<Float64>, v: General64, store: StoreV, direct: Direct
             rows: m,
             cols: m,
             stride: m,
-            data: Array<Float64>(m * m, item: 0.0)
+            data: Array<Float64>(m * m, repeat: 0.0)
         )
         copy(hcopy.data, h.data)
         if (direct == Forward) {
@@ -546,7 +546,7 @@ func constructQK(kind: String, m: Int64, n: Int64, k: Int64, a: Array<Float64>, 
         rows: sz,
         cols: sz,
         stride: max(1, sz),
-        data: Array<Float64>(sz * sz, item: 0.0)
+        data: Array<Float64>(sz * sz, repeat: 0.0)
     )
     for (i in 0..sz) {
         q.data[i * sz + i] = 1.0
@@ -555,21 +555,21 @@ func constructQK(kind: String, m: Int64, n: Int64, k: Int64, a: Array<Float64>, 
         rows: q.rows,
         cols: q.cols,
         stride: q.stride,
-        data: Array<Float64>(q.data.size, item: 0.0)
+        data: Array<Float64>(q.data.size, repeat: 0.0)
     )
     for (i in 0..k) {
         let h = General64(
             rows: sz,
             cols: sz,
             stride: max(1, sz),
-            data: Array<Float64>(sz * sz, item: 0.0)
+            data: Array<Float64>(sz * sz, repeat: 0.0)
         )
         for (j in 0..sz) {
             h.data[j * sz + j] = 1.0
         }
         let vVec = Vector(
             inc: 1,
-            data: Array<Float64>(sz, item: 0.0)
+            data: Array<Float64>(sz, repeat: 0.0)
         )
         if (kind == "QR") {
             vVec.data[i] = 1.0
@@ -608,7 +608,7 @@ func checkBidiagonal(m: Int64, n: Int64, nb: Int64, a: Array<Float64>, lda: Int6
         rows: m,
         cols: n,
         stride: lda,
-        data: Array<Float64>(aCopy.size, item: 0.0)
+        data: Array<Float64>(aCopy.size, repeat: 0.0)
     )
     copy(aMat.data, aCopy)
 
@@ -616,14 +616,14 @@ func checkBidiagonal(m: Int64, n: Int64, nb: Int64, a: Array<Float64>, lda: Int6
         rows: m,
         cols: n,
         stride: n,
-        data: Array<Float64>(m * n, item: 0.0)
+        data: Array<Float64>(m * n, repeat: 0.0)
     )
     gemm(Trans, NoTrans, 1.0, qMat, aMat, 0.0, tmp1)
     var tmp2 = General64(
         rows: m,
         cols: n,
         stride: n,
-        data: Array<Float64>(m * n, item: 0.0)
+        data: Array<Float64>(m * n, repeat: 0.0)
     )
     gemm(NoTrans, NoTrans, 1.0, tmp1, pMat, 0.0, tmp2)
 
@@ -686,7 +686,7 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
             rows: m,
             cols: nb,
             stride: ldv,
-            data: Array<Float64>(m * ldv, item: 0.0)
+            data: Array<Float64>(m * ldv, repeat: 0.0)
         )
     } else {
         ldv = n
@@ -694,7 +694,7 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
             rows: nb,
             cols: n,
             stride: ldv,
-            data: Array<Float64>(m * ldv, item: 0.0)
+            data: Array<Float64>(m * ldv, repeat: 0.0)
         )
     }
 
@@ -748,13 +748,13 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
         rows: sz,
         cols: sz,
         stride: sz,
-        data: Array<Float64>(sz * sz, item: 0.0)
+        data: Array<Float64>(sz * sz, repeat: 0.0)
     )
     var hMat = General64(
         rows: sz,
         cols: sz,
         stride: sz,
-        data: Array<Float64>(sz * sz, item: 0.0)
+        data: Array<Float64>(sz * sz, repeat: 0.0)
     )
 
     for (i in 0..sz) {
@@ -763,7 +763,7 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
 
     for (i in 0..nb) {
         var qCopy = General64(rows: qMat.rows, cols: qMat.cols, stride: qMat.stride,
-            data: Array<Float64>(qMat.data.clone()))
+            data: qMat.data.clone())
         copy(qCopy.data, qMat.data)
 
         for (i in 0..sz) {
@@ -803,7 +803,7 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
 //TODO func copyGeneral(dst: General64, src: General64): Unit {  //TODO
 
 func cloneGeneral(a: General64): General64 {
-    let c = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, item: 0.0))
+    let c = General64(rows: a.rows, cols: a.cols, stride: a.stride, data: Array<Float64>(a.data.size, repeat: 0.0))
     copy(c.data, a.data)
     return c
 }
@@ -852,7 +852,7 @@ func intsEqual(a: Array<Int64>, b: Array<Int64>): Bool {
 func randSymBand(uplo: Uplo, n: Int64, kd: Int64, ldab: Int64, rnd: Random): Array<Float64> {
     var ab: Array<Float64> = []
     if (n > 0) {
-        ab = Array<Float64>((n - 1) * ldab + kd + 1, item: 0.0)
+        ab = Array<Float64>((n - 1) * ldab + kd + 1, repeat: 0.0)
     }
     for (i in 0..ab.size) {
         ab[i] = rnd.nextGaussianFloat64()
@@ -1113,7 +1113,7 @@ func residualOrthogonal(q: General64, rowwise: Bool): Float64 {
     let work = Symmetric(
         uplo: Upper,
         n: minmn,
-        data: Array<Float64>(minmn * minmn, item: 0.0),
+        data: Array<Float64>(minmn * minmn, repeat: 0.0),
         stride: minmn
     )
     for (i in 0..minmn) {

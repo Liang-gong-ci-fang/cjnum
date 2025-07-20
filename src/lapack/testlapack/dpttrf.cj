@@ -22,10 +22,10 @@ func _dpttrfTest(lFloat64: LFloat64, rnd: Random, n: Int64): Unit {
 	var dFac: Array<Float64> = [] 
     var eFac: Array<Float64> = []
 	if (n > 0) {
-		dFac = Array<Float64>(d.size, item: 0.0)
+		dFac = Array<Float64>(d.size, repeat: 0.0)
 		copy(dFac, d)
 		if (n > 1) {
-			eFac = Array<Float64>(e.size, item: 0.0)
+			eFac = Array<Float64>(e.size, repeat: 0.0)
 			copy(eFac, e)
 		}
 	}
@@ -46,8 +46,8 @@ func dpttrfResidual(n: Int64, d: Array<Float64>, e: Array<Float64>, dFac: Array<
         return 0.0
     }
 
-    let dDiff = Array<Float64>(n, item: 0.0)
-    let eDiff = Array<Float64>(n - 1, item: 0.0)
+    let dDiff = Array<Float64>(n, repeat: 0.0)
+    let eDiff = Array<Float64>(n - 1, repeat: 0.0)
     dDiff[0] = dFac[0] - d[0]
     for (i in 0..eFac.size) {
         let ef = eFac[i]

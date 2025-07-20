@@ -37,12 +37,12 @@ public func dorg2lTest(lFloat64: LFloat64): Bool {
             lda = n
         }
 
-        let a = Array<Float64>(m * lda, item: 0.0)
+        let a = Array<Float64>(m * lda, repeat: 0.0)
         for (i in 0..a.size) {
             a[i] = rnd.nextGaussianFloat64()
         }
         let tau = nanSlice(max(m, n))
-        let work = Array<Float64>(n, item: 0.0)
+        let work = Array<Float64>(n, repeat: 0.0)
         lFloat64.dgeql2(m, n, a, lda, tau, work)
 
         lFloat64.dorg2l(m, n, k, a, lda, tau[n - k..], work)

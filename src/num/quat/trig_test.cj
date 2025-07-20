@@ -17,18 +17,18 @@ private class SinTest {
 
 private let sinTests: Array<SinTest> = [
     SinTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
-    SinTest(NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
+    SinTest(NqNumber(Float64.getPI() / 2.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     SinTest(
-        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        NqNumber(0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.getPI() / 2.0, 0.0, 0.0),
+        NqNumber(0.0, c128Sin(Complex128(0.0, Float64.getPI() / 2.0)).imag, 0.0, 0.0)
     ),
     SinTest(
-        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        NqNumber(0.0, 0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.getPI() / 2.0, 0.0),
+        NqNumber(0.0, 0.0, c128Sin(Complex128(0.0, Float64.getPI() / 2.0)).imag, 0.0)
     ),
     SinTest(
-        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        NqNumber(0.0, 0.0, 0.0, c128Sin(Complex128(0.0, Float64.PI / 2.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.getPI() / 2.0),
+        NqNumber(0.0, 0.0, 0.0, c128Sin(Complex128(0.0, Float64.getPI() / 2.0)).imag)
     ),
 
     // Exercises from Real Quaternionic Calculus Handbook doi:10.1007/978-3-0348-0622-0
@@ -64,18 +64,18 @@ private class SinhTest {
 
 private let sinhTests: Array<SinhTest> = [
     SinhTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
-    SinhTest(NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0), NqNumber(sinh(Float64.PI / 2.0), 0.0, 0.0, 0.0)),
+    SinhTest(NqNumber(Float64.getPI() / 2.0, 0.0, 0.0, 0.0), NqNumber(sinh(Float64.getPI() / 2.0), 0.0, 0.0, 0.0)),
     SinhTest(
-        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        NqNumber(0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.getPI() / 2.0, 0.0, 0.0),
+        NqNumber(0.0, c128Sinh(Complex128(0.0, Float64.getPI() / 2.0)).imag, 0.0, 0.0)
     ),
     SinhTest(
-        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        NqNumber(0.0, 0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.getPI() / 2.0, 0.0),
+        NqNumber(0.0, 0.0, c128Sinh(Complex128(0.0, Float64.getPI() / 2.0)).imag, 0.0)
     ),
     SinhTest(
-        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        NqNumber(0.0, 0.0, 0.0, c128Sinh(Complex128(0.0, Float64.PI / 2.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.getPI() / 2.0),
+        NqNumber(0.0, 0.0, 0.0, c128Sinh(Complex128(0.0, Float64.getPI() / 2.0)).imag)
     ),
     SinhTest(
         NqNumber(1.0, -1.0, -1.0, 0.0),
@@ -116,19 +116,19 @@ private let sinhTests: Array<SinhTest> = [
         NqNumber(Float64.Inf, 0.0, 0.0, 0.0)
     ),
     SinhTest(
-        NqNumber(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, Float64.getPI() / 2.0, 0.0, 0.0),
         NqNumber(Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     SinhTest(
-        NqNumber(Float64.Inf, Float64.PI, 0.0, 0.0),
+        NqNumber(Float64.Inf, Float64.getPI(), 0.0, 0.0),
         NqNumber(-Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     SinhTest(
-        NqNumber(Float64.Inf, 3.0 * Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, 3.0 * Float64.getPI() / 2.0, 0.0, 0.0),
         NqNumber(-Float64.Inf, -Float64.Inf, 0.0, 0.0)
     ),
     SinhTest(
-        NqNumber(Float64.Inf, 2.0 * Float64.PI, 0.0, 0.0),
+        NqNumber(Float64.Inf, 2.0 * Float64.getPI(), 0.0, 0.0),
         NqNumber(Float64.Inf, -Float64.Inf, 0.0, 0.0)
     )
 ]
@@ -154,20 +154,20 @@ private class CosTest {
 private let cosTests: Array<CosTest> = [
     CosTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     CosTest(
-        NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0),
+        NqNumber(Float64.getPI() / 2.0, 0.0, 0.0, 0.0),
         NqNumber(0.0, 0.0, 0.0, 0.0)
     ),
     CosTest(
-        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        NqNumber(c128Cos(Complex128(0.0, Float64.PI / 2.0)).real, 0.0, 0.0, 0.0)
+        NqNumber(0.0, Float64.getPI() / 2.0, 0.0, 0.0),
+        NqNumber(c128Cos(Complex128(0.0, Float64.getPI() / 2.0)).real, 0.0, 0.0, 0.0)
     ),
     CosTest(
-        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        NqNumber((c128Cos(Complex128(0.0, Float64.PI / 2.0))).real, 0.0, 0.0, 0.0)
+        NqNumber(0.0, 0.0, Float64.getPI() / 2.0, 0.0),
+        NqNumber((c128Cos(Complex128(0.0, Float64.getPI() / 2.0))).real, 0.0, 0.0, 0.0)
     ),
     CosTest(
-        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        NqNumber((c128Cos(Complex128(0.0, Float64.PI / 2.0))).real, 0.0, 0.0, 0.0)
+        NqNumber(0.0, 0.0, 0.0, Float64.getPI() / 2.0),
+        NqNumber((c128Cos(Complex128(0.0, Float64.getPI() / 2.0))).real, 0.0, 0.0, 0.0)
     ),
     CosTest(
         NqNumber(1.0, 1.0, 1.0, 1.0),
@@ -201,20 +201,20 @@ private class CoshTest {
 private let coshTests: Array<CoshTest> = [
     CoshTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     CoshTest(
-        NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0),
-        NqNumber(cosh(Float64.PI / 2.0), 0.0, 0.0, 0.0)
+        NqNumber(Float64.getPI() / 2.0, 0.0, 0.0, 0.0),
+        NqNumber(cosh(Float64.getPI() / 2.0), 0.0, 0.0, 0.0)
     ),
     CoshTest(
-        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0),
-        NqNumber(0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.getPI() / 2.0, 0.0, 0.0),
+        NqNumber(0.0, c128Cosh(Complex128(0.0, Float64.getPI() / 2.0)).imag, 0.0, 0.0)
     ),
     CoshTest(
-        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0),
-        NqNumber(0.0, 0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.getPI() / 2.0, 0.0),
+        NqNumber(0.0, 0.0, c128Cosh(Complex128(0.0, Float64.getPI() / 2.0)).imag, 0.0)
     ),
     CoshTest(
-        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0),
-        NqNumber(0.0, 0.0, 0.0, c128Cosh(Complex128(0.0, Float64.PI / 2.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.getPI() / 2.0),
+        NqNumber(0.0, 0.0, 0.0, c128Cosh(Complex128(0.0, Float64.getPI() / 2.0)).imag)
     ),
     CoshTest(
         NqNumber(1.0, -1.0, -1.0, 0.0),
@@ -229,19 +229,19 @@ private let coshTests: Array<CoshTest> = [
         NqNumber(Float64.Inf, 0.0, 0.0, 0.0)
     ),
     CoshTest(
-        NqNumber(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, Float64.getPI() / 2.0, 0.0, 0.0),
         NqNumber(Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     CoshTest(
-        NqNumber(Float64.Inf, Float64.PI, 0.0, 0.0),
+        NqNumber(Float64.Inf, Float64.getPI(), 0.0, 0.0),
         NqNumber(-Float64.Inf, Float64.Inf, 0.0, 0.0)
     ),
     CoshTest(
-        NqNumber(Float64.Inf, 3.0 * Float64.PI / 2.0, 0.0, 0.0),
+        NqNumber(Float64.Inf, 3.0 * Float64.getPI() / 2.0, 0.0, 0.0),
         NqNumber(-Float64.Inf, -Float64.Inf, 0.0, 0.0)
     ),
     CoshTest(
-        NqNumber(Float64.Inf, 2.0 * Float64.PI, 0.0, 0.0),
+        NqNumber(Float64.Inf, 2.0 * Float64.getPI(), 0.0, 0.0),
         NqNumber(Float64.Inf, -Float64.Inf, 0.0, 0.0)
     )
 ]
@@ -267,20 +267,20 @@ private class TanTest {
 private let tanTests: Array<TanTest> = [
     TanTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(1.0, 0.0, 0.0, 0.0)),
     TanTest(
-        NqNumber(Float64.PI / 4.0, 0.0, 0.0, 0.0),
-        NqNumber(tan(Float64.PI / 4.0), 0.0, 0.0, 0.0)
+        NqNumber(Float64.getPI() / 4.0, 0.0, 0.0, 0.0),
+        NqNumber(tan(Float64.getPI() / 4.0), 0.0, 0.0, 0.0)
     ),
     TanTest(
-        NqNumber(0.0, Float64.PI / 4.0, 0.0, 0.0),
-        NqNumber(0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.getPI() / 4.0, 0.0, 0.0),
+        NqNumber(0.0, c128Tan(Complex128(0.0, Float64.getPI() / 4.0)).imag, 0.0, 0.0)
     ),
     TanTest(
-        NqNumber(0.0, 0.0, Float64.PI / 4.0, 0.0),
-        NqNumber(0.0, 0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.getPI() / 4.0, 0.0),
+        NqNumber(0.0, 0.0, c128Tan(Complex128(0.0, Float64.getPI() / 4.0)).imag, 0.0)
     ),
     TanTest(
-        NqNumber(0.0, 0.0, 0.0, Float64.PI / 4.0),
-        NqNumber(0.0, 0.0, 0.0, c128Tan(Complex128(0.0, Float64.PI / 4.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.getPI() / 4.0),
+        NqNumber(0.0, 0.0, 0.0, c128Tan(Complex128(0.0, Float64.getPI() / 4.0)).imag)
     ),
     TanTest(
         NqNumber(0.0, 1.0, 0.0, 0.0),
@@ -318,20 +318,20 @@ private class TanhTest {
 private let tanhTests: Array<TanhTest> = [
     TanhTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     TanhTest(
-        NqNumber(Float64.PI / 4.0, 0.0, 0.0, 0.0),
-        NqNumber(tanh(Float64.PI / 4.0), 0.0, 0.0, 0.0)
+        NqNumber(Float64.getPI() / 4.0, 0.0, 0.0, 0.0),
+        NqNumber(tanh(Float64.getPI() / 4.0), 0.0, 0.0, 0.0)
     ),
     TanhTest(
-        NqNumber(0.0, Float64.PI / 4.0, 0.0, 0.0),
-        NqNumber(0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0, 0.0)
+        NqNumber(0.0, Float64.getPI() / 4.0, 0.0, 0.0),
+        NqNumber(0.0, c128Tanh(Complex128(0.0, Float64.getPI() / 4.0)).imag, 0.0, 0.0)
     ),
     TanhTest(
-        NqNumber(0.0, 0.0, Float64.PI / 4.0, 0.0),
-        NqNumber(0.0, 0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag, 0.0)
+        NqNumber(0.0, 0.0, Float64.getPI() / 4.0, 0.0),
+        NqNumber(0.0, 0.0, c128Tanh(Complex128(0.0, Float64.getPI() / 4.0)).imag, 0.0)
     ),
     TanhTest(
-        NqNumber(0.0, 0.0, 0.0, Float64.PI / 4.0),
-        NqNumber(0.0, 0.0, 0.0, c128Tanh(Complex128(0.0, Float64.PI / 4.0)).imag)
+        NqNumber(0.0, 0.0, 0.0, Float64.getPI() / 4.0),
+        NqNumber(0.0, 0.0, 0.0, c128Tanh(Complex128(0.0, Float64.getPI() / 4.0)).imag)
     ),
     TanhTest(
         NqNumber(0.0, 1.0, 0.0, 0.0),
@@ -346,20 +346,20 @@ private let tanhTests: Array<TanhTest> = [
         NqNumber(1.0, 0.0, 0.0, 0.0)
     ),
     TanhTest(
-        NqNumber(Float64.Inf, Float64.PI / 4.0, 0.0, 0.0),
-        NqNumber(1.0, 0.0 * sin(Float64.PI / 2.0), 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.getPI() / 4.0, 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(Float64.getPI() / 2.0), 0.0, 0.0)
     ),
     TanhTest(
-        NqNumber(Float64.Inf, Float64.PI / 2.0, 0.0, 0.0),
-        NqNumber(1.0, 0.0 * sin(Float64.PI), 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.getPI() / 2.0, 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(Float64.getPI()), 0.0, 0.0)
     ),
     TanhTest(
-        NqNumber(Float64.Inf, 3.0 * Float64.PI / 4.0, 0.0, 0.0),
-        NqNumber(1.0, 0.0 * sin(3.0 * Float64.PI / 2.0), 0.0, 0.0)
+        NqNumber(Float64.Inf, 3.0 * Float64.getPI() / 4.0, 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(3.0 * Float64.getPI() / 2.0), 0.0, 0.0)
     ),
     TanhTest(
-        NqNumber(Float64.Inf, Float64.PI, 0.0, 0.0),
-        NqNumber(1.0, 0.0 * sin(2.0 * Float64.PI), 0.0, 0.0)
+        NqNumber(Float64.Inf, Float64.getPI(), 0.0, 0.0),
+        NqNumber(1.0, 0.0 * sin(2.0 * Float64.getPI()), 0.0, 0.0)
     )
 ]
 
@@ -385,7 +385,7 @@ private let asinTests: Array<AsinTest> = [
     AsinTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     AsinTest(
         NqNumber(1.0, 0.0, 0.0, 0.0),
-        NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0)
+        NqNumber(Float64.getPI() / 2.0, 0.0, 0.0, 0.0)
     ),
     AsinTest(
         NqNumber(0.0, 1.0, 0.0, 0.0),
@@ -431,15 +431,15 @@ private let asinhTests: Array<AsinhTest> = [
     ),
     AsinhTest(
         NqNumber(0.0, 1.0, 0.0, 0.0),
-        NqNumber(0.0, Float64.PI / 2.0, 0.0, 0.0)
+        NqNumber(0.0, Float64.getPI() / 2.0, 0.0, 0.0)
     ),
     AsinhTest(
         NqNumber(0.0, 0.0, 1.0, 0.0),
-        NqNumber(0.0, 0.0, Float64.PI / 2.0, 0.0)
+        NqNumber(0.0, 0.0, Float64.getPI() / 2.0, 0.0)
     ),
     AsinhTest(
         NqNumber(0.0, 0.0, 0.0, 1.0),
-        NqNumber(0.0, 0.0, 0.0, Float64.PI / 2.0)
+        NqNumber(0.0, 0.0, 0.0, Float64.getPI() / 2.0)
     ),
     AsinhTest(
         NqNumber(1.0, 1.0, 1.0, 1.0),
@@ -510,7 +510,7 @@ private class AcosTest {
 }
 
 private let acosTests: Array<AcosTest> = [
-    AcosTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0)),
+    AcosTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(Float64.getPI() / 2.0, 0.0, 0.0, 0.0)),
     AcosTest(
         NqNumber(1.0, 0.0, 0.0, 0.0),
         NqNumber(0.0, 0.0, 0.0, 0.0)
@@ -567,7 +567,7 @@ private class AcoshTest {
 }
 
 private let acoshTests: Array<AcoshTest> = [
-    AcoshTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(Float64.PI / 2.0, 0.0, 0.0, 0.0)),
+    AcoshTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(Float64.getPI() / 2.0, 0.0, 0.0, 0.0)),
     AcoshTest(
         NqNumber(1.0, 0.0, 0.0, 0.0),
         NqNumber(acosh(1.0), 0.0, 0.0, 0.0)
@@ -638,7 +638,7 @@ private let atanTests: Array<AtanTest> = [
     AtanTest(NqNumber(0.0, 0.0, 0.0, 0.0), NqNumber(0.0, 0.0, 0.0, 0.0)),
     AtanTest(
         NqNumber(1.0, 0.0, 0.0, 0.0),
-        NqNumber(Float64.PI / 4.0, 0.0, 0.0, 0.0)
+        NqNumber(Float64.getPI() / 4.0, 0.0, 0.0, 0.0)
     ),
     AtanTest(
         NqNumber(0.0, 0.5, 0.0, 0.0),

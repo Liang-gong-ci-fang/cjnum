@@ -39,8 +39,8 @@ extend LFloat64Implementation {
 
         if (n1 + n2 == 3) {
             var smin: Float64
-            var tmp: Array<Float64> = Array<Float64>(4, item: 0.0)
-            var btmp: Array<Float64> = Array<Float64>(2, item: 0.0)
+            var tmp: Array<Float64> = Array<Float64>(4, repeat: 0.0)
+            var btmp: Array<Float64> = Array<Float64>(2, repeat: 0.0)
             if (n1 == 1 && n2 == 2) {
                 smin = abs(tl[0])
                 smin = max(smin, max(abs(tr[0]), abs(tr[1])))
@@ -83,11 +83,11 @@ extend LFloat64Implementation {
                 ok = false
                 u11 = smin
             }
-            let locu12 = Array<Int64>([1, 0, 3, 2])
+            let locu12 = [1, 0, 3, 2]
             let u12 = tmp[locu12[ipiv]]
-            let locl21 = Array<Int64>([2, 3, 0, 1])
+            let locl21 = [2, 3, 0, 1]
             let l21 = tmp[locl21[ipiv]] / u11
-            let locu22 = Array<Int64>([3, 2, 1, 0])
+            let locu22 = [3, 2, 1, 0]
             var u22 = tmp[locu22[ipiv]] - l21 * u12
             if (abs(u22) <= smin) {
                 ok = false
@@ -127,9 +127,8 @@ extend LFloat64Implementation {
         smin = max(smin, max(abs(tl[ldtl]), abs(tl[ldtl + 1])))
         smin = max(eps * smin, smlnum)
 
-        let t = Array<Array<Float64>>(
-            [Array<Float64>(4, item: 0.0), Array<Float64>(4, item: 0.0), Array<Float64>(4, item: 0.0),
-                Array<Float64>(4, item: 0.0)])
+        let t = [Array<Float64>(4, repeat: 0.0), Array<Float64>(4, repeat: 0.0), Array<Float64>(4, repeat: 0.0),
+                Array<Float64>(4, repeat: 0.0)]
         t[0][0] = tl[0] + sgn * tr[0]
         t[1][1] = tl[0] + sgn * tr[ldtr + 1]
         t[2][2] = tl[ldtl + 1] + sgn * tr[0]
@@ -157,13 +156,13 @@ extend LFloat64Implementation {
             t[3][2] = sgn * tr[1]
         }
 
-        let btmp = Array<Float64>(4, item: 0.0)
+        let btmp = Array<Float64>(4, repeat: 0.0)
         btmp[0] = b[0]
         btmp[1] = b[1]
         btmp[2] = b[ldb]
         btmp[3] = b[ldb + 1]
 
-        var jpiv = Array<Int64>(4, item: 0)
+        var jpiv = Array<Int64>(4, repeat: 0)
         for (i in 0..3) {
             var xmax: Float64 = 0.0
             var ipsv: Int64 = 0
@@ -215,7 +214,7 @@ extend LFloat64Implementation {
             btmp[3] *= scale
         }
 
-        var tmp: Array<Float64> = Array<Float64>(4, item: 0.0)
+        var tmp: Array<Float64> = Array<Float64>(4, repeat: 0.0)
         for (i in 3..=0 : -1) {
             let temp = 1.0 / t[i][i]
             tmp[i] = btmp[i] * temp

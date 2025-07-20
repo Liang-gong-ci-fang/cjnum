@@ -7,7 +7,7 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 public func newSymmetricBandFrom(a: SymmetricBandCols): SymmetricBand {
-    let t = SymmetricBand(n: a.n, k: a.k, stride: a.k + 1, data: Array<Complex128>(a.n * (a.k + 1), item: Complex128(0.0)), uplo: a.uplo)
+    let t = SymmetricBand(n: a.n, k: a.k, stride: a.k + 1, data: Array<Complex128>(a.n * (a.k + 1), repeat: Complex128(0.0)), uplo: a.uplo)
     for (i in 0..t.data.size) {
         t.data[i] = Complex128.NaN
     }
@@ -52,7 +52,7 @@ extend SymmetricBand <: symmetricBand {
 }
 
 public func newSymmetricBandColsFrom(a: SymmetricBand): SymmetricBandCols {
-    let t = SymmetricBandCols(n: a.n, k: a.k, stride: a.k + 1, data: Array<Complex128>(a.n * (a.k + 1), item: Complex128(0.0)), uplo: a.uplo)
+    let t = SymmetricBandCols(n: a.n, k: a.k, stride: a.k + 1, data: Array<Complex128>(a.n * (a.k + 1), repeat: Complex128(0.0)), uplo: a.uplo)
     for (i in 0..t.data.size) {
         t.data[i] = Complex128.NaN
     }

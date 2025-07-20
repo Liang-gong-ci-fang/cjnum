@@ -32,7 +32,7 @@ public func dlansyTest(lFloat64: LFloat64): Bool {
                         }
                     })
 
-                    let aDense = Array<Float64>(n * n, item: 0.0)
+                    let aDense = Array<Float64>(n * n, repeat: 0.0)
                     if (uplo == Upper) {
                         for (i in 0..n) {
                             for (j in i..n) {
@@ -51,7 +51,7 @@ public func dlansyTest(lFloat64: LFloat64): Bool {
                         }
                     }
 
-                    let work = Array<Float64>(n, item: 0.0)
+                    let work = Array<Float64>(n, repeat: 0.0)
                     let got = lFloat64.dlansy(norm, uplo, n, a, lda, work)
                     let want = lFloat64.dlange(norm, n, n, aDense, n, work)
                     if (abs(want - got) > 1e-14) {

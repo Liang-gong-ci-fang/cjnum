@@ -24,12 +24,12 @@ public func dlacn2Test(lFloat64: LFloat64): Bool {
                 }
             }
 
-            let x = Array<Float64>(n, item: 0.0)
-            let work = Array<Float64>(n, item: 0.0)
-            let v = Array<Float64>(n, item: 0.0)
-            let isgn = Array<Int64>(n, item: 0)
+            let x = Array<Float64>(n, repeat: 0.0)
+            let work = Array<Float64>(n, repeat: 0.0)
+            let v = Array<Float64>(n, repeat: 0.0)
+            let isgn = Array<Int64>(n, repeat: 0)
             var kase = 0
-            var isave = Array<Int64>(3, item: 0)
+            var isave = Array<Int64>(3, repeat: 0)
             var got = 0.0
 
             while (true) {

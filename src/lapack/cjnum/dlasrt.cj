@@ -12,9 +12,9 @@ extend LFloat64Implementation {
         }
 
         if (s == SortIncreasing) {
-            stableSort(d[..n])
+            sort(d[..n], stable: true)
         } else if (s == SortDecreasing) {
-            stableSort(d[..n])
+            sort(d[..n], stable: true)
             d[..n].reverse()
         } else {
             throw Exception(badSort)

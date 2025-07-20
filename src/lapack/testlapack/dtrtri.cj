@@ -48,7 +48,7 @@ public func dtrtriTest(lFloat64: LFloat64): Bool {
                         aCopy[i * lda + i] = 1.0
                     }
                 }
-                let ans = Array<Float64>(a.size, item: 0.0)
+                let ans = Array<Float64>(a.size, repeat: 0.0)
                 nFloat64.dgemm(NoTrans, NoTrans, n, n, n, 1.0, a, lda, aCopy, lda, 0.0, ans, lda)
                 let dist = distFromIdentity(n, ans, lda)
                 if (dist > tol) {

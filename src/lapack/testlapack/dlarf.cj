@@ -62,9 +62,9 @@ func _dlarfTest(lFloat64: LFloat64, rnd: Random, side: Side, m: Int64, n: Int64,
 	let cCopy = c.clone()
 
 	let work = if (side == Left) {
-		Array<Float64>(n, item: 0.0)
+		Array<Float64>(n, repeat: 0.0)
 	} else {
-		Array<Float64>(m, item: 0.0)
+		Array<Float64>(m, repeat: 0.0)
 	}
 
 	var vlen = n
@@ -104,9 +104,9 @@ func _dlarfTest(lFloat64: LFloat64, rnd: Random, side: Side, m: Int64, n: Int64,
 
 	let nFloat64 = nFloat64Implementation()
 
-	let want = Array<Float64>(cCopy.size, item: 0.0)
+	let want = Array<Float64>(cCopy.size, repeat: 0.0)
 	if (side == Left) {
-		let vtc = Array<Float64>(n, item: 0.0)
+		let vtc = Array<Float64>(n, repeat: 0.0)
 		nFloat64.dgemv(Trans, m, n, -tau, cCopy, ldc, v, incv, 0.0, vtc, 1)
 
 		for (i in 0..m) {
@@ -115,7 +115,7 @@ func _dlarfTest(lFloat64: LFloat64, rnd: Random, side: Side, m: Int64, n: Int64,
 			}
 		}
 	} else {
-		let cv = Array<Float64>(m, item: 0.0)
+		let cv = Array<Float64>(m, repeat: 0.0)
 		nFloat64.dgemv(NoTrans, m, n, -tau, cCopy, ldc, v, incv, 0.0, cv, 1)
 
 		for (i in 0..m) {
@@ -124,7 +124,7 @@ func _dlarfTest(lFloat64: LFloat64, rnd: Random, side: Side, m: Int64, n: Int64,
 			}
 		}
 	}
-	let diff = Array<Float64>(m * n, item: 0.0)
+	let diff = Array<Float64>(m * n, repeat: 0.0)
     for (i in 0..m) {
         for (j in 0..n) {
 			diff[i * n + j] = got[i * ldc + j] - want[i * ldc + j]

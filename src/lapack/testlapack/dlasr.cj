@@ -32,16 +32,16 @@ public func dlasrTest(lFloat64: LFloat64): Bool {
 					let a = Array<Float64>(m * lda, { _ => rnd.nextFloat64() })
 
 					let (s, c) = if (side == Left) {
-						(Array<Float64>(m - 1, item: 0.0), Array<Float64>(m - 1, item: 0.0))
+						(Array<Float64>(m - 1, repeat: 0.0), Array<Float64>(m - 1, repeat: 0.0))
 					} else {
-						(Array<Float64>(n - 1, item: 0.0), Array<Float64>(n - 1, item: 0.0))
+						(Array<Float64>(n - 1, repeat: 0.0), Array<Float64>(n - 1, repeat: 0.0))
 					}
 					for (k in 0..s.size) {
 						let theta = rnd.nextFloat64() * 2.0 * pi
 						s[k] = sin(theta)
 						c[k] = cos(theta)
 					}
-					let aCopy = Array<Float64>(a.size, item: 0.0)
+					let aCopy = Array<Float64>(a.size, repeat: 0.0)
 					copy(a, aCopy)
 
 					lFloat64.dlasr(side, pivot, direct, m, n, c, s, a, lda)
@@ -54,19 +54,19 @@ public func dlasrTest(lFloat64: LFloat64): Bool {
 						rows:   pSize,
 						cols:   pSize,
 						stride: pSize,
-						data:   Array<Float64>(pSize * pSize, item: 0.0)
+						data:   Array<Float64>(pSize * pSize, repeat: 0.0)
 					)
 					let pk = General64(
 						rows:   pSize,
 						cols:   pSize,
 						stride: pSize,
-						data:   Array<Float64>(pSize * pSize, item: 0.0)
+						data:   Array<Float64>(pSize * pSize, repeat: 0.0)
 					)
 					let ptmp = General64(
 						rows:   pSize,
 						cols:   pSize,
 						stride: pSize,
-						data:   Array<Float64>(pSize * pSize, item: 0.0)
+						data:   Array<Float64>(pSize * pSize, repeat: 0.0)
 					)
 
 					for (i in 0..pSize) {
@@ -109,14 +109,14 @@ public func dlasrTest(lFloat64: LFloat64): Bool {
 						rows:   m,
 						cols:   n,
 						stride: lda,
-						data:   Array<Float64>(m * lda, item: 0.0)
+						data:   Array<Float64>(m * lda, repeat: 0.0)
 					)
 					copy(a, aCopy)
 					let newA = General64(
 						rows:   m,
 						cols:   n,
 						stride: lda,
-						data:   Array<Float64>(m * lda, item: 0.0)
+						data:   Array<Float64>(m * lda, repeat: 0.0)
 					)
 					if (side == Left) {
 						gemm(NoTrans, NoTrans, 1.0, p, aMat, 0.0, newA)

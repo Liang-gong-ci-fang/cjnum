@@ -23,9 +23,9 @@ public func dlansbTest(lFloat64: LFloat64): Bool {
 func _dlansbTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, n: Int64, kd: Int64, ldab: Int64): Unit {
     const tol = 1e-15
 
-	let ab = Array<Float64>(max(0, (n - 1) * ldab + kd + 1), item: 0.0)
-	let rowsum = Array<Float64>(n, item: 0.0)
-	let colsum = Array<Float64>( n, item: 0.0)
+	let ab = Array<Float64>(max(0, (n - 1) * ldab + kd + 1), repeat: 0.0)
+	let rowsum = Array<Float64>(n, repeat: 0.0)
+	let colsum = Array<Float64>( n, repeat: 0.0)
 	var (frobWant, maxabsWant) = (0.0, 0.0)
 	if (uplo == Upper) {
 		for (i in 0..n) {
@@ -71,10 +71,10 @@ func _dlansbTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, n: Int64, kd: Int6
 		maxrowsumWant = fMax(rowsum)
 	}
 
-	let abCopy = Array<Float64>(ab.size, item: 0.0)
+	let abCopy = Array<Float64>(ab.size, repeat: 0.0)
 	copy(abCopy, ab)
 
-	let work = Array<Float64>(n, item: 0.0)
+	let work = Array<Float64>(n, repeat: 0.0)
 	var (maxcolsumGot, maxrowsumGot) = (0.0, 0.0)
 	for (norm in [MaxAbs, MaxColumnSum, MaxRowSum, Frobenius]) {
 		let name = "norm=${norm},uplo=${uplo},n=${n},kd=${kd},ldab=${ldab}"

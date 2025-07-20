@@ -23,8 +23,8 @@ public func dlasv2Test(lFloat64: LFloat64): Bool {
 		let ans21 = tmp21*csr + tmp22*snr
 		let ans22 = tmp21*-snr + tmp22*csr
 
-		let lhs: Array<Float64> = Array<Float64>([ans11, ans12, ans21, ans22])
-		let rhs: Array<Float64> = Array<Float64>([ssmax, 0.0, 0.0, ssmin])
+		let lhs: Array<Float64> = [ans11, ans12, ans21, ans22]
+		let rhs: Array<Float64> = [ssmax, 0.0, 0.0, ssmin]
 		if (!fEqualApprox(rhs, lhs, 1e-12)) {
 			throw Exception("SVD mismatch. f = ${f}, g = ${g}, h = ${h}.\nLHS: ${lhs}\nRHS: ${rhs}")
 		}

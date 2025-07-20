@@ -29,7 +29,7 @@ func dpbtrfTest(lFloat64: LFloat64, uplo: Uplo, n: Int64, kd: Int64, ldab: Int64
 
     let ab = randSymBand(uplo, n, kd, ldab, rnd)
 
-    let abFac = Array<Float64>(ab.size, item: 0.0)
+    let abFac = Array<Float64>(ab.size, repeat: 0.0)
     copy(abFac, ab)
     let ok = lFloat64.dpbtrf(uplo, n, kd, abFac, ldab)
     if (!ok) {

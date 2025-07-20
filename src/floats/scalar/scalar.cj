@@ -61,7 +61,7 @@ public func parseWithNA(s: String, missing: String): (Float64, Float64) {
     if (s == missing) {
         return (0.0, 0.0)
     }
-    let value = Decimal(s).toFloat64()
+    let value = Decimal.parse(s).toFloat64()
     return (value, 1.0)
 }
 
@@ -81,7 +81,7 @@ public func round(x: Float64, prec: Int64): Float64 {
         return intermed
     }
 
-    let x_ = round(Decimal(intermed), roundingMode: RoundingMode.HALF_UP)
+    let x_ = round(Decimal(intermed), roundingMode: RoundingMode.HalfUp)
 
     if (x_.toFloat64() == 0.0) {
         return 0.0
@@ -106,7 +106,7 @@ public func roundEven(x: Float64, prec: Int64): Float64 {
         return intermed
     }
 
-    let x_ = round(Decimal(intermed), roundingMode: RoundingMode.HALF_EVEN)
+    let x_ = round(Decimal(intermed), roundingMode: RoundingMode.HalfEven)
 
     if (x_.toFloat64() == 0.0) {
         return 0.0

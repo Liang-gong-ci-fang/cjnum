@@ -71,7 +71,7 @@ public func dgetf2Test(lFloat64: LFloat64): Bool {
     ]
     for (n in 0..tests.size) {
         let test = tests[n]
-        if (lFloat64.dgetf2(test.m, test.n, test.a, test.lda, Array<Int64>(min(test.m, test.n), item: 0))) {
+        if (lFloat64.dgetf2(test.m, test.n, test.a, test.lda, Array<Int64>(min(test.m, test.n), repeat: 0))) {
             throw Exception("${n}: Returned ok with singular matrix.")
         }
     }
@@ -94,9 +94,9 @@ func checkPLU(ok: Bool, m: Int64, n: Int64, lda: Int64, ipiv: Array<Int64>, fact
     }
 
     let mn = min(m, n)
-    let l = Array<Float64>(m * mn, item: 0.0)
+    let l = Array<Float64>(m * mn, repeat: 0.0)
     let ldl = mn
-    let u = Array<Float64>(n * mn, item: 0.0)
+    let u = Array<Float64>(n * mn, repeat: 0.0)
     let ldu = n
     for (i in 0..m) {
         for (j in 0..n) {
@@ -116,7 +116,7 @@ func checkPLU(ok: Bool, m: Int64, n: Int64, lda: Int64, ipiv: Array<Int64>, fact
         rows: m,
         cols: n,
         stride: n,
-        data: Array<Float64>(m * n, item: 0.0)
+        data: Array<Float64>(m * n, repeat: 0.0)
     )
     let U = General64(
         rows: mn,
@@ -132,7 +132,7 @@ func checkPLU(ok: Bool, m: Int64, n: Int64, lda: Int64, ipiv: Array<Int64>, fact
     )
     gemm(NoTrans, NoTrans, 1.0, L, U, 0.0, LU)
 
-    let p = Array<Float64>(m * m, item: 0.0) // a
+    let p = Array<Float64>(m * m, repeat: 0.0) // a
     let ldp = m
     for (i in 0..m) {
         p[i * ldp + i] = 1.0
@@ -153,7 +153,7 @@ func checkPLU(ok: Bool, m: Int64, n: Int64, lda: Int64, ipiv: Array<Int64>, fact
         rows: m,
         cols: n,
         stride: lda,
-        data: Array<Float64>(m * lda, item: 0.0)
+        data: Array<Float64>(m * lda, repeat: 0.0)
     )
     copy(aComp.data, factorized)
     gemm(NoTrans, NoTrans, 1.0, P, LU, 0.0, aComp)

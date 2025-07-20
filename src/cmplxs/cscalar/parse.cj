@@ -10,8 +10,8 @@ func cParse(s: String): Complex128 {
         throw ParseExpection(information: "quat: failed to parse: ${""}")
     }
 
-    let orig = s;
-    var copyS = s;
+    let orig = s
+    var copyS = s
     let wantClose = s[0] == 40
 
     if (wantClose) {
@@ -19,9 +19,9 @@ func cParse(s: String): Complex128 {
             throw ParseExpection(information: "quat: failed to parse: ${orig}")
         }
 
-        let strArray = Array(s);
+        let strArray = s.toArray()
         let strSlice = strArray[1..(s.size - 1)]
-        let newStrArray = Array(strSlice)
+        let newStrArray = strSlice.clone()
         copyS = String.fromUtf8(newStrArray)
     }
 
@@ -69,16 +69,16 @@ func cParse(s: String): Complex128 {
                     throw ParseExpection(information: "quat: failed to parse: ${orig}")
                 }
                 v = -1.0
-            case _ => v = Float64.parse(String.fromUtf8(Array(copyS)[beg..end]))
+            case _ => v = Float64.parse(String.fromUtf8(copyS.toArray()[beg..end]))
         }
 
-        copyS = String.fromUtf8(Array(copyS)[end..=(copyS.size - 1)])
+        copyS = String.fromUtf8(copyS.toArray()[end..=(copyS.size - 1)])
 
         match {
             case p == 0 => q = Complex128((q.real + v), q.imag)
             case p == 1 =>
                 q = Complex128(q.real, (q.imag + v))
-                copyS = String.fromUtf8(Array(copyS)[1..=(copyS.size - 1)])
+                copyS = String.fromUtf8(copyS.toArray()[1..=(copyS.size - 1)])
             case _ => ()
         }
 

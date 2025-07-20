@@ -6,13 +6,13 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 func newGeneralFrom(a: GeneralCols): General {
-    let t = General(rows: a.rows, cols: a.cols, stride: a.cols, data: Array<Complex128>(a.rows * a.cols, item: Complex128(0.0)))
+    let t = General(rows: a.rows, cols: a.cols, stride: a.cols, data: Array<Complex128>(a.rows * a.cols, repeat: Complex128(0.0)))
     t.from(a)
     return t
 }
 
 func newGeneralColsFrom(a: General): GeneralCols {
-    let t = GeneralCols(rows: a.rows, cols: a.cols, stride: a.rows, data: Array<Complex128>(a.rows * a.cols, item: Complex128(0.0)))
+    let t = GeneralCols(rows: a.rows, cols: a.cols, stride: a.rows, data: Array<Complex128>(a.rows * a.cols, repeat: Complex128(0.0)))
     t.from(a)
     return t
 }

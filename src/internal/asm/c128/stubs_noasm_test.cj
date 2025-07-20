@@ -58,28 +58,28 @@ let axpyTests = [
         ex: [Complex128(-3.0, -2.0), Complex128(-3.0, -2.0), Complex128(-2.0, -2.0), Complex128(-3.0, -2.0),
             Complex128(-3.0, -2.0)]),
     axpyTestStruct(incX: 2, incY: 2, incDst: 3, ix: 0, iy: 0, idst: 0, a: Complex128(1.0, -1.0),
-        dst: Array<Complex128>(10, item: Complex128(0.0, 0.0)), x: Array<Complex128>(10, item: Complex128(0.0, 1.0)),
+        dst: Array<Complex128>(10, repeat: Complex128(0.0, 0.0)), x: Array<Complex128>(10, repeat: Complex128(0.0, 1.0)),
         y: [Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0),
             Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0)],
         ex: [Complex128(2.0, 1.0), Complex128(2.0, 1.0), Complex128(3.0, 1.0), Complex128(2.0, 1.0), Complex128(2.0, 1.0
         ), Complex128(2.0, 1.0), Complex128(2.0, 1.0), Complex128(3.0, 1.0), Complex128(2.0, 1.0), Complex128(2.0, 1.0)]
     ),
     axpyTestStruct(incX: 2, incY: 2, incDst: 3, ix: 0, iy: 0, idst: 0, a: Complex128(1.0, -1.0),
-        dst: Array<Complex128>(10, item: Complex128(0.0, 0.0)), x: Array<Complex128>(10, item: Complex128(0.0, 1.0)),
+        dst: Array<Complex128>(10, repeat: Complex128(0.0, 0.0)), x: Array<Complex128>(10, repeat: Complex128(0.0, 1.0)),
         y: [Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0),
             Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0)],
         ex: [Complex128(2.0, 1.0), Complex128(2.0, 1.0), Complex128(3.0, 1.0), Complex128(2.0, 1.0), Complex128(2.0, 1.0
         ), Complex128(2.0, 1.0), Complex128(2.0, 1.0), Complex128(3.0, 1.0), Complex128(2.0, 1.0), Complex128(2.0, 1.0)]
     ),
     axpyTestStruct(incX: -2, incY: -2, incDst: -3, ix: 18, iy: 18, idst: 27, a: Complex128(1.0, -1.0),
-        dst: Array<Complex128>(10, item: Complex128(0.0, 0.0)), x: Array<Complex128>(10, item: Complex128(0.0, 1.0)),
+        dst: Array<Complex128>(10, repeat: Complex128(0.0, 0.0)), x: Array<Complex128>(10, repeat: Complex128(0.0, 1.0)),
         y: [Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0),
             Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0)],
         ex: [Complex128(2.0, 1.0), Complex128(2.0, 1.0), Complex128(3.0, 1.0), Complex128(2.0, 1.0), Complex128(2.0, 1.0
         ), Complex128(2.0, 1.0), Complex128(2.0, 1.0), Complex128(3.0, 1.0), Complex128(2.0, 1.0), Complex128(2.0, 1.0)]
     ),
     axpyTestStruct(incX: -2, incY: 2, incDst: -3, ix: 18, iy: 0, idst: 27, a: Complex128(1.0, -1.0),
-        dst: Array<Complex128>(10, item: Complex128(0.0, 0.0)), x: Array<Complex128>(10, item: Complex128(0.0, 1.0)),
+        dst: Array<Complex128>(10, repeat: Complex128(0.0, 0.0)), x: Array<Complex128>(10, repeat: Complex128(0.0, 1.0)),
         y: [Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0),
             Complex128(1.0, 0.0), Complex128(1.0, 0.0), Complex128(2.0, 0.0), Complex128(1.0, 0.0), Complex128(1.0, 0.0)],
         ex: [Complex128(2.0, 1.0), Complex128(2.0, 1.0), Complex128(3.0, 1.0), Complex128(2.0, 1.0), Complex128(2.0, 1.0

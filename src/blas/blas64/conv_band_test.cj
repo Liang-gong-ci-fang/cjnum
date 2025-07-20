@@ -7,7 +7,7 @@ import std.unittest.testmacro.*
 
 func newBandFrom(a: BandCols): Band {
     let t = Band(rows: a.rows, cols: a.cols, kl: a.kl, ku: a.ku, stride: a.kl + a.ku + 1,
-                 data: Array<Float64>(a.rows * (a.kl + a.ku + 1), item: 0.0))
+                 data: Array<Float64>(a.rows * (a.kl + a.ku + 1), repeat: 0.0))
     for (i in 0..t.data.size) {
         t.data[i] = Float64.NaN
     }
@@ -35,7 +35,7 @@ extend Band <: band {
 
 func newBandColsFrom(a: Band): BandCols {
 let t = BandCols(rows: a.rows, cols: a.cols, kl: a.kl, ku: a.ku, stride: a.kl + a.ku + 1,
-                 data: Array<Float64>(a.cols * (a.kl + a.ku + 1), item: 0.0))
+                 data: Array<Float64>(a.cols * (a.kl + a.ku + 1), repeat: 0.0))
     for (i in 0..t.data.size) {
         t.data[i] = Float64.NaN
     }

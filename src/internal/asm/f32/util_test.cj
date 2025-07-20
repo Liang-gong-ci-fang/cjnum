@@ -36,7 +36,7 @@ func copy<T>(dst: Array<T>, src: Array<T>): Int64 {
 }
 
 func guardVector(v: Array<Float32>, g: Float32, gdLn: Int64): Array<Float32> {
-    let guarded = Array<Float32>(v.size + gdLn * 2, item: 0.0)
+    let guarded = Array<Float32>(v.size + gdLn * 2, repeat: 0.0)
     copy(guarded[gdLn..], v)
     for (i in 0..gdLn) {
         guarded[i] = g
@@ -57,7 +57,7 @@ func isValidGuard(v: Array<Float32>, g: Float32, gdLn: Int64): Bool {
 func guardIncVector(vec: Array<Float32>, gdVal: Float32, inc: Int64, gdLen: Int64): Array<Float32> {
     let inc_ = abs(inc)
     let inrLen = vec.size * inc_
-    let guarded = Array<Float32>(inrLen + gdLen * 2, item: 0.0)
+    let guarded = Array<Float32>(inrLen + gdLen * 2, repeat: 0.0)
     for (i in 0..guarded.size) {
         guarded[i] = gdVal
     }
@@ -97,7 +97,7 @@ class IncSet {
 
 func newIncSet(inc: Array<Int64>): Array<IncSet> {
     let n = inc.size
-    var is_ = Array<IncSet>(n * n, item: IncSet(0, 0))
+    var is_ = Array<IncSet>(n * n, repeat: IncSet(0, 0))
     for (x in 0..inc.size) {
         for (y in 0..inc.size) {
             is_[x * n + y].x = inc[x]
@@ -117,7 +117,7 @@ class IncToSet {
 
 func newIncToSet(inc: Array<Int64>): Array<IncToSet> {
     let n = inc.size
-    var is_ = Array<IncToSet>(n * n * n, item: IncToSet(0, 0, 0))
+    var is_ = Array<IncToSet>(n * n * n, repeat: IncToSet(0, 0, 0))
     for (i in 0..inc.size) {
         for (x in 0..inc.size) {
             for (y in 0..inc.size) {

@@ -1,6 +1,6 @@
 package cjnum.internal.asm.f32
 
-import std.format.*
+import std.convert.*
 import std.unittest.*
 import std.unittest.testmacro.*
 import cjnum.internal.math32.*

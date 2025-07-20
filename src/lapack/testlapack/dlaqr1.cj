@@ -52,7 +52,7 @@ public func dlaqr1Test(lFloat64: LFloat64): Bool {
 
                     let h2 = Array<Complex128>(n, { i => Complex128(h[i * ldh], 0.0) })
                     h2[0] -= Complex128(sr2, si2)
-                    let wantv = Array<Float64>(n, item: 0.0)
+                    let wantv = Array<Float64>(n, repeat: 0.0)
                     for (i in 0..n) {
                         for (j in 0..n) {
                             wantv[i] += real(h1[i * n + j] * h2[j])

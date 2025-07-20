@@ -27,12 +27,12 @@ public func dgebd2Test(lFloat64: LFloat64): Bool {
             lda = n
         }
 
-        let a = Array<Float64>(m * lda, item: 0.0)
+        let a = Array<Float64>(m * lda, repeat: 0.0)
         for (i in 0..a.size) {
             a[i] = rnd.nextGaussianFloat64()
         }
 
-        let aCopy = Array<Float64>(a.size, item: 0.0)
+        let aCopy = Array<Float64>(a.size, repeat: 0.0)
         copy(aCopy, a)
 
         let nb = min(m, n)

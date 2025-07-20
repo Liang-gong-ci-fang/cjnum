@@ -53,7 +53,7 @@ func dtrtrsTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, trans: Transpose, d
     }
     let name = "uplo=${uplo},diag=${diag},n=${n},nrhs=${nrhs},lda=${lda},ldb=${ldb},sing=${singular_}"
 
-    let a = Array<Float64>(n * lda, item: 0.0)
+    let a = Array<Float64>(n * lda, repeat: 0.0)
     for (i in 0..a.size) {
         a[i] = rnd.nextGaussianFloat64()
     }
@@ -61,20 +61,20 @@ func dtrtrsTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, trans: Transpose, d
         let i = rnd.nextInt64(n)
         a[i * lda + i] = 0.0
     }
-    let aCopy = Array<Float64>(a.size, item: 0.0)
+    let aCopy = Array<Float64>(a.size, repeat: 0.0)
     copy(aCopy, a)
 
-    let x = Array<Float64>(n * ldb, item: 0.0)
+    let x = Array<Float64>(n * ldb, repeat: 0.0)
     for (i in 0..x.size) {
         x[i] = rnd.nextGaussianFloat64()
     }
 
-    let b = Array<Float64>(x.size, item: 0.0)
+    let b = Array<Float64>(x.size, repeat: 0.0)
     copy(b, x)
     let nFloat64 = nFloat64Implementation()
     nFloat64.dtrmm(Left, uplo, trans, diag, n, nrhs, 1.0, a, lda, b, ldb)
 
-    let got = Array<Float64>(b.size, item: 0.0)
+    let got = Array<Float64>(b.size, repeat: 0.0)
     copy(got, b)
 
     let ok = lFloat64.dtrtrs(uplo, trans, diag, n, nrhs, a, lda, got, ldb)
@@ -98,7 +98,7 @@ func dtrtrsTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, trans: Transpose, d
         return true
     }
 
-    let work = Array<Float64>(n, item: 0.0)
+    let work = Array<Float64>(n, repeat: 0.0)
 
     var aNorm: Float64
     if (trans == NoTrans) {

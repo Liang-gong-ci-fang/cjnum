@@ -35,7 +35,7 @@ func dlangbTest(lFloat64: LFloat64, rnd: Random, norm: MatrixNorm, m: Int64, n: 
         let i = rnd.nextInt64(m)
         ab[i * ldab + kl] = Float64.NaN
     }
-    let abCopy = Array<Float64>(ab.size, item: 0.0)
+    let abCopy = Array<Float64>(ab.size, repeat: 0.0)
     copy(abCopy, ab)
 
     if (m == 0 || n == 0) {

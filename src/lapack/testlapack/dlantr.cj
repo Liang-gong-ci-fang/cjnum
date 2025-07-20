@@ -32,8 +32,8 @@ func _dlantrTest( lFloat64: LFloat64, rnd: Random, uplo: Uplo, diag: Diag, m: In
 	const tol = 1e-14
 
 	let a = Array<Float64>(max(0, (m - 1) * lda + n), { _ => rnd.nextGaussianFloat64() })
-	let rowsum = Array<Float64>(m, item: 0.0)
-	let colsum = Array<Float64>(n, item: 0.0)
+	let rowsum = Array<Float64>(m, repeat: 0.0)
+	let colsum = Array<Float64>(n, repeat: 0.0)
 	var (frobWant, maxabsWant) = (0.0, 0.0)
 	if (diag == UnitDiag) {
 		for (i in 0..min(m, n)) {
@@ -91,7 +91,7 @@ func _dlantrTest( lFloat64: LFloat64, rnd: Random, uplo: Uplo, diag: Diag, m: In
 		let name = "norm=${norm},uplo=${uplo},diag=${diag},m=${m},n=${n},lda=${lda}"
 
 		let work: Array<Float64> = if (norm == MaxColumnSum) {
-			Array<Float64>(n, item: 0.0)
+			Array<Float64>(n, repeat: 0.0)
 		} else {
             []
         }

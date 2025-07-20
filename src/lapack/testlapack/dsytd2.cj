@@ -32,22 +32,22 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
             if (lda == 0) {
                 lda = n
             }
-            let a = Array<Float64>(n * lda, item: 0.0)
+            let a = Array<Float64>(n * lda, repeat: 0.0)
             for (i in 0..a.size) {
                 a[i] = rnd.nextGaussianFloat64()
             }
-            let aCopy = Array<Float64>(a.size, item: 0.0)
+            let aCopy = Array<Float64>(a.size, repeat: 0.0)
             copy(aCopy, a)
 
-            let d = Array<Float64>(n, item: 0.0)
+            let d = Array<Float64>(n, repeat: 0.0)
             for (i in 0..d.size) {
                 d[i] = Float64.NaN
             }
-            let e = Array<Float64>(n - 1, item: 0.0)
+            let e = Array<Float64>(n - 1, repeat: 0.0)
             for (i in 0..e.size) {
                 e[i] = Float64.NaN
             }
-            let tau = Array<Float64>(n - 1, item: 0.0)
+            let tau = Array<Float64>(n - 1, repeat: 0.0)
             for (i in 0..tau.size) {
                 tau[i] = Float64.NaN
             }
@@ -58,13 +58,13 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
                 rows: n,
                 cols: n,
                 stride: n,
-                data: Array<Float64>(n * n, item: 0.0)
+                data: Array<Float64>(n * n, repeat: 0.0)
             )
             let qCopy = General64(
                 rows: n,
                 cols: n,
                 stride: n,
-                data: Array<Float64>(qMat.data.size, item: 0.0)
+                data: Array<Float64>(qMat.data.size, repeat: 0.0)
             )
             for (i in 0..n) {
                 qMat.data[i * qMat.stride + i] = 1.0
@@ -74,7 +74,7 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
                     rows: n,
                     cols: n,
                     stride: n,
-                    data: Array<Float64>(n * n, item: 0.0)
+                    data: Array<Float64>(n * n, repeat: 0.0)
                 )
                 for (j in 0..n) {
                     hMat.data[j * hMat.stride + j] = 1.0
@@ -83,7 +83,7 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
                 if (uplo == Upper) {
                     vi = Vector(
                         inc: 1,
-                        data: Array<Float64>(n, item: 0.0)
+                        data: Array<Float64>(n, repeat: 0.0)
                     )
                     for (j in 0..i) {
                         vi.data[j] = a[j * lda + i + 1]
@@ -92,7 +92,7 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
                 } else {
                     vi = Vector(
                         inc: 1,
-                        data: Array<Float64>(n, item: 0.0)
+                        data: Array<Float64>(n, repeat: 0.0)
                     )
                     vi.data[i + 1] = 1.0
                     for (j in i + 2..n) {
@@ -118,7 +118,7 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
                 rows: n,
                 cols: n,
                 stride: n,
-                data: Array<Float64>(a.size, item: 0.0),
+                data: Array<Float64>(a.size, repeat: 0.0),
             )
 
             for (i in 0..n) {
@@ -136,14 +136,14 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
                 rows: n,
                 cols: n,
                 stride: n,
-                data: Array<Float64>(n * n, item: 0.0)
+                data: Array<Float64>(n * n, repeat: 0.0)
             )
 
             let ans = General64(
                 rows: n,
                 cols: n,
                 stride: n,
-                data: Array<Float64>(n * n, item: 0.0)
+                data: Array<Float64>(n * n, repeat: 0.0)
             )
 
             gemm(Trans, NoTrans, 1.0, qMat, aMat, 0.0, tmp)
@@ -153,7 +153,7 @@ public func dsytd2Test(lFloat64: LFloat64): Bool {
                 rows: n,
                 cols: n,
                 stride: n,
-                data: Array<Float64>(n * n, item: 0.0),
+                data: Array<Float64>(n * n, repeat: 0.0),
             )
             for (i in 0..n - 1) {
                 tMat.data[i * tMat.stride + i] = d[i]

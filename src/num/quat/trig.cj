@@ -95,7 +95,7 @@ public func nqAsinh(q: NqNumber): NqNumber {
 // Acos returns the inverse cosine of q.
 public func nqAcos(q: NqNumber): NqNumber {
     let (w, uv) = nqSplit(nqAsin(q))
-    return nqJoin(Float64.PI / 2.0 - w, nqScale(-1.0, uv))
+    return nqJoin(Float64.getPI() / 2.0 - w, nqScale(-1.0, uv))
 }
 
 // Acosh returns the inverse hyperbolic cosine of q.

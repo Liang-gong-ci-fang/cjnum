@@ -52,7 +52,7 @@ extend LFloat64Implementation <: LFloat64{
     //     var ainvnm = 0.0
     //     var kase = 0
     //     var normin = false
-    //     let isave = Array<Int64>(3, item: 0)
+    //     let isave = Array<Int64>(3, repeat: 0)
     //     let onenrm = norm == MaxColumnSum
     //     let smlnum = dlamchS
     //     let kase1 = if (onenrm) {

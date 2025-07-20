@@ -56,7 +56,7 @@ public func dgelq2Test(lFloat64: LFloat64): Bool {
 
         let a = Array<Float64>(m * lda, {_ => rnd.nextFloat64()})
 
-        let aCopy = Array<Float64>(a.size, item: 0.0)
+        let aCopy = Array<Float64>(a.size, repeat: 0.0)
         copy(aCopy, a)
         lFloat64.dgelq2(m, n, a, lda, tau, work)
 
@@ -71,7 +71,7 @@ public func dgelq2Test(lFloat64: LFloat64): Bool {
             rows: m,
             cols: n,
             stride: n,
-            data: Array<Float64>(m * n, item: 0.0)
+            data: Array<Float64>(m * n, repeat: 0.0)
         )
         for (i in 0..m) {
             for (j in 0..=min(i, n - 1)) {
@@ -83,7 +83,7 @@ public func dgelq2Test(lFloat64: LFloat64): Bool {
             rows: m,
             cols: n,
             stride: lda,
-            data: Array<Float64>(m * lda, item: 0.0)
+            data: Array<Float64>(m * lda, repeat: 0.0)
         )
         copy(ans.data, aCopy)
         gemm(NoTrans, NoTrans, 1.0, L, Q, 0.0, ans)

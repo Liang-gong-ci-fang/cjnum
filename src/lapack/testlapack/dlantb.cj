@@ -39,7 +39,7 @@ func _dlantbTest(lFloat64: LFloat64, rnd: Random, norm: MatrixNorm, uplo: Uplo, 
 		return
 	}
 
-	let a = Array<Float64>(max(0, (n - 1) * lda + k + 1), item: 0.0)
+	let a = Array<Float64>(max(0, (n - 1) * lda + k + 1), repeat: 0.0)
 	if (rnd.nextFloat64() < 0.5) {
 		for (i in 0..a.size) {
 			a[i] = rnd.nextFloat64() - 0.5
@@ -57,7 +57,7 @@ func _dlantbTest(lFloat64: LFloat64, rnd: Random, norm: MatrixNorm, uplo: Uplo, 
 	let aCopy = a.clone()
 	var work: Array<Float64> = []
 	if (norm == MaxColumnSum) {
-		work = Array<Float64>(n, item: 0.0)
+		work = Array<Float64>(n, repeat: 0.0)
 	}
 
 	for (i in 0..work.size) {
@@ -71,7 +71,7 @@ func _dlantbTest(lFloat64: LFloat64, rnd: Random, norm: MatrixNorm, uplo: Uplo, 
 	}
 
 	let ldaGen = n
-	let aGen = Array<Float64>(n * ldaGen, item: 0.0)
+	let aGen = Array<Float64>(n * ldaGen, repeat: 0.0)
 	if (uplo == Upper) {
 		for (i in 0..n) {
 			for (j in 0..min(n - i, k + 1)) {

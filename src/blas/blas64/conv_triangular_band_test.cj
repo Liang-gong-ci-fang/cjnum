@@ -6,7 +6,7 @@ import std.unittest.*
 import std.unittest.testmacro.*
 
 public func newTriangularBandFrom(a: TriangularBandCols): TriangularBand {
-    let t = TriangularBand(n: a.n, k: a.k, stride: a.k + 1, data: Array<Float64>(a.n * (a.k +1 ), item: 0.0), 
+    let t = TriangularBand(n: a.n, k: a.k, stride: a.k + 1, data: Array<Float64>(a.n * (a.k +1 ), repeat: 0.0), 
         uplo: a.uplo, diag: a.diag)
     for (i in 0..t.data.size) {
         t.data[i] = Float64.NaN
@@ -55,7 +55,7 @@ extend TriangularBand <: triangularBand {
 }
 
 public func newTriangularBandColsFrom(a: TriangularBand): TriangularBandCols {
-    let t = TriangularBandCols(n: a.n, k: a.k, stride: a.k + 1, data: Array<Float64>(a.n * (a.k + 1), item: 0.0), 
+    let t = TriangularBandCols(n: a.n, k: a.k, stride: a.k + 1, data: Array<Float64>(a.n * (a.k + 1), repeat: 0.0), 
         uplo: a.uplo, diag: a.diag)
     for (i in 0..t.data.size) {
         t.data[i] = Float64.NaN

@@ -22,7 +22,7 @@ public func flatten(a: Array<Array<Float64>>): Array<Float64> {
     }
     let m = a.size
     let n = a[0].size
-    let s = Array<Float64>(m * n, item: 0.0)
+    let s = Array<Float64>(m * n, repeat: 0.0)
     for (i in 0..m) {
         for (j in 0..n) {
             s[i * n + j] = a[i][j]

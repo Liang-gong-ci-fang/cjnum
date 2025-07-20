@@ -35,16 +35,16 @@ func dgtsvTest(lFloat64: LFloat64, rnd: Random, n: Int64, nrhs: Int64, ldb: Int6
 	}
 
 	let d = randomSlice(n + 1 + extra, rnd)
-	let dCopy = Array<Float64>(d.size, item: 0.0)
+	let dCopy = Array<Float64>(d.size, repeat: 0.0)
 	copy(dCopy, d)
 	var (dl, dlCopy, du, duCopy) = (Array<Float64>(), Array<Float64>(), Array<Float64>(), Array<Float64>())
 	if (n > 1) {
 		dl = randomSlice(n + extra, rnd)
-		dlCopy = Array<Float64>(dl.size, item: 0.0)
+		dlCopy = Array<Float64>(dl.size, repeat: 0.0)
 		copy(dlCopy, dl)
 
 		du = randomSlice(n + extra, rnd)
-		duCopy = Array<Float64>(du.size, item: 0.0)
+		duCopy = Array<Float64>(du.size, repeat: 0.0)
 		copy(duCopy, du)
 	}
 

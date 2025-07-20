@@ -18,7 +18,7 @@ func copy<T>(dst: Array<T>, src: Array<T>): Int64 {
 }
 
 func guardVector(vec: Array<Complex128>, guard_val: Complex128, guard_len: Int64): Array<Complex128> {
-    var guarded = Array<Complex128>(vec.size + guard_len * 2, item: Complex128(0.0))
+    var guarded = Array<Complex128>(vec.size + guard_len * 2, repeat: Complex128(0.0))
     copy(guarded[guard_len..], vec)
     for (i in 0..guard_len) {
         guarded[i] = guard_val
@@ -41,7 +41,7 @@ func guardIncVector(vec: Array<Complex128>, guard_val: Complex128, inc: Int64, g
     if (inc < 0) {
         s_ln = vec.size * -inc
     }
-    var guarded = Array<Complex128>(s_ln + guard_len * 2, item: Complex128(0.0))
+    var guarded = Array<Complex128>(s_ln + guard_len * 2, repeat: Complex128(0.0))
     var cas = 0
     for (i in 0..guarded.size) {
         match {
@@ -89,7 +89,7 @@ class IncSet {
 
 func newIncSet(inc: Array<Int64>): Array<IncSet> {
     let n = inc.size
-    var is_ = Array<IncSet>(n * n, item: IncSet(0, 0))
+    var is_ = Array<IncSet>(n * n, repeat: IncSet(0, 0))
     for (x in 0..inc.size) {
         for (y in 0..inc.size) {
             is_[x * n + y].x = inc[x]
@@ -109,7 +109,7 @@ class IncToSet {
 
 func newIncToSet(inc: Array<Int64>): Array<IncToSet> {
     let n = inc.size
-    var is_ = Array<IncToSet>(n * n * n, item: IncToSet(0, 0, 0))
+    var is_ = Array<IncToSet>(n * n * n, repeat: IncToSet(0, 0, 0))
     for (i in 0..inc.size) {
         for (x in 0..inc.size) {
             for (y in 0..inc.size) {

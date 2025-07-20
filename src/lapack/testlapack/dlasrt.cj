@@ -20,9 +20,9 @@ public func dlasrtTest(lFloat64: LFloat64): Bool {
                 wantDec: []
             ),
             dlasrtTestStruct(
-                data: Array<Float64>([]),
-                wantInc: Array<Float64>([]),
-                wantDec: Array<Float64>([])
+                data: Array<Float64>(),
+                wantInc: Array<Float64>(),
+                wantDec: Array<Float64>()
             ),
             dlasrtTestStruct(
                 data: [1.0],
@@ -56,7 +56,7 @@ public func dlasrtTest(lFloat64: LFloat64): Bool {
             )
         ]) {
         let n = test.data.size
-        let ds = Array<Float64>(n, item: 0.0)
+        let ds = Array<Float64>(n, repeat: 0.0)
 
         copy(ds, test.data)
         lFloat64.dlasrt(SortIncreasing, n, ds)

@@ -117,12 +117,12 @@ public class BenchmarkDotUnitaryN1TestClass {
 
     @Strategy[ln in benchmarkSizes]
     func dotSlice(ln: Int64): (Array<Float64>, Array<Float64>) {
-        let x = Array<Float64>(ln, item: 0.0)
+        let x = Array<Float64>(ln, repeat: 0.0)
         let random = Random()
         for (i in 0..ln) {
             x[i] = random.nextFloat64()
         }
-        let y = Array<Float64>(ln, item: 0.0)
+        let y = Array<Float64>(ln, repeat: 0.0)
         for (i in 0..ln) {
             y[i] = random.nextFloat64()
         }
@@ -146,8 +146,8 @@ public class BenchmarkDotUnitaryN1TestClass {
         let inc = tests[1]
         let absInc = abs(inc)
         let ln = (n - 1) * absInc + 1
-        let x = Array<Float64>(ln, item: 0.0)
-        let y = Array<Float64>(ln, item: 0.0)
+        let x = Array<Float64>(ln, repeat: 0.0)
+        let y = Array<Float64>(ln, repeat: 0.0)
         var ini: Int64 = 0
         let random = Random()
         for (i in 0..x.size) {

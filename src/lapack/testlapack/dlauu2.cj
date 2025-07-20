@@ -27,12 +27,12 @@ func dlauuTest(f: (uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64) -> Unit,
         for (lda in [max(1, n), n + 11]) {
             let prefix = "n=${n},lda=${lda}"
 
-            let a = Array<Float64>(n * lda, item: 0.0)
+            let a = Array<Float64>(n * lda, repeat: 0.0)
             for (i in 0..a.size) {
                 a[i] = rnd.nextGaussianFloat64()
             }
 
-            let aCopy = Array<Float64>(a.size, item: 0.0)
+            let aCopy = Array<Float64>(a.size, repeat: 0.0)
             copy(aCopy, a)
 
             f(uplo, n, a, lda)

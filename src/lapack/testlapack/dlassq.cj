@@ -85,7 +85,7 @@ func _dlassqTest(lFloat64: LFloat64, rnd: Random, n: Int64, incx: Int64, cas: In
         throw Exception("bad cas")
     }
 
-    let x = Array<Float64>(max(0, 1 + (n - 1) * incx), item: rogue)
+    let x = Array<Float64>(max(0, 1 + (n - 1) * incx), repeat: rogue)
     for (i in 0..work.size) {
         x[i * incx] = v1 * work[i]
     }
