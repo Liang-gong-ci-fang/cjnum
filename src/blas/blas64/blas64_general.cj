@@ -11,7 +11,7 @@ public abstract class GeneralCore {
     ) {}
 }
 
-public class General <: GeneralCore {
+public class General <: GeneralCore & ToString {
     public General(
         rows!: Int64 = 0,
         cols!: Int64 = 0,
@@ -35,5 +35,10 @@ public class General <: GeneralCore {
                 this.data[i * this.stride + j] = a.data[j * a.stride + i]
             }
         }
+    }
+
+    public func toString(): String {
+        var s: String = "{rows: ${this.rows}, cols: ${this.cols}, stride: ${this.stride}, data: [${this.data}]"
+        return s
     }
 }

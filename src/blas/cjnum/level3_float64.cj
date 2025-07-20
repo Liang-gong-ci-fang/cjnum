@@ -42,7 +42,7 @@ extend NFloat64Implementation {
         }
 
         if (m == 0 || n == 0) {
-            return 
+            return
         }
 
         if (a.size < lda * (k - 1) + k) {
@@ -59,7 +59,7 @@ extend NFloat64Implementation {
                     btmp[j] = 0.0
                 }
             }
-            return 
+            return
         }
 
         let nonUnitDiag = d == NonUnitDiag
@@ -86,7 +86,7 @@ extend NFloat64Implementation {
                         }
                         i--
                     }
-                    return 
+                    return
                 }
 
                 for (i in 0..m) {
@@ -105,7 +105,7 @@ extend NFloat64Implementation {
                         scalUnitary(tmp, btmp)
                     }
                 }
-                return 
+                return
             }
 
             if (ul == Upper) {
@@ -126,7 +126,7 @@ extend NFloat64Implementation {
                         scalUnitary(alpha, btmpk)
                     }
                 }
-                return 
+                return
             }
 
             var k = m - 1
@@ -136,7 +136,7 @@ extend NFloat64Implementation {
                     scalUnitary(1.0 / a[k * lda + k], btmpk)
                 }
                 let atmpk = a[k * lda..k * lda + k]
-                for (i in 0..atmpk.size) { 
+                for (i in 0..atmpk.size) {
                     let va = atmpk[i]
                     if (va != 0.0) {
                         axpyUnitary(-va, btmpk, b[i * ldb..i * ldb + n])
@@ -147,7 +147,7 @@ extend NFloat64Implementation {
                 }
                 k--
             }
-            return 
+            return
         }
 
         if (tA == NoTrans) {
@@ -168,7 +168,7 @@ extend NFloat64Implementation {
                         axpyUnitary(-btmp[k], a[k * lda + k + 1..k * lda + n], btmp[k + 1..n])
                     }
                 }
-                return 
+                return
             }
 
             for (i in 0..m) {
@@ -188,7 +188,7 @@ extend NFloat64Implementation {
                     k--
                 }
             }
-            return 
+            return
         }
 
         if (ul == Upper) {
@@ -218,8 +218,8 @@ extend NFloat64Implementation {
         }
     }
 
-    public func dsymm(s: Side, ul: Uplo, m: Int64, n: Int64, alpha: Float64, a: Array<Float64>, lda: Int64, b: Array<Float64>,
-        ldb: Int64, beta: Float64, c: Array<Float64>, ldc: Int64): Unit {
+    public func dsymm(s: Side, ul: Uplo, m: Int64, n: Int64, alpha: Float64, a: Array<Float64>, lda: Int64,
+        b: Array<Float64>, ldb: Int64, beta: Float64, c: Array<Float64>, ldc: Int64): Unit {
         if (s != Left && s != Right) {
             throw Exception(badSide)
         }
@@ -250,7 +250,7 @@ extend NFloat64Implementation {
         }
 
         if (m == 0 || n == 0) {
-            return 
+            return
         }
 
         if (a.size < lda * (k - 1) + k) {
@@ -264,7 +264,7 @@ extend NFloat64Implementation {
         }
 
         if (alpha == 0.0 && beta == 1.0) {
-            return 
+            return
         }
 
         if (beta == 0.0) {
@@ -318,7 +318,7 @@ extend NFloat64Implementation {
                     axpyUnitary(atmp, b[k * ldb..k * ldb + n], ctmp)
                 }
             }
-            return 
+            return
         }
 
         if (isUpper) {
@@ -359,8 +359,8 @@ extend NFloat64Implementation {
         }
     }
 
-    public func dsyrk(ul: Uplo, tA: Transpose, n: Int64, k: Int64, alpha: Float64, a: Array<Float64>, lda: Int64, beta: Float64,
-        c: Array<Float64>, ldc: Int64): Unit {
+    public func dsyrk(ul: Uplo, tA: Transpose, n: Int64, k: Int64, alpha: Float64, a: Array<Float64>, lda: Int64,
+        beta: Float64, c: Array<Float64>, ldc: Int64): Unit {
         if (ul != Lower && ul != Upper) {
             throw Exception(badUplo)
         }
@@ -393,7 +393,7 @@ extend NFloat64Implementation {
         }
 
         if (n == 0) {
-            return 
+            return
         }
 
         if (a.size < lda * (row - 1) + col) {
@@ -412,7 +412,7 @@ extend NFloat64Implementation {
                             ctmp[j] = 0.0
                         }
                     }
-                    return 
+                    return
                 }
 
                 for (i in 0..n) {
@@ -421,7 +421,7 @@ extend NFloat64Implementation {
                         ctmp[j] = 0.0
                     }
                 }
-                return 
+                return
             }
 
             if (ul == Upper) {
@@ -431,7 +431,7 @@ extend NFloat64Implementation {
                         ctmp[j] *= beta
                     }
                 }
-                return 
+                return
             }
 
             for (i in 0..n) {
@@ -440,7 +440,7 @@ extend NFloat64Implementation {
                     ctmp[j] *= beta
                 }
             }
-            return 
+            return
         }
 
         if (tA == NoTrans) {
@@ -461,7 +461,7 @@ extend NFloat64Implementation {
                         }
                     }
                 }
-                return 
+                return
             }
 
             for (i in 0..n) {
@@ -478,7 +478,7 @@ extend NFloat64Implementation {
                     }
                 }
             }
-            return 
+            return
         }
 
         if (ul == Upper) {
@@ -500,7 +500,7 @@ extend NFloat64Implementation {
                     }
                 }
             }
-            return 
+            return
         }
 
         for (i in 0..n) {
@@ -518,7 +518,7 @@ extend NFloat64Implementation {
             }
         }
     }
-    
+
     public func dsyr2k(ul: Uplo, tA: Transpose, n: Int64, k: Int64, alpha: Float64, a: Array<Float64>, lda: Int64,
         b: Array<Float64>, ldb: Int64, beta: Float64, c: Array<Float64>, ldc: Int64): Unit {
         if (ul != Lower && ul != Upper) {
@@ -535,12 +535,12 @@ extend NFloat64Implementation {
         }
 
         let row = if (tA == NoTrans) {
-            n  
+            n
         } else {
             k
         }
         let col = if (tA == NoTrans) {
-            k  
+            k
         } else {
             n
         }
@@ -556,7 +556,7 @@ extend NFloat64Implementation {
         }
 
         if (n == 0) {
-            return 
+            return
         }
 
         if (a.size < lda * (row - 1) + col) {
@@ -578,7 +578,7 @@ extend NFloat64Implementation {
                             ctmp[j] = 0.0
                         }
                     }
-                    return 
+                    return
                 }
 
                 for (i in 0..n) {
@@ -587,7 +587,7 @@ extend NFloat64Implementation {
                         ctmp[j] = 0.0
                     }
                 }
-                return 
+                return
             }
 
             if (ul == Upper) {
@@ -597,7 +597,7 @@ extend NFloat64Implementation {
                         ctmp[j] *= beta
                     }
                 }
-                return 
+                return
             }
 
             for (i in 0..n) {
@@ -606,7 +606,7 @@ extend NFloat64Implementation {
                     ctmp[j] *= beta
                 }
             }
-            return 
+            return
         }
 
         if (tA == NoTrans) {
@@ -622,7 +622,7 @@ extend NFloat64Implementation {
                             var tmp2 = 0.0
                             let binner = b[j * ldb..j * ldb + k]
                             let ainner = a[j * lda..j * lda + k]
-                            for(l in 0..ainner.size) {
+                            for (l in 0..ainner.size) {
                                 tmp1 += ainner[l] * btmp[l]
                                 tmp2 += atmp[l] * binner[l]
                             }
@@ -635,7 +635,7 @@ extend NFloat64Implementation {
                             var tmp2 = 0.0
                             let binner = b[j * ldb..j * ldb + k]
                             let ainner = a[j * lda..j * lda + k]
-                            for(l in 0..ainner.size) {
+                            for (l in 0..ainner.size) {
                                 tmp1 += ainner[l] * btmp[l]
                                 tmp2 += atmp[l] * binner[l]
                             }
@@ -644,7 +644,7 @@ extend NFloat64Implementation {
                         }
                     }
                 }
-                return 
+                return
             }
 
             for (i in 0..n) {
@@ -657,7 +657,7 @@ extend NFloat64Implementation {
                         var tmp2 = 0.0
                         let binner = b[j * ldb..j * ldb + k]
                         let ainner = a[j * lda..j * lda + k]
-                        for(l in 0..ainner.size) {
+                        for (l in 0..ainner.size) {
                             tmp1 += ainner[l] * btmp[l]
                             tmp2 += atmp[l] * binner[l]
                         }
@@ -669,7 +669,7 @@ extend NFloat64Implementation {
                         var tmp2 = 0.0
                         let binner = b[j * ldb..j * ldb + k]
                         let ainner = a[j * lda..j * lda + k]
-                        for(l in 0..ainner.size) {
+                        for (l in 0..ainner.size) {
                             tmp1 += ainner[l] * btmp[l]
                             tmp2 += atmp[l] * binner[l]
                         }
@@ -678,7 +678,7 @@ extend NFloat64Implementation {
                     }
                 }
             }
-            return 
+            return
         }
 
         if (ul == Upper) {
@@ -689,7 +689,6 @@ extend NFloat64Implementation {
                         ctmp[j] = 0.0
                     }
                 } else if (beta == 1.0) {
-
                 } else {
                     for (j in 0..ctmp.size) {
                         ctmp[j] *= beta
@@ -707,7 +706,7 @@ extend NFloat64Implementation {
                     }
                 }
             }
-            return 
+            return
         }
 
         for (i in 0..n) {
@@ -717,7 +716,6 @@ extend NFloat64Implementation {
                     ctmp[j] = 0.0
                 }
             } else if (beta == 1.0) {
-
             } else {
                 for (j in 0..ctmp.size) {
                     ctmp[j] *= beta
@@ -736,7 +734,7 @@ extend NFloat64Implementation {
             }
         }
     }
-    
+
     public func dtrmm(s: Side, ul: Uplo, tA: Transpose, d: Diag, m: Int64, n: Int64, alpha: Float64, a: Array<Float64>,
         lda: Int64, b: Array<Float64>, ldb: Int64): Unit {
         if (s != Left && s != Right) {
@@ -759,7 +757,7 @@ extend NFloat64Implementation {
         }
 
         let k = if (s == Left) {
-            m 
+            m
         } else {
             n
         }
@@ -772,7 +770,7 @@ extend NFloat64Implementation {
         }
 
         if (m == 0 || n == 0) {
-            return 
+            return
         }
 
         if (a.size < lda * (k - 1) + k) {
@@ -789,7 +787,7 @@ extend NFloat64Implementation {
                     btmp[j] = 0.0
                 }
             }
-            return 
+            return
         }
 
         let nonUnitDiag = d == NonUnitDiag
@@ -812,7 +810,7 @@ extend NFloat64Implementation {
                             }
                         }
                     }
-                    return 
+                    return
                 }
 
                 var i = m - 1
@@ -832,7 +830,7 @@ extend NFloat64Implementation {
                     }
                     i--
                 }
-                return 
+                return
             }
 
             if (ul == Upper) {
@@ -857,7 +855,7 @@ extend NFloat64Implementation {
                     }
                     k--
                 }
-                return 
+                return
             }
 
             for (k in 0..m) {
@@ -878,7 +876,7 @@ extend NFloat64Implementation {
                     scalUnitary(tmp, btmpk)
                 }
             }
-            return 
+            return
         }
 
         if (tA == NoTrans) {
@@ -900,7 +898,7 @@ extend NFloat64Implementation {
                         k--
                     }
                 }
-                return 
+                return
             }
 
             for (i in 0..m) {
@@ -917,12 +915,12 @@ extend NFloat64Implementation {
                     axpyUnitary(tmp, a[k * lda..k * lda + k], btmp[..k])
                 }
             }
-            return 
+            return
         }
 
         if (ul == Upper) {
             for (i in 0..m) {
-                let btmp = b[i * ldb..i *ldb + n]
+                let btmp = b[i * ldb..i * ldb + n]
                 for (j in 0..btmp.size) {
                     var tmp = btmp[j]
                     if (nonUnitDiag) {
@@ -932,7 +930,7 @@ extend NFloat64Implementation {
                     btmp[j] = alpha * tmp
                 }
             }
-            return 
+            return
         }
 
         for (i in 0..m) {
@@ -995,7 +993,7 @@ extend NFloat64Implementation {
         }
 
         if (m == 0 || n == 0) {
-            return 
+            return
         }
 
         if (aTrans) {
@@ -1023,7 +1021,7 @@ extend NFloat64Implementation {
         }
 
         if ((alpha == 0.0 || k == 0) && beta == 1.0) {
-            return 
+            return
         }
 
         if (beta != 1.0) {
@@ -1048,19 +1046,20 @@ extend NFloat64Implementation {
     }
 }
 
-func dgemmParallel(aTrans: Bool, bTrans: Bool, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
+func dgemmParallel(aTrans: Bool, bTrans: Bool, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
+    b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
     let maxKLen = k
     let parBlocks = blocks(m, blockSize) * blocks(n, blockSize)
     if (parBlocks < minParBlock) {
-		dgemmSerial(aTrans, bTrans, m, n, k, a, lda, b, ldb, c, ldc, alpha)
-		return
+        dgemmSerial(aTrans, bTrans, m, n, k, a, lda, b, ldb, c, ldc, alpha)
+        return
     }
 
     let wg = ArrayList<Future<Unit>>()
 
     var i = 0
-    var j = 0
     while (i < m) {
+        var j = 0
         while (j < n) {
             let i_ = i
             let j_ = j
@@ -1109,17 +1108,19 @@ func dgemmParallel(aTrans: Bool, bTrans: Bool, m: Int64, n: Int64, k: Int64, a: 
     }
 }
 
-func dgemmSerial(aTrans: Bool, bTrans: Bool, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
+func dgemmSerial(aTrans: Bool, bTrans: Bool, m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64,
+    b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
     match {
         case !aTrans && !bTrans => dgemmSerialNotNot(m, n, k, a, lda, b, ldb, c, ldc, alpha)
-        case aTrans && !bTrans  => dgemmSerialTransNot(m, n, k, a, lda, b, ldb, c, ldc, alpha)
-        case !aTrans && bTrans  => dgemmSerialNotTrans(m, n, k, a, lda, b, ldb, c, ldc, alpha)
-        case aTrans && bTrans   => dgemmSerialTransTrans(m, n, k, a, lda, b, ldb, c, ldc, alpha)
+        case aTrans && !bTrans => dgemmSerialTransNot(m, n, k, a, lda, b, ldb, c, ldc, alpha)
+        case !aTrans && bTrans => dgemmSerialNotTrans(m, n, k, a, lda, b, ldb, c, ldc, alpha)
+        case aTrans && bTrans => dgemmSerialTransTrans(m, n, k, a, lda, b, ldb, c, ldc, alpha)
         case _ => throw Exception("dgemmSerial unreachable")
     }
 }
 
-func dgemmSerialNotNot(m: Int64, n: Int64, k: Int64,  a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
+func dgemmSerialNotNot(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64,
+    c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
     for (i in 0..m) {
         let atmp = a[i * lda..i * lda + k]
         let ctmp = c[i * ldc..i * ldc + n]
@@ -1132,7 +1133,8 @@ func dgemmSerialNotNot(m: Int64, n: Int64, k: Int64,  a: Array<Float64>, lda: In
     }
 }
 
-func dgemmSerialTransNot(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
+func dgemmSerialTransNot(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64,
+    c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
     for (l in 0..k) {
         let atmp = a[l * lda..l * lda + m]
         let btmp = b[l * ldb..l * ldb + n]
@@ -1146,7 +1148,8 @@ func dgemmSerialTransNot(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: I
     }
 }
 
-func dgemmSerialNotTrans(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
+func dgemmSerialNotTrans(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64,
+    c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
     for (i in 0..m) {
         let atmp = a[i * lda..i * lda + k]
         let ctmp = c[i * ldc..i * ldc + n]
@@ -1156,7 +1159,8 @@ func dgemmSerialNotTrans(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: I
     }
 }
 
-func dgemmSerialTransTrans(m :Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64, c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
+func dgemmSerialTransTrans(m: Int64, n: Int64, k: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64,
+    c: Array<Float64>, ldc: Int64, alpha: Float64): Unit {
     for (l in 0..k) {
         let atmp = a[l * lda..l * lda + m]
         for (i in 0..atmp.size) {

@@ -4,8 +4,8 @@ import cjnum.blas.*
 
 public abstract class VectorCore {
     public VectorCore(
-        public let n: Int64,
-        public let data: Array<Float64>,
+        public var n: Int64,
+        public var data: Array<Float64>,
         public let inc: Int64
     ) {}
 }
