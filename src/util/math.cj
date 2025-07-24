@@ -55,45 +55,45 @@ private func _atan(x: Float64): Float64 {
 //     return _atan2(y, x)
 // }
 
-private func _atan2(y: Float64, x: Float64): Float64 {
-    // special cases
-    if (y.isNaN() || x.isNaN()) {
-        return Float64.NaN
-    } else if (y == 0.0) {
-        if (x >= 0.0 && (!signbit(x))) {
-            return copysign(0.0, y)
-        }
-        return copysign(Float64.getPI(), y)
-    } else if (x == 0.0) {
-        return copysign(Float64.getPI() / 2.0, y)
-    } else if (x.isInf()) {
-        if (x > 0.0) {
-            if (y.isInf()) {
-                return copysign(Float64.getPI() / 4.0, y)
-            } else {
-                return copysign(0.0, y)
-            }
-        }
-        if (y.isInf()) {
-            return copysign(Float64.getPI() * 3.0 / 4.0, y)
-        } else {
-            return copysign(Float64.getPI(), y)
-        }
-    } else if (y.isInf()) {
-        return copysign(Float64.getPI() / 2.0, y)
-    }
+// private func _atan2(y: Float64, x: Float64): Float64 {
+//     // special cases
+//     if (y.isNaN() || x.isNaN()) {
+//         return Float64.NaN
+//     } else if (y == 0.0) {
+//         if (x >= 0.0 && (!signbit(x))) {
+//             return copysign(0.0, y)
+//         }
+//         return copysign(Float64.getPI(), y)
+//     } else if (x == 0.0) {
+//         return copysign(Float64.getPI() / 2.0, y)
+//     } else if (x.isInf()) {
+//         if (x > 0.0) {
+//             if (y.isInf()) {
+//                 return copysign(Float64.getPI() / 4.0, y)
+//             } else {
+//                 return copysign(0.0, y)
+//             }
+//         }
+//         if (y.isInf()) {
+//             return copysign(Float64.getPI() * 3.0 / 4.0, y)
+//         } else {
+//             return copysign(Float64.getPI(), y)
+//         }
+//     } else if (y.isInf()) {
+//         return copysign(Float64.getPI() / 2.0, y)
+//     }
 
-    // Call atan and determine the quadrant.
-    // TODO
-    let q = uAtan(y / x)
-    if (x < 0.0) {
-        if (q <= 0.0) {
-            return q + Float64.getPI()
-        }
-        return q - Float64.getPI()
-    }
-    return q
-}
+//     // Call atan and determine the quadrant.
+//     // TODO
+//     let q = uAtan(y / x)
+//     if (x < 0.0) {
+//         if (q <= 0.0) {
+//             return q + Float64.getPI()
+//         }
+//         return q - Float64.getPI()
+//     }
+//     return q
+// }
 
 public func copysign(f: Float64, sign: Float64): Float64 {
     let signBit: UInt64 = 1 << 63
