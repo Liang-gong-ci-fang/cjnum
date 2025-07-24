@@ -25,7 +25,7 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
                         z[2 * i] = rnd.nextFloat64()
                         want[i] = z[2 * i]
                     }
-                    stableSort(want)
+                    sort(want, stable: true)
                 } else if (typ == 2) {
                     for (i in 0..z.size) {
                         z[i] = rnd.nextFloat64()
@@ -82,7 +82,7 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
                     }
                 }
 
-                stableSort(got)
+                sort(got, stable: true)
                 let diff = fDistance(Float64.Inf, s: got, t: want)
                 if (diff > tol) {
                     throw Exception("${name}: unexpected eigenvalues; diff=${diff}\n${got}\n%{want}\n\n")
