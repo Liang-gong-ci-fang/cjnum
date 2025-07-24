@@ -648,3 +648,35 @@ private func sameDual(a: NdNumber, b: NdNumber, tol: Float64): Bool {
 private func same(a: Float64, b: Float64, tol: Float64): Bool {
     return (a.isNaN() && b.isNaN()) || equalWithinAbsOrRel(a, b, tol, tol)
 }
+
+// @Test
+// @Parallel
+// public func testScale(): Unit {
+//     for (test in [
+//         (2.0, NdNumber(1.0, 3.0), NdNumber(2.0, 6.0)),
+//         (-1.0, NdNumber(1.0, -2.0), NdNumber(-1.0, 2.0)),
+//         (0.0, NdNumber(5.0, 7.0), NdNumber(0.0, 0.0)),
+//         (1.0, NdNumber(-3.0, 4.0), NdNumber(-3.0, 4.0))
+//     ]) {
+//         let got = ndScale(test[0], test[1])
+//         if (!sameDual(got, test[2], 1e-15)) {
+//             throw Exception("Scale test failed")
+//         }
+//     }
+// }
+
+// @Test
+// @Parallel
+// public func testAbs() {
+//     for (test in [
+//         (NdNumber(3.0, 2.0), NdNumber(3.0, 2.0)),
+//         (NdNumber(-3.0, 2.0), NdNumber(3.0, -2.0)),
+//         (NdNumber(0.0, 5.0), NdNumber(0.0, 5.0)),
+//         (NdNumber(-0.0, 7.0), NdNumber(-0.0, 7.0))
+//     ]) {
+//         let got = ndAbs(test[0])
+//         if (!(same(got.real, test[1].real, 1e-15) && same(got.emag, test[1].emag, 1e-15))) {
+//             throw Exception("Abs test failed")
+//         }
+//     }
+// }

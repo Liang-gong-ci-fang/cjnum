@@ -20,6 +20,15 @@ public interface Matrix {
     func t(): Matrix
 }
 
+public interface allMatrix <: reseter{
+    func isEmpty(): Bool
+    func zero(): Unit
+}
+
+public interface reseter {
+    func reset(): Unit
+}
+
 /*
 因为以下注释代码本质上是为了在编译过程中检查是Transpose类否实现了以下接口，
 仓颉编译过程中会对未实现的接口方法进行提示，

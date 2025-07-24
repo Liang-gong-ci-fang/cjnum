@@ -22,7 +22,7 @@ import std.math.*
 // )
 
 // BandDense represents a band matrix in dense storage format.
-public class BandDense <: Matrix & DiagDenseViewer {
+public class BandDense <: Matrix & DiagDenseViewer & allMatrix {
     let mat: Band
     public init(mat: Band) {
         this.mat = mat
@@ -142,6 +142,19 @@ public class BandDense <: Matrix & DiagDenseViewer {
             let u = min(nCol, m + kL - i)
             _zero(this.mat.data[i * this.mat.stride + l..i * this.mat.stride + u])
         }
+    }
+
+    public func isEmpty(): Bool {
+        return this.mat.stride == 0
+    }
+
+    public func reset(): Unit {
+        this.mat.rows = 0
+        this.mat.cols = 0
+        this.mat.kl = 0
+        this.mat.ku = 0
+        this.mat.stride = 0
+        this.mat.data = this.mat.data[..0]
     }
 
     // DiagView returns the diagonal as a matrix backed by the original data.
