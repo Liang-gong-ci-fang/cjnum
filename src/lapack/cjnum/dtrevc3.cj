@@ -9,9 +9,9 @@ extend LFloat64Implementation {
     public func dtrevc3(side: EVSide, howmny: EVHowMany, selected: Array<Bool>, n: Int64, t: Array<Float64>, ldt: Int64,
         vl: Array<Float64>, ldvl: Int64, vr: Array<Float64>, ldvr: Int64, mm: Int64, work: Array<Float64>, lwork: Int64): Int64 {
         var m: Int64 = 0
-        let bothv = side == EVBoth
-        let rightv = side == EVRight || bothv
-        let leftv = side == EVLeft || bothv
+        // let bothv = side == EVBoth
+        let rightv = side == EVRight || (side == EVBoth)
+        let leftv = side == EVLeft || (side == EVBoth)
         if (!rightv && !leftv) {
             throw Exception(badEVSide)
         } else if (howmny != EVAll && howmny != EVAllMulQ && howmny != EVSelected) {

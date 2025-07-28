@@ -63,9 +63,7 @@ extend LFloat64Implementation {
             }
         }
         if (sgn1 == sgn2) {
-            let tn = cs1
-            cs1 = -sn1
-            sn1 = tn
+            (cs1, sn1) = (-sn1, cs1)
         }
         return (rt1, rt2, cs1, sn1)
     }

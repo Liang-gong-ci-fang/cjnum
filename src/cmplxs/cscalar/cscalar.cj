@@ -26,9 +26,7 @@ func hypot(p: Float64, q: Float64): Float64 {
     }
 
     if (p_ < q_) {
-        let tmp = p_
-        p_ = q_
-        q_ = tmp
+        (p_, q_) = (q_, p_)
     }
 
     if (p_ == 0.0) {

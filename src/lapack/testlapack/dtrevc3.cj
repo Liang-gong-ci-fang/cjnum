@@ -11,14 +11,6 @@ public func dtrevc3Test(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
 
     for (side in [EVRight, EVLeft, EVBoth]) {
-        var name = ""
-        if (side == EVRight) {
-            name = "EVRigth"
-        } else if (side == EVLeft) {
-            name = "EVLeft"
-        } else if (side == EVBoth) {
-            name = "EVBoth"
-        }
         if (!runDtrevc3Test(lFloat64, rnd, side)) {
             return false
         }

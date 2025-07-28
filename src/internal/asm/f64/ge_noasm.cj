@@ -34,7 +34,7 @@ public func gemvN(m: Int64, n: Int64, alpha: Float64, a: Array<Float64>, lda: In
         case incX < 0 => -(n - 1) * incX
         case _ => 0
     }
-    let ky = match {
+    var ky = match {
         case incY < 0 => -(m - 1) * incY
         case _ => 0
     }
@@ -52,18 +52,17 @@ public func gemvN(m: Int64, n: Int64, alpha: Float64, a: Array<Float64>, lda: In
         return
     }
 
-    var iy = ky
     if (beta == 0.0) {
         for (i in 0..m) {
-            y[iy] = alpha * dotInc(x, a[lda * i..lda * i + n], n, incX, 1, kx, 0)
-            iy += incY
+            y[ky] = alpha * dotInc(x, a[lda * i..lda * i + n], n, incX, 1, kx, 0)
+            ky += incY
         }
         return
     }
 
     for (i in 0..m) {
-        y[iy] = y[iy] * beta + alpha * dotInc(x, a[lda * i..lda * i + n], n, incX, 1, kx, 0)
-        iy += incY
+        y[ky] = y[ky] * beta + alpha * dotInc(x, a[lda * i..lda * i + n], n, incX, 1, kx, 0)
+        ky += incY
     }
 }
 
