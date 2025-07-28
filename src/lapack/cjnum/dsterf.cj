@@ -24,7 +24,7 @@ extend LFloat64Implementation {
             return true
         }
 
-        let none = 0
+        // let none = 0
         let down = 1
         let up = 2
 
@@ -67,7 +67,7 @@ extend LFloat64Implementation {
             }
 
             let anorm = dlanst(MaxAbs, lend - l + 1, d[l..], e[l..])
-            var iscale = none
+            var iscale = 0
             if (anorm == 0.0) {
                 continue
             }

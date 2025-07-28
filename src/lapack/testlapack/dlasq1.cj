@@ -58,7 +58,7 @@ public func dlasq1Test(lFloat64: LFloat64): Bool {
             let dWant = Array<Float64>(n, repeat: 0.0)
             copy(dWant, d)
             // sort.Sort(sort.Reverse(sort.Float64Slice(dWant)))
-            stableSort(dWant)
+            sort(dWant)
             dWant.reverse()
 
             let work = Array<Float64>(max(1, 4 * n), repeat: 0.0)

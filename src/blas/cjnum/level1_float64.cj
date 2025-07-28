@@ -125,13 +125,15 @@ extend NFloat64Implementation <: NFloat64 {
             return idx
         }
         var ix = incX
-        for (i in 1..n) {
+        var i = 1
+        while (i < n) {
             let absV = abs(x[ix])
             if (absV > max_) {
                 max_ = absV
                 idx = i
             }
             ix += incX
+            i++
         }
         return idx
     }
@@ -327,9 +329,7 @@ extend NFloat64Implementation <: NFloat64 {
             h12 = 1.0
             h21 = -1.0
             x1_ = y1
-            let tmp = d1_
-            d1_ = d2_
-            d2_ = tmp
+            (d1_, d2_) = (d2_, d1_)
         } else {
             let p2 = d2_ * y1
             let p1 = d1_ * x1_
@@ -361,10 +361,7 @@ extend NFloat64Implementation <: NFloat64 {
                 h11 = p1 / p2
                 h22 = x1_ / y1
                 let u = 1.0 + (h11 * h22)
-                let new_d1_ = d2_ / u
-                let new_d2_ = d1_ / u
-                d1_ = new_d1_
-                d2_ = new_d2_
+                (d1_, d2_) = (d2_ / u, d1_ / u)
                 x1_ = y1 * u
             }
         }
