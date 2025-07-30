@@ -467,8 +467,8 @@ public func testDpttrs(): Unit { // TODO
 }
 
 @Test
-@Skip // 精度
-public func testDlaqr1(): Unit { // TODO
+@Parallel
+public func testDlaqr1(): Unit {
     @Expect(dlaqr1Test(lFloat64Implementation))
 }
 
@@ -515,14 +515,14 @@ public func testDlaqr23(): Unit { // TODO
 }
 
 @Test
-@Skip
-public func testDormqr(): Unit { // TODO
+@Parallel
+public func testDormqr(): Unit {
     @Expect(dormqrTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDorm2r(): Unit { // TODO
+@Parallel
+public func testDorm2r(): Unit {
     @Expect(dorm2rTest(lFloat64Implementation))
 }
 
@@ -533,8 +533,8 @@ public func testDormhr(): Unit { // TODO
 }
 
 @Test
-@Skip
-public func testDgeqrf(): Unit { // TODO
+@Parallel
+public func testDgeqrf(): Unit {
     @Expect(dgeqrfTest(lFloat64Implementation))
 }
 
@@ -599,13 +599,13 @@ public func testDsytrd(): Unit { // TODO
 }
 
 @Test
-@Skip
-public func testDorg2r(): Unit { // TODO
+@Parallel
+public func testDorg2r(): Unit {
     @Expect(dorg2rTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDorgqr(): Unit { // TODO
+@Parallel
+public func testDorgqr(): Unit {
     @Expect(dorgqrTest(lFloat64Implementation))
 }
