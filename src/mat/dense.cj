@@ -32,10 +32,17 @@ public class Dense <: Matrix & RawMatrixer {
     let mat: General
     let capRows: Int64
     let capCols: Int64
+
     public init(mat: General, capRows: Int64, capCols: Int64) {
         this.mat = mat
         this.capRows = capRows
         this.capCols = capCols
+    }
+
+    public init(mat: General) {
+        this.mat = mat
+        this.capRows = mat.rows
+        this.capCols = mat.cols
     }
 
     // Dims returns the number of rows and columns in the matrix.

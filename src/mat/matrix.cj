@@ -1,6 +1,8 @@
 package cjnum.mat
 
 import cjnum.blas.blas64.*
+import cjnum.blas.*
+import cjnum.lapack.*
 import std.math.*
 import std.collection.*
 
@@ -20,12 +22,16 @@ public interface Matrix {
     func t(): Matrix
 }
 
-public interface allMatrix <: reseter{
+public interface AllMatrix <: Reseter {
     func isEmpty(): Bool
     func zero(): Unit
 }
 
-public interface reseter {
+public interface DenseMatrix <: Tracer & Normer {
+    func diagView(): Diagonal
+}
+
+public interface Reseter {
     func reset(): Unit
 }
 
@@ -97,6 +103,53 @@ private func untranspose(a: Matrix): (Matrix, Bool) {
     return (a, false)
 }
 
+func untransposeExtract(a: Matrix): (Matrix, Bool) {
+    let (ut, trans) = untranspose(a)
+    match {
+        // TODO Tridiag
+        case ut is DiagDense || ut is SymBandDense || ut is TriBandDense || ut is BandDense || ut is TriDense ||
+            ut is SymDense || ut is Dense || ut is VecDense => return (ut, trans)
+        case ut is RawSymBander => 
+            let rsb = (ut as RawSymBander).getOrThrow().rawSymBand()
+            if (rsb.uplo != Upper) {
+                return (ut, trans)
+            }
+            let sb = SymBandDense(rsb)
+            return (sb, trans)
+        case ut is RawTriBander => 
+            let rtb = (ut as RawTriBander).getOrThrow().rawTriBand()
+            if (rtb.diag == UnitDiag) {
+                return (ut, trans)
+            }
+            let tb = TriBandDense(rtb)
+            return (tb, trans)
+        case ut is RawBander => 
+            let b = BandDense((ut as RawBander).getOrThrow().rawBand())
+            return (b, trans)
+        case ut is RawTriangular =>
+            let rt = (ut as RawTriangular).getOrThrow().rawTriangular()
+            if (rt.diag == UnitDiag) {
+                return (ut, trans)
+            }
+            let t = TriDense(rt)
+            return (t, trans)
+        case ut is RawSymmetricer =>
+            let rs = (ut as RawSymmetricer).getOrThrow().rawSymmetric()
+            if (rs.uplo != Upper) {
+                return (ut, trans)
+            }
+            let s = SymDense(rs)
+            return (s, trans)
+        case ut is RawMatrixer =>
+            let d = Dense((ut as RawMatrixer).getOrThrow().rawMatrix())
+            return (d, trans)
+        case ut is RawVectorer => 
+            let v = VecDense((ut as RawVectorer).getOrThrow().rawVector())
+            return (v, trans)
+        case _ => return (ut, trans)
+    }
+}
+
 // A RawMatrixer can return a blas64.General representation of the receiver. Changes to the blas64.General.Data
 // slice will be reflected in the original matrix, changes to the Rows, Cols and Stride fields will not.
 public interface RawMatrixer {
@@ -107,6 +160,69 @@ public interface RawMatrixer {
 // slice will be reflected in the original matrix, changes to the Inc field will not.
 public interface RawVectorer {
     func rawVector(): Vector
+}
+
+public interface Tracer {
+    func trace(): Float64
+}
+
+public interface Normer {
+    func norm(norm: Float64): Float64
+}
+
+public func norm(a: Matrix, norm: Float64): Float64 {
+    let (r, c) = a.dims()
+    if (r == 0 || c == 0) {
+        throw Exception(errZeroLength)
+    }
+    let (m, trans) = untransposeExtract(a)
+    if (let Some(m) <- (m as Normer)) {
+        var norm_ = norm
+        if (trans) {
+            if (norm == 1.0) {
+                norm_ = Float64.Inf
+            } else if (norm == Float64.Inf) {
+                norm_ = 1.0
+            }
+        }
+        return m.norm(norm_)
+    }
+    match {
+        case norm == 1.0 => 
+            var mx = 0.0
+            for (j in 0..c) {
+                var sum = 0.0
+                for (i in 0..r) {
+                    sum += abs(a.at(i, j))
+                }
+                if (sum > mx) {
+                    mx = sum
+                }
+            }
+            return mx
+        case norm == 2.0 =>
+            var sum = 0.0
+            for (i in 0..r) {
+                for (j in 0..c) {
+                    let v = a.at(i, j)
+                    sum += v * v
+                }
+            }
+            return sqrt(sum)
+        case norm == Float64.Inf =>
+            var mx = 0.0
+            for (i in 0..r) {
+                var sum = 0.0
+                for (j in 0..c) {
+                    sum += abs(a.at(i, j))
+                }
+                if (sum > mx) {
+                    mx = sum
+                }
+            }
+            return mx
+        case _ => throw Exception(errNormOrder)
+    }
 }
 
 // Col copies the elements in the jth column of the matrix into the slice dst.
@@ -252,4 +368,23 @@ public func use(f_: Array<Float64>, l: Int64): Array<Float64> {
         return f.slice(0..l).toArray()
     }
     return Array<Float64>(l, repeat: 0.0)
+}
+
+func normLapack(norm: Float64, aTrans: Bool): MatrixNorm {
+    if (norm == Float64.Inf) {
+        return if (aTrans) {
+            MaxColumnSum
+        } else {
+            MaxRowSum
+        }
+    }
+    match (norm) {
+        case 1.0 => return if (aTrans) {
+            MaxRowSum
+        } else {
+            MaxColumnSum
+        }
+        case 2.0 => return Frobenius
+        case _ => throw Exception(errNormOrder)
+    }
 }

@@ -202,58 +202,58 @@ public interface LFloat64 {
         lda: Int64, tau: Array<Float64>, c: Array<Float64>, ldc: Int64, work: Array<Float64>, lwork: Int64): Unit
 }
 
-type Direct = UInt8
+public type Direct = UInt8
 
 public const Forward: Direct = 'F'
 public const Backward: Direct = 'B'
 
-type Sort = UInt8
+public type Sort = UInt8
 
 public const SortIncreasing: Sort = 'I'
 public const SortDecreasing: Sort = 'D'
 
-type StoreV = UInt8
+public type StoreV = UInt8
 
 public const ColumnWise: StoreV = 'C'
 public const RowWise: StoreV = 'R'
 
-type MatrixNorm = UInt8
+public type MatrixNorm = UInt8
 
 public const MaxAbs: MatrixNorm = 'M'
 public const MaxColumnSum: MatrixNorm = 'O'
 public const MaxRowSum: MatrixNorm = 'I'
 public const Frobenius: MatrixNorm = 'F'
 
-type MatrixType = UInt8
+public type MatrixType = UInt8
 
 public const General: MatrixType = 'G'
 public const UpperTri: MatrixType = 'U'
 public const LowerTri: MatrixType = 'L'
 
-type Pivot = UInt8
+public type Pivot = UInt8
 
 public const Variable: Pivot = 'V'
 public const Top: Pivot = 'T'
 public const Bottom: Pivot = 'B'
 
-type ApplyOrtho = UInt8
+public type ApplyOrtho = UInt8
 
 public const ApplyP: ApplyOrtho = 'P'
 public const ApplyQ: ApplyOrtho = 'Q'
 
-type GenOrtho = UInt8
+public type GenOrtho = UInt8
 
 public const GeneratePT: GenOrtho = 'P'
 public const GenerateQ: GenOrtho = 'Q'
 
-type SVDJob = UInt8
+public type SVDJob = UInt8
 
 public const SVDAll: SVDJob = 'A'
 public const SVDStore: SVDJob = 'S'
 public const SVDOverwrite: SVDJob = 'O'
 public const SVDNone: SVDJob = 'N'
 
-type GSVDJob = UInt8
+public type GSVDJob = UInt8
 
 public const GSVDU: GSVDJob = 'U'
 public const GSVDV: GSVDJob = 'V'
@@ -261,68 +261,68 @@ public const GSVDQ: GSVDJob = 'Q'
 public const GSVDUnit: GSVDJob = 'I'
 public const GSVDNone: GSVDJob = 'N'
 
-type EVComp = UInt8
+public type EVComp = UInt8
 
 public const EVOrig: EVComp = 'V'
 public const EVTridiag: EVComp = 'I'
 public const EVCompNone: EVComp = 'N'
 
-type EVJob = UInt8
+public type EVJob = UInt8
 
 public const EVCompute: EVJob = 'V'
 public const EVNone: EVJob = 'N'
 
-type LeftEVJob = UInt8
+public type LeftEVJob = UInt8
 
 public const LeftEVCompute: LeftEVJob = 'V'
 public const LeftEVNone: LeftEVJob = 'N'
 
-type RightEVJob = UInt8
+public type RightEVJob = UInt8
 
 public const RightEVCompute: RightEVJob = 'V'
 public const RightEVNone: RightEVJob = 'N'
 
-type BalanceJob = UInt8
+public type BalanceJob = UInt8
 
 public const Permute: BalanceJob = 'P'
 public const Scale: BalanceJob = 'S'
 public const PermuteScale: BalanceJob = 'B'
 public const BalanceNone: BalanceJob = 'N'
 
-type SchurJob = UInt8
+public type SchurJob = UInt8
 
 public const EigenvaluesOnly: SchurJob = 'E'
 public const EigenvaluesAndSchur: SchurJob = 'S'
 
-type SchurComp = UInt8
+public type SchurComp = UInt8
 
 public const SchurOrig: SchurComp = 'V'
 public const SchurHess: SchurComp = 'I'
 public const SchurNone: SchurComp = 'N'
 
-type UpdateSchurComp = UInt8
+public type UpdateSchurComp = UInt8
 
 public const UpdateSchur: UpdateSchurComp = 'V'
 public const UpdateSchurNone: UpdateSchurComp = 'N'
 
-type EVSide = UInt8
+public type EVSide = UInt8
 
 public const EVRight: EVSide = 'R'
 public const EVLeft: EVSide = 'L'
 public const EVBoth: EVSide = 'B'
 
-type EVHowMany = UInt8
+public type EVHowMany = UInt8
 
 public const EVAll: EVHowMany = 'A'
 public const EVAllMulQ: EVHowMany = 'B'
 public const EVSelected: EVHowMany = 'S'
 
-type MaximizeNormXJob = UInt8
+public type MaximizeNormXJob = UInt8
 
 public const LocalLookAhead: MaximizeNormXJob = 0
 public const NormalizedNullVector: MaximizeNormXJob = 2
 
-type OrthoComp = UInt8
+public type OrthoComp = UInt8
 
 public const OrthoNone: OrthoComp = 'N'
 public const OrthoExplicit: OrthoComp = 'I'

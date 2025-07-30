@@ -32,6 +32,14 @@ public class TriDense <: Matrix & RawTriangular {
         this.cap = cap
     }
 
+    public init(mat: Triangular) {
+        if (mat.diag == UnitDiag) {
+            throw Exception("mat: cannot set TriDense with Unit storage format")
+        }
+        this.mat = mat
+        this.cap = mat.n
+    }
+
     // At returns the element at row i, column j.
     @When[feature != "bounds"]
     public func at(i: Int64, j: Int64): Float64 {

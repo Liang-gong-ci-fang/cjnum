@@ -19,14 +19,25 @@ import cjnum.blas.blas64.*
 // 	_ MutableSymmetric = symDense
 // )
 
+const badSymTriangle = "mat: blas64.Symmetric not upper"
+
 // SymDense is a symmetric matrix that uses dense storage. SymDense
 // matrices are stored in the upper triangle.
 public class SymDense <: Matrix {
     let mat: Symmetric
     let cap: Int64
+
     public init(mat: Symmetric, cap: Int64) {
         this.mat = mat
         this.cap = cap
+    }
+
+    public init(mat: Symmetric) {
+        if (mat.uplo != Upper) {
+            throw Exception(badSymTriangle)
+        }
+        this.mat = mat
+        this.cap = mat.n
     }
 
     // At returns the element at row i and column j.

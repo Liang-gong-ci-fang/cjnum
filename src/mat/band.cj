@@ -1,6 +1,8 @@
 package cjnum.mat
 
 import cjnum.blas.blas64.*
+import cjnum.lapack.lapack64.*
+import cjnum.lapack.*
 import std.math.*
 
 /*
@@ -22,7 +24,7 @@ import std.math.*
 // )
 
 // BandDense represents a band matrix in dense storage format.
-public class BandDense <: Matrix & DiagDenseViewer & allMatrix {
+public class BandDense <: Matrix & DiagDenseViewer & AllMatrix & DenseMatrix {
     let mat: Band
     public init(mat: Band) {
         this.mat = mat
@@ -36,6 +38,10 @@ public class BandDense <: Matrix & DiagDenseViewer & allMatrix {
     // Bandwidth returns the upper and lower bandwidths of the matrix.
     public func bandwidth(): (Int64, Int64) {
         return (this.mat.kl, this.mat.ku)
+    }
+
+    public func rawBand(): Band {
+        return this.mat
     }
 
     public func t(): Matrix {
@@ -167,6 +173,33 @@ public class BandDense <: Matrix & DiagDenseViewer & allMatrix {
                 data: this.mat.data[this.mat.kl..(n - 1) * this.mat.stride + this.mat.kl + 1],
             ),
         )
+    }
+
+    public func trace(): Float64 {
+        let (r, c) = dims()
+        if (r != c) {
+            throw Exception(errSquare)
+        }
+        if (isEmpty()) {
+            throw Exception(errZeroLength)
+        }
+        let rb = rawBand()
+        var tr = 0.0
+        for (i in 0..r) {
+            tr += rb.data[rb.kl + i * rb.stride]
+        }
+        return tr
+    }
+
+    public func norm(norm: Float64): Float64 {
+        if (isEmpty()) {
+            throw Exception(errZeroLength)
+        }
+        let lnorm = normLapack(norm, false)
+        // if (lnorm == MaxColumnSum || lnorm == MaxRowSum) {
+        //     return langb(lnorm, this.mat)
+        // }
+        return langb(lnorm, this.mat)
     }
 }
 

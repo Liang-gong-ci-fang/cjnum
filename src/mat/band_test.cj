@@ -1,6 +1,7 @@
 package cjnum.mat
 
 import cjnum.blas.blas64.*
+import cjnum.floats.scalar.*
 import std.reflect.*
 import std.math.*
 import std.core.*
@@ -397,6 +398,7 @@ extend BandDense {
 }
 
 @Test
+@Parallel
 public func testBendResetAndIsEmpty(): Unit {
     for (test in [
             newBandDense(1, 1, 0, 0, [1.0]),
@@ -410,5 +412,65 @@ public func testBendResetAndIsEmpty(): Unit {
         @Expect(!test.isEmpty())
         test.reset()
         @Expect(test.isEmpty())
+    }
+}
+
+@Test
+@Parallel
+public func testBandDenseTrace(): Unit {
+    let data = [
+        -1.0, 1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0, 7.0,
+        8.0, 9.0, 10.0, 11.0,
+        12.0, 13.0, 14.0, 15.0,
+        16.0, 17.0, 18.0, -1.0,
+        19.0, 20.0, -1.0, -1.0
+    ]
+    let b = newBandDense(6, 6, 1, 2, data)
+    let expect = 1.0 + 5.0 + 9.0 + 13.0 + 17.0 + 20.0
+    let tr = b.trace()
+    if (!equalWithinAbsOrRel(tr, expect, 1e-14, 1e-14)) {
+        throw Exception("Trace error: got ${tr}, want ${expect}")
+    }
+}
+
+@Test
+@Parallel
+public func testBandDenseNorm(): Unit {
+    let data = [
+        -1.0, 1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0, 7.0,
+        8.0, 9.0, 10.0, 11.0,
+        12.0, 13.0, 14.0, 15.0,
+        16.0, 17.0, 18.0, -1.0,
+        19.0, 20.0, -1.0, -1.0
+    ]
+
+    let b = newBandDense(6, 6, 1, 2, data)
+
+    let dense = newDense(6, 6, [
+        1.0, 2.0, 3.0, 0.0, 0.0, 0.0,
+        4.0, 5.0, 6.0, 7.0, 0.0, 0.0,
+        0.0, 8.0, 9.0, 10.0, 11.0, 0.0,
+        0.0, 0.0, 12.0, 13.0, 14.0, 15.0,
+        0.0, 0.0, 0.0, 16.0, 17.0, 18.0,
+        0.0, 0.0, 0.0, 0.0, 19.0, 20.0
+    ])
+    let want1 = norm(dense, 1.0)
+    let got1 = b.norm(1.0)
+    if (!equalWithinAbsOrRel(got1, want1, 1e-14, 1e-14)) {
+        throw Exception("Norm(1) error: got ${got1}, want ${want1}")
+    }
+
+    let wantInf = norm(dense, Float64.Inf)
+    let gotInf = b.norm(Float64.Inf)
+    if (!equalWithinAbsOrRel(gotInf, wantInf, 1e-14, 1e-14)) {
+        throw Exception("Norm(Inf) error: got ${gotInf}, want ${wantInf}")
+    }
+
+    let wantF = norm(dense, 2.0)
+    let gotF = b.norm(2.0)
+    if (!equalWithinAbsOrRel(gotF, wantF, 1e-14, 1e-14)) {
+        throw Exception("Norm(2) error: got ${gotF}, want ${wantF}")
     }
 }
