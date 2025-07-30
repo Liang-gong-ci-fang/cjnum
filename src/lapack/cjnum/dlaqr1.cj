@@ -31,12 +31,6 @@ extend LFloat64Implementation {
                 let h21s = h[ldh] / s
                 v[0] = h21s * h[1] + (h[0] - sr1) * ((h[0] - sr2) / s) - si1 * (si2 / s)
                 v[1] = h21s * (h[0] + h[ldh + 1] - sr1 - sr2)
-                // let numerator = (h[0] - sr1) * (h[0] - sr2) - si1 * si2
-                // v[0] = (Decimal(numerator) / Decimal(s)).toFloat64() + h21s * h[1]
-
-                // let term1 = (h[0] - sr1) 
-                // let term2 = (h[ldh + 1] - sr2)    
-                // v[1] = h21s * (term1 + term2)
             }
             return
         }
@@ -52,17 +46,6 @@ extend LFloat64Implementation {
             v[0] = (h[0] - sr1) * ((h[0] - sr2) / s) - si1 * (si2 / s) + h[1] * h21s + h[2] * h31s
             v[1] = h21s * (h[0] + h[ldh + 1] - sr1 - sr2) + h[ldh + 2] * h31s
             v[2] = h31s * (h[0] + h[2 * ldh + 2] - sr1 - sr2) + h21s * h[2 * ldh + 1]
-
-            // let numerator = (h[0] - sr1) * (h[0] - sr2) - si1 * si2
-            // v[0] = (Decimal(numerator) / Decimal(s)).toFloat64() + h[1] * h21s + h[2] * h31s
-
-            // let term11 = (h[0] - sr1)        
-            // let term12 = (h[ldh + 1] - sr2)
-            // v[1] = h21s * (term11 + term12) + h[ldh + 2] * h31s
-
-            // let term21 = (h[0] - sr1)         
-            // let term22 = (h[2 * ldh + 2] - sr2)     
-            // v[2] = h31s * (term21 + term22) + h21s * h[2 * ldh + 1]
         }
     }
 }
