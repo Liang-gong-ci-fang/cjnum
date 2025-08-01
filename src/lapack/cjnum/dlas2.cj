@@ -1,20 +1,21 @@
 package cjnum.lapack.cjnum
 
 import std.math.*
+import cjnum.util.*
 
 extend LFloat64Implementation {
     public func dlas2(f: Float64, g: Float64, h: Float64): (Float64, Float64) {
         let fa = abs(f)
         let ga = abs(g)
         let ha = abs(h)
-        let fhmin = min(fa, ha)
-        let fhmax = max(fa, ha)
+        let fhmin = nanMin(fa, ha)
+        let fhmax = nanMax(fa, ha)
         if (fhmin == 0.0) {
             if (fhmax == 0.0) {
                 return (0.0, ga)
             }
-            let v = min(fhmax, ga) / max(fhmax, ga)
-            return (0.0, max(fhmax, ga) * sqrt(1.0 + v * v))
+            let v = nanMin(fhmax, ga) / nanMax(fhmax, ga)
+            return (0.0, nanMax(fhmax, ga) * sqrt(1.0 + v * v))
         }
         if (ga < fhmax) {
             let as_ = 1.0 + fhmin / fhmax

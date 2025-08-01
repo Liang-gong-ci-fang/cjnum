@@ -5,6 +5,7 @@ import std.random.*
 import cjnum.blas.*
 import cjnum.lapack.*
 import cjnum.floats.*
+import cjnum.util.*
 
 public func dlantrTest(lFloat64: LFloat64): Bool {
 	let rnd = Random(1)
@@ -56,7 +57,7 @@ func _dlantrTest( lFloat64: LFloat64, rnd: Random, uplo: Uplo, diag: Diag, m: In
 				a[i*lda+j] = aij
 				rowsum[i] += abs(aij)
 				colsum[j] += abs(aij)
-				maxabsWant = max(maxabsWant, abs(aij))
+				maxabsWant = nanMax(maxabsWant, abs(aij))
 				frobWant += aij * aij
 			}
 		}
@@ -71,7 +72,7 @@ func _dlantrTest( lFloat64: LFloat64, rnd: Random, uplo: Uplo, diag: Diag, m: In
 				a[i*lda+j] = aij
 				rowsum[i] += abs(aij)
 				colsum[j] += abs(aij)
-				maxabsWant = max(maxabsWant, abs(aij))
+				maxabsWant = nanMax(maxabsWant, abs(aij))
 				frobWant += aij * aij
 			}
 		}

@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -106,12 +107,12 @@ extend LFloat64Implementation {
                     z[4 * (n0_ + 1) + pp_ - 2] = z[4 * (i0_ + 1) + pp_ - 2]
                     z[4 * (n0_ + 1) - pp_ - 1] = z[4 * (i0_ + 1) - pp_ - 1]
                 }
-                dmin2_ = min(dmin2_, z[4 * (i0_ + 1) - pp_ - 2])
-                z[4 * (n0_ + 1) + pp_ - 2] = min(min(z[4 * (n0_ + 1) + pp_ - 2], z[4 * (i0_ + 1) + pp_ - 2]),
+                dmin2_ = nanMin(dmin2_, z[4 * (i0_ + 1) - pp_ - 2])
+                z[4 * (n0_ + 1) + pp_ - 2] = nanMin(nanMin(z[4 * (n0_ + 1) + pp_ - 2], z[4 * (i0_ + 1) + pp_ - 2]),
                     z[4 * (i0_ + 1) + pp_ + 2])
-                z[4 * (n0_ + 1) - pp_ - 1] = min(min(z[4 * (n0_ + 1) - pp_ - 1], z[4 * (i0_ + 1) - pp_ - 1]),
+                z[4 * (n0_ + 1) - pp_ - 1] = nanMin(nanMin(z[4 * (n0_ + 1) - pp_ - 1], z[4 * (i0_ + 1) - pp_ - 1]),
                     z[4 * (i0_ + 1) - pp_ + 3])
-                qmax_ = max(max(qmax_, z[4 * (i0_ + 1) + pp_ - 4]), z[4 * (i0_ + 1) + pp_])
+                qmax_ = nanMax(nanMax(qmax_, z[4 * (i0_ + 1) + pp_ - 4]), z[4 * (i0_ + 1) + pp_])
                 dmin_ = copysign(0.0, -1.0)
             }
         }

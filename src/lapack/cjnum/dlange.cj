@@ -2,6 +2,7 @@ package cjnum.lapack.cjnum
 
 import std.math.*
 import cjnum.lapack.*
+import cjnum.util.nanMax
 
 extend LFloat64Implementation {
     public func dlange(norm: MatrixNorm, m: Int64, n: Int64, a: Array<Float64>, lda: Int64, work: Array<Float64>): Float64 {
@@ -33,7 +34,7 @@ extend LFloat64Implementation {
             var value = 0.0
             for (i in 0..m) {
                 for (j in 0..n) {
-                    value = max(value, abs(a[i * lda + j]))
+                    value = nanMax(value, abs(a[i * lda + j]))
                 }
             }
             return value
@@ -48,7 +49,7 @@ extend LFloat64Implementation {
             }
             var value = 0.0
             for (i in 0..n) {
-                value = max(value, work[i])
+                value = nanMax(value, work[i])
             }
             return value
         } else if (norm == MaxRowSum) {
@@ -58,7 +59,7 @@ extend LFloat64Implementation {
                 for (j in 0..n) {
                     sum += abs(a[i * lda + j])
                 }
-                value = max(value, sum)
+                value = nanMax(value, sum)
             }
             return value
         } else {

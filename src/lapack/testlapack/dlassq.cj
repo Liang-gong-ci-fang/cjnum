@@ -4,6 +4,7 @@ import std.math.*
 import std.random.*
 import cjnum.floats.*
 import cjnum.lapack.*
+import cjnum.util.*
 
 class dlassqTestStruct {
     dlassqTestStruct(
@@ -104,7 +105,7 @@ func _dlassqTest(lFloat64: LFloat64, rnd: Random, n: Int64, incx: Int64, cas: In
         z1n = v1 * sqrt(workssq)
     }
     let zmin = min(z0, z1n)
-    let zmax = max(z0, z1n)
+    let zmax = nanMax(z0, z1n)
     var nrmWant = 0.0
 
     if (z0.isNaN() || z1n.isNaN()) {
@@ -131,7 +132,7 @@ func _dlassqTest(lFloat64: LFloat64, rnd: Random, n: Int64, incx: Int64, cas: In
             throw Exception("${name}: unexpected result; got ${nrmGot}, want 0")
         }
     } else {
-        let diff = abs(nrmGot - nrmWant) / nrmWant / max(1.0, Float64(n))
+        let diff = abs(nrmGot - nrmWant) / nrmWant / nanMax(1.0, Float64(n))
         if (diff.isNaN() || diff > tol) {
             throw Exception("${name}: unexpected result; got ${nrmGot}, want ${nrmWant}")
         }

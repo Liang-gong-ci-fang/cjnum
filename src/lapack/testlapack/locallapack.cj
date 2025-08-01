@@ -4,6 +4,7 @@ import std.math.*
 import cjnum.blas.*
 import cjnum.internal.asm.f64.*
 import cjnum.lapack.*
+import cjnum.util.*
 
 func dlagtm(trans: Transpose, m: Int64, n: Int64, alpha: Float64, dl: Array<Float64>, d: Array<Float64>, du: Array<Float64>,
     b: Array<Float64>, ldb: Int64, beta: Float64, c: Array<Float64>, ldc: Int64) {
@@ -254,10 +255,7 @@ func dlange(norm: MatrixNorm, m: Int64, n: Int64, a: Array<Float64>, lda: Int64)
     if (norm == MaxAbs) {
         for (i in 0..m) {
             for (j in 0..n) {
-                if (value.isNaN()) {  // TODO cj1.0.0
-                    continue
-                }
-                value = max(value, abs(a[i * lda + j]))
+                value = nanMax(value, abs(a[i * lda + j]))
             }
         }
     } else if (norm == MaxColumnSum) {
@@ -268,7 +266,7 @@ func dlange(norm: MatrixNorm, m: Int64, n: Int64, a: Array<Float64>, lda: Int64)
             }
         }
         for (i in 0..n) {
-            value = max(value, work[i])
+            value = nanMax(value, work[i])
         }
     } else if (norm == MaxRowSum) {
         for (i in 0..m) {
@@ -276,7 +274,7 @@ func dlange(norm: MatrixNorm, m: Int64, n: Int64, a: Array<Float64>, lda: Int64)
             for (j in 0..n) {
                 sum += abs(a[i * lda + j])
             }
-            value = max(value, sum)
+            value = nanMax(value, sum)
         }
     } else if (norm == Frobenius) {
         for (i in 0..m) {
@@ -493,20 +491,20 @@ func dlanst(norm: MatrixNorm, n: Int64, d: Array<Float64>, e: Array<Float64>): F
             value = abs(d[0])
         } else {
             for (di in d[..n]) {
-                value = max(value, abs(di))
+                value = nanMax(value, abs(di))
             }
             for (ei in e[..n - 1]) {
-                value = max(value, abs(ei))
+                value = nanMax(value, abs(ei))
             }
         }
         case norm == MaxColumnSum || norm == MaxRowSum => if (n == 1) {
             value = abs(d[0])
         } else {
             value = abs(d[0]) + abs(e[0])
-            value = max(value, abs(d[n - 1]) + abs(e[n - 2]))
+            value = nanMax(value, abs(d[n - 1]) + abs(e[n - 2]))
             for (i in 1..n - 1) {
                 let sum = abs(d[i]) + abs(e[i]) + abs(e[i - 1])
-                value = max(value, sum)
+                value = nanMax(value, sum)
             }
         }
         case norm == Frobenius => throw Exception("not implemented") // TODO

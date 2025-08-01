@@ -3,6 +3,7 @@ package cjnum.lapack.cjnum
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -159,7 +160,7 @@ extend LFloat64Implementation {
                 if (ip != 0) {
                     wi = sqrt(abs(t[ki * ldt + ki - 1])) * sqrt(abs(t[(ki - 1) * ldt + ki]))
                 }
-                let smin = max(ulp * (abs(wr) + abs(wi)), smlnum)
+                let smin = nanMax(ulp * (abs(wr) + abs(wi)), smlnum)
 
                 if (ip == 0) {
                     b[ki * ldb + iv] = 1.0
@@ -185,7 +186,7 @@ extend LFloat64Implementation {
                             var (scale, xnorm, _) = dlaln2(false, 2, 1, smin, 1.0, t[(j - 1) * ldt + j - 1..], ldt, 1.0,
                                 1.0, b[(j - 1) * ldb + iv..], ldb, wr, 0.0, x[..3], 2)
                             if (xnorm > 1.0) {
-                                let beta = max(norms[j - 1], norms[j])
+                                let beta = nanMax(norms[j - 1], norms[j])
                                 if (beta > bignum / xnorm) {
                                     x[0] /= xnorm
                                     x[2] /= xnorm
@@ -261,7 +262,7 @@ extend LFloat64Implementation {
                             var (scale, xnorm, _) = dlaln2(false, 2, 2, smin, 1.0, t[(j - 1) * ldt + j - 1..], ldt, 1.0,
                                 1.0, b[(j - 1) * ldb + iv - 1..], ldb, wr, wi, x[..], 2)
                             if (xnorm > 1.0) {
-                                let beta = max(norms[j - 1], norms[j])
+                                let beta = nanMax(norms[j - 1], norms[j])
                                 if (beta > bignum / xnorm) {
                                     let rec = 1.0 / xnorm
                                     x[0] *= rec
@@ -291,7 +292,7 @@ extend LFloat64Implementation {
                         nFloat64.dcopy(ki + 1, b[iv..], ldb, vr[is_..], ldvr)
                         var emax = 0.0
                         for (k in 0..=ki) {
-                            emax = max(emax, abs(vr[k * ldvr + is_ - 1]) + abs(vr[k * ldvr + is_]))
+                            emax = nanMax(emax, abs(vr[k * ldvr + is_ - 1]) + abs(vr[k * ldvr + is_]))
                         }
                         let remax = 1.0 / emax
                         nFloat64.dscal(ki + 1, remax, vr[is_ - 1..], ldvr)
@@ -312,7 +313,7 @@ extend LFloat64Implementation {
                         }
                         var emax = 0.0
                         for (k in 0..n) {
-                            emax = max(emax, abs(vr[k * ldvr + ki - 1]) + abs(vr[k * ldvr + ki]))
+                            emax = nanMax(emax, abs(vr[k * ldvr + ki - 1]) + abs(vr[k * ldvr + ki]))
                         }
                         let remax = 1.0 / emax
                         nFloat64.dscal(n, remax, vr[ki - 1..], ldvr)
@@ -343,7 +344,7 @@ extend LFloat64Implementation {
                             } else if (iscomplex[k] == 1) {
                                 var emax = 0.0
                                 for (ii in 0..n) {
-                                    emax = max(emax, abs(b[ii * ldb + nb + k]) + abs(b[ii * ldb + nb + k + 1]))
+                                    emax = nanMax(emax, abs(b[ii * ldb + nb + k]) + abs(b[ii * ldb + nb + k + 1]))
                                 }
                                 remax = 1.0 / emax
                             }
@@ -389,7 +390,7 @@ extend LFloat64Implementation {
             if (ip != 0) {
                 wi = sqrt(abs(t[ki * ldt + ki + 1])) * sqrt(abs(t[(ki + 1) * ldt + ki]))
             }
-            let smin = max(ulp * (abs(wr) + abs(wi)), smlnum)
+            let smin = nanMax(ulp * (abs(wr) + abs(wi)), smlnum)
 
             if (ip == 0) {
                 b[ki * ldb + iv] = 1.0
@@ -414,11 +415,11 @@ extend LFloat64Implementation {
                             nFloat64.dscal(n - ki, scale, b[ki * ldb + iv..], ldb)
                         }
                         b[j * ldb + iv] = x[0]
-                        vmax = max(abs(b[j * ldb + iv]), vmax)
+                        vmax = nanMax(abs(b[j * ldb + iv]), vmax)
                         vcrit = bignum / vmax
                         j++
                     } else {
-                        let beta = max(norms[j], norms[j + 1])
+                        let beta = nanMax(norms[j], norms[j + 1])
                         if (beta > vcrit) {
                             nFloat64.dscal(n - ki, 1.0 / vmax, b[ki * ldb + iv..], ldb)
                             vmax = 1.0
@@ -434,7 +435,7 @@ extend LFloat64Implementation {
                         }
                         b[j * ldb + iv] = x[0]
                         b[(j + 1) * ldb + iv] = x[2]
-                        vmax = max(vmax, max(abs(b[j * ldb + iv]), abs(b[(j + 1) * ldb + iv])))
+                        vmax = nanMax(vmax, nanMax(abs(b[j * ldb + iv]), abs(b[(j + 1) * ldb + iv])))
                         vcrit = bignum / vmax
                         j += 2
                     }
@@ -498,11 +499,11 @@ extend LFloat64Implementation {
                         }
                         b[j * ldb + iv] = x[0]
                         b[j * ldb + iv + 1] = x[1]
-                        vmax = max(vmax, max(abs(b[j * ldb + iv]), abs(b[j * ldb + iv + 1])))
+                        vmax = nanMax(vmax, nanMax(abs(b[j * ldb + iv]), abs(b[j * ldb + iv + 1])))
                         vcrit = bignum / vmax
                         j++
                     } else {
-                        if (max(norms[j], norms[j + 1]) > vcrit) {
+                        if (nanMax(norms[j], norms[j + 1]) > vcrit) {
                             let rec = 1.0 / vmax
                             nFloat64.dscal(n - ki, rec, b[ki * ldb + iv..], ldb)
                             nFloat64.dscal(n - ki, rec, b[ki * ldb + iv + 1..], ldb)
@@ -526,9 +527,9 @@ extend LFloat64Implementation {
                         b[j * ldb + iv + 1] = x[1]
                         b[(j + 1) * ldb + iv] = x[2]
                         b[(j + 1) * ldb + iv + 1] = x[3]
-                        let vmax01 = max(abs(x[0]), abs(x[1]))
-                        let vmax23 = max(abs(x[2]), abs(x[3]))
-                        vmax = max(vmax, max(vmax01, vmax23))
+                        let vmax01 = nanMax(abs(x[0]), abs(x[1]))
+                        let vmax23 = nanMax(abs(x[2]), abs(x[3]))
+                        vmax = nanMax(vmax, nanMax(vmax01, vmax23))
                         vcrit = bignum / vmax
                         j += 2
                     }
@@ -538,7 +539,7 @@ extend LFloat64Implementation {
                     nFloat64.dcopy(n - ki, b[ki * ldb + iv + 1..], ldb, vl[ki * ldvl + is_ + 1..], ldvl)
                     var emax = 0.0
                     for (k in ki..n) {
-                        emax = max(emax, abs(vl[k * ldvl + is_]) + abs(vl[k * ldvl + is_ + 1]))
+                        emax = nanMax(emax, abs(vl[k * ldvl + is_]) + abs(vl[k * ldvl + is_ + 1]))
                     }
                     let remax = 1.0 / emax
                     nFloat64.dscal(n - ki, remax, vl[ki * ldvl + is_..], ldvl)
@@ -559,7 +560,7 @@ extend LFloat64Implementation {
                     }
                     var emax = 0.0
                     for (k in 0..n) {
-                        emax = max(emax, abs(vl[k * ldvl + ki]) + abs(vl[k * ldvl + ki + 1]))
+                        emax = nanMax(emax, abs(vl[k * ldvl + ki]) + abs(vl[k * ldvl + ki + 1]))
                     }
                     let remax = 1.0 / emax
                     nFloat64.dscal(n, remax, vl[ki..], ldvl)
@@ -590,7 +591,7 @@ extend LFloat64Implementation {
                         } else if (iscomplex[k] == 1) {
                             var emax = 0.0
                             for (ii in 0..n) {
-                                emax = max(emax, abs(b[ii * ldb + nb + k]) + abs(b[ii * ldb + nb + k + 1]))
+                                emax = nanMax(emax, abs(b[ii * ldb + nb + k]) + abs(b[ii * ldb + nb + k + 1]))
                             }
                             remax = 1.0 / emax
                         }

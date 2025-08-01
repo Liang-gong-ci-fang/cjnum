@@ -4,6 +4,7 @@ import cjnum.blas.blas64.General as General64
 import cjnum.complex.*
 import cjnum.floats.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 import std.random.*
 
@@ -140,10 +141,10 @@ func residualDlag2(a: General64, b: General64, s: Float64, w: Complex128): (Floa
     let b22 = b.data[b.stride + 1]
 
     var absw = zabs(w_)
-    var anorm = max(abs(a11) + abs(a21), abs(a12) + abs(a22))
-    anorm = max(anorm, safmin)
-    var bnorm = max(abs(b11), abs(b12) + abs(b22))
-    bnorm = max(bnorm, safmin)
+    var anorm = nanMax(abs(a11) + abs(a21), abs(a12) + abs(a22))
+    anorm = nanMax(anorm, safmin)
+    var bnorm = nanMax(abs(b11), abs(b12) + abs(b22))
+    bnorm = nanMax(bnorm, safmin)
 
     var temp = (safmin * anorm) * s_ + (safmin * bnorm) * absw
     if (temp >= 1.0) {
@@ -152,18 +153,18 @@ func residualDlag2(a: General64, b: General64, s: Float64, w: Complex128): (Floa
         absw = zabs(w)
     }
 
-    var s1 = max(ulp * max(s * anorm, absw * bnorm), safmin * max(s, absw))
+    var s1 = nanMax(ulp * nanMax(s * anorm, absw * bnorm), safmin * nanMax(s, absw))
     if (s1 < safmin) {
         if (s < safmin && absw < safmin) {
-            return (1.0 / ulp, "ulp*max(s*|A|,|w|*|B|) < safmin and s and w could not be scaled; s=${s_}, |w|=${absw}")
+            return (1.0 / ulp, "ulp*nanMax(s*|A|,|w|*|B|) < safmin and s and w could not be scaled; s=${s_}, |w|=${absw}")
         }
-        temp = 1.0 / max(s * anorm + absw * bnorm, safmin)
+        temp = 1.0 / nanMax(s * anorm + absw * bnorm, safmin)
         s_ *= temp
         w_ = scale(temp, w_)
         absw = zabs(w_)
-        s1 = max(ulp * max(s * anorm, absw * bnorm), safmin * max(s, absw))
+        s1 = nanMax(ulp * nanMax(s * anorm, absw * bnorm), safmin * nanMax(s, absw))
         if (s1 < safmin) {
-            return (1.0 / ulp, "ulp*max(s*|A|,|w|*|B|) < safmin and s and w could not be scaled; s=${s_}, |w|=${absw}")
+            return (1.0 / ulp, "ulp*nanMax(s*|A|,|w|*|B|) < safmin and s and w could not be scaled; s=${s_}, |w|=${absw}")
         }
     }
 
@@ -171,8 +172,8 @@ func residualDlag2(a: General64, b: General64, s: Float64, w: Complex128): (Floa
     let c12 = Complex128(s * a12, 0.0) - w * Complex128(b12, 0.0)
     let c21 = Complex128(s * a21, 0.0)
     let c22 = Complex128(s * a22, 0.0) - w * Complex128(b22, 0.0)
-    let cnorm = max(zabs(c11) + zabs(c21), zabs(c12) + zabs(c22))
-    let cs = 1.0 / sqrt(max(cnorm, safmin))
+    let cnorm = nanMax(zabs(c11) + zabs(c21), zabs(c12) + zabs(c22))
+    let cs = 1.0 / sqrt(nanMax(cnorm, safmin))
     let det = cmplxdet2x2(scale(cs, c11), scale(cs, c12), scale(cs, c21), scale(cs, c22))
     return (zabs(det) / s1 * ulp, None)
 }

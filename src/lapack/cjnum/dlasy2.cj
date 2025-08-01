@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import cjnum.blas.blas64.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -43,9 +44,9 @@ extend LFloat64Implementation {
             var btmp: Array<Float64> = Array<Float64>(2, repeat: 0.0)
             if (n1 == 1 && n2 == 2) {
                 smin = abs(tl[0])
-                smin = max(smin, max(abs(tr[0]), abs(tr[1])))
-                smin = max(smin, max(abs(tr[ldtr]), abs(tr[ldtr + 1])))
-                smin = max(eps * smin, smlnum)
+                smin = nanMax(smin, nanMax(abs(tr[0]), abs(tr[1])))
+                smin = nanMax(smin, nanMax(abs(tr[ldtr]), abs(tr[ldtr + 1])))
+                smin = nanMax(eps * smin, smlnum)
                 tmp[0] = tl[0] + sgn * tr[0]
                 tmp[3] = tl[0] + sgn * tr[ldtr + 1]
                 if (tranr) {
@@ -59,9 +60,9 @@ extend LFloat64Implementation {
                 btmp[1] = b[1]
             } else {
                 smin = abs(tr[0])
-                smin = max(smin, max(abs(tl[0]), abs(tl[1])))
-                smin = max(smin, max(abs(tl[ldtl]), abs(tl[ldtl + 1])))
-                smin = max(eps * smin, smlnum)
+                smin = nanMax(smin, nanMax(abs(tl[0]), abs(tl[1])))
+                smin = nanMax(smin, nanMax(abs(tl[ldtl]), abs(tl[ldtl + 1])))
+                smin = nanMax(eps * smin, smlnum)
                 tmp[0] = tl[0] + sgn * tr[0]
                 tmp[3] = tl[ldtl + 1] + sgn * tr[0]
                 if (tranl) {
@@ -100,7 +101,7 @@ extend LFloat64Implementation {
             }
             scale = 1.0
             if (2.0 * smlnum * abs(btmp[1]) > abs(u22) || 2.0 * smlnum * abs(btmp[0]) > abs(u11)) {
-                scale = 0.5 / max(abs(btmp[0]), abs(btmp[1]))
+                scale = 0.5 / nanMax(abs(btmp[0]), abs(btmp[1]))
                 btmp[0] *= scale
                 btmp[1] *= scale
             }
@@ -116,16 +117,16 @@ extend LFloat64Implementation {
                 xnorm = abs(x[0]) + abs(x[1])
             } else {
                 x[ldx] = x22
-                xnorm = max(abs(x[0]), abs(x[ldx]))
+                xnorm = nanMax(abs(x[0]), abs(x[ldx]))
             }
             return (scale, xnorm, ok)
         }
 
-        var smin = max(abs(tr[0]), abs(tr[1]))
-        smin = max(smin, max(abs(tr[ldtr]), abs(tr[ldtr + 1])))
-        smin = max(smin, max(abs(tl[0]), abs(tl[1])))
-        smin = max(smin, max(abs(tl[ldtl]), abs(tl[ldtl + 1])))
-        smin = max(eps * smin, smlnum)
+        var smin = nanMax(abs(tr[0]), abs(tr[1]))
+        smin = nanMax(smin, nanMax(abs(tr[ldtr]), abs(tr[ldtr + 1])))
+        smin = nanMax(smin, nanMax(abs(tl[0]), abs(tl[1])))
+        smin = nanMax(smin, nanMax(abs(tl[ldtl]), abs(tl[ldtl + 1])))
+        smin = nanMax(eps * smin, smlnum)
 
         let t = [Array<Float64>(4, repeat: 0.0), Array<Float64>(4, repeat: 0.0), Array<Float64>(4, repeat: 0.0),
                 Array<Float64>(4, repeat: 0.0)]
@@ -205,8 +206,8 @@ extend LFloat64Implementation {
         scale = 1.0
         if (8.0 * smlnum * abs(btmp[0]) > abs(t[0][0]) || 8.0 * smlnum * abs(btmp[1]) > abs(t[1][1]) ||
             8.0 * smlnum * abs(btmp[2]) > abs(t[2][2]) || 8.0 * smlnum * abs(btmp[3]) > abs(t[3][3])) {
-            var maxbtmp = max(abs(btmp[0]), abs(btmp[1]))
-            maxbtmp = max(maxbtmp, max(abs(btmp[2]), abs(btmp[3])))
+            var maxbtmp = nanMax(abs(btmp[0]), abs(btmp[1]))
+            maxbtmp = nanMax(maxbtmp, nanMax(abs(btmp[2]), abs(btmp[3])))
             scale = (1.0 / 8.0) / maxbtmp
             btmp[0] *= scale
             btmp[1] *= scale
@@ -231,7 +232,7 @@ extend LFloat64Implementation {
         x[1] = tmp[1]
         x[ldx] = tmp[2]
         x[ldx + 1] = tmp[3]
-        xnorm = max(abs(tmp[0]) + abs(tmp[1]), abs(tmp[2]) + abs(tmp[3]))
+        xnorm = nanMax(abs(tmp[0]) + abs(tmp[1]), abs(tmp[2]) + abs(tmp[3]))
         return (scale, xnorm, ok)
     }
 }

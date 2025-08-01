@@ -3,6 +3,7 @@ package cjnum.lapack.testlapack
 import std.math.*
 import std.random.*
 import cjnum.lapack.*
+import cjnum.util.*
 
 public func dpttrfTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
@@ -60,9 +61,9 @@ func dpttrfResidual(n: Int64, d: Array<Float64>, e: Array<Float64>, dFac: Array<
     if (n == 1) {
         resid = abs(dDiff[0])
     } else {
-        resid = max(abs(dDiff[0]) + abs(eDiff[0]), abs(dDiff[n - 1]) + abs(eDiff[n - 2]))
+        resid = nanMax(abs(dDiff[0]) + abs(eDiff[0]), abs(dDiff[n - 1]) + abs(eDiff[n - 2]))
         for (i in 1..n - 1) {
-            resid = max(resid, abs(dDiff[i]) + abs(eDiff[i - 1]) + abs(eDiff[i]))
+            resid = nanMax(resid, abs(dDiff[i]) + abs(eDiff[i - 1]) + abs(eDiff[i]))
         }
     }
 

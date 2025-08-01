@@ -4,6 +4,7 @@ import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.General as lGeneral
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -38,7 +39,7 @@ extend LFloat64Implementation {
         var sigmx: Float64 = 0.0
         for (i in 0..n - 1) {
             d[i] = abs(d[i])
-            sigmx = max(sigmx, abs(e[i]))
+            sigmx = nanMax(sigmx, abs(e[i]))
         }
         d[n - 1] = abs(d[n - 1])
         if (sigmx == 0.0) {
@@ -47,7 +48,7 @@ extend LFloat64Implementation {
         }
 
         for (i in 0..n) {
-            sigmx = max(sigmx, d[i])
+            sigmx = nanMax(sigmx, d[i])
         }
 
         let eps = dlamchP

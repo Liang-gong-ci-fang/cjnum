@@ -4,6 +4,7 @@ import cjnum.blas.blas64.General as General64
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 // TODO dgeev.cj
@@ -39,8 +40,8 @@ func residualRightEV(a: General64, e: General64, wr: Array<Float64>, wi: Array<F
     nFloat64.dgemm(NoTrans, NoTrans, n, n, n, 1.0, a.data, a.stride, e.data, e.stride, -1.0, r, ldr)
 
     const eps = dlamchE
-    let anorm = max(dlange(MaxColumnSum, n, n, a.data, a.stride), safmin)
-    let enorm = max(dlange(MaxColumnSum, n, n, e.data, e.stride), eps)
+    let anorm = nanMax(dlange(MaxColumnSum, n, n, a.data, a.stride), safmin)
+    let enorm = nanMax(dlange(MaxColumnSum, n, n, e.data, e.stride), eps)
     let errnorm = dlange(MaxColumnSum, n, n, r, ldr) / enorm
     if (anorm > errnorm) {
         return errnorm / anorm
@@ -82,8 +83,8 @@ func residualLeftEV(a: General64, e: General64, wr: Array<Float64>, wi: Array<Fl
     nFloat64.dgemm(Trans, NoTrans, n, n, n, 1.0, a.data, a.stride, e.data, e.stride, -1.0, r, ldr)
 
     const eps = dlamchE
-    let anorm = max(dlange(MaxRowSum, n, n, a.data, a.stride), safmin)
-    let enorm = max(dlange(MaxColumnSum, n, n, e.data, e.stride), eps)
+    let anorm = nanMax(dlange(MaxRowSum, n, n, a.data, a.stride), safmin)
+    let enorm = nanMax(dlange(MaxColumnSum, n, n, e.data, e.stride), eps)
     let errnorm = dlange(MaxColumnSum, n, n, r, ldr) / enorm
     if (anorm > errnorm) {
         return errnorm / anorm

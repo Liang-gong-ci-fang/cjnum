@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import cjnum.complex.*
+import cjnum.util.nanMax
 import std.math.*
 
 extend LFloat64Implementation {
@@ -38,7 +39,7 @@ extend LFloat64Implementation {
 
         let smlnum = 2.0 * dlamchS
         let bignum = 1.0 / smlnum
-        let smini = max(smin, smlnum)
+        let smini = nanMax(smin, smlnum)
 
         ok = true
         scale = 1.0
@@ -55,7 +56,7 @@ extend LFloat64Implementation {
                 }
 
                 let bnorm = abs(b[0])
-                if (cnorm < 1.0 && bnorm > max(1.0, bignum * cnorm)) {
+                if (cnorm < 1.0 && bnorm > nanMax(1.0, bignum * cnorm)) {
                     scale = 1.0 / bnorm
                 }
 
@@ -77,7 +78,7 @@ extend LFloat64Implementation {
             }
 
             let bnorm = abs(b[0]) + abs(b[1])
-            if (cnorm < 1.0 && bnorm > max(1.0, bignum * cnorm)) {
+            if (cnorm < 1.0 && bnorm > nanMax(1.0, bignum * cnorm)) {
                 scale = 1.0 / bnorm
             }
 
@@ -119,8 +120,8 @@ extend LFloat64Implementation {
             }
 
             if (cmax < smini) {
-                let bnorm = max(abs(b[0]), abs(b[ldb]))
-                if (smini < 1.0 && bnorm > max(1.0, bignum * smini)) {
+                let bnorm = nanMax(abs(b[0]), abs(b[ldb]))
+                if (smini < 1.0 && bnorm > nanMax(1.0, bignum * smini)) {
                     scale = 1.0 / bnorm
                 }
                 let temp = scale / smini
@@ -156,7 +157,7 @@ extend LFloat64Implementation {
             }
             br2 -= lr21 * br1
 
-            let bbnd = max(abs(ur22 * ur11r * br1), abs(br2))
+            let bbnd = nanMax(abs(ur22 * ur11r * br1), abs(br2))
             if (bbnd > 1.0 && abs(ur22) < 1.0 && bbnd >= bignum * abs(ur22)) {
                 scale = 1.0 / bbnd
             }
@@ -170,7 +171,7 @@ extend LFloat64Implementation {
                 x[0] = xr1
                 x[ldx] = xr2
             }
-            xnorm = max(abs(xr1), abs(xr2))
+            xnorm = nanMax(abs(xr1), abs(xr2))
 
             if (xnorm > 1.0 && cmax > 1.0 && xnorm > bignum / cmax) {
                 let temp = cmax / bignum
@@ -202,7 +203,7 @@ extend LFloat64Implementation {
         if (cmax < smini) {
             let br1 = abs(b[0]) + abs(b[1])
             let br2 = abs(b[ldb]) + abs(b[ldb + 1])
-            let bnorm = max(br1, br2)
+            let bnorm = nanMax(br1, br2)
             if (smini < 1.0 && bnorm > 1.0 && bnorm > bignum * smini) {
                 scale = 1.0 / bnorm
             }
@@ -287,7 +288,7 @@ extend LFloat64Implementation {
 
         let bbnd1 = u22abs * (abs(ur11r) + abs(ui11r)) * (abs(br1) + abs(bi1))
         let bbnd2 = abs(br2) + abs(bi2)
-        let bbnd = max(bbnd1, bbnd2)
+        let bbnd = nanMax(bbnd1, bbnd2)
         if (bbnd > 1.0 && u22abs < 1.0 && bbnd >= bignum * u22abs) {
             scale = 1.0 / bbnd
             br1 *= scale
@@ -311,7 +312,7 @@ extend LFloat64Implementation {
             x[ldx] = xr2
             x[ldx + 1] = xi2
         }
-        xnorm = max(abs(xr1) + abs(xi1), abs(xr2) + abs(xi2))
+        xnorm = nanMax(abs(xr1) + abs(xi1), abs(xr2) + abs(xi2))
 
         if (xnorm > 1.0 && cmax > 1.0 && xnorm > bignum / cmax) {
             let temp = cmax / bignum

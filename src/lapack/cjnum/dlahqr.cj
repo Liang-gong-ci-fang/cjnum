@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import cjnum.blas.blas64.*
+import cjnum.util.nanMax
 import std.math.*
 
 extend LFloat64Implementation {
@@ -90,12 +91,12 @@ extend LFloat64Implementation {
                         }
                     }
                     if (abs(h[k * ldh + k - 1]) <= ulp * tst) {
-                        let ab = max(abs(h[k * ldh + k - 1]), abs(h[(k - 1) * ldh + k]))
+                        let ab = nanMax(abs(h[k * ldh + k - 1]), abs(h[(k - 1) * ldh + k]))
                         let ba = min(abs(h[k * ldh + k - 1]), abs(h[(k - 1) * ldh + k]))
-                        let aa = max(abs(h[k * ldh + k]), abs(h[(k - 1) * ldh + k - 1] - h[k * ldh + k]))
+                        let aa = nanMax(abs(h[k * ldh + k]), abs(h[(k - 1) * ldh + k - 1] - h[k * ldh + k]))
                         let bb = min(abs(h[k * ldh + k]), abs(h[(k - 1) * ldh + k - 1] - h[k * ldh + k]))
                         let s = aa + ab
-                        if (ab / s * ba <= max(smlnum, aa / s * bb * ulp)) {
+                        if (ab / s * ba <= nanMax(smlnum, aa / s * bb * ulp)) {
                             break
                         }
                     }

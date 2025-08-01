@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import std.math.*
+import cjnum.util.*
 
 extend LFloat64Implementation {
     public func dlag2(a: Array<Float64>, lda: Int64, b: Array<Float64>, ldb: Int64): (Float64, Float64, Float64, 
@@ -27,8 +28,8 @@ extend LFloat64Implementation {
         let rtmin = sqrt(safmin)
         let rtmax = 1.0 / rtmin
 
-        var anorm = max(abs(a[0]) + abs(a[lda]), abs(a[1]) + abs(a[lda + 1]))
-        anorm = max(anorm, safmin)
+        var anorm = nanMax(abs(a[0]) + abs(a[lda]), abs(a[1]) + abs(a[lda + 1]))
+        anorm = nanMax(anorm, safmin)
         let ascale = 1.0 / anorm
         let a11 = ascale * a[0]
         let a21 = ascale * a[lda]
@@ -38,7 +39,7 @@ extend LFloat64Implementation {
         var b11 = b[0]
         var b12 = b[1]
         var b22 = b[ldb + 1]
-        let bmin = rtmin * max(max(abs(b11), abs(b12)), max(abs(b22), rtmin))
+        let bmin = rtmin * nanMax(nanMax(abs(b11), abs(b12)), nanMax(abs(b22), rtmin))
         if (abs(b11) < bmin) {
             b11 = copysign(bmin, b11)
         }
@@ -46,8 +47,8 @@ extend LFloat64Implementation {
             b22 = copysign(bmin, b22)
         }
 
-        let bnorm = max(max(abs(b11), abs(b12) + abs(b22)), safmin)
-        let bsize = max(abs(b11), abs(b22))
+        let bnorm = nanMax(nanMax(abs(b11), abs(b12) + abs(b22)), safmin)
+        let bsize = nanMax(abs(b11), abs(b22))
         let bscale = 1.0 / bsize
         b11 *= bscale
         b12 *= bscale
@@ -103,16 +104,16 @@ extend LFloat64Implementation {
             let wbig = shift + sum
 
             var wsmall = shift + diff
-            if (0.5 * abs(wbig) > max(abs(wsmall), safmin)) {
+            if (0.5 * abs(wbig) > nanMax(abs(wsmall), safmin)) {
                 let wdet = (a11 * a22 - a12 * a21) * (binv11 * binv22)
                 wsmall = wdet / wbig
             }
             if (pp > abi22) {
-                wr1 = min(wbig, wsmall)
-                wr2 = max(wbig, wsmall)
+                wr1 = nanMin(wbig, wsmall)
+                wr2 = nanMax(wbig, wsmall)
             } else {
-                wr1 = max(wbig, wsmall)
-                wr2 = min(wbig, wsmall)
+                wr1 = nanMax(wbig, wsmall)
+                wr2 = nanMin(wbig, wsmall)
             }
         } else {
             wr1 = shift + pp
@@ -120,22 +121,22 @@ extend LFloat64Implementation {
             wi = r
         }
 
-        let c1 = bsize * (safmin * max(1.0, ascale))
-        let c2 = safmin * max(1.0, bnorm)
+        let c1 = bsize * (safmin * nanMax(1.0, ascale))
+        let c2 = safmin * nanMax(1.0, bnorm)
         let c3 = bsize * safmin
         var c4 = 1.0
         var c5 = 1.0
         if (ascale <= 1.0 || bsize <= 1.0) {
-            c5 = min(1.0, ascale * bsize)
+            c5 = nanMin(1.0, ascale * bsize)
             if (ascale <= 1.0 && bsize <= 1.0) {
-                c4 = min(1.0, (ascale / safmin) * bsize)
+                c4 = nanMin(1.0, (ascale / safmin) * bsize)
             }
         }
 
         let wabs = abs(wr1) + abs(wi)
-        var wsize = max(max(safmin, c1), max(fuzzy1 * (wabs * c2 + c3), min(c4, 0.5 * max(wabs, c5))))
-        let maxABsize = max(ascale, bsize)
-        let minABsize = min(ascale, bsize)
+        var wsize = nanMax(nanMax(safmin, c1), nanMax(fuzzy1 * (wabs * c2 + c3), nanMin(c4, 0.5 * nanMax(wabs, c5))))
+        let maxABsize = nanMax(ascale, bsize)
+        let minABsize = nanMin(ascale, bsize)
         if (wsize != 1.0) {
             let wscale = 1.0 / wsize
             if (wsize > 1.0) {
@@ -155,7 +156,7 @@ extend LFloat64Implementation {
         }
 
         if (wi == 0.0) {
-            wsize = max(max(safmin, c1), max(fuzzy1 * (abs(wr2) * c2 + c3), min(c4, 0.5 * max(abs(wr2), c5))))
+            wsize = nanMax(nanMax(safmin, c1), nanMax(fuzzy1 * (abs(wr2) * c2 + c3), nanMin(c4, 0.5 * nanMax(abs(wr2), c5))))
             if (wsize != 1.0) {
                 let wscale = 1.0 / wsize
                 if (wsize > 1.0) {

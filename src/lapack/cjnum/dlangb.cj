@@ -34,9 +34,9 @@ extend LFloat64Implementation {
             for (i in 0..min(m, n + kl)) {
                 let l = max(0, kl - i)
                 let u = min(n + kl - i, ncol)
-                for (i in 0..ab[i * ldab + l..i * ldab + u].size) {
-                    var aij = ab[i * ldab + l..i * ldab + u][i]
-                    aij = abs(aij)
+                let abtmp = ab[i * ldab + l..i * ldab + u]
+                for (i in 0..abtmp.size) {
+                    let aij = abs(abtmp[i])
                     if (aij > value || aij.isNaN()) {
                         value = aij
                     }

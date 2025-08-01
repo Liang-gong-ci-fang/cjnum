@@ -3,6 +3,7 @@ package cjnum.blas.testblas
 import std.math.*
 import cjnum.complex.*
 import cjnum.blas.*
+import cjnum.util.*
 import std.collection.*
 
 const throwException = true
@@ -17,7 +18,7 @@ func dTolEqual(a: Float64, b: Float64): Bool {
     }
     var a_ = a
     var b_ = b
-    let m = max(abs(a), abs(b))
+    let m = nanMax(abs(a), abs(b))
     if (m > 1.0) {
         a_ = a / m
         b_ = b / m

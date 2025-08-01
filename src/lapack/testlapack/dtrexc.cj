@@ -3,6 +3,7 @@ package cjnum.lapack.testlapack
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 import std.random.*
 

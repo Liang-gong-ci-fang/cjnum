@@ -5,6 +5,7 @@ import std.random.*
 import cjnum.blas.*
 import cjnum.lapack.*
 import cjnum.floats.*
+import cjnum.util.*
 
 public func dlansbTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
@@ -36,7 +37,7 @@ func _dlansbTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, n: Int64, kd: Int6
 				let j = jb + i
 				colsum[j] += abs(aij)
 				rowsum[i] += abs(aij)
-				maxabsWant = max(maxabsWant, abs(aij))
+				maxabsWant = nanMax(maxabsWant, abs(aij))
 				frobWant += aij * aij
 				if (i != j) {
 					colsum[i] += abs(aij)
@@ -54,7 +55,7 @@ func _dlansbTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, n: Int64, kd: Int6
 				let j = jb - kd + i
 				colsum[j] += abs(aij)
 				rowsum[i] += abs(aij)
-				maxabsWant = max(maxabsWant, abs(aij))
+				maxabsWant = nanMax(maxabsWant, abs(aij))
 				frobWant += aij * aij
 				if (i != j) {
 					colsum[i] += abs(aij)

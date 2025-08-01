@@ -3,6 +3,7 @@ package cjnum.lapack.testlapack
 import cjnum.blas.blas64.nFloat64Implementation
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 import std.random.*
 
@@ -64,7 +65,7 @@ func dgtsvTest(lFloat64: LFloat64, rnd: Random, n: Int64, nrhs: Int64, ldb: Int6
 	for (j in 0..nrhs) {
 		let bnorm = nFloat64.dasum(n, b.data[j..], b.stride)
 		let xnorm = nFloat64.dasum(n, got.data[j..], got.stride)
-		resid = max(resid, bnorm / anorm / xnorm)
+		resid = nanMax(resid, bnorm / anorm / xnorm)
 	}
 	if (resid > tol) {
 		throw Exception("${name}: unexpected result; resid=${resid},want<=${tol}")

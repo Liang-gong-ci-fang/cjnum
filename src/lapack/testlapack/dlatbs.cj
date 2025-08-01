@@ -4,6 +4,7 @@ import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.floats.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 import std.random.*
 
@@ -93,16 +94,16 @@ func dlatbsResidual(uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, kd: Int6
     if (diag == NonUnitDiag) {
         if (uplo == Upper) {
             for (j in 0..n) {
-                tnorm = max(tnorm, abs(ab[j * ldab]) + cnorm[j])
+                tnorm = nanMax(tnorm, abs(ab[j * ldab]) + cnorm[j])
             }
         } else {
             for (j in 0..n) {
-                tnorm = max(tnorm, abs(ab[j * ldab + kd]) + cnorm[j])
+                tnorm = nanMax(tnorm, abs(ab[j * ldab + kd]) + cnorm[j])
             }
         }
     } else {
         for (j in 0..n) {
-            tnorm = max(tnorm, 1.0 + cnorm[j])
+            tnorm = nanMax(tnorm, 1.0 + cnorm[j])
         }
     }
 
@@ -112,7 +113,7 @@ func dlatbsResidual(uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, kd: Int6
     let nFloat64 = nFloat64Implementation()
 
     var ix = nFloat64.idamax(n, x, 1)
-    let xNorm = max(1.0, abs(x[ix]))
+    let xNorm = nanMax(1.0, abs(x[ix]))
     let xScal = (1.0 / xNorm) / Float64(kd + 1)
 
     let resid = Array<Float64>(x.size, repeat: 0.0)

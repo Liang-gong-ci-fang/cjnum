@@ -4,6 +4,7 @@ import std.math.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.lapack.*
+import cjnum.util.*
 
 extend LFloat64Implementation {
     public func dlatrs(uplo: Uplo, trans: Transpose, diag: Diag, normin: Bool, n: Int64, a: Array<Float64>, lda: Int64,
@@ -73,11 +74,11 @@ extend LFloat64Implementation {
                 tmax = 0.0
                 if (upper) {
                     for (j in 1..n) {
-                        tmax = max(dlange(MaxAbs, j, 1, a[j..], lda, Array<Float64>()), tmax)
+                        tmax = nanMax(dlange(MaxAbs, j, 1, a[j..], lda, Array<Float64>()), tmax)
                     }
                 } else {
                     for (j in 0..n - 1) {
-                        tmax = max(dlange(MaxAbs, n - j - 1, 1, a[(j + 1) * lda + j..], lda, Array<Float64>()), tmax)
+                        tmax = nanMax(dlange(MaxAbs, n - j - 1, 1, a[(j + 1) * lda + j..], lda, Array<Float64>()), tmax)
                     }
                 }
 
@@ -129,7 +130,7 @@ extend LFloat64Implementation {
                     n, a, lda, x, cnorm)
             }
             if (nonUnitDiag) {
-                grow = 1.0 / max(xband, smlnum)
+                grow = 1.0 / nanMax(xband, smlnum)
                 xband = grow
                 var jj = jfirst
                 while (jj != jlast) {
@@ -148,7 +149,7 @@ extend LFloat64Implementation {
                 }
                 grow = xband
             } else {
-                grow = min(1.0, 1.0 / max(xband, smlnum))
+                grow = min(1.0, 1.0 / nanMax(xband, smlnum))
                 var jj = jfirst
                 while (jj != jlast) {
                     if (grow <= smlnum) {
@@ -175,7 +176,7 @@ extend LFloat64Implementation {
                     n, a, lda, x, cnorm)
             }
             if (nonUnitDiag) {
-                grow = 1.0 / max(xband, smlnum)
+                grow = 1.0 / nanMax(xband, smlnum)
                 xband = grow
                 var jj = jfirst
                 while (jj != jlast) {
@@ -193,7 +194,7 @@ extend LFloat64Implementation {
                 }
                 grow = min(grow, xband)
             } else {
-                grow = min(1.0, 1.0 / max(xband, smlnum))
+                grow = min(1.0, 1.0 / nanMax(xband, smlnum))
                 var jj = jfirst
                 while (jj != jlast) {
                     if (grow <= smlnum) {
@@ -335,7 +336,7 @@ private func __solve__(xmax_: Float64, scale_: Float64, nonUnitDiag: Bool, upper
         while (jj != jlast) {
             let xj = abs(x[jj])
             var uscal = tscal
-            var rec = 1.0 / max(xmax, 1.0)
+            var rec = 1.0 / nanMax(xmax, 1.0)
             var tjjs = 0.0
             if (cnorm[jj] > (bignum - xj) * rec) {
                 rec *= 0.5
@@ -383,7 +384,7 @@ private func __solve__(xmax_: Float64, scale_: Float64, nonUnitDiag: Bool, upper
                 } else {
                     tjjs = tscal
                     if (tscal == 1.0) {
-                        xmax = max(xmax, abs(x[jj]))
+                        xmax = nanMax(xmax, abs(x[jj]))
                         jj += jinc
                         continue
                     }
@@ -418,7 +419,7 @@ private func __solve__(xmax_: Float64, scale_: Float64, nonUnitDiag: Bool, upper
             } else {
                 x[jj] = x[jj] / tjjs - sumj
             }
-            xmax = max(xmax, abs(x[jj]))
+            xmax = nanMax(xmax, abs(x[jj]))
             jj += jinc
         }
     }

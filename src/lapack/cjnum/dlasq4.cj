@@ -1,5 +1,6 @@
 package cjnum.lapack.cjnum
 
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -48,7 +49,7 @@ extend LFloat64Implementation {
                         gap1 = a2 - dn - (b1 + b2)
                     }
                     if (gap1 > 0.0 && gap1 > b1) {
-                        s = max(dn - (b1 / gap1) * b1, 0.5 * dmin)
+                        s = nanMax(dn - (b1 / gap1) * b1, 0.5 * dmin)
                         ttype_ = -2
                     } else {
                         s = 0.0
@@ -58,7 +59,7 @@ extend LFloat64Implementation {
                         if (a2 > b1 + b2) {
                             s = min(s, a2 - (b1 + b2))
                         }
-                        s = max(s, cnstthird * dmin)
+                        s = nanMax(s, cnstthird * dmin)
                         ttype_ = -3
                     }
                 } else {
@@ -99,7 +100,7 @@ extend LFloat64Implementation {
                         }
                         b2 *= z[i4] / z[i4 - 2]
                         a2 += b2
-                        if (100.0 * max(b2, b1) < a2 || cnst1 < a2) {
+                        if (100.0 * nanMax(b2, b1) < a2 || cnst1 < a2) {
                             break
                         }
                     }
@@ -133,7 +134,7 @@ extend LFloat64Implementation {
                         }
                         b2 *= z[i4] / z[i4 - 2]
                         a2 += b2
-                        if (100.0 * max(b2, b1) < a2 || cnst1 < a2) {
+                        if (100.0 * nanMax(b2, b1) < a2 || cnst1 < a2) {
                             break
                         }
                     }
@@ -171,7 +172,7 @@ extend LFloat64Implementation {
                         }
                         b1 *= z[i4] / z[i4 - 2]
                         b2 += b1
-                        if (100.0 * max(b1, a2) < b2) {
+                        if (100.0 * nanMax(b1, a2) < b2) {
                             break
                         }
                     }
@@ -180,9 +181,9 @@ extend LFloat64Implementation {
                 let a2 = dmin1 / (1.0 + b2 * b2)
                 let gap2 = 0.5 * dmin2 - a2
                 if (gap2 > 0.0 && gap2 > b2 * a2) {
-                    s = max(s, a2 * (1.0 - cnst2 * a2 * (b2 / gap2) * b2))
+                    s = nanMax(s, a2 * (1.0 - cnst2 * a2 * (b2 / gap2) * b2))
                 } else {
-                    s = max(s, a2 * (1.0 - cnst2 * b2))
+                    s = nanMax(s, a2 * (1.0 - cnst2 * b2))
                     ttype_ = -8
                 }
             } else {
@@ -218,9 +219,9 @@ extend LFloat64Implementation {
                 let a2 = dmin2 / (1.0 + b2 * b2)
                 let gap2 = z[nn - 7] + z[nn - 9] - sqrt(z[nn - 11]) * sqrt(z[nn - 9]) - a2
                 if (gap2 > 0.0 && gap2 > b2 * a2) {
-                    s = max(s, a2 * (1.0 - cnst2 * a2 * (b2 / gap2) * b2))
+                    s = nanMax(s, a2 * (1.0 - cnst2 * a2 * (b2 / gap2) * b2))
                 } else {
-                    s = max(s, a2 * (1.0 - cnst2 * b2))
+                    s = nanMax(s, a2 * (1.0 - cnst2 * b2))
                 }
             } else {
                 s = dmin2 / 4.0

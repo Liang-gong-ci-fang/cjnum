@@ -2,6 +2,7 @@ package cjnum.floats.scalar
 
 import std.math.*
 import std.math.numeric.*
+import cjnum.util.*
 
 public func equalWithinAbs(a: Float64, b: Float64, tol: Float64): Bool {
     return a == b || abs(a - b) <= tol
@@ -15,7 +16,7 @@ public func equalWithinRel(a: Float64, b: Float64, tol: Float64): Bool {
     if (delta <= Float64.MinNormal) {
         return delta <= tol * Float64.MinNormal
     }
-    return delta / max(abs(a), abs(b)) <= tol
+    return delta / nanMax(abs(a), abs(b)) <= tol
 }
 
 public func equalWithinAbsOrRel(a: Float64, b: Float64, absTol: Float64, relTol: Float64): Bool {

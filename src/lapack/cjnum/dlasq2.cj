@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -67,8 +68,8 @@ extend LFloat64Implementation {
             }
             d += z[k]
             e += z[k + 1]
-            qmax = max(qmax, z[k])
-            emin = min(emin, z[k + 1])
+            qmax = nanMax(qmax, z[k])
+            emin = nanMin(emin, z[k + 1])
         }
         if (z[2 * (n - 1)] < 0.0) {
             throw Exception(negZ)
@@ -136,14 +137,14 @@ extend LFloat64Implementation {
                     z[i4 - 2 * pp] = z[i4 + 1] * (z[i4 - 1] / z[i4 - 2 * pp - 2])
                     d = z[i4 + 1] * (d / z[i4 - 2 * pp - 2])
                 }
-                emin = min(emin, z[i4 - 2 * pp])
+                emin = nanMin(emin, z[i4 - 2 * pp])
             }
             z[4 * (n0 + 1) - pp - 3] = d
 
             qmax = z[4 * (i0 + 1) - pp - 3]
             for (i4loop in 4 * (i0 + 1) - pp + 2..=4 * (n0 + 1) + pp - 2 : 4) {
                 let i4 = i4loop - 1
-                qmax = max(qmax, z[i4])
+                qmax = nanMax(qmax, z[i4])
             }
             pp = 1 - pp
         }
@@ -207,11 +208,11 @@ extend LFloat64Implementation {
                     break
                 }
                 if (qmin >= 4.0 * emax) {
-                    qmin = min(qmin, z[i4 - 3])
-                    emax = max(emax, z[i4 - 5])
+                    qmin = nanMin(qmin, z[i4 - 3])
+                    emax = nanMax(emax, z[i4 - 5])
                 }
-                qmax = max(qmax, z[i4 - 7] + z[i4 - 5])
-                emin = min(emin, z[i4 - 5])
+                qmax = nanMax(qmax, z[i4 - 7] + z[i4 - 5])
+                emin = nanMin(emin, z[i4 - 5])
             }
             if (!zSmall) {
                 i4 = 3
@@ -272,9 +273,9 @@ extend LFloat64Implementation {
                                 emin = z[i4 + 3]
                                 oldemn = z[i4 + 4]
                             } else {
-                                qmax = max(qmax, z[i4 + 1])
-                                emin = min(emin, z[i4 - 1])
-                                oldemn = min(oldemn, z[i4])
+                                qmax = nanMax(qmax, z[i4 + 1])
+                                emin = nanMin(emin, z[i4 - 1])
+                                oldemn = nanMin(oldemn, z[i4])
                             }
                         }
                         z[4 * (n0 + 1) - 2] = emin

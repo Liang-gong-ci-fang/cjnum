@@ -4,6 +4,7 @@ import cjnum.blas.blas64.General as General64
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 import std.random.*
 
@@ -319,22 +320,22 @@ func residualEVNormalization(emat: General64, wi: Array<Float64>): Float64 {
         var nrm = 0.0
         if (ipair == 0) {
             for (i in 0..n) {
-                nrm = max(nrm, abs(e[i * lde + j]))
+                nrm = nanMax(nrm, abs(e[i * lde + j]))
             }
-            enrmin = min(enrmin, nrm)
-            enrmax = max(enrmax, nrm)
+            enrmin = nanMin(enrmin, nrm)
+            enrmax = nanMax(enrmax, nrm)
         } else if (ipair == 1) {
             for (i in 0..n) {
-                nrm = max(nrm, abs(e[i * lde + j]) + abs(e[i * lde + j + 1]))
+                nrm = nanMax(nrm, abs(e[i * lde + j]) + abs(e[i * lde + j + 1]))
             }
-            enrmin = min(enrmin, nrm)
-            enrmax = max(enrmax, nrm)
+            enrmin = nanMin(enrmin, nrm)
+            enrmax = nanMax(enrmax, nrm)
             ipair = 2
         } else if (ipair == 2) {
             ipair = 0
         }
     }
-    return max(abs(enrmin - 1.0), abs(enrmax - 1.0))
+    return nanMax(abs(enrmin - 1.0), abs(enrmax - 1.0))
 }
 
 func normalizeEV(emat: General64, wi: Array<Float64>): Unit {
@@ -357,7 +358,7 @@ func normalizeEV(emat: General64, wi: Array<Float64>): Unit {
         } else if (ipair == 1) {
             var emax = 0.0
             for (i in 0..n) {
-                emax = max(emax, abs(e[i * lde + j]) + abs(e[i * lde + j + 1]))
+                emax = nanMax(emax, abs(e[i * lde + j]) + abs(e[i * lde + j + 1]))
             }
             nFloat64.dscal(n, 1.0 / emax, e[j..], lde)
             nFloat64.dscal(n, 1.0 / emax, e[j + 1..], lde)

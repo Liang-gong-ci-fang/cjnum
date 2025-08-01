@@ -3,6 +3,7 @@ package cjnum.lapack.testlapack
 import std.math.*
 import std.random.*
 import cjnum.lapack.*
+import cjnum.util.*
 
 class dlasclTestStruct {
     dlasclTestStruct(
@@ -71,7 +72,7 @@ public func dlasclTest(lFloat64: LFloat64): Bool {
                         for (j in 0..n) {
                             let want = scale * aCopy.data[i * aCopy.stride + j]
                             let got = a.data[i * a.stride + j]
-                            resid = max(resid, abs(want - got))
+                            resid = nanMax(resid, abs(want - got))
                         }
                     }
                 } else if (kind == UpperTri) {
@@ -79,7 +80,7 @@ public func dlasclTest(lFloat64: LFloat64): Bool {
                         for (j in i..n) {
                             let want = scale * aCopy.data[i * aCopy.stride + j]
                             let got = a.data[i * a.stride + j]
-                            resid = max(resid, abs(want - got))
+                            resid = nanMax(resid, abs(want - got))
                         }
                     }
                 } else if (kind == LowerTri) {
@@ -87,7 +88,7 @@ public func dlasclTest(lFloat64: LFloat64): Bool {
                         for (j in 0..=min(i, n - 1)) {
                             let want = scale * aCopy.data[i * aCopy.stride + j]
                             let got = a.data[i * a.stride + j]
-                            resid = max(resid, abs(want - got))
+                            resid = nanMax(resid, abs(want - got))
                         }
                     }
                 }

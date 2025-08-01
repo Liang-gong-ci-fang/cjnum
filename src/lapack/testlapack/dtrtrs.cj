@@ -6,6 +6,7 @@ import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.lapack.*
 import cjnum.floats.*
+import cjnum.util.*
 
 public func dtrtrsTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
@@ -114,7 +115,7 @@ func dtrtrsTest(lFloat64: LFloat64, rnd: Random, uplo: Uplo, trans: Transpose, d
         nFloat64.daxpy(n, -1.0, b[j..], ldb, work, 1)
         let rjNorm = nFloat64.dasum(n, work, 1)
         let xNorm = nFloat64.dasum(n, got[j..], ldb)
-        resid = max(resid, rjNorm / aNorm / xNorm)
+        resid = nanMax(resid, rjNorm / aNorm / xNorm)
     }
     if (resid > tol) {
         throw Exception("${name}: unexpected result; resid=${resid},want<=${tol}")

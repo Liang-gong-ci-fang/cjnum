@@ -2,6 +2,7 @@ package cjnum.lapack.testlapack
 
 import std.math.*
 import cjnum.lapack.*
+import cjnum.util.*
 
 public func dlartgTest(lFloat64: LFloat64): Bool {
     const tol = 20.0 * ulp
@@ -40,15 +41,15 @@ public func dlartgTest(lFloat64: LFloat64): Bool {
                     throw Exception("${name}: unexpected r=${r}; want NaN or Inf")
                 }
             } else {
-                var d = max(abs(f), abs(g))
-                d = min(max(safmin, d), safmax)
+                var d = nanMax(abs(f), abs(g))
+                d = min(nanMax(safmin, d), safmax)
                 let fs = f / d
                 let gs = g / d
                 let rs = r / d
 
                 var rnorm = abs(rs)
                 if (rnorm == 0.0) {
-                    rnorm = max(abs(fs), abs(gs))
+                    rnorm = nanMax(abs(fs), abs(gs))
                     if (rnorm == 0.0) {
                         rnorm = 1.0
                     }

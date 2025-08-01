@@ -153,11 +153,11 @@ func dlattr(imat: Int64, uplo: Uplo, trans: Transpose, n: Int64, a: Array<Float6
             }
             dlarnv(b, 2, rnd)
             let imax = nFloat64.idamax(n, b, 1)
-            let bscal = huge / max(1.0, b[imax])
+            let bscal = huge / nanMax(1.0, b[imax])
             nFloat64.dscal(n, bscal, b, 1)
         case 12 =>
             diag = NonUnitDiag
-            let tscal = 1.0 / max(1.0, Float64(n - 1))
+            let tscal = 1.0 / nanMax(1.0, Float64(n - 1))
             if (uplo == Upper) {
                 for (i in 0..n) {
                     dlarnv(a[i * lda + i..i * lda + n], 2, rnd)
@@ -235,7 +235,7 @@ func dlattr(imat: Int64, uplo: Uplo, trans: Transpose, n: Int64, a: Array<Float6
             }
         case 15 =>
             diag = NonUnitDiag
-            let texp = 1.0 / max(1.0, Float64(n - 1))
+            let texp = 1.0 / nanMax(1.0, Float64(n - 1))
             let tscal = pow(tiny, texp)
             if (uplo == Upper) {
                 for (i in 0..n) {
@@ -333,12 +333,12 @@ func dlattr(imat: Int64, uplo: Uplo, trans: Transpose, n: Int64, a: Array<Float6
             dlarnv(b, 2, rnd)
             let iy = nFloat64.idamax(n, b, 1)
             let bnorm = abs(b[iy])
-            let bscal = huge / max(1.0, bnorm)
+            let bscal = huge / nanMax(1.0, bnorm)
             nFloat64.dscal(n, bscal, b, 1)
         case 19 =>
             diag = NonUnitDiag
-            let tleft = huge / max(1.0, Float64(n - 1))
-            let tscal = huge * (Float64(n - 1) / max(1.0, Float64(n)))
+            let tleft = huge / nanMax(1.0, Float64(n - 1))
+            let tscal = huge * (Float64(n - 1) / nanMax(1.0, Float64(n)))
             if (uplo == Upper) {
                 for (i in 0..n) {
                     dlarnv(a[i * lda + i..i * lda + n], 2, rnd)
@@ -654,7 +654,7 @@ func dlattb(kind: Int64, uplo: Uplo, trans: Transpose, n: Int64, kd: Int64, ab: 
             }
         }
         let bnorm = abs(b[nFloat64.idamax(n, b, 1)])
-        let bscal = huge / max(1.0, bnorm)
+        let bscal = huge / nanMax(1.0, bnorm)
         nFloat64.dscal(n, bscal, b, 1)
     } else if (kind == 11) {
         let tscal = 1.0 / Float64(kd + 1)
@@ -814,11 +814,11 @@ func dlattb(kind: Int64, uplo: Uplo, trans: Transpose, n: Int64, kd: Int64, ab: 
             }
         }
         let bnorm = abs(b[nFloat64.idamax(n, b, 1)])
-        let bscal = huge / max(1.0, bnorm)
+        let bscal = huge / nanMax(1.0, bnorm)
         nFloat64.dscal(n, bscal, b, 1)
     } else if (kind == 18) {
-        let tleft = huge / max(1.0, Float64(kd))
-        let tscal = huge / max(1.0, Float64(kd))
+        let tleft = huge / nanMax(1.0, Float64(kd))
+        let tscal = huge / nanMax(1.0, Float64(kd))
         if (uplo == Upper) {
             for (i in 0..n) {
                 for (j in 0..min(n - i, kd + 1)) {

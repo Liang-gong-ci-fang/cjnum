@@ -3,6 +3,7 @@ package cjnum.cmplxs.cscalar
 import std.math.*
 import cjnum.floats.scalar
 import cjnum.complex.*
+import cjnum.util.*
 
 const minNormalFloat64 = 0x1p-1022
 
@@ -52,7 +53,7 @@ public func equalWithinRel(a: Complex128, b: Complex128, tol: Float64): Bool {
     if (delta <= minNormalFloat64) {
 		return delta <= tol * minNormalFloat64
 	}
-    return delta / max(complexAbs(a), complexAbs(b)) <= tol
+    return delta / nanMax(complexAbs(a), complexAbs(b)) <= tol
 }
 
 public func equalWithinAbsOrRel(a: Complex128, b: Complex128, absTol: Float64, reTol: Float64): Bool {

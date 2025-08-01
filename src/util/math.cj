@@ -387,3 +387,34 @@ private func xatan(x: Float64): Float64 {
     z = x * z + x
     return z
 }
+
+/*
+ * 仓颉的max和min函数对于有非数参与的情况下会直接返回另一个数，不符合大部分语言返回非数的情况。
+ */
+public func nanMax(x: Float64, y: Float64): Float64 {
+    if (x.isNaN() || y.isNaN()) {
+        return Float64.NaN
+    }
+    return max(x, y)
+}
+
+public func nanMax(x: Float32, y: Float32): Float32 {
+    if (x.isNaN() || y.isNaN()) {
+        return Float32.NaN
+    }
+    return max(x, y)
+}
+
+public func nanMin(x: Float64, y: Float64): Float64 {
+    if (x.isNaN() || y.isNaN()) {
+        return Float64.NaN
+    }
+    return min(x, y)
+}
+
+public func nanMin(x: Float32, y: Float32): Float32 {
+    if (x.isNaN() || y.isNaN()) {
+        return Float32.NaN
+    }
+    return min(x, y)
+}

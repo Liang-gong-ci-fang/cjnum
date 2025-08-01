@@ -4,8 +4,8 @@ import std.math.*
 
 public func l1Norm(x: Array<Float64>): Float64 {
     var sum: Float64 = 0.0
-    for (i in 0..x.size) {
-        sum += abs(x[i])
+    for (v in x) {
+        sum += abs(v)
     }
     return sum
 }

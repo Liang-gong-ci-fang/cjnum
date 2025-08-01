@@ -3,6 +3,7 @@ package cjnum.lapack.cjnum
 import std.math.*
 import cjnum.lapack.*
 import cjnum.blas.blas64.*
+import cjnum.util.*
 
 extend LFloat64Implementation {
     public func dlanhs(norm: MatrixNorm, n: Int64, a: Array<Float64>, lda: Int64, work: Array<Float64>): Float64 {
@@ -33,7 +34,7 @@ extend LFloat64Implementation {
             for (i in 0..n) {
                 let minj = max(0, i - 1)
                 for (v in a[i * lda + minj..i * lda + n]) {
-                    value = max(value, abs(v))
+                    value = nanMax(value, abs(v))
                 }
             }
         } else if (norm == MaxColumnSum) {
@@ -46,13 +47,13 @@ extend LFloat64Implementation {
                 }
             }
             for (v in work[..n]) {
-                value = max(value, v)
+                value = nanMax(value, v)
             }
         } else if (norm == MaxRowSum) {
             for (i in 0..n) {
                 let minj = max(0, i - 1)
                 let sum = nFloat64.dasum(n- minj, a[i * lda + minj..], 1)
-                value = max(value, sum)
+                value = nanMax(value, sum)
             }
         } else if (norm == Frobenius) {
             var scale = 0.0

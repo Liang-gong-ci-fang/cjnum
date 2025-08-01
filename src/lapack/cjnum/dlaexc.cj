@@ -3,6 +3,7 @@ package cjnum.lapack.cjnum
 import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.lapack.*
+import cjnum.util.nanMax
 import std.math.*
 
 extend LFloat64Implementation {
@@ -73,7 +74,7 @@ extend LFloat64Implementation {
         let dnorm = dlange(MaxAbs, nd, nd, d[..], ldd, work)
 
         let eps = dlamchP
-        let thresh = max(10.0 * eps * dnorm, dlamchS / eps)
+        let thresh = nanMax(10.0 * eps * dnorm, dlamchS / eps)
 
         var x = Array<Float64>(4, repeat: 0.0)
         const ldx = 2
@@ -89,7 +90,7 @@ extend LFloat64Implementation {
                 dlarfx(Left, 3, 3, u[..], tau, d[..], ldd, work)
                 dlarfx(Right, 3, 3, u[..], tau, d[..], ldd, work)
 
-                if (max(abs(d[2 * ldd]), max(abs(d[2 * ldd + 1]), abs(d[2 * ldd + 2] - t11))) > thresh) {
+                if (nanMax(abs(d[2 * ldd]), nanMax(abs(d[2 * ldd + 1]), abs(d[2 * ldd + 2] - t11))) > thresh) {
                     return false
                 }
 
@@ -112,7 +113,7 @@ extend LFloat64Implementation {
                 dlarfx(Left, 3, 3, u[..], tau, d[..], ldd, work)
                 dlarfx(Right, 3, 3, u[..], tau, d[..], ldd, work)
 
-                if (max(abs(d[ldd]), max(abs(d[2 * ldd]), abs(d[0] - t33))) > thresh) {
+                if (nanMax(abs(d[ldd]), nanMax(abs(d[2 * ldd]), abs(d[0] - t33))) > thresh) {
                     return false
                 }
 
@@ -140,9 +141,9 @@ extend LFloat64Implementation {
                 dlarfx(Left, 3, 4, u2[..], tau2, d[ldd..], ldd, work)
                 dlarfx(Right, 4, 3, u2[..], tau2, d[1..], ldd, work)
 
-                let m1 = max(abs(d[2 * ldd]), abs(d[2 * ldd + 1]))
-                let m2 = max(abs(d[3 * ldd]), abs(d[3 * ldd + 1]))
-                if (max(m1, m2) > thresh) {
+                let m1 = nanMax(abs(d[2 * ldd]), abs(d[2 * ldd + 1]))
+                let m2 = nanMax(abs(d[3 * ldd]), abs(d[3 * ldd + 1]))
+                if (nanMax(m1, m2) > thresh) {
                     return false
                 }
 

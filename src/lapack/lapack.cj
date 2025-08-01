@@ -244,22 +244,22 @@ public const ApplyQ: ApplyOrtho = 'Q'
 public type GenOrtho = UInt8
 
 public const GeneratePT: GenOrtho = 'P'
-public const GenerateQ: GenOrtho = 'Q'
+// public const GenerateQ: GenOrtho = 'Q'
 
 public type SVDJob = UInt8
 
-public const SVDAll: SVDJob = 'A'
-public const SVDStore: SVDJob = 'S'
-public const SVDOverwrite: SVDJob = 'O'
-public const SVDNone: SVDJob = 'N'
+// public const SVDAll: SVDJob = 'A'
+// public const SVDStore: SVDJob = 'S'
+// public const SVDOverwrite: SVDJob = 'O'
+// public const SVDNone: SVDJob = 'N'
 
 public type GSVDJob = UInt8
 
-public const GSVDU: GSVDJob = 'U'
-public const GSVDV: GSVDJob = 'V'
-public const GSVDQ: GSVDJob = 'Q'
-public const GSVDUnit: GSVDJob = 'I'
-public const GSVDNone: GSVDJob = 'N'
+// public const GSVDU: GSVDJob = 'U'
+// public const GSVDV: GSVDJob = 'V'
+// public const GSVDQ: GSVDJob = 'Q'
+// public const GSVDUnit: GSVDJob = 'I'
+// public const GSVDNone: GSVDJob = 'N'
 
 public type EVComp = UInt8
 
@@ -274,13 +274,13 @@ public const EVNone: EVJob = 'N'
 
 public type LeftEVJob = UInt8
 
-public const LeftEVCompute: LeftEVJob = 'V'
-public const LeftEVNone: LeftEVJob = 'N'
+// public const LeftEVCompute: LeftEVJob = 'V'
+// public const LeftEVNone: LeftEVJob = 'N'
 
 public type RightEVJob = UInt8
 
-public const RightEVCompute: RightEVJob = 'V'
-public const RightEVNone: RightEVJob = 'N'
+// public const RightEVCompute: RightEVJob = 'V'
+// public const RightEVNone: RightEVJob = 'N'
 
 public type BalanceJob = UInt8
 
@@ -291,14 +291,14 @@ public const BalanceNone: BalanceJob = 'N'
 
 public type SchurJob = UInt8
 
-public const EigenvaluesOnly: SchurJob = 'E'
-public const EigenvaluesAndSchur: SchurJob = 'S'
+// public const EigenvaluesOnly: SchurJob = 'E'
+// public const EigenvaluesAndSchur: SchurJob = 'S'
 
 public type SchurComp = UInt8
 
-public const SchurOrig: SchurComp = 'V'
-public const SchurHess: SchurComp = 'I'
-public const SchurNone: SchurComp = 'N'
+// public const SchurOrig: SchurComp = 'V'
+// public const SchurHess: SchurComp = 'I'
+// public const SchurNone: SchurComp = 'N'
 
 public type UpdateSchurComp = UInt8
 
@@ -319,8 +319,8 @@ public const EVSelected: EVHowMany = 'S'
 
 public type MaximizeNormXJob = UInt8
 
-public const LocalLookAhead: MaximizeNormXJob = 0
-public const NormalizedNullVector: MaximizeNormXJob = 2
+// public const LocalLookAhead: MaximizeNormXJob = 0
+// public const NormalizedNullVector: MaximizeNormXJob = 2
 
 public type OrthoComp = UInt8
 

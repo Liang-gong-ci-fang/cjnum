@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import std.math.*
+import cjnum.util.*
 
 extend LFloat64Implementation {
     public func dlartg(f: Float64, g: Float64): (Float64, Float64, Float64) {
@@ -29,7 +30,7 @@ extend LFloat64Implementation {
             return (cs, sn, r)
         }
 
-        let u = min(max(safmin, max(f1, g1)), safmax)
+        let u = nanMin(nanMax(safmin, nanMax(f1, g1)), safmax)
         let fs = f / u
         let gs = g / u
         let d = sqrt(fs * fs + gs * gs)

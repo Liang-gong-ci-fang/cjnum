@@ -3,6 +3,7 @@ package cjnum.lapack.cjnum
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -107,7 +108,7 @@ extend LFloat64Implementation {
             si[kwtop] = 0.0
             ns = 1
             nd = 0
-            if (abs(s) <= max(smlnum, ulp * abs(h[kwtop * ldh + kwtop]))) {
+            if (abs(s) <= nanMax(smlnum, ulp * abs(h[kwtop * ldh + kwtop]))) {
                 ns = 0
                 nd = 1
                 if (kwtop > ktop) {
@@ -152,7 +153,7 @@ extend LFloat64Implementation {
                 if (abst == 0.0) {
                     abst = abs(s)
                 }
-                if (abs(s * v[ns - 1]) <= max(smlnum, ulp * abst)) {
+                if (abs(s * v[ns - 1]) <= nanMax(smlnum, ulp * abst)) {
                     ns--
                 } else {
                     (_, ilst, _) = dtrexc(UpdateSchur, jw, t, ldt, v, ldv, ns - 1, ilst, work)
@@ -165,7 +166,7 @@ extend LFloat64Implementation {
             if (abst == 0.0) {
                 abst = abs(s)
             }
-            if (max(abs(s * v[ns - 1]), abs(s * v[ns - 2])) <= max(smlnum, ulp * abst)) {
+            if (nanMax(abs(s * v[ns - 1]), abs(s * v[ns - 2])) <= nanMax(smlnum, ulp * abst)) {
                 ns -= 2
             } else {
                 (_, ilst, _) = dtrexc(UpdateSchur, jw, t, ldt, v, ldv, ns - 1, ilst, work)

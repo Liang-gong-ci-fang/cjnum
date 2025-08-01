@@ -4,6 +4,7 @@ import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.floats.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 import std.random.*
 import std.sort.*
@@ -161,11 +162,11 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
             var dMax = 0.0
             for (i in 0..dGot.size) {
                 let diffAbs = abs(dGot[i] - dWant[i])
-                diff = max(diff, diffAbs)
-                let dAbs = max(abs(dGot[i]), abs(dWant[i]))
-                dMax = max(dMax, dAbs)
+                diff = nanMax(diff, diffAbs)
+                let dAbs = nanMax(abs(dGot[i]), abs(dWant[i]))
+                dMax = nanMax(dMax, dAbs)
             }
-            dMax = max(dlamchS, dMax)
+            dMax = nanMax(dlamchS, dMax)
             if (diff > tol * dMax) {
                 throw Exception("${name}: unexpected result; |dGot-dWant|=${diff}")
             }
@@ -179,11 +180,11 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
                 a[i * lda + i] = d[i]
                 a[i * lda + i + 1] = e[i]
                 let tmp2 = abs(e[i])
-                anorm = max(anorm, abs(d[i]) + tmp + tmp2)
+                anorm = nanMax(anorm, abs(d[i]) + tmp + tmp2)
                 tmp = tmp2
             }
             a[(n - 1) * lda + n - 1] = d[n - 1]
-            anorm = max(anorm, abs(d[n - 1]) + tmp)
+            anorm = nanMax(anorm, abs(d[n - 1]) + tmp)
 
             let nFloat64 = nFloat64Implementation()
             for (i in 0..n) {
@@ -196,9 +197,9 @@ public func dsterfTest(lFloat64: LFloat64): Bool {
                 diff = wnorm / anorm / Float64(n)
             } else {
                 if (anorm < 1.0) {
-                    diff = min(wnorm, Float64(n) * anorm) / anorm / Float64(n)
+                    diff = nanMin(wnorm, Float64(n) * anorm) / anorm / Float64(n)
                 } else {
-                    diff = min(wnorm / anorm, Float64(n)) / Float64(n)
+                    diff = nanMin(wnorm / anorm, Float64(n)) / Float64(n)
                 }
             }
 

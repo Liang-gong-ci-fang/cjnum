@@ -4,6 +4,7 @@ import std.math.*
 import cjnum.blas.*
 import cjnum.floats.*
 import cjnum.floats.scalar.*
+import cjnum.util.*
 
 const pi = 3.14159265358979323846264338327950288419716939937510582097494459
 
@@ -1696,15 +1697,15 @@ public func drotgTest(nFloat64: NFloat64, skipExtreme: Bool): Bool {
                     throw Exception("${name}: unexpected r=${r}; want NaN or Inf")
                 }
             } else {
-                var d = max(abs(f), abs(g))
-                d = min(max(safmin, d), safmax)
+                var d = nanMax(abs(f), abs(g))
+                d = nanMin(nanMax(safmin, d), safmax)
                 let fs = f / d
                 let gs = g / d
                 let rs = r / d
 
                 var rnorm = abs(rs)
                 if (rnorm == 0.0) {
-                    rnorm = max(abs(fs), abs(gs))
+                    rnorm = nanMax(abs(fs), abs(gs))
                     if (rnorm == 0.0) {
                         rnorm = 1.0
                     }

@@ -3,6 +3,7 @@ package cjnum.lapack.cjnum
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -112,7 +113,7 @@ extend LFloat64Implementation {
         if (skipComputeGrow) {
             if (noTran) {
                 if (diag == NonUnitDiag) {
-                    grow = 1.0 / max(xBnd, smlnum)
+                    grow = 1.0 / nanMax(xBnd, smlnum)
                     xBnd = grow
                     var j = jFirst
                     while (j != jLast) {
@@ -133,7 +134,7 @@ extend LFloat64Implementation {
                     }
                     grow = xBnd
                 } else {
-                    var grow = min(1.0, 1.0 / max(xBnd, smlnum))
+                    var grow = min(1.0, 1.0 / nanMax(xBnd, smlnum))
                     var j = jFirst
                     while (j != jLast) {
                         if (grow <= smlnum) {
@@ -148,7 +149,7 @@ extend LFloat64Implementation {
                 }
             } else {
                 if (diag == NonUnitDiag) {
-                    grow = 1.0 / max(xBnd, smlnum)
+                    grow = 1.0 / nanMax(xBnd, smlnum)
                     xBnd = grow
                     var j = jFirst
                     while (j != jLast) {
@@ -168,7 +169,7 @@ extend LFloat64Implementation {
                     }
                     grow = min(grow, xBnd)
                 } else {
-                    grow = min(1.0, 1.0 / max(xBnd, smlnum))
+                    grow = min(1.0, 1.0 / nanMax(xBnd, smlnum))
                     var j = jFirst
                     while (j != jLast) {
                         if (grow <= smlnum) {
@@ -279,7 +280,7 @@ extend LFloat64Implementation {
                     tjjs *= ab[j * ldab + maind]
                 }
                 let tjj = abs(tjjs)
-                var rec = 1.0 / max(1.0, xMax)
+                var rec = 1.0 / nanMax(1.0, xMax)
                 var uscal = tscal
                 if (cnorm[j] > (bignum - xj) * rec) {
                     rec *= 0.5
@@ -351,7 +352,7 @@ extend LFloat64Implementation {
                 } else {
                     x[j] = x[j] / tjjs - sumj
                 }
-                xMax = max(xMax, abs(x[j]))
+                xMax = nanMax(xMax, abs(x[j]))
                 j += jInc
             }
             scale /= tscal

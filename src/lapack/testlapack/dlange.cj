@@ -4,6 +4,7 @@ import std.math.*
 import std.random.*
 import cjnum.lapack.*
 import cjnum.blas.blas64.*
+import cjnum.util.*
 
 class dlangeTestStruct {
     dlangeTestStruct(
@@ -42,7 +43,7 @@ public func dlangeTest(lFloat64: LFloat64): Bool {
         var ans = 0.0
         for (i in 0..m) {
             let idx = iamax(Vector(n: n, inc: 1, data: aCopy[i * lda..]))
-            ans = max(ans, abs(a[i * lda + idx]))
+            ans = nanMax(ans, abs(a[i * lda + idx]))
         }
 
         if (ans != norm) {
@@ -53,7 +54,7 @@ public func dlangeTest(lFloat64: LFloat64): Bool {
         ans = 0.0
         for (i in 0..n) {
             let sum = asum(Vector(n: m, inc: lda, data: aCopy[i..]))
-            ans = max(ans, sum)
+            ans = nanMax(ans, sum)
         }
         if (abs(norm - ans) > 1e-14) {
             throw Exception("MaxColumnSum mismatch. Want ${ans}, got ${norm}.")
@@ -63,7 +64,7 @@ public func dlangeTest(lFloat64: LFloat64): Bool {
         ans = 0.0
         for (i in 0..m) {
             let sum = asum(Vector(n: n, inc: 1, data: aCopy[i * lda..]))
-            ans = max(ans, sum)
+            ans = nanMax(ans, sum)
         }
         if (abs(norm - ans) > 1e-14) {
             throw Exception("MaxRowSum mismatch. Want ${ans}, got ${norm}.")

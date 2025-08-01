@@ -7,6 +7,7 @@ import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.floats.*
 import cjnum.lapack.*
+import cjnum.util.*
 
 public func dlatrsTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
@@ -77,11 +78,11 @@ func dlatrsResidual(uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, a: Array
     var tnorm = 0.0
     if (diag == NonUnitDiag) {
         for (j in 0..n) {
-            tnorm = max(tnorm, abs(a[j * lda + j]) + cnorm[j])
+            tnorm = nanMax(tnorm, abs(a[j * lda + j]) + cnorm[j])
         }
     } else {
         for (j in 0..n) {
-            tnorm = max(tnorm, 1.0 + cnorm[j])
+            tnorm = nanMax(tnorm, 1.0 + cnorm[j])
         }
     }
 
@@ -91,7 +92,7 @@ func dlatrsResidual(uplo: Uplo, trans: Transpose, diag: Diag, n: Int64, a: Array
     let nFloat64 = nFloat64Implementation()
     copy(work, x)
     var ix = nFloat64.idamax(n, work, 1)
-    var xnorm = max(1.0, abs(work[ix]))
+    var xnorm = nanMax(1.0, abs(work[ix]))
     let xscal = 1.0 / xnorm / Float64(n)
     nFloat64.dscal(n, xscal, work, 1)
     nFloat64.dtrmv(uplo, trans, diag, n, a, lda, work, 1)

@@ -1,6 +1,7 @@
 package cjnum.lapack.cjnum
 
 import std.math.*
+import cjnum.util.*
 
 extend LFloat64Implementation {
     public func dlanv2(a: Float64, b: Float64, c: Float64, d: Float64): (Float64, Float64, Float64, Float64, Float64, 
@@ -40,12 +41,12 @@ extend LFloat64Implementation {
         } else {
             var temp = a - d
             var p = temp / 2.0
-            var bcmax = max(abs(b), abs(c))
-            var bcmis = min(abs(b), abs(c))
+            var bcmax = nanMax(abs(b), abs(c))
+            var bcmis = nanMin(abs(b), abs(c))
             if (b * c < 0.0) {
                 bcmis *= -1.0
             }
-            var scale = max(abs(p), bcmax)
+            var scale = nanMax(abs(p), bcmax)
             var z = p / scale * p + bcmax / scale * bcmis
             let eps = dlamchP
 
@@ -68,7 +69,7 @@ extend LFloat64Implementation {
                 var sigma = b + c
 
                 for (_ in 0..20) {
-                    scale = max(abs(temp), abs(sigma))
+                    scale = nanMax(abs(temp), abs(sigma))
                     if (scale >= safmx2) {
                         sigma *= safmn2
                         temp *= safmn2

@@ -95,7 +95,7 @@ func randomSlice(n: Int64, rnd: Random): Array<Float64> {
     return Array<Float64>(
         n,
         {
-            _ => rnd.nextFloat64()
+            _ => rnd.nextGaussianFloat64()
         }
     )
 }
@@ -882,13 +882,13 @@ func distSymBand(uplo: Uplo, n: Int64, kd: Int64, a: Array<Float64>, lda: Int64,
     if (uplo == Upper) {
         for (i in 0..n) {
             for (j in 0..min(kd + 1, n - i)) {
-                dist = max(dist, abs(a[i * lda + j] - b[i * ldb + j]))
+                dist = nanMax(dist, abs(a[i * lda + j] - b[i * ldb + j]))
             }
         }
     } else if (uplo == Lower) {
         for (i in 0..n) {
             for (j in max(0, kd - i)..kd + 1) {
-                dist = max(dist, abs(a[i * lda + j] - b[i * ldb + j]))
+                dist = nanMax(dist, abs(a[i * lda + j] - b[i * ldb + j]))
             }
         }
     }
@@ -1050,9 +1050,9 @@ func distFromIdentity(n: Int64, a: Array<Float64>, lda: Int64): Float64 {
                 return Float64.Inf
             }
             if (i == j) {
-                dist = max(dist, abs(aij - 1.0))
+                dist = nanMax(dist, abs(aij - 1.0))
             } else {
-                dist = max(dist, abs(aij))
+                dist = nanMax(dist, abs(aij))
             }
         }
     }
@@ -1094,7 +1094,7 @@ func sameUpperTri(n: Int64, a: Array<Float64>, lda: Int64, b: Array<Float64>, ld
 func rCondTestRatio(rcond: Float64, rcondc: Float64): Float64 {
     const eps = dlamchE
     return if (rcond > 0.0 && rcondc > 0.0) {
-        max(rcond, rcondc) / min(rcond, rcondc) - (1.0 - eps)
+        nanMax(rcond, rcondc) / nanMin(rcond, rcondc) - (1.0 - eps)
     } else if (rcond > 0.0) {
         rcond / eps
     } else if (rcondc > 0.0) {

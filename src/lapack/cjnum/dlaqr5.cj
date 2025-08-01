@@ -3,6 +3,7 @@ package cjnum.lapack.cjnum
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
+import cjnum.util.*
 import std.math.*
 
 extend LFloat64Implementation {
@@ -176,14 +177,14 @@ extend LFloat64Implementation {
                                 tst1 += abs(h[(k + 4) * ldh + k + 1])
                             }
                         }
-                        if (abs(h[(k + 1) * ldh + k]) <= max(smlnum, ulp * tst1)) {
-                            let h12 = max(abs(h[(k + 1) * ldh + k]), abs(h[k * ldh + k + 1]))
+                        if (abs(h[(k + 1) * ldh + k]) <= nanMax(smlnum, ulp * tst1)) {
+                            let h12 = nanMax(abs(h[(k + 1) * ldh + k]), abs(h[k * ldh + k + 1]))
                             let h21 = min(abs(h[(k + 1) * ldh + k]), abs(h[k * ldh + k + 1]))
-                            let h11 = max(abs(h[(k + 1) * ldh + k + 1]), abs(h[k * ldh + k] - h[(k + 1) * ldh + k + 1]))
+                            let h11 = nanMax(abs(h[(k + 1) * ldh + k + 1]), abs(h[k * ldh + k] - h[(k + 1) * ldh + k + 1]))
                             let h22 = min(abs(h[(k + 1) * ldh + k + 1]), abs(h[k * ldh + k] - h[(k + 1) * ldh + k + 1]))
                             let scl = h11 + h12
                             let tst2 = h22 * (h11 / scl)
-                            if (tst2 == 0.0 || h21 * (h12 / scl) <= max(smlnum, ulp * tst2)) {
+                            if (tst2 == 0.0 || h21 * (h12 / scl) <= nanMax(smlnum, ulp * tst2)) {
                                 h[(k + 1) * ldh + k] = 0.0
                             }
                         }
@@ -303,14 +304,14 @@ extend LFloat64Implementation {
                                 tst1 += abs(h[(k + 4) * ldh + k + 1])
                             }
                         }
-                        if (abs(h[(k + 1) * ldh + k]) <= max(smlnum, ulp * tst1)) {
-                            let h12 = max(abs(h[(k + 1) * ldh + k]), abs(h[k * ldh + k + 1]))
+                        if (abs(h[(k + 1) * ldh + k]) <= nanMax(smlnum, ulp * tst1)) {
+                            let h12 = nanMax(abs(h[(k + 1) * ldh + k]), abs(h[k * ldh + k + 1]))
                             let h21 = min(abs(h[(k + 1) * ldh + k]), abs(h[k * ldh + k + 1]))
-                            let h11 = max(abs(h[(k + 1) * ldh + k + 1]), abs(h[k * ldh + k] - h[(k + 1) * ldh + k + 1]))
+                            let h11 = nanMax(abs(h[(k + 1) * ldh + k + 1]), abs(h[k * ldh + k] - h[(k + 1) * ldh + k + 1]))
                             let h22 = min(abs(h[(k + 1) * ldh + k + 1]), abs(h[k * ldh + k] - h[(k + 1) * ldh + k + 1]))
                             let scl = h11 + h12
                             let tst2 = h22 * (h11 / scl)
-                            if (tst2 == 0.0 || h21 * (h12 / scl) <= max(smlnum, ulp * tst2)) {
+                            if (tst2 == 0.0 || h21 * (h12 / scl) <= nanMax(smlnum, ulp * tst2)) {
                                 h[(k + 1) * ldh + k] = 0.0
                             }
                         }

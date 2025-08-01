@@ -406,10 +406,11 @@ public func testDsytd2(): Unit {
     @Expect(dsytd2Test(lFloat64Implementation))
 }
 
-// @Test
-// public func testDlangb(): Unit {
-//     @Expect(dlangbTest(lFloat64Implementation))
-// }
+@Test
+@Parallel
+public func testDlangb(): Unit {
+    @Expect(dlangbTest(lFloat64Implementation))
+}
 
 @Test
 @Skip
