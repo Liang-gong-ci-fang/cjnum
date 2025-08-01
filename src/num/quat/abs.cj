@@ -28,19 +28,13 @@ public func nqAbs(q: NqNumber): Float64 {
         k = -k
     }
     if (r < i) {
-        let temp = i
-        i = r
-        r = temp
+        (i, r) = (r, i)
     }
     if (r < j) {
-        let temp = j
-        j = r
-        r = temp
+        (j, r) = (r, j)
     }
     if (r < k) {
-        let temp = k
-        k = r
-        r = temp
+        (k, r) = (r, k)
     }
     if (r == 0.0) {
         return 0.0

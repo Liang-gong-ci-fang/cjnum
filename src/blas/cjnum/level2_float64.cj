@@ -849,10 +849,9 @@ extend NFloat64Implementation {
             if (incX == 1) {
                 var i = n - 1
                 while (i >= 0) {
-                    let l = max(0, k - i)
                     let atmp = a[i * lda..]
                     var sum = 0.0
-                    for (j in l..k) {
+                    for (j in max(0, k - i)..k) {
                         sum += x[i - k + j] * atmp[j]
                     }
                     if (nonUnitDiag) {

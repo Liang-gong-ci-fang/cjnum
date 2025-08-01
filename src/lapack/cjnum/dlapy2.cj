@@ -16,9 +16,7 @@ extend LFloat64Implementation {
         }
 
         if (p_ < q_) {
-            let tmp = p_
-            p_ = q_
-            q_ = tmp
+            (p_, q_) = (q_, p_)
         }
 
         if (p_ == 0.0) {
