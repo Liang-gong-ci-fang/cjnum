@@ -297,7 +297,7 @@ extend LFloat64Implementation {
             bi2 *= scale
         }
 
-        let cx2 = Complex128(br2, bi2) / Complex128(ur22, ui22)
+        let cx2 = Complex128(br2, bi2) / Complex128(ur22, ui22) 
         let (xr2, xi2) = (cx2.real, cx2.imag)
         let xr1 = ur11r * br1 - ui11r * bi1 - ur12s * xr2 + ui12s * xi2
         let xi1 = ui11r * br1 + ur11r * bi1 - ui12s * xr2 - ur12s * xi2

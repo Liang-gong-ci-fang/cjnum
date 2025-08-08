@@ -167,7 +167,7 @@ public func testDlanst(): Unit {
 }
 
 @Test
-// @Parallel
+@Parallel
 public func testDlantb(): Unit {
     @Expect(dlantbTest(lFloat64Implementation))
 }
@@ -353,7 +353,7 @@ public func testDlagtm(): Unit {
 }
 
 @Test
-// @Parallel
+@Parallel
 public func testDlangt(): Unit {
     @Expect(dlangtTest(lFloat64Implementation))
 }
@@ -413,8 +413,8 @@ public func testDlangb(): Unit {
 }
 
 @Test
-@Skip
-public func testDtrevc3(): Unit { // TODO
+@Parallel
+public func testDtrevc3(): Unit { 
     @Expect(dtrevc3Test(lFloat64Implementation))
 }
 
@@ -432,7 +432,7 @@ public func testDgelqf(): Unit { // TODO
 
 @Test
 @Skip
-public func testDgehrd(): Unit { // TODO
+public func testDgehrd(): Unit { // TODO ok?
     @Expect(dgehrdTest(lFloat64Implementation))
 }
 

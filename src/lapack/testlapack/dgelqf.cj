@@ -22,7 +22,7 @@ public func dgelqfTest(lFloat64: LFloat64): Bool {
             dgelqfTestStruct(10, 10, 0),
             dgelqfTestStruct(300, 5, 0),
             dgelqfTestStruct(3, 500, 0),
-            dgelqfTestStruct(200, 200, 0),
+            dgelqfTestStruct(200, 200, 0), 
             dgelqfTestStruct(300, 200, 0),
             dgelqfTestStruct(204, 300, 0),
             dgelqfTestStruct(1, 3000, 0),
@@ -35,7 +35,7 @@ public func dgelqfTest(lFloat64: LFloat64): Bool {
             dgelqfTestStruct(200, 200, 300),
             dgelqfTestStruct(300, 200, 300),
             dgelqfTestStruct(204, 300, 400),
-            dgelqfTestStruct(1, 3000, 4000),
+            dgelqfTestStruct(1, 3000, 4000), 
             dgelqfTestStruct(3000, 1, 4000)
         ]) {
         let m = test.m

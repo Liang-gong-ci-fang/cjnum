@@ -23,8 +23,8 @@ func runDtrevc3Test(lFloat64: LFloat64, rnd: Random, side: EVSide) {
     for (n in [0, 1, 2, 3, 4, 5, 6, 7, 10, 34]) {
         for (extra in [0, 11]) {
             for (optwork in [true, false]) {
-                for (_ in 0..10) {
-                    if (!dtrevc3Test(lFloat64, side, n, extra, optwork, rnd)) {
+                for (i in 0..10) {
+                    if (!dtrevc3Test(lFloat64, side, n, extra, optwork, rnd, i)) {
                         return false
                     }
                 }
@@ -34,10 +34,10 @@ func runDtrevc3Test(lFloat64: LFloat64, rnd: Random, side: EVSide) {
     return true
 }
 
-func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwork: Bool, rnd: Random): Bool {
+func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwork: Bool, rnd: Random, cnt: Int64): Bool {
     const tol = 1e-15
 
-    let name = "n=${n},extra=${extra},optwk=${optwork}"
+    let name = "n=${n},extra=${extra},optwk=${optwork}, cnt=${cnt}"
 
     let right = side != EVLeft
     let left = side != EVRight
@@ -110,8 +110,8 @@ func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwo
 
     howmny = EVSelected
 
-    let selected = Array<Bool>(n, repeat: true)
-    let selectedWant = Array<Bool>(n, repeat: true)
+    let selected = Array<Bool>(n, repeat: false)
+    let selectedWant = Array<Bool>(n, repeat: false)
     var nselr: Int64 = 0
     var nselc: Int64 = 0
     var j = n - 1
@@ -154,7 +154,6 @@ func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwo
 
     mGot = lFloat64.dtrevc3(side, howmny, selected, n, tmat.data, tmat.stride, vlSel.data, max(1, vlSel.stride),
         vrSel.data, max(1, vrSel.stride), mWant, work, work.size)
-
     if (!generalOutsideAllNaN(tmat)) {
         throw Exception("${name}: out-of-range write to T")
     }
@@ -195,7 +194,6 @@ func dtrevc3Test(lFloat64: LFloat64, side: EVSide, n: Int64, extra: Int64, optwo
                         throw Exception("${name}: unexpected selected VR")
                     }
                 }
-
                 k += 2
             }
         }

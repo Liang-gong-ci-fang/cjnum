@@ -259,7 +259,7 @@ extend LFloat64Implementation {
                             nFloat64.daxpy(j, -x[1], t[j..], ldt, b[iv..], ldb)
                             j--
                         } else {
-                            var (scale, xnorm, _) = dlaln2(false, 2, 2, smin, 1.0, t[(j - 1) * ldt + j - 1..], ldt, 1.0,
+                            var (scale, xnorm, _) = dlaln2(false, 2, 2, smin, 1.0, t[(j - 1) * ldt + j - 1..], ldt, 1.0, 
                                 1.0, b[(j - 1) * ldb + iv - 1..], ldb, wr, wi, x[..], 2)
                             if (xnorm > 1.0) {
                                 let beta = nanMax(norms[j - 1], norms[j])
@@ -287,6 +287,7 @@ extend LFloat64Implementation {
                             j -= 2
                         }
                     }
+
                     if (howmny != EVAllMulQ) {
                         nFloat64.dcopy(ki + 1, b[iv - 1..], ldb, vr[is_ - 1..], ldvr)
                         nFloat64.dcopy(ki + 1, b[iv..], ldb, vr[is_..], ldvr)

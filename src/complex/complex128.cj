@@ -2,6 +2,7 @@ package cjnum.complex
 
 import cjnum.util.*
 import std.math.*
+import std.math.numeric.*
 
 public class Complex128 <: ToString {
     public static let NaN: Complex128 = Complex128(Float64.NaN, Float64.NaN)
@@ -55,6 +56,24 @@ public class Complex128 <: ToString {
     }
 
     public operator func /(right: Complex128) {
+        if (isInf() || isNaN() || right.isInf() || right.isNaN()) {
+            return division(right)
+        }
+
+        let (lr, ll) = (Decimal(this.real), Decimal(this.imag))
+        let (rr, rl) = (Decimal(right.real), Decimal(right.imag))
+        let denominator = rr * rr + rl * rl
+        if (denominator == Decimal(0.0)) {
+            return division(right)
+        }
+        
+        return Complex128(
+            ((lr * rr + ll * rl) / denominator).toFloat64(),
+            ((ll * rr - lr * rl) / denominator).toFloat64()
+        )
+    }
+
+    private func division(right: Complex128): Complex128 {
         let denominator = right.real * right.real + right.imag * right.imag
         return Complex128(
             (this.real * right.real + this.imag * right.imag) / denominator,
