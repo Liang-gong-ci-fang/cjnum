@@ -83,7 +83,7 @@ public func dlabrdTest(lFloat64: LFloat64): Bool {
         if (m < n && nb == m) {
             tauQ[m - 1] = 0.0
         }
-        checkBidiagonal(m, n, nb, a, lda, d, e, tauP, tauQ, aCopy) //TODO 在此处中精度存在问题，误差为10
+        checkBidiagonal(m, n, nb, a, lda, d, e, tauP, tauQ, aCopy)
     }
     return true
 }

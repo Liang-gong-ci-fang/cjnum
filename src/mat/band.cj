@@ -24,7 +24,7 @@ import std.math.*
 // )
 
 // BandDense represents a band matrix in dense storage format.
-public class BandDense <: Matrix & DiagDenseViewer & AllMatrix & DenseMatrix {
+public class BandDense <: Matrix & DiagDenseViewer & AllMatrix & DenseMatrix & Banded & RawBander {
     let mat: Band
     public init(mat: Band) {
         this.mat = mat
@@ -46,6 +46,10 @@ public class BandDense <: Matrix & DiagDenseViewer & AllMatrix & DenseMatrix {
 
     public func t(): Matrix {
         return Transpose(this)
+    }
+
+    public func tBand(): Banded {
+        return TransposeBand(this)
     }
 
     // At returns the element at row i, column j.

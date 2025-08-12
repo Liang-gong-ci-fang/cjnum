@@ -701,7 +701,7 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
     if (vect == ApplyQ) {
         if (m >= n) {
             for (i in 0..m) {
-                for (j in 0..min(nb - 1, i)) {
+                for (j in 0..=min(nb - 1, i)) {
                     if (i == j) {
                         v.data[i * ldv + j] = 1.0
                         continue
@@ -711,7 +711,7 @@ public func constructQPBidiagonal(vect: ApplyOrtho, m: Int64, n: Int64, nb: Int6
             }
         } else {
             for (i in 1..m) {
-                for (j in 0..min(nb - 1, i - 1)) {
+                for (j in 0..=min(nb - 1, i - 1)) {
                     if (i - 1 == j) {
                         v.data[i * ldv + j] = 1.0
                         continue

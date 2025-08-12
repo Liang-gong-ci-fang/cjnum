@@ -438,7 +438,7 @@ public func testDgehrd(): Unit { // TODO ok?
 
 @Test
 @Skip
-public func testDormr2(): Unit { // TODO
+public func testDormr2(): Unit { // TODO ok?
     @Expect(dormr2Test(lFloat64Implementation))
 }
 
@@ -450,7 +450,7 @@ public func testDgerqf(): Unit { // TODO
 
 @Test
 @Skip
-public func testDorml2(): Unit { // TODO
+public func testDorml2(): Unit { // TODO ok?
     @Expect(dorml2Test(lFloat64Implementation))
 }
 
@@ -479,13 +479,13 @@ public func testDlaqr1(): Unit {
 }
 
 @Test
-@Skip // 随机数
+@Parallel
 public func testDtrtri(): Unit { // TODO
     @Expect(dtrtriTest(lFloat64Implementation))
 }
 
 @Test
-@Skip // 随机数
+@Skip // 内存
 public func testDgetrf(): Unit { // TODO
     @Expect(dgetrfTest(lFloat64Implementation))
 }
@@ -545,14 +545,14 @@ public func testDgeqrf(): Unit {
 }
 
 @Test
-@Skip
-public func testDgebrd(): Unit { // TODO
+@Parallel
+public func testDgebrd(): Unit { 
     @Expect(dgebrdTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDlabrd(): Unit { // TODO
+@Parallel
+public func testDlabrd(): Unit {
     @Expect(dlabrdTest(lFloat64Implementation))
 }
 

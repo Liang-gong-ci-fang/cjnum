@@ -9,9 +9,9 @@ import cjnum.blas.blas64.*
 public func dgetrfTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)
     for (test in [
-		// [10, 5, 0],
-		// [5, 10, 0],
-		// [10, 10, 0],
+		[10, 5, 0],
+		[5, 10, 0],
+		[10, 10, 0],
 		[300, 5, 0],
 		[3, 500, 0],
 		[4, 5, 0],
@@ -39,7 +39,7 @@ public func dgetrfTest(lFloat64: LFloat64): Bool {
         }
         let a = Array<Float64>(m * lda, { _ => rnd.nextFloat64() })
         let mn = min(m, n)
-        let ipiv = Array<Int64>(mn, { _ => rnd.nextInt64() })
+        let ipiv = Array<Int64>(mn, { _ => rnd.nextInt64(Int64.Max) })
 
         let aCopy = a.clone()
         let ok = lFloat64.dgetrf(m, n, a, lda, ipiv)

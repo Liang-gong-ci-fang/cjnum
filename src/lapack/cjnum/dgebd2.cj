@@ -38,7 +38,7 @@ extend LFloat64Implementation {
         }
 
         if (m >= n) {
-            for (i in 0..n - 1) {
+            for (i in 0..n) {
                 (a[i * lda + i], tauQ[i]) = dlarfg(m - i, a[i * lda + i], a[min(i + 1, m - 1) * lda + i..], lda)
                 d[i] = a[i * lda + i]
                 a[i * lda + i] = 1.0
@@ -62,7 +62,7 @@ extend LFloat64Implementation {
             return
         }
 
-        for (i in 0..m - 1) {
+        for (i in 0..m) {
             (a[i * lda + i], tauP[i]) = dlarfg(n - i, a[i * lda + i], a[i * lda + min(i + 1, n - 1)..], 1)
             d[i] = a[i * lda + i]
             a[i * lda + i] = 1.0

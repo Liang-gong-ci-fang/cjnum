@@ -46,7 +46,7 @@ extend LFloat64Implementation {
         //     if (!blockOk) {
         //         ok = false
         //     }
-        //     for (i in j..min(m - 1, j + jb - 1)) {
+        //     for (i in j..=min(m - 1, j + jb - 1)) {
         //         ipiv[i] = j + ipiv[i]
         //     }
         //     dlaswp(j, a, lda, j, j + jb - 1, ipiv[..j + jb], 1)

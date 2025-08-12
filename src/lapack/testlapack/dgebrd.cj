@@ -37,6 +37,7 @@ public func dgebrdTest(lFloat64: LFloat64): Bool {
         }
         let minmn = min(m, n)
         let a = Array<Float64>(m * lda, repeat: 0.0)
+
         for (i in 0..a.size - 1) {
             a[i] = rnd.nextGaussianFloat64()
         }
@@ -90,7 +91,7 @@ public func dgebrdTest(lFloat64: LFloat64): Bool {
         if (!fEqualApprox(a, aAns, 1e-10)) {
             throw Exception("a mismatch")
         }
-        if (!fEqualApprox(d, dAns, 1e-10)) {
+        if (!fEqualApprox(d, dAns, 1e-10)) { 
             throw Exception("d mismatch")
         }
         if (!fEqualApprox(e, eAns, 1e-10)) {

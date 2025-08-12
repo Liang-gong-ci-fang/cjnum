@@ -474,3 +474,47 @@ public func testBandDenseNorm(): Unit {
         throw Exception("Norm(2) error: got ${gotF}, want ${wantF}")
     }
 }
+
+@Test
+@Parallel
+public func testBandDenseDims(): Unit {
+    let b = newBandDense(8, 13, 2, 3, [])
+    let (r, c) = b.dims()
+    @Expect(r == 8)
+    @Expect(c == 13)
+}
+
+@Test
+@Parallel
+public func testBandDenseBandwidth(): Unit {
+    let b = newBandDense(8, 13, 2, 3, [])
+    let (kl, ku) = b.bandwidth()
+    @Expect(kl == 2)
+    @Expect(ku == 3)
+}
+
+@Test
+@Parallel
+public func testBandDenseT(): Unit {
+    let b = newBandDense(3, 9, 1, 2, [])
+    let tmat = b.t()
+
+    let tr = (tmat as Transpose).getOrThrow()
+
+    let (r, c) = tr.dims()
+    @Expect(r == 9)
+    @Expect(c == 3)
+}
+
+@Test
+@Parallel
+public func testBandDenseTBand(): Unit {
+    let b = newBandDense(6, 4, 2, 0, [])
+    let tmat = b.tBand()
+
+    let tr = (tmat as TransposeBand).getOrThrow()
+
+    let (kl, ku) = tr.bandwidth()
+    @Expect(kl == 0)
+    @Expect(ku == 2)
+}
