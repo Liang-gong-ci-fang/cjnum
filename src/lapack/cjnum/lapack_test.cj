@@ -419,55 +419,55 @@ public func testDtrevc3(): Unit {
 }
 
 @Test
-@Skip
-public func testDpstrf(): Unit { // TODO
+@Parallel
+public func testDpstrf(): Unit { // TODO ok?
     @Expect(dpstrfTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDgelqf(): Unit { // TODO
+@Parallel
+public func testDgelqf(): Unit { // TODO ok?
     @Expect(dgelqfTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
+@Parallel
 public func testDgehrd(): Unit { // TODO ok?
     @Expect(dgehrdTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
+@Parallel
 public func testDormr2(): Unit { // TODO ok?
     @Expect(dormr2Test(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDgerqf(): Unit { // TODO
+@Parallel
+public func testDgerqf(): Unit { // TODO ok ?
     @Expect(dgerqfTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
+@Parallel
 public func testDorml2(): Unit { // TODO ok?
     @Expect(dorml2Test(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDormlq(): Unit { // TODO
+@Parallel
+public func testDormlq(): Unit { // TODO ok?
     @Expect(dormlqTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDormbr(): Unit { // TODO
+@Parallel
+public func testDormbr(): Unit { // TODO ok ?
     @Expect(dormbrTest(lFloat64Implementation))
 }
 
 @Test
-@Skip // 精度
+@Skip // 精度 go 的精度也不够
 public func testDpttrs(): Unit { // TODO
     @Expect(dpttrsTest(lFloat64Implementation))
 }
@@ -480,7 +480,7 @@ public func testDlaqr1(): Unit {
 
 @Test
 @Parallel
-public func testDtrtri(): Unit { // TODO
+public func testDtrtri(): Unit { 
     @Expect(dtrtriTest(lFloat64Implementation))
 }
 
@@ -491,32 +491,32 @@ public func testDgetrf(): Unit { // TODO
 }
 
 @Test
-@Skip // 随机数
-public func testDgecon(): Unit { // TODO
+@Parallel
+public func testDgecon(): Unit { // TODO ok ?
     @Expect(dgeconTest(lFloat64Implementation))
 }
 
 @Test
-@Skip // 随机数
-public func testDgetri(): Unit { // TODO
+@Parallel
+public func testDgetri(): Unit { // TODO ok ?
     @Expect(dgetriTest(lFloat64Implementation))
 }
 
 @Test
-@Skip // 随机数
-public func testDgetrs(): Unit { // TODO
+@Parallel
+public func testDgetrs(): Unit { // TODO ok ?
     @Expect(dgetrsTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDlaqr04(): Unit { // TODO
+@Parallel
+public func testDlaqr04(): Unit { // TODO ok ?
     @Expect(dlaqr04Test(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDlaqr23(): Unit { // TODO
+@Parallel
+public func testDlaqr23(): Unit { // TODO ok ?
     @Expect(dlaqr23Test(lFloat64Implementation))
 }
 
@@ -533,8 +533,8 @@ public func testDorm2r(): Unit {
 }
 
 @Test
-@Skip
-public func testDormhr(): Unit { // TODO
+@Parallel
+public func testDormhr(): Unit { // TODO ok?
     @Expect(dormhrTest(lFloat64Implementation))
 }
 
@@ -557,50 +557,50 @@ public func testDlabrd(): Unit {
 }
 
 @Test
-@Skip
-public func testDlasq1(): Unit { // TODO
+@Skip // 依赖 dlasq2
+public func testDlasq1(): Unit { // TODO ok ?
     @Expect(dlasq1Test(lFloat64Implementation))
 }
 
 @Test
-@Skip
+@Skip // 精度
 public func testDlasq2(): Unit { // TODO
     @Expect(dlasq2Test(lFloat64Implementation))
 }
 
 @Test
 @Skip
-public func testDorgql(): Unit { // TODO
+public func testDorgql(): Unit { // TODO ok？
     @Expect(dorgqlTest(lFloat64Implementation))
 }
 
 @Test
 @Skip
-public func testDorgtr(): Unit { // TODO
+public func testDorgtr(): Unit { // TODO ok ?
     @Expect(dorgtrTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDsteqr(): Unit { // TODO
+@Parallel
+public func testDsteqr(): Unit { // TODO ok？
     @Expect(dsteqrTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDsterf(): Unit { // TODO
+@Parallel
+public func testDsterf(): Unit { // TODO ok ?
     @Expect(dsterfTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDsyev(): Unit { // TODO
+@Parallel
+public func testDsyev(): Unit { // TODO ok ?
     @Expect(dsyevTest(lFloat64Implementation))
 }
 
 @Test
-@Skip
-public func testDsytrd(): Unit { // TODO
+@Parallel
+public func testDsytrd(): Unit { // TODO ok ?
     @Expect(dsytrdTest(lFloat64Implementation))
 }
 

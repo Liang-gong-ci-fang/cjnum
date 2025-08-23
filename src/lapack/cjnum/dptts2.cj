@@ -15,20 +15,20 @@ extend LFloat64Implementation {
         for (j in 0..nrhs) {
             var com = 0.0
             for (i in 1..n) {
-                // b[i * ldb + j] -= b[(i - 1) * ldb + j] * e[i - 1]
-                let y = b[(i - 1) * ldb + j] * e[i - 1] - com
-                let t = b[i * ldb + j] - y
-                com = (t - b[i * ldb + j]) + y
-                b[i * ldb + j] = t
+                b[i * ldb + j] -= b[(i - 1) * ldb + j] * e[i - 1]
+                // let y = b[(i - 1) * ldb + j] * e[i - 1] - com
+                // let t = b[i * ldb + j] - y
+                // com = (t - b[i * ldb + j]) + y
+                // b[i * ldb + j] = t
             }
             b[(n - 1) * ldb + j] /= d[n - 1]
             var i = n - 2
             while (i >= 0) {
-                // b[i * ldb + j] = b[i * ldb + j] / d[i] - b[(i + 1) * ldb + j] * e[i]
-                let div = b[i * ldb + j] / d[i]
-                let sub = b[(i + 1) * ldb + j] * e[i]
-                // 使用 FMA（Fused Multiply-Add）减少误差
-                b[i * ldb + j] = div - sub
+                b[i * ldb + j] = b[i * ldb + j] / d[i] - b[(i + 1) * ldb + j] * e[i]
+                // let div = b[i * ldb + j] / d[i]
+                // let sub = b[(i + 1) * ldb + j] * e[i]
+                // // 使用 FMA（Fused Multiply-Add）减少误差
+                // b[i * ldb + j] = div - sub
                 i--
             }
         }

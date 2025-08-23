@@ -7,14 +7,17 @@ import std.math.*
 import std.random.*
 import std.sort.*
 
+import std.math.numeric.*
+import std.fs.*
+
 public func dlasq2Test(lFloat64: LFloat64): Bool {
     let tol = 1e-14
     let rnd = Random(1)
 
     for (n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 25, 50]) {
-        for (_ in 0..10) {
+        for (j in 0..10) {
             for (typ in 0..=2) {
-                let name = "n=${n},typ=${typ}"
+                let name = "n=${n},j=${j},typ=${typ}"
 
                 let want = Array<Float64>(n, repeat: 0.0)
                 let z = Array<Float64>(4 * n, repeat: 0.0)
@@ -85,6 +88,7 @@ public func dlasq2Test(lFloat64: LFloat64): Bool {
                 sort(got, stable: true)
                 let diff = fDistance(Float64.Inf, s: got, t: want)
                 if (diff > tol) {
+                    // n = 25, j = 9, typ = 2
                     throw Exception("${name}: unexpected eigenvalues; diff=${diff}\n${got}\n%{want}\n\n")
                 }
             }

@@ -244,7 +244,8 @@ extend LFloat64Implementation {
                     }
                 }
             }
-            var dmin: Float64 = Float64(-max(0, Int64(qmin - 2.0 * sqrt(qmin) * sqrt(emax))))
+
+            var dmin = -max(0.0, qmin - 2.0 * sqrt(qmin) * sqrt(emax))
 
             var nbig = 100 * (n0 - i0 + 1)
             for (_ in 0..nbig) {

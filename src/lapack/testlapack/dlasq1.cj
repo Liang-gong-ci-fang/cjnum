@@ -58,8 +58,8 @@ public func dlasq1Test(lFloat64: LFloat64): Bool {
             let dWant = Array<Float64>(n, repeat: 0.0)
             copy(dWant, d)
             // sort.Sort(sort.Reverse(sort.Float64Slice(dWant)))
-            sort(dWant)
-            dWant.reverse()
+            sort(dWant, descending: true)
+            // dWant.reverse()
 
             let work = Array<Float64>(max(1, 4 * n), repeat: 0.0)
 
@@ -77,7 +77,6 @@ public func dlasq1Test(lFloat64: LFloat64): Bool {
             }
             let info = lFloat64.dlasq1(n, d, e, work)
             if (info != 0) {
-                // t.Fatalf("${name}: Dlasq1 returned non-zero info=${info}")
                 throw Exception("${name}: Dlasq1 returned non-zero info=${info}")
             }
 
@@ -87,13 +86,12 @@ public func dlasq1Test(lFloat64: LFloat64): Bool {
             
             var srf = true
             for (i in 0..d.size - 1) {
-                if (d[i] > d[i + 1]) {
+                if (d[i] < d[i + 1]) {
                     srf = false
                 }
             }
 
             if (!srf) {
-                // t.Errorf("${name}: singular values not sorted")
                 throw Exception("${name}: singular values not sorted")
             }
 
@@ -103,7 +101,6 @@ public func dlasq1Test(lFloat64: LFloat64): Bool {
                 case None => 0.0
             }
             if (diff > tol * md) {
-                // t.Errorf("${name}: unexpected result; diff=${diff}")
                 throw Exception("${name}: unexpected result; diff=${diff}")
             }
         }

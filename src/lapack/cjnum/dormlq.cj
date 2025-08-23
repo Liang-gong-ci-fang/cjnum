@@ -88,28 +88,28 @@ extend LFloat64Implementation {
         }
 
         if (left && notrans) {
-            for (i in 0..k) {
+            for (i in 0..k : nb) {
                 let ib = min(nb, k - i)
                 dlarft(Forward, RowWise, m - i, ib, a[i * lda + i..], lda, tau[i..], t, ldt)
                 dlarfb(side, transt, Forward, RowWise, m - i, n, ib, a[i * lda + i..], lda, t, ldt, c[i * ldc..], ldc,
                     wrk, ldwrk)
             }
         } else if (left && !notrans) {
-            for (i in ((k - 1) / nb) * nb..=0 : -1) {
+            for (i in ((k - 1) / nb) * nb..=0 : -nb) {
                 let ib = min(nb, k - i)
                 dlarft(Forward, RowWise, m - i, ib, a[i * lda + i..], lda, tau[i..], t, ldt)
                 dlarfb(side, transt, Forward, RowWise, m - i, n, ib, a[i * lda + i..], lda, t, ldt, c[i * ldc..], ldc,
                     wrk, ldwrk)
             }
         } else if (!left && notrans) {
-            for (i in ((k - 1) / nb) * nb..=0 : -1) {
+            for (i in ((k - 1) / nb) * nb..=0 : -nb) {
                 let ib = min(nb, k - i)
                 dlarft(Forward, RowWise, n - i, ib, a[i * lda + i..], lda, tau[i..], t, ldt)
                 dlarfb(side, transt, Forward, RowWise, m, n - i, ib, a[i * lda + i..], lda, t, ldt, c[i..], ldc, wrk,
                     ldwrk)
             }
         } else if (!left && !notrans) {
-            for (i in 0..k) {
+            for (i in 0..k : nb) {
                 let ib = min(nb, k - i)
                 dlarft(Forward, RowWise, n - i, ib, a[i * lda + i..], lda, tau[i..], t, ldt)
                 dlarfb(side, transt, Forward, RowWise, m, n - i, ib, a[i * lda + i..], lda, t, ldt, c[i..], ldc, wrk,

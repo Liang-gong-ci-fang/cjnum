@@ -93,7 +93,7 @@ public func dorgtrTest(lFloat64: LFloat64): Bool {
                     stride: n,
                     data: Array<Float64>(n * n, repeat: 0.0)
                 )
-                for (i in 0..n - 1) {
+                for (i in 0..n) {
                     tri.data[i * tri.stride + i] = d[i]
                     if (i != n - 1) {
                         tri.data[i * tri.stride + i + 1] = e[i]
@@ -131,6 +131,7 @@ public func dorgtrTest(lFloat64: LFloat64): Bool {
                 gemm(Trans, NoTrans, 1.0, q, tmp, 0.0, ans)
 
                 if (!fEqualApprox(ans.data, tri.data, tol)) {
+                    // "uplo=85,n=1,lda=1,work=0"
                     throw Exception("Case ${name}: Recombination mismatch")
                 }
             }

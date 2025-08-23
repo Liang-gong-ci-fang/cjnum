@@ -155,7 +155,7 @@ public func dlaqr04Test(lFloat64: LFloat64): Bool {
 						iloz: 0,
 						ihiz: 9
                     )
-                 ]) {
+                ]) {
 					if (test.ilo-1 >= 0) {
 						test.h.data[test.ilo*test.h.stride+test.ilo-1] = 0.0
 					}
