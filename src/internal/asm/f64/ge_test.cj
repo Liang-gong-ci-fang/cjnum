@@ -1,7 +1,5 @@
 package cjnum.internal.asm.f64
 
-import std.math.*
-import std.convert.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

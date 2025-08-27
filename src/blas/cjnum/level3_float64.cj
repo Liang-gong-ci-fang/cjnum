@@ -3,8 +3,6 @@ package cjnum.blas.cjnum
 import cjnum.internal.asm.f64.*
 import cjnum.blas.*
 import std.collection.*
-import std.math.*
-import std.sync.*
 
 extend NFloat64Implementation {
     public func dtrsm(s: Side, ul: Uplo, tA: Transpose, d: Diag, m: Int64, n: Int64, alpha: Float64, a: Array<Float64>,

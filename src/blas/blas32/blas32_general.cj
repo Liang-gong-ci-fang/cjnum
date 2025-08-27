@@ -1,7 +1,5 @@
 package cjnum.blas.blas32
 
-import cjnum.blas.*
-
 public abstract class GeneralCore {
     public GeneralCore(
         public let rows: Int64,

@@ -5,7 +5,6 @@ import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
 import std.random.*
-import std.math.*
 
 public func dlauu2Test(lFloat64: LFloat64): Bool {
     for (uplo in [Upper, Lower]) {

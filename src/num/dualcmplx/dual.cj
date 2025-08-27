@@ -2,7 +2,6 @@ package cjnum.num.dualcmplx
 
 import cjnum.complex.*
 import cjnum.util.*
-import std.math.*
 
 // NdcNumber is a float64 precision anti-commutative dual complex number.
 public class NdcNumber {

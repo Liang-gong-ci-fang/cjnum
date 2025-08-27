@@ -1,8 +1,6 @@
 package cjnum.blas.cblas128
 
-import cjnum.blas.*
 import cjnum.complex.*
-import std.math.*
 
 public abstract class BandCore {
     public BandCore(

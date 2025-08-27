@@ -1,10 +1,7 @@
 package cjnum.lapack.testlapack
 
-import std.math.*
 import std.random.*
-import cjnum.blas.*
 import cjnum.lapack.*
-import cjnum.blas.blas64.*
 
 public func dgetrfTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)

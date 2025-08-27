@@ -4,7 +4,6 @@ import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
 import std.random.*
-import std.math.*
 
 class dsytrdTestStruct {
     dsytrdTestStruct(

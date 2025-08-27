@@ -2,7 +2,6 @@ package cjnum.num.dualquat
 
 import cjnum.num.quat.*
 import cjnum.num.dual.*
-import std.math.*
 
 // Number is a float64 precision dual quaternion. A dual quaternion
 // is a hypercomplex number composed of two quaternions, q₀+q₂ϵ,

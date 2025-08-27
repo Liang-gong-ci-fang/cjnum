@@ -1,15 +1,10 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
-import cjnum.lapack.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
 
 extend LFloat64Implementation {
     public func dgetrs(trans: Transpose, n: Int64, nrhs: Int64, a: Array<Float64>, lda: Int64, ipiv: Array<Int64>, b: Array<Float64>, ldb: Int64): Unit {
-    // public func dgetrs(_: Transpose, _: Int64, _: Int64, _: Array<Float64>, _: Int64, _: Array<Int64>, _: Array<Float64>, _: Int64): Unit {
-        // // TODO
-        // throw Exception("not implemented")
         if (trans != NoTrans && trans != Trans && trans != ConjTrans) {
             throw Exception(badTrans)
         }

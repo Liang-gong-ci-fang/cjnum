@@ -1,8 +1,5 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
-import std.math.numeric.*
-
 extend LFloat64Implementation {
     public func dpttrf(n: Int64, d: Array<Float64>, e: Array<Float64>): Bool {
         if (n < 0) {

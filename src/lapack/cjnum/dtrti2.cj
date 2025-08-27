@@ -2,7 +2,6 @@ package cjnum.lapack.cjnum
 
 import cjnum.blas.*
 import cjnum.blas.blas64.*
-import cjnum.lapack.*
 
 extend LFloat64Implementation {
     public func dtrti2(uplo: Uplo, diag: Diag, n: Int64, a: Array<Float64>, lda: Int64): Unit {

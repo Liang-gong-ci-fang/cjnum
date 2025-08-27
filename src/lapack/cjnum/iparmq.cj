@@ -1,7 +1,6 @@
 package cjnum.lapack.cjnum
 
 import std.math.*
-import cjnum.lapack.*
 
 func iparmq(ispec: Int64, name: String, _: String, _: Int64, ilo: Int64, ihi: Int64, _: Int64): Int64 {
     let nh = ihi - ilo + 1

@@ -1,7 +1,5 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
-
 extend LFloat64Implementation {
     // public func dpttrs(n: Int64, nrhs: Int64, d: Array<Float64>, e: Array<Float64>, b: Array<Float64>, ldb: Int64): Unit {
     public func dpttrs(_: Int64, _: Int64, _: Array<Float64>, _: Array<Float64>, _: Array<Float64>, _: Int64): Unit {

@@ -1,8 +1,5 @@
 package cjnum.blas.blas64
 
-import cjnum.blas.*
-import std.math.*
-
 public class BandCols <: BandCore {
     public BandCols(
         rows!: Int64 = 0,

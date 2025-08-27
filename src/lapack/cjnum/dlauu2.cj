@@ -4,7 +4,6 @@ package cjnum.lapack.cjnum
 
 import cjnum.blas.*
 import cjnum.blas.blas64.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dlauu2(uplo: Uplo, n: Int64, a: Array<Float64>, lda: Int64): Unit {

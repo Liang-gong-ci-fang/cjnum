@@ -1,7 +1,5 @@
 package cjnum.blas.blas64
 
-import cjnum.blas.*
-import std.math.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

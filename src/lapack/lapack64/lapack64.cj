@@ -3,7 +3,6 @@ package cjnum.lapack.lapack64
 import cjnum.lapack.*
 import cjnum.lapack.cjnum.*
 import cjnum.blas.blas64.*
-import std.math.*
 
 var lapack64: LFloat64 = LFloat64Implementation()
 

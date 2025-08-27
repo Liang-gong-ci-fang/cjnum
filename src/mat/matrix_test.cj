@@ -2,8 +2,6 @@ package cjnum.mat
 
 import std.core.*
 import std.collection.*
-import std.unittest.*
-import std.unittest.testmacro.*
 
 public func mPanics(fn: () -> Unit): (Bool, String) {
     try {

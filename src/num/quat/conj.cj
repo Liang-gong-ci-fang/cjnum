@@ -1,7 +1,5 @@
 package cjnum.num.quat
 
-import std.math.*
-
 // Conj returns the quaternion conjugate of q.
 public func nqConj(q: NqNumber): NqNumber {
     return NqNumber(q.real, -q.imag, -q.jmag, -q.kmag)

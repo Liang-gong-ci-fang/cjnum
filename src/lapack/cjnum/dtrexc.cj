@@ -1,7 +1,6 @@
 package cjnum.lapack.cjnum
 
 import cjnum.lapack.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dtrexc(compq: UpdateSchurComp, n: Int64, t: Array<Float64>, ldt: Int64, q: Array<Float64>, ldq: Int64,

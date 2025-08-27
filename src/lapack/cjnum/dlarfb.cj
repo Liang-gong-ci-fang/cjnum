@@ -3,7 +3,6 @@ package cjnum.lapack.cjnum
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dlarfb(side: Side, trans: Transpose, direct: Direct, store: StoreV, m: Int64, n: Int64, k: Int64,

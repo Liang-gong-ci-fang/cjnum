@@ -1,7 +1,5 @@
 package cjnum.num.dual
 
-import std.math.*
-
 // TODO public interface State {
 
 public class NdNumber {

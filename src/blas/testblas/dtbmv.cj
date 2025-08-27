@@ -1,7 +1,6 @@
 package cjnum.blas.testblas
 
 import cjnum.blas.*
-import cjnum.floats.*
 
 class dtbmvTestStruct {
     dtbmvTestStruct(

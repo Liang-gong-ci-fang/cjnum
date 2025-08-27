@@ -1,7 +1,6 @@
 package cjnum.lapack.cjnum
 
 import std.math.*
-import cjnum.lapack.*
 import cjnum.blas.blas64.*
 
 extend LFloat64Implementation {

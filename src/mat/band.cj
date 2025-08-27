@@ -2,8 +2,6 @@ package cjnum.mat
 
 import cjnum.blas.blas64.*
 import cjnum.lapack.lapack64.*
-import cjnum.lapack.*
-import std.math.*
 
 /*
 因为以下注释代码本质上是为了在编译过程中检查是BandDense类否实现了以下接口，

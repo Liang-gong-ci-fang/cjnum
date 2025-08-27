@@ -3,7 +3,6 @@ package cjnum.internal.math32
 import cjnum.floats.scalar.*
 import std.math.*
 import std.math.numeric.*
-import std.random.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

@@ -1,6 +1,5 @@
 package cjnum.num.quat
 
-import std.math.*
 import std.convert.*
 
 public var zero = NqNumber(0.0, 0.0, 0.0, 0.0)

@@ -13,7 +13,6 @@ extend LFloat64Implementation {
         }
 
         for (j in 0..nrhs) {
-            var com = 0.0
             for (i in 1..n) {
                 b[i * ldb + j] -= b[(i - 1) * ldb + j] * e[i - 1]
                 // let y = b[(i - 1) * ldb + j] * e[i - 1] - com

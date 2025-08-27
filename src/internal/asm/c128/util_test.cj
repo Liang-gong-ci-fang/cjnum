@@ -1,12 +1,8 @@
 package cjnum.internal.asm.c128
 
-import cjnum.cmplxs.*
 import cjnum.cmplxs.cscalar as cscalar
 import cjnum.complex.*
 import cjnum.floats.scalar as scalar
-import std.math.*
-import std.unittest.*
-import std.unittest.testmacro.*
 
 var inf = Float64.Inf
 var benchSink: Complex128 = Complex128(0.0, 0.0)

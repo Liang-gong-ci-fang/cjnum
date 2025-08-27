@@ -2,7 +2,6 @@ package cjnum.lapack.cjnum
 
 import cjnum.blas.blas64.*
 import cjnum.blas.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dgebrd(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, d: Array<Float64>, e: Array<Float64>,

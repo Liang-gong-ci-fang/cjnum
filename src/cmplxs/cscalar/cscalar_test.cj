@@ -1,6 +1,5 @@
 package cjnum.cmplxs.cscalar
 
-import std.math.*
 import cjnum.complex.*
 import std.unittest.*
 import std.unittest.testmacro.*

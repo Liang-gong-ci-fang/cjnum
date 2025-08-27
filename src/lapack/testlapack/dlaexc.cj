@@ -3,7 +3,6 @@ package cjnum.lapack.testlapack
 import cjnum.blas.*
 import cjnum.blas.blas64.*
 import cjnum.lapack.*
-import std.math.*
 import std.random.*
 
 public func dlaexcTest(lFloat64: LFloat64): Bool {

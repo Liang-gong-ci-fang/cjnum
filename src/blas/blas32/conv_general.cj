@@ -1,7 +1,5 @@
 package cjnum.blas.blas32
 
-import cjnum.blas.*
-
 public class GeneralCols <: GeneralCore {
     public GeneralCols(
         rows!: Int64 = 0,

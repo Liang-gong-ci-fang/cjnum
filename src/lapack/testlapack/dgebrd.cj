@@ -2,7 +2,6 @@ package cjnum.lapack.testlapack
 
 import cjnum.lapack.*
 import cjnum.floats.*
-import std.math.*
 import std.random.*
 
 class dgebrdTestStruct {

@@ -3,7 +3,6 @@ package cjnum.num.dualquat
 import cjnum.util.*
 import cjnum.num.quat.*
 import cjnum.floats.scalar.*
-import std.math.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

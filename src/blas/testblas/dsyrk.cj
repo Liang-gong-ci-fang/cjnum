@@ -1,7 +1,5 @@
 package cjnum.blas.testblas
 
-import std.math.*
-import std.random.*
 import cjnum.blas.*
 import cjnum.floats.*
 

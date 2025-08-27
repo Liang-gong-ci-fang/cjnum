@@ -1,8 +1,5 @@
 package cjnum.num.hyperdual
 
-import cjnum.util.*
-import std.math.*
-
 // NhNumber is a float64 precision hyperdual number.
 public class NhNumber {
     let real: Float64

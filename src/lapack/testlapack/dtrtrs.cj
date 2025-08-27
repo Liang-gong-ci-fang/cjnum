@@ -1,6 +1,5 @@
 package cjnum.lapack.testlapack
 
-import std.math.*
 import std.random.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*

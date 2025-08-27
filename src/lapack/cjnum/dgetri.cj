@@ -1,15 +1,10 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
-import cjnum.lapack.*
 
 extend LFloat64Implementation {
     public func dgetri(n: Int64, a: Array<Float64>, lda: Int64, ipiv: Array<Int64>, work: Array<Float64>, lwork: Int64): Bool {
-    // public func dgetri(_: Int64, _: Array<Float64>, _: Int64, _: Array<Int64>, _: Array<Float64>, _: Int64): Bool {
-    //     // TODO
-    //     throw Exception("not implemented")
         let iws = max(1, n)
         if (n < 0) {
             throw Exception(nLT0)

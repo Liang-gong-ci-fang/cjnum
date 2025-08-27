@@ -1,6 +1,5 @@
 package cjnum.num.quat
 
-import std.math.*
 
 // IsNaN returns true if any of real(q), imag(q), jmag(q), or kmag(q) is NaN
 // and none are an infinity.

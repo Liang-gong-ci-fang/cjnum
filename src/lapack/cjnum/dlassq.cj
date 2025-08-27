@@ -1,8 +1,6 @@
 package cjnum.lapack.cjnum
 
 import std.math.*
-import cjnum.lapack.*
-import cjnum.blas.*
 
 extend LFloat64Implementation {
     public func dlassq(n: Int64, x: Array<Float64>, incX: Int64, scale: Float64, sumsq: Float64): (Float64, Float64) {

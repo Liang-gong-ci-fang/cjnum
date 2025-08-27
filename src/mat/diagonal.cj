@@ -2,8 +2,6 @@ package cjnum.mat
 
 import cjnum.blas.blas64.*
 import cjnum.blas.*
-import std.math.*
-
 /*
 因为以下注释代码本质上是为了在编译过程中检查是DiagDense类否实现了以下接口，
 仓颉编译过程中会对未实现的接口方法进行提示，

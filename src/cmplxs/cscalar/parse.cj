@@ -2,7 +2,6 @@ package cjnum.cmplxs.cscalar
 
 import cjnum.complex.*
 import std.core.*
-import std.math.*
 import std.convert.*
 
 func cParse(s: String): Complex128 {

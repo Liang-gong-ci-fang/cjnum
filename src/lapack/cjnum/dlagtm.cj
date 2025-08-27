@@ -1,7 +1,6 @@
 package cjnum.lapack.cjnum
 
 import cjnum.blas.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dlagtm(trans: Transpose, m: Int64, n: Int64, alpha: Float64, dl: Array<Float64>, d: Array<Float64>,

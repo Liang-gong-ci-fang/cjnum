@@ -1,7 +1,6 @@
 package cjnum.num.dualquat
 
 import cjnum.num.quat.*
-import std.math.*
 
 // PowReal returns d**p, the base-d exponential of p.
 //

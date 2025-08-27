@@ -1,7 +1,5 @@
 package cjnum.lapack.testlapack
 
-import std.random.*
-import cjnum.blas.*
 import cjnum.lapack.*
 import cjnum.blas.blas64.*
 import cjnum.blas.blas64.General as General64

@@ -1,7 +1,6 @@
 package cjnum.lapack.cjnum
 
 import cjnum.blas.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dormhr(side: Side, trans: Transpose, m: Int64, n: Int64, ilo: Int64, ihi: Int64, a: Array<Float64>,

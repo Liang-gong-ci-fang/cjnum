@@ -4,7 +4,6 @@ import cjnum.blas.blas64.nFloat64Implementation
 import cjnum.blas.*
 import cjnum.lapack.*
 import cjnum.util.*
-import std.math.*
 import std.random.*
 
 public func dgtsvTest(lFloat64: LFloat64): Bool {

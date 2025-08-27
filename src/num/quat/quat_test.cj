@@ -2,7 +2,6 @@ package cjnum.num.quat
 
 import cjnum.util.*
 import cjnum.floats.scalar.*
-import std.math.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

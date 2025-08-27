@@ -2,7 +2,6 @@ package cjnum.lapack.testlapack
 
 import cjnum.floats.scalar.*
 import cjnum.lapack.*
-import std.math.*
 import std.random.*
 
 class dorg2rTestStruct {

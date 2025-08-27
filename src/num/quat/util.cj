@@ -1,7 +1,5 @@
 package cjnum.num.quat
 
-import std.math.*
-
 public func nqLift(v: Float64): NqNumber {
     return NqNumber(v, 0.0, 0.0, 0.0)
 }

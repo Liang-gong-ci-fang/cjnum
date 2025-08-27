@@ -1,7 +1,5 @@
 package cjnum.internal.asm.f32
 
-import std.unittest.*
-import std.unittest.testmacro.*
 import cjnum.floats.scalar.same as scalar_same
 import cjnum.floats.scalar.equalWithinAbsOrRel
 import std.math.*

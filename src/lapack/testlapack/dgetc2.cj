@@ -4,7 +4,6 @@ import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
 import std.random.*
-import std.math.*
 
 public func dgetc2Test(lFloat64: LFloat64): Bool {
     let rnd = Random(1)

@@ -1,6 +1,5 @@
 package cjnum.num.quat
 
-import std.math.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

@@ -1,8 +1,6 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
 import cjnum.blas.*
-import cjnum.lapack.*
 
 extend LFloat64Implementation {
     public func dlarfx(side: Side, m: Int64, n: Int64, v: Array<Float64>, tau: Float64, c: Array<Float64>, ldc: Int64,

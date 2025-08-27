@@ -1,6 +1,5 @@
 package cjnum.blas.testblas
 
-import std.math.*
 import cjnum.blas.*
 import cjnum.floats.*
 import std.unittest.*

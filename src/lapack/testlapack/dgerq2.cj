@@ -2,9 +2,7 @@ package cjnum.lapack.testlapack
 
 import cjnum.blas.blas64.*
 import cjnum.blas.*
-import cjnum.floats.*
 import cjnum.lapack.*
-import std.math.*
 import std.random.*
 
 public func dgerq2Test(lFloat64: LFloat64): Bool {

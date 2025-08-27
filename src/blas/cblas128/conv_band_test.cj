@@ -1,8 +1,6 @@
 package cjnum.blas.cblas128
 
-import cjnum.blas.*
 import cjnum.complex.*
-import std.math.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

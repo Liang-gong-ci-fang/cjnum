@@ -420,49 +420,49 @@ public func testDtrevc3(): Unit {
 
 @Test
 @Parallel
-public func testDpstrf(): Unit { // TODO ok?
+public func testDpstrf(): Unit { 
     @Expect(dpstrfTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDgelqf(): Unit { // TODO ok?
+public func testDgelqf(): Unit { 
     @Expect(dgelqfTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDgehrd(): Unit { // TODO ok?
+public func testDgehrd(): Unit { 
     @Expect(dgehrdTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDormr2(): Unit { // TODO ok?
+public func testDormr2(): Unit { 
     @Expect(dormr2Test(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDgerqf(): Unit { // TODO ok ?
+public func testDgerqf(): Unit { 
     @Expect(dgerqfTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDorml2(): Unit { // TODO ok?
+public func testDorml2(): Unit { 
     @Expect(dorml2Test(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDormlq(): Unit { // TODO ok?
+public func testDormlq(): Unit { 
     @Expect(dormlqTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDormbr(): Unit { // TODO ok ?
+public func testDormbr(): Unit { 
     @Expect(dormbrTest(lFloat64Implementation))
 }
 
@@ -492,31 +492,31 @@ public func testDgetrf(): Unit { // TODO
 
 @Test
 @Parallel
-public func testDgecon(): Unit { // TODO ok ?
+public func testDgecon(): Unit { 
     @Expect(dgeconTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDgetri(): Unit { // TODO ok ?
+public func testDgetri(): Unit { 
     @Expect(dgetriTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDgetrs(): Unit { // TODO ok ?
+public func testDgetrs(): Unit { 
     @Expect(dgetrsTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDlaqr04(): Unit { // TODO ok ?
+public func testDlaqr04(): Unit { 
     @Expect(dlaqr04Test(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDlaqr23(): Unit { // TODO ok ?
+public func testDlaqr23(): Unit { 
     @Expect(dlaqr23Test(lFloat64Implementation))
 }
 
@@ -534,7 +534,7 @@ public func testDorm2r(): Unit {
 
 @Test
 @Parallel
-public func testDormhr(): Unit { // TODO ok?
+public func testDormhr(): Unit { 
     @Expect(dormhrTest(lFloat64Implementation))
 }
 
@@ -558,7 +558,7 @@ public func testDlabrd(): Unit {
 
 @Test
 @Skip // 依赖 dlasq2
-public func testDlasq1(): Unit { // TODO ok ?
+public func testDlasq1(): Unit { 
     @Expect(dlasq1Test(lFloat64Implementation))
 }
 
@@ -576,31 +576,31 @@ public func testDorgql(): Unit { // TODO ok？
 
 @Test
 @Skip
-public func testDorgtr(): Unit { // TODO ok ?
+public func testDorgtr(): Unit { 
     @Expect(dorgtrTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDsteqr(): Unit { // TODO ok？
+public func testDsteqr(): Unit {
     @Expect(dsteqrTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDsterf(): Unit { // TODO ok ?
+public func testDsterf(): Unit { 
     @Expect(dsterfTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDsyev(): Unit { // TODO ok ?
+public func testDsyev(): Unit { 
     @Expect(dsyevTest(lFloat64Implementation))
 }
 
 @Test
 @Parallel
-public func testDsytrd(): Unit { // TODO ok ?
+public func testDsytrd(): Unit { 
     @Expect(dsytrdTest(lFloat64Implementation))
 }
 

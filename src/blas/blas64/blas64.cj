@@ -2,7 +2,6 @@ package cjnum.blas.blas64
 
 import cjnum.blas.cjnum.*
 import cjnum.blas.*
-import cjnum.*
 import cjnum.blas.*
 import cjnum.blas.cjnum.*
 

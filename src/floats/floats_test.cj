@@ -1,7 +1,6 @@
 package cjnum.floats
 
 import std.math.*
-import std.random.*
 import std.unittest.*
 import std.unittest.testmacro.*
 import std.collection.*

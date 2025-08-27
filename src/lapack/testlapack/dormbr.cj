@@ -5,7 +5,6 @@ import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.floats.*
 import cjnum.lapack.*
-import std.math.*
 import std.random.*
 
 class dormbrTestStruct {

@@ -1,9 +1,5 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
-import cjnum.lapack.*
-import cjnum.blas.*
-
 extend LFloat64Implementation {
     public func iladlc(m: Int64, n: Int64, a: Array<Float64>, lda: Int64): Int64 {
         if (m < 0) {

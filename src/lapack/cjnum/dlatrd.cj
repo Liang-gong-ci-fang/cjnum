@@ -2,7 +2,6 @@ package cjnum.lapack.cjnum
 
 import cjnum.blas.blas64.*
 import cjnum.blas.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dlatrd(uplo: Uplo, n: Int64, nb: Int64, a: Array<Float64>, lda: Int64, e: Array<Float64>, tau: Array<Float64>,

@@ -5,7 +5,6 @@ import std.random.*
 import std.collection.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
-import cjnum.floats.*
 import cjnum.lapack.*
 import cjnum.util.*
 

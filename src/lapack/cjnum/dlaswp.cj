@@ -1,9 +1,7 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
-import cjnum.lapack.*
 
 extend LFloat64Implementation {
     public func dlaswp(n: Int64, a: Array<Float64>, lda: Int64, k1: Int64, k2: Int64, ipiv: Array<Int64>, incX: Int64): Unit {

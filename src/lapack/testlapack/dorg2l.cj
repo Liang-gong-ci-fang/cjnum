@@ -3,7 +3,6 @@ package cjnum.lapack.testlapack
 import cjnum.blas.blas64.General as General64
 import cjnum.blas.blas64.*
 import cjnum.lapack.*
-import std.math.*
 import std.random.*
 
 class dorg2lTestStruct {

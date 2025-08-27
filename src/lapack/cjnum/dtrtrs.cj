@@ -1,7 +1,5 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
-import cjnum.lapack.*
 import cjnum.blas.*
 import cjnum.blas.blas64.*
 

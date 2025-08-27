@@ -1,10 +1,5 @@
 package cjnum.mat
 
-import cjnum.blas.blas64.*
-import std.random.*
-import std.unittest.*
-import std.unittest.testmacro.*
-
 // TODO 
 // // legalDims returns whether {m,n} is a valid dimension of the given matrix type.
 // private func legalDims(a: Matrix, m:Int64, n: Int64): Bool {

@@ -2,8 +2,6 @@ package cjnum.mat
 
 import cjnum.blas.blas64.*
 import cjnum.floats.scalar.*
-import std.reflect.*
-import std.math.*
 import std.core.*
 import std.unittest.*
 import std.unittest.testmacro.*

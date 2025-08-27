@@ -1,7 +1,5 @@
 package cjnum.blas.blas64
 
-import cjnum.blas.*
-
 public abstract class VectorCore {
     public VectorCore(
         public var n: Int64,

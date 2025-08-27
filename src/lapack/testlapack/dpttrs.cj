@@ -1,14 +1,8 @@
 package cjnum.lapack.testlapack
 
-import std.math.*
 import std.random.*
-import std.math.numeric.*
 import cjnum.lapack.*
 import cjnum.blas.blas64.General as General64
-
-import std.math.numeric.*
-import std.fs.*
-import std.io.*
 
 public func dpttrsTest(lFloat64: LFloat64): Bool {
     let rnd = Random(1)

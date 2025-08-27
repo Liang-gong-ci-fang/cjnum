@@ -1,8 +1,5 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
-import cjnum.lapack.*
-
 func ilaenv(ispec: Int64, name: String, opts: String, n1: Int64, n2: Int64, n3: Int64, n4: Int64): Int64 {
     let sname = name[0] == b'S' || name[0] == b'D'
     let cname = name[0] == b'C' || name[0] == b'Z'

@@ -1,6 +1,5 @@
 package cjnum.internal.asm.c128
 
-import cjnum.cmplxs.cscalar.*
 import cjnum.complex.*
 import std.math.*
 import std.unittest.*

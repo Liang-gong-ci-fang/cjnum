@@ -3,7 +3,6 @@ package cjnum.num.dual
 import cjnum.floats.scalar.*
 import cjnum.util.*
 import std.math.*
-import std.collection.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

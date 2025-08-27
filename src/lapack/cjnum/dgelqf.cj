@@ -2,7 +2,6 @@ package cjnum.lapack.cjnum
 
 import cjnum.blas.*
 import cjnum.lapack.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dgelqf(m: Int64, n: Int64, a: Array<Float64>, lda: Int64, tau: Array<Float64>, work: Array<Float64>,

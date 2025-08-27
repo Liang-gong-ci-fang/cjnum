@@ -2,7 +2,6 @@ package cjnum.blas.cjnum
 
 import cjnum.internal.asm.f64.*
 import cjnum.blas.*
-import std.math.*
 
 extend NFloat64Implementation {
     public func dger(m: Int64, n: Int64, alpha: Float64, x: Array<Float64>, incX: Int64, y: Array<Float64>, incY: Int64,

@@ -1,8 +1,5 @@
 package cjnum.blas.blas64
 
-import cjnum.blas.*
-import std.math.*
-
 public abstract class BandCore {
     public BandCore(
         public var rows: Int64,

@@ -1,6 +1,5 @@
 package cjnum.lapack.cjnum
 
-import cjnum.lapack.*
 import cjnum.util.*
 import std.math.*
 

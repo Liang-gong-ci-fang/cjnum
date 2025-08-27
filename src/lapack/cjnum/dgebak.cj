@@ -3,7 +3,6 @@ package cjnum.lapack.cjnum
 import cjnum.blas.blas64.*
 import cjnum.blas.*
 import cjnum.lapack.*
-import std.math.*
 
 extend LFloat64Implementation {
     public func dgebak(job: BalanceJob, side: EVSide, n: Int64, ilo: Int64, ihi: Int64, scale: Array<Float64>, m: Int64,

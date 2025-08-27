@@ -1,7 +1,5 @@
 package cjnum.lapack.cjnum
 
-import std.math.*
-
 extend LFloat64Implementation {
     public func dlasq5(i0: Int64, n0: Int64, z: Array<Float64>, pp: Int64, tau: Float64, sigma: Float64): (Int64, Int64, 
         Int64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64) {
